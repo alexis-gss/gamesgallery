@@ -1,0 +1,503 @@
+:root{
+	--color1: #1D1D1D;
+	--color2: #FFFFFF;
+	--color3: #737373;
+	--color4: #1A1A1A;
+}
+::-webkit-scrollbar{
+	background: var(--color1);
+	width: 1rem;
+}
+::-webkit-scrollbar-thumb{
+    background: var(--color3);
+}
+html{
+	font-size: 62.5%;
+    text-rendering: optimizeLegibility;
+}
+body{
+    margin: 0;
+    font-size: 2rem;
+    font-family: 'Pathway Gothic One', sans-serif;
+    text-transform: uppercase;
+    background: var(--color1);
+    color: var(--color2);
+    overflow-x: hidden;
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
+    -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
+    user-select: none; /* Propriété standard */
+}
+
+/*Filtre*/
+.filtre{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    transition: .3s;
+    z-index: 200;
+}
+.filtreActivated{
+    opacity: .8;
+}
+
+/* Galerie */
+.galerie{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 10rem;
+    margin: 0 auto;
+    max-width: 140rem;
+    min-height: 100vh;
+    transition: .3s;
+}
+.galerieBtnMenu, .jeuxContentBtnMenuClose{
+    position: absolute;
+    top: 0;
+    left: 2vw;
+    background: none;
+    border: none;
+    color: var(--color3);
+    padding: 0;
+    cursor: pointer;
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    transition: .3s;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(0);
+}
+.galerieBtnMenu{
+    margin-left: .8rem;
+}
+.galerieBtnMenuActivated{
+    transform: translateX(-130%);
+}
+.galerieBtnMenu:hover, .jeuxContentBtnMenuClose:hover{
+    color: var(--color2)
+}
+.galerieBtnMenu:focus, .jeuxContentBtnMenuClose:focus{
+    outline:0;
+}
+.galerieBtnMenuIcon{
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    margin-right: 1rem;
+}
+.galerieBtnMenuIconContent{
+    margin: 0;
+    text-transform: uppercase;
+}
+.galerieBtnMenuIconClose{
+    width: .7em;
+    height: .7em;
+    transform: translateY(1px);
+}
+.jeuxContentBtnMenuClose{
+    display: none;
+    position: relative;
+    left: 0;
+    width: 100%;
+    justify-content: flex-end;
+    margin-left: 0;
+    padding-right: 3rem;
+}
+
+/* Partie jeux */
+.jeux, .images{
+    height: 100%;
+}
+.jeux{
+    min-width: 28rem;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: .3s;
+    padding: 0rem 1rem 0 0;
+    transform: translateX(-100%);
+}
+.jeuxContent{
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.jeuxContentTitre{
+    font-size: 4rem;
+    margin: 0;
+    padding: 6rem 0 4rem 0;
+}
+.jeuxContentUl{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color3);
+    height: calc(100vh - 26.5rem);
+    overflow-y: scroll;
+}
+.jeuxContentUlLi, .jeuxContentTitleFolder{
+    margin-top: 1rem;
+}
+.jeuxContentUlLiSpan{
+    transition: .3s;
+    opacity: 0;
+}
+.jeuxContentUlLi:hover .jeuxContentUlLiSpan{
+    opacity: 1;
+}
+.jeuxContentUlLiSpanActive{
+    opacity: 1;
+}
+.jeuxContentUlLiTitre{
+    position: relative;
+    cursor: pointer;
+    transition: .3s;
+    text-decoration: none;
+    font-style: normal;
+    color: var(--color3);
+}
+.jeuxContentUlLiTitreActive{
+    color: var(--color2);
+}
+.jeuxContentUlFolder{
+    background-color: #0d0d0d;
+    overflow-y: hidden;
+    height: 0;
+    transition: 0.3s;
+    padding: 0;
+    list-style: none;
+}
+.jeuxContentUlLiFolder{
+    margin: 1rem;
+}
+.jeuxContentTitleFolder{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s;
+}
+.jeuxContentTitleFolder:after{
+    content: "";
+    display: block;
+    background-image: url("../data/arrow.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 11px;
+    height: 16px;
+    margin: 0 4px;
+    transition: .3s;
+}
+.jeuxContentTitleFolderActive{
+    color: var(--color2);
+}
+.folderTitleActive:after{
+    transform: rotate(180deg);
+}
+.jeuxContentForm{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+}
+.jeuxContentSearch{
+    width: 20rem;
+    height: 2rem;
+    padding: 1rem 0;
+    font-size: 2rem;
+    font-family: 'Pathway Gothic One', sans-serif;
+    color: var(--color2);
+    border: none;
+    outline: none;
+    transition: .3s;
+    background-color: transparent;
+    border-bottom: 1px solid var(--color3);
+}
+.jeuxContentSearch:focus{
+    outline: none;
+    border-bottom: 1px solid var(--color2);
+}
+.jeuxContentSearchClear{
+    cursor: pointer;
+    height: 4rem;
+    width: 3rem;
+    background-color: transparent;
+    border: none;
+    color: var(--color3);
+}
+.jeuxContentSearchDisplay{
+    display: none;
+}
+
+/* Partie images */
+.images{
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.imagesContent{
+    opacity: 1;
+    transition: .3s;
+}
+.imagesTitre{
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    text-align: center;
+    transition: .3s;
+}
+.imagesGrid{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: auto;
+}
+.imagesGridContent{
+    width: 49.5%;
+    height: auto;
+    transition: .3s;
+    cursor: zoom-in;
+    transform: scale(1);
+    overflow: hidden;
+    margin: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color2);
+}
+.imagesGridContent:hover{
+    background: var(--color4);
+}
+.imagesGridContent:hover > .imagesGridDetail > .imagesGridContentImageActive{
+    transform: scale(1.02);
+}
+.imagesGridDetail{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.imagesGridContentTitle{
+    font-family: 'Barlow Condensed', sans-serif;
+    bottom: 0;
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.imagesGridContentImage{
+    width: 100%;
+    height: 100%;
+    transition: 1s cubic-bezier(0, 0, 0.23, 0.99);
+}
+
+/* Footer */
+.footer{
+    width: 100%;
+    min-height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color3);
+}
+.footerTitre, .footerDetail{
+    margin: 0;
+}
+.footerDetail{
+    font-size: small;
+}
+.footerTitre{
+    cursor: pointer;
+    margin: 1rem 0;
+    transition: .3s;
+    text-decoration: none;
+    color: var(--color3);
+}
+.footerTitre:hover{
+    color: var(--color2);
+}
+.footerTitre::before{
+    content: "↑";
+    margin-right: 1rem;
+}
+
+/* Visionneuse photo */
+.viewer{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+.viewerBackground{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--color3);
+    opacity: .8;
+}
+.viewerBtns{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 110;
+}
+.viewerBtnsImg{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.viewerBtn{
+    width: 5rem;
+    height: 5rem;
+    margin: 1rem;
+    font-size: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    background-color: var(--color2);
+    cursor: pointer;
+}
+.viewerProgressBar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: transparent;
+}
+.viewerProgressBarContent{
+    width: 0;
+    height: 100%;
+    background-color: var(--color2);
+    transition: ease-in-out;
+}
+.viewerBtnClose, .viewerBtnPlay, .viewerBtnPause{
+    position: absolute;
+    right: 0;
+    font-family: 'Quicksand', sans-serif;
+    text-transform: lowercase;
+}
+.viewerBtnPlay, .viewerBtnPause{
+    right: 60px;
+}
+.viewerBtnPause{
+    display: none;
+}
+.viewerBtnContent{
+    width: .8em;
+    height: .8em;
+    fill: var(--color4);
+}
+.viewerPhoto{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.viewerPhotoImg{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Autre */
+.transition{
+    opacity: 0;
+}
+.display{
+    display: none;
+}
+.opacity{
+    opacity: .5;
+}
+.overflowHtml{
+    overflow-y: hidden;
+}
+.overflowBody{
+    max-height: 100vh;
+    overflow: hidden;
+}
+.translateX{
+    transform: translateX(39rem);
+}
+.maxHeight{
+    max-height: 270px;
+}
+
+/* Média */
+@media screen and (max-width: 1200px){
+    .galerie{
+        padding: 0;
+    }
+    .images{
+      margin: 0 2%;
+    }
+    .jeux{
+      position: absolute;
+      left: 0;
+      width: 25rem;
+      padding-left: 2rem;
+    }
+    .btnsMenu{
+      display: block;
+    }
+    .jeuxContentBtnMenuClose{
+        display: flex;
+    }
+    .galerieBtnMenu{
+        display: flex;
+    }
+}
+@media screen and (max-width: 900px){
+    .imagesTitre{
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .imagesGridContent {
+        width: 100%;
+    }
+}
+@media screen and (min-width: 1200px){
+    .jeux{
+        transform: translateX(0);
+    }
+}
