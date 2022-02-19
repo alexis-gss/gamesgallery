@@ -23,6 +23,7 @@
         viewerAutoLoop: undefined,
         viewerProgressBarWidth: 0,
         heightLi: 23,
+        idGameActivated: 0,
 
         //Initialise les premières actions
         init: function(){
@@ -49,6 +50,9 @@
             document.querySelector('.galerieBtnMenu').addEventListener("click", V.menuActivated)
             document.querySelector(".footerDetailDate").innerHTML = new Date().getFullYear()
             document.querySelector(".viewerBtnPlay").addEventListener("click", V.viewerAuto)
+            document.querySelector(".footerTitre").addEventListener("click", function(){
+                V.transitionGame(V.idGameActivated)
+            })
         },
         //Responsive du menu
         menuNormal: function(){
@@ -216,12 +220,14 @@
             document.querySelector(".imagesTitre").classList.add("transition")
             setTimeout(function(){
                 V.styleListeAndTitle(i)
+                V.scrollTop()
                 document.querySelector(".imagesContent").classList.remove("transition")
                 document.querySelector(".imagesTitre").classList.remove("transition")
             }, 300)
         },
         // Stylise la liste des jeux et le titre du jeu concerné
         styleListeAndTitle: function(j){
+            V.idGameActivated = j;
             setTimeout(function(){
                 for (let i = 0 ; i < V.jeuxContentListeTitre.length ; i ++){
                     V.jeuxContentListeTitre[i].classList.remove("jeuxContentUlLiTitreActive")
@@ -280,6 +286,14 @@
                     V.transitionGame(i)
                 })
             }
+        },
+        // Scroll en haut de la page
+        scrollTop: function(time){
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                });
+            }, time);
         },
         // Affiche les images correspondants au jeu
         updateImgs: function(name){
