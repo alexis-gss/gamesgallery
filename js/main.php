@@ -243,7 +243,7 @@
                         V.jeuxContentTitleFolder[index].classList.add("jeuxContentTitleFolderActive")
                     }
                 }
-            }, 400)
+            }, 200)
             if(V.jeuxContentListeTitre[j].textContent === V.jeux[j].name){
                 document.querySelector(".imagesContent").innerHTML = ""
                 document.querySelector(".imagesTitre").textContent = V.jeux[j].name
