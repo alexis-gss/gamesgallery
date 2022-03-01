@@ -3,6 +3,7 @@
 	--color2: #FFFFFF;
 	--color3: #737373;
 	--color4: #1A1A1A;
+    --color5: #000000;
 }
 ::-webkit-scrollbar{
 	background: var(--color1);
@@ -358,12 +359,22 @@ body{
     width: 100%;
     height: 100%;
     z-index: 100;
+    opacity: 0;
+    transition: .3s;
+    visibility: hidden;
+}
+.viewerActivated{
+    transform: scale(1) !important;
+}
+.viewerOpacity{
+    visibility: visible;
+    opacity: 1;
 }
 .viewerBackground{
     position: absolute;
     width: 100%;
     height: 100%;
-    background: var(--color3);
+    background: var(--color5);
     opacity: .8;
 }
 .viewerBtns{
@@ -407,16 +418,19 @@ body{
     background-color: var(--color2);
     transition: ease-in-out;
 }
-.viewerBtnClose, .viewerBtnPlay, .viewerBtnPause{
+.viewerBtnClose, .viewerBtnPlay, .viewerBtnPause, .viewerBtnFullScreen, .viewerBtnWindowed{
     position: absolute;
     right: 0;
     font-family: 'Quicksand', sans-serif;
     text-transform: lowercase;
 }
-.viewerBtnPlay, .viewerBtnPause{
+.viewerBtnFullScreen, .viewerBtnWindowed{
     right: 60px;
 }
-.viewerBtnPause{
+.viewerBtnPlay, .viewerBtnPause{
+    right: 120px;
+}
+.viewerBtnPause, .viewerBtnWindowed{
     display: none;
 }
 .viewerBtnContent{
@@ -432,6 +446,8 @@ body{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    transition: transform .3s;
+    transform: scale(.8);
 }
 .viewerPhotoImg{
     max-width: 100%;
@@ -448,12 +464,8 @@ body{
 .opacity{
     opacity: .5;
 }
-.overflowHtml{
-    overflow-y: hidden;
-}
 .overflowBody{
     max-height: 100vh;
-    overflow: hidden;
 }
 .translateX{
     transform: translateX(39rem);

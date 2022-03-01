@@ -50,6 +50,8 @@
             document.querySelector('.galerieBtnMenu').addEventListener("click", V.menuActivated)
             document.querySelector(".footerDetailDate").innerHTML = new Date().getFullYear()
             document.querySelector(".viewerBtnPlay").addEventListener("click", V.viewerAuto)
+            document.querySelector(".viewerBtnFullScreen").addEventListener("click", V.viewerFullScreen)
+            document.querySelector(".viewerBtnWindowed").addEventListener("click", V.viewerWindowed)
             document.querySelector(".footerTitre").addEventListener("click", function(){
                 V.transitionGame(V.idGameActivated)
             })
@@ -220,7 +222,7 @@
             document.querySelector(".imagesTitre").classList.add("transition")
             setTimeout(function(){
                 V.styleListeAndTitle(i)
-                V.scrollTop()
+                V.scrollTop(0)
                 document.querySelector(".imagesContent").classList.remove("transition")
                 document.querySelector(".imagesTitre").classList.remove("transition")
             }, 300)
@@ -345,7 +347,8 @@
             else{
                 document.querySelector(".viewerBtnClose").addEventListener("click", function(){
                     V.viewerStopAuto()
-                    document.querySelector(".viewer").classList.add("display")
+                    document.querySelector(".viewer").classList.remove("viewerOpacity")
+                    document.querySelector(".viewerPhoto").classList.remove("viewerActivated")
                     document.querySelector("html").classList.remove("overflowHtml")
                     document.querySelector("body").classList.remove("overflowBody")
                     V.removeOpacityBtnViewer()
@@ -353,9 +356,9 @@
                 var imagesGridDetail = document.querySelectorAll(".imagesGridDetail")
                 for (let j = 0 ; j < imagesGridDetail.length ; j ++){
                     imagesGridDetail[j].addEventListener("click", function(){
-                        document.querySelector("html").classList.add("overflowHtml")
                         document.querySelector("body").classList.add("overflowBody")
-                        document.querySelector(".viewer").classList.remove("display")
+                        document.querySelector(".viewer").classList.add("viewerOpacity")
+                        document.querySelector(".viewerPhoto").classList.add("viewerActivated")
                         document.querySelector(".viewerPhotoImg").src = V.srcJson[j]
                         V.j = j
                         if(V.j === 0){
@@ -371,7 +374,7 @@
                 V.lazyLoad()
             }, 100)
         },
-        //Stylise les bouttons du viewer
+        //Event arrow buttons
         viewerBtn: function(){
             document.querySelector(".viewerBtnLeft").addEventListener("click", function(){
                 V.viewerPrevious()
@@ -382,6 +385,7 @@
                 V.viewerStopAuto()
             })
         },
+        //Stylise les bouttons du viewer
         viewerPrevious: function(){
             if(V.j > 0){
                 V.j = V.j - 1
@@ -393,6 +397,7 @@
                 document.querySelector(".viewerBtnLeft").classList.add("opacity")
             }
         },
+        //Stylise les bouttons du viewer
         viewerNext: function(){
             if(V.j < V.srcJson.length - 1){
                 V.j = V.j + 1
@@ -405,6 +410,7 @@
                 document.querySelector(".viewerBtnRight").classList.add("opacity")
             }
         },
+        //Automatise le viewer
         viewerAuto: function(){
             if(V.j != V.srcJson.length - 1){
                 document.querySelector(".viewerBtnPlay").style.display = "none"
@@ -425,12 +431,25 @@
                 V.viewerStopAuto()
             })
         },
+        //Stop le viewer
         viewerStopAuto: function(){
             clearInterval(V.viewerAutoLoop);
             V.viewerProgressBarWidth = 0
             document.querySelector(".viewerProgressBarContent").style.width = "0"
             document.querySelector(".viewerBtnPlay").style.display = "flex"
             document.querySelector(".viewerBtnPause").style.display = "none"
+        },
+        //Mets en plein écran
+        viewerFullScreen: function(){
+            document.querySelector(".viewerBtnFullScreen").style.display = "none"
+            document.querySelector(".viewerBtnWindowed").style.display = "flex"
+            document.documentElement.requestFullscreen()
+        },
+        //Sort du plein écran
+        viewerWindowed: function(){
+            document.querySelector(".viewerBtnFullScreen").style.display = "flex"
+            document.querySelector(".viewerBtnWindowed").style.display = "none"
+            document.exitFullscreen()
         },
         //Stylise les boutons du viewer en fonction de l'image affichée
         removeOpacityBtnViewer: function(){
