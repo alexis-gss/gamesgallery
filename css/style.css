@@ -466,6 +466,7 @@ body{
 }
 .overflowBody{
     max-height: 100vh;
+    overflow-y: hidden;
 }
 .translateX{
     transform: translateX(39rem);
