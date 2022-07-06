@@ -1,0 +1,28 @@
+.ta-end {
+    text-align: end;
+}
+.w-fit {
+    width: fit-content !important;
+    width: -moz-fit-content !important;
+    width: -webkit-fit-content !important;
+    @media screen and (max-width: 770px) {
+        width: 100% !important;
+    }
+}
+.w-10 {
+    width: 10% !important;
+}
+.w-22 {
+    width: 22rem !important;
+}
+.w-test {
+    width: 2rem !important;
+}
+.preview {
+    .filtre {
+        width: 5rem;
+        top: 0;
+        right: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);;
+    }
+}
