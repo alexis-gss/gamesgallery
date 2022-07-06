@@ -38,7 +38,7 @@ class Game extends Model
     }
 
     /**
-     * Delete old images.
+     * Actions on update/delete Game model.
      *
      * @return void
      */
@@ -46,16 +46,31 @@ class Game extends Model
     {
         parent::boot();
 
-        static::updating(function ($game) {
-            if (
-                isset($game->getOriginal()['pictures']) &&
-                count($game->getOriginal()['pictures']) > 0 &&
-                $game->getOriginal()['pictures'] != null
-            ) {
-                foreach ($game->getOriginal()['pictures'] as $oldImage) {
-                    File::delete($oldImage);
-                }
-            }
+        static::updating(function (self $game) {
+            $game->updateImages($game);
         });
+
+        static::deleting(function (self $game) {
+            $game->updateImages($game);
+        });
+    }
+
+    /**
+     * Remove old images.
+     *
+     * @param Model $game
+     * @return void
+     */
+    private static function updateImages(Model $game)
+    {
+        if (
+            $game->getOriginal('pictures') and
+            count($game->getOriginal('pictures')) > 0 and
+            $game->order === $game->getOriginal('order')
+        ) {
+            foreach ($game->getOriginal('pictures') as $oldImage) {
+                File::delete($oldImage);
+            }
+        }
     }
 }
