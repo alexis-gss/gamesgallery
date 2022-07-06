@@ -4,6 +4,7 @@ use App\Http\Controllers\Bo\BackController;
 use App\Http\Controllers\Bo\GamesController;
 use App\Http\Controllers\Bo\FoldersController;
 use App\Http\Controllers\FrontController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,10 +38,12 @@ Route::prefix('bo')
                             ->group(
                                 function () {
                                     Route::resource('folders', FoldersController::class)->except(['index']);
-                                    Route::get('/folders/change-order/{folder}/{action}', [FoldersController::class, 'changeOrder'])
+                                    Route::get('/folders/change-order/{folder}/{direction}', [FoldersController::class, 'changeOrder'])
+                                        ->where('direction', 'up|down')
                                         ->name('folders.change-order');
                                     Route::resource('games', GamesController::class)->except(['index']);
-                                    Route::get('/games/change-order/{game}/{action}', [GamesController::class, 'changeOrder'])
+                                    Route::get('/games/change-order/{game}/{direction}', [GamesController::class, 'changeOrder'])
+                                        ->where('direction', 'up|down')
                                         ->name('games.change-order');
                                 }
                             );

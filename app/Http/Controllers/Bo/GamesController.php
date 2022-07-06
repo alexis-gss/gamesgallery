@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateChangeOrderRequest;
 use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
 use App\Models\Folder;
+use App\Traits\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
 use Illuminate\Http\Response;
 
 class GamesController extends Controller
 {
+    use ChangesModelOrder;
     use HasPicture;
 
     /**
@@ -113,36 +114,6 @@ class GamesController extends Controller
         }
 
         return redirect()->route('bo.games.index')->with('success', trans('Successful deletion !'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param UpdateChangeOrderRequest $request
-     * @param Game                     $game
-     * @return Response
-     */
-    public function changeOrder(UpdateChangeOrderRequest $request, Game $game)
-    {
-        if ($request->validated()['action'] === 'up') {
-            $tmp         = Game::where('order', '<', $game->order)
-                ->orderBy('order', 'DESC')->first();
-            $newOrder    = $tmp->order;
-            $tmp->order  = $game->order;
-            $game->order = $newOrder;
-        } elseif ($request->validated()['action'] === 'down') {
-            $tmp         = Game::where('order', '>', $game->order)
-                ->orderBy('order', 'ASC')->first();
-            $newOrder    = $tmp->order;
-            $tmp->order  = $game->order;
-            $game->order = $newOrder;
-        } else {
-            return redirect()->route('bo.games.index');
-        }
-        $tmp->save();
-        $game->save();
-
-        return back();
     }
 
     /**

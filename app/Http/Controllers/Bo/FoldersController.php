@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateChangeOrderRequest;
 use App\Http\Requests\StoreFolderRequest;
 use App\Models\Folder;
 use App\Traits\Controllers\HasPicture;
+use App\Traits\ChangesModelOrder;
 use Illuminate\Http\Response;
 
 class FoldersController extends Controller
 {
+    use ChangesModelOrder;
     use HasPicture;
 
     /**
@@ -95,36 +96,6 @@ class FoldersController extends Controller
         }
 
         return redirect()->route('bo.folders.index')->with('success', trans('Successful deletion'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param UpdateChangeOrderRequest $request
-     * @param Folder                   $folder
-     * @return Response
-     */
-    public function changeOrder(UpdateChangeOrderRequest $request, Folder $folder)
-    {
-        if ($request->validated()['action'] === 'up') {
-            $tmp           = Folder::where('order', '<', $folder->order)
-                ->orderBy('order', 'DESC')->first();
-            $newOrder      = $tmp->order;
-            $tmp->order    = $folder->order;
-            $folder->order = $newOrder;
-        } elseif ($request->validated()['action'] === 'down') {
-            $tmp           = Folder::where('order', '>', $folder->order)
-                ->orderBy('order', 'ASC')->first();
-            $newOrder      = $tmp->order;
-            $tmp->order    = $folder->order;
-            $folder->order = $newOrder;
-        } else {
-            return redirect()->route('bo.folders.index');
-        }
-        $tmp->save();
-        $folder->save();
-
-        return back();
     }
 
     /**

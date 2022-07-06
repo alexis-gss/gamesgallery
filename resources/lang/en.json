@@ -41,5 +41,7 @@
     "Identification": "Identification",
     "Type_name_game": "Type the name of the game",
     "Type_name_folder": "Type the name of the folder",
-    "Return_list": "Return to the list"
+    "Return_list": "Return to the list",
+    "Order_changed": "The order has been changed !",
+    "Order_not_changed": "The order could not be changed !"
 }

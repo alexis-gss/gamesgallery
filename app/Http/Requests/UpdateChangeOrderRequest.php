@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\ChangeOrder;
-use Kwaadpepper\Enum\Rules\EnumIsValidRule;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,11 +14,19 @@ class UpdateChangeOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->merge([
-            'action' => $this->action
-        ]);
-
         return auth()->check() && Gate::allowIf('isAdmin');
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'direction' => $this->direction === 'up' ? true : false
+        ]);
     }
 
     /**
@@ -31,10 +37,7 @@ class UpdateChangeOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'action' => [
-                'required',
-                new EnumIsValidRule(ChangeOrder::class)
-            ],
+            'direction' => 'required|boolean',
         ];
     }
 }

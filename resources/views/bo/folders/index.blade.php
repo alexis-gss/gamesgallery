@@ -35,21 +35,21 @@
                             @if ($loop->count > 1)
                                 <td class="w-10">
                                     @if ($loop->first)
-                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'action' => 'down']) }}"
+                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none px-3" title="{{ __('Down') }}">
                                             ↓
                                         </a>
                                     @elseif($loop->last)
-                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'action' => 'up']) }}"
+                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'up']) }}"
                                             class="btn-link text-decoration-none px-3" title="{{ __('Up') }}">
                                             ↑
                                         </a>
                                     @else
-                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'action' => 'up']) }}"
+                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'up']) }}"
                                             class="btn-link text-decoration-none px-3" title="{{ __('Up') }}">
                                             ↑
                                         </a>
-                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'action' => 'down']) }}"
+                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none px-3" title="{{ __('Down') }}">
                                             ↓
                                         </a>
