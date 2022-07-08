@@ -33,12 +33,16 @@
                 @foreach ($games as $game)
                     <tr>
                         <td class="w-25">{{ $game->name }}</td>
-                        <td class="w-25">
+                        <td class="w-25 text-secondary">
                             @if (isset($game->folder_id))
-                                <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
-                                    title="{{ __('Show_folder') }}">
+                                @can('isAdmin')
+                                    <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
+                                        title="{{ __('Show_folder') }}">
+                                    @endcan
                                     {{ $game->folder->name }}
-                                </a>
+                                    @can('isAdmin')
+                                    </a>
+                                @endcan
                             @else
                                 No associated folder
                             @endif
