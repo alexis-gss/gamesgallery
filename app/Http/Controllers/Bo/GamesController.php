@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
 use App\Models\Folder;
-use App\Traits\ChangesModelOrder;
+use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
-use Illuminate\Http\Response;
 
 class GamesController extends Controller
 {
@@ -18,9 +17,9 @@ class GamesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View
     {
         $games = Game::orderBy('order', 'ASC')->get();
 
@@ -30,10 +29,10 @@ class GamesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Game $game
-     * @return Response
+     * @param App\Models\Game $game
+     * @return \Illuminate\Contracts\View\View
      */
-    public function create(Game $game)
+    public function create(Game $game): \Illuminate\Contracts\View\View
     {
         $folders = Folder::orderBy('order', 'ASC')->get();
 
@@ -43,17 +42,17 @@ class GamesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreGameRequest $request
-     * @return Response
+     * @param \App\Http\Requests\StoreGameRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreGameRequest $request)
+    public function store(StoreGameRequest $request): \Illuminate\Http\RedirectResponse
     {
         $game = new Game($request->validated());
         // Check if a folder is associated.
         if ($game->folder_id === "0") {
             $game->folder_id = null;
         }
-        $game->pictures_alt = "Image of " . $game->name . "'s game";
+        $game->pictures_alt = "Image of the " . $game->name . " game";
         $game->slug         = str_slug($game->name);
         $game->order        = $this->getLastOrder();
         $this->storePictures($request, $game);
@@ -65,10 +64,10 @@ class GamesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Game $game
-     * @return Response
+     * @param App\Models\Game $game
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit(Game $game)
+    public function edit(Game $game): \Illuminate\Contracts\View\View
     {
         $folders = Folder::orderBy('order', 'ASC')->get();
 
@@ -78,11 +77,11 @@ class GamesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param StoreGameRequest $request
-     * @param Game             $game
-     * @return Response
+     * @param \App\Http\Requests\StoreGameRequest $request
+     * @param \App\Models\Game                    $game
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreGameRequest $request, Game $game)
+    public function update(StoreGameRequest $request, Game $game): \Illuminate\Http\RedirectResponse
     {
         // Save new images.
         $game->fill($request->validated());
@@ -93,6 +92,7 @@ class GamesController extends Controller
         $game->pictures_alt = "Image of the " . $game->name . " game";
         $game->slug         = str_slug($game->name);
         $this->storePictures($request, $game);
+
         if (!$game->saveOrFail()) {
             return redirect()->route('bo.games.edit', $game->id)
                 ->with('error', trans(__('Modification_failed')));
@@ -104,26 +104,26 @@ class GamesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Game $game
-     * @return Response
+     * @param App\Models\Game $game
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Game $game)
+    public function destroy(Game $game): \Illuminate\Http\RedirectResponse
     {
         if (!$game->delete()) {
             return redirect()->route('bo.games.index')->with('error', trans('Suppression failed !'));
         }
-
         return redirect()->route('bo.games.index')->with('success', trans('Successful deletion !'));
     }
 
     /**
      * Get by order the last element of the list.
      *
-     * @return Response
+     * @return integer
      */
-    private function getLastOrder()
+    private function getLastOrder(): int
     {
         $order = Game::select('order')->orderBy('order', 'DESC')->first();
+
         if ($order === null) {
             return 1;
         }

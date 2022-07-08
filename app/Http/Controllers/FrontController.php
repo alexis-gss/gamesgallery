@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use Illuminate\Contracts\View\View;
 
 class FrontController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return View
+     * @return Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View
     {
-        $games = Game::orderBy('order', 'ASC')->get();
+        $games = self::sortGamesArray();
+
         return view('front.home', compact('games'));
     }
 
@@ -22,13 +22,36 @@ class FrontController extends Controller
      * Show the application dashboard.
      *
      * @param string $slug
-     * @return View
+     * @return Illuminate\Contracts\View\View
      */
-    public function show(string $slug)
+    public function show(string $slug): \Illuminate\Contracts\View\View
     {
-        $games = Game::orderBy('order', 'ASC')->get();
+        $games = self::sortGamesArray();
         $game  = Game::where('slug', $slug)->firstOrFail();
 
         return view('front.games.show', ['game' => $game], compact('games'));
+    }
+
+    /**
+     * Created a table sorted alphabetically and by folder.
+     *
+     * @return array
+     */
+    public function sortGamesArray(): array
+    {
+        $array = [];
+        $query = Game::orderBy('slug', 'ASC')->get();
+        foreach ($query as $game) {
+            if (!is_null($game->folder_id)) {
+                if (isset($array[$game->folder->name])) {
+                    array_push($array[$game->folder->name], $game);
+                } else {
+                    $array = array_merge($array, [$game->folder->name => [$game]]);
+                }
+            } else {
+                $array = array_merge($array, [$game->name => [$game]]);
+            }
+        }
+        return $array;
     }
 }
