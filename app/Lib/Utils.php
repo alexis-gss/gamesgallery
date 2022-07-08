@@ -21,10 +21,9 @@ class Utils
      */
     public static function storeImage(Model $model, $image): string
     {
-        $table = $model->getTable();
         if (\is_object($image) and $image instanceof \Illuminate\Http\UploadedFile) {
             /** @var \Illuminate\Http\UploadedFile $image */
-            $newPath = self::prepareMoveFile($table, $image->getClientOriginalName());
+            $newPath = self::prepareMoveFile($image->getClientOriginalName(), $model->slug);
             $newPath = str_replace(storage_path('app'), '', $newPath);
             $image->storePubliclyAs(
                 pathinfo($newPath, \PATHINFO_DIRNAME),
@@ -34,7 +33,7 @@ class Utils
         }
         if (\is_object($image) and $image instanceof \SplFileInfo) {
             /** @var \SplFileInfo $image */
-            $newPath = self::prepareMoveFile($table, $image->getBaseName());
+            $newPath = self::prepareMoveFile($image->getBaseName(), $model->slug);
             if (!File::copy($image->getRealPath(), $newPath)) {
                 throw new \ErrorException(sprintf(
                     'Failed to copy file %s to %s',
@@ -49,11 +48,11 @@ class Utils
     /**
      * Prepare storage path and return the image full path
      *
-     * @param string $table    Model table name.
      * @param string $filename The basename for the file.
+     * @param string $slug     The slug of the game.
      * @return string
      */
-    private static function prepareMoveFile(string $table, string $filename): string
+    private static function prepareMoveFile(string $filename, string $slug): string
     {
         // * Security filter + beautifier
         $filename = self::sanitizeFileName($filename);
@@ -62,7 +61,7 @@ class Utils
         // * Slugify filename
         $ext        = \pathinfo($filename, \PATHINFO_EXTENSION);
         $filename   = Str::slug(\pathinfo($filename, \PATHINFO_FILENAME)) . (\strlen($ext) ? ".{$ext}" : '');
-        $pathFolder = \storage_path(sprintf('app/public/images/%s', $table));
+        $pathFolder = \storage_path(sprintf('app/public/images/%s', $slug));
         if (!File::exists($pathFolder)) {
             File::makeDirectory($pathFolder, 0755, true);
         }
