@@ -14,7 +14,6 @@
         "joedixon/laravel-translation": "^1.1",
         "kwaadpepper/enum": "^2.1",
         "kwaadpepper/exception-handler": "^0.0.9",
-        "kwaadpepper/refresh-sitemap": "^0.0.1",
         "laravel/framework": "^8.75",
         "laravel/helpers": "^1.5",
         "laravel/sanctum": "^2.11",

@@ -3,7 +3,6 @@
 /public/css/*
 /public/fonts/*
 /public/storage
-/public/sitemap.xml
 /storage/*.key
 /storage/inco/*.*
 /storage/eleveur/*.*

@@ -4,7 +4,6 @@ use App\Http\Controllers\Bo\BackController;
 use App\Http\Controllers\Bo\GamesController;
 use App\Http\Controllers\Bo\FoldersController;
 use App\Http\Controllers\FrontController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
