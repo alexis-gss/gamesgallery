@@ -10,6 +10,15 @@
                 <span class="float-center text-danger">{{ $error }}</span>
             @endforeach
         @endif
+        <form action="{{ route('bo.games.search') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-row">
+            @csrf
+            <input class="form-control" type="text" title="{{ __('Search_game') }}"
+                placeholder="{{ __('Search_game') }}" id="filter" name="filter"
+                value="{{ old('filter', $filter ?? '') }}">
+            <button class="btn btn-primary mx-2" title="{{ __('Apply_filter') }}">{{ __('Filtered') }}</button>
+            <a class="btn btn-info" title="{{ __('Remove_filter') }}"
+                href="{{ route('bo.games.index') }}">{{ __('No_filter') }}</a>
+        </form>
         @can('isAdmin')
             <a href="{{ route('bo.games.create') }}" class="btn btn-primary float-right"
                 title="{{ __('Create_new_game') }}">{{ __('Create_a_game') }}</a>

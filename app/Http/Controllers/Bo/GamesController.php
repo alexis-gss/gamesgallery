@@ -8,6 +8,7 @@ use App\Models\Game;
 use App\Models\Folder;
 use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
+use Illuminate\Http\Request;
 
 class GamesController extends Controller
 {
@@ -21,9 +22,25 @@ class GamesController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $games = Game::orderBy('order', 'ASC')->get();
+        $games = Game::orderBy('order', 'ASC')->paginate(12);
 
         return view('bo.games.index', compact('games'));
+    }
+
+    /**
+     * Show only game(s) which corresponds to the filter.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function search(Request $request): \Illuminate\Contracts\View\View
+    {
+        $filter = $request->filter;
+        $games  = Game::where('name', 'LIKE', '%' . $filter . '%')
+            ->orderBy('order', 'ASC')
+            ->paginate(12);
+
+        return view('bo.games.index', compact('games', 'filter'));
     }
 
     /**

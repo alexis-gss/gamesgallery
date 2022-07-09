@@ -43,5 +43,11 @@
     "Type_name_folder": "Type the name of the folder",
     "Return_list": "Return to the list",
     "Order_changed": "The order has been changed !",
-    "Order_not_changed": "The order could not be changed !"
+    "Order_not_changed": "The order could not be changed !",
+    "Search_game": "Search a game",
+    "Search_folder": "Search a folder",
+    "Apply_filter": "Apply a filter",
+    "Remove_filter": "Remove the filter",
+    "No_filter": "X",
+    "Filtered": "Filtered"
 }

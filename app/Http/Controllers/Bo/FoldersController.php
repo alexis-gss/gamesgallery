@@ -7,6 +7,7 @@ use App\Http\Requests\StoreFolderRequest;
 use App\Models\Folder;
 use App\Traits\Controllers\HasPicture;
 use App\Traits\Models\ChangesModelOrder;
+use Illuminate\Http\Request;
 
 class FoldersController extends Controller
 {
@@ -20,9 +21,25 @@ class FoldersController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $folders = Folder::orderBy('order', 'ASC')->get();
+        $folders = Folder::orderBy('order', 'ASC')->paginate(12);
 
         return view('bo.folders.index', compact('folders'));
+    }
+
+    /**
+     * Show only folder(s) which corresponds to the filter.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function search(Request $request): \Illuminate\Contracts\View\View
+    {
+        $filter = $request->filter;
+        $games  = Folder::where('name', 'LIKE', '%' . $filter . '%')
+            ->orderBy('order', 'ASC')
+            ->paginate(12);
+
+        return view('bo.games.index', compact('games', 'filter'));
     }
 
     /**
