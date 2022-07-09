@@ -58,7 +58,7 @@
                             @endif
                             <td class="w-10 px-0 ta-end">
                                 <a href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
-                                    class="btn btn-sm btn-primary mx-2"
+                                    class="btn btn-sm btn-primary mx-1"
                                     title="{{ __('Edit_folder') }}">{{ __('Edit') }}</a>
                                 <form action="{{ route('bo.folders.destroy', $folder->id) }}" method="POST"
                                     class="d-inline">
@@ -79,4 +79,5 @@
             </tr>
         @endif
     </table>
+    {!! $folders->links() !!}
 @endsection

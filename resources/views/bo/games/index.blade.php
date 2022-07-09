@@ -101,4 +101,5 @@
             </tr>
         @endif
     </table>
+    {!! $games->links() !!}
 @endsection
