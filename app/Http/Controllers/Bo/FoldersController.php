@@ -34,12 +34,12 @@ class FoldersController extends Controller
      */
     public function search(Request $request): \Illuminate\Contracts\View\View
     {
-        $filter = $request->filter;
-        $games  = Folder::where('name', 'LIKE', '%' . $filter . '%')
+        $filter  = $request->filter;
+        $folders = Folder::where('name', 'LIKE', '%' . $filter . '%')
             ->orderBy('order', 'ASC')
             ->paginate(12);
 
-        return view('bo.games.index', compact('games', 'filter'));
+        return view('bo.folders.index', compact('folders', 'filter'));
     }
 
     /**

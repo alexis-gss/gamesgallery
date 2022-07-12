@@ -17,7 +17,8 @@
                 <input class="form-control" type="text" title="{{ __('Search_game') }}"
                     placeholder="{{ __('Search_game') }}" id="filter" name="filter"
                     value="{{ old('filter', $filter ?? '') }}">
-                <button class="btn btn-primary mx-2" title="{{ __('Apply_filter') }}">{{ __('Filtered') }}</button>
+                <button class="btn btn-primary mx-2" type="submit"
+                    title="{{ __('Apply_filter') }}">{{ __('Filtered') }}</button>
                 <a class="btn btn-info" title="{{ __('Remove_filter') }}"
                     href="{{ route('bo.games.index') }}">{{ __('No_filter') }}</a>
             </form>
