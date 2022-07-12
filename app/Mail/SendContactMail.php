@@ -2,7 +2,7 @@
 
 /**
  * Sender pour le contact
- * 
+ *
  * @category Description
  * @package  Category
  * @author   Name <email@email.com>
@@ -20,7 +20,7 @@ use Illuminate\Queue\SerializesModels;
 
 /**
  * Undocumented class
- * 
+ *
  * @category Description
  * @package  Category
  * @author   Name <email@email.com>
@@ -66,7 +66,8 @@ class SendContactMail extends Mailable
         $this->joinFileIfProvided();
 
         return $this->subject(
-            "Contact - " . config('app.name', 'Prim\'s') . " - " . $data->topic)
+            "Contact - " . config('app.name', 'Prim\'s') . " - " . $data->topic
+        )
             ->from($data->email)
             ->view('emails.send-contact', compact('data'));
     }

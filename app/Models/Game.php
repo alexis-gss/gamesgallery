@@ -19,7 +19,7 @@ class Game extends Model
     ];
 
     /**
-     * The attributes that should be cast
+     * The attributes that should be cast.
      *
      * @var array
      */
@@ -38,7 +38,7 @@ class Game extends Model
     }
 
     /**
-     * Actions on update/delete Game model.
+     * The "booted" method of the model.
      *
      * @return void
      */

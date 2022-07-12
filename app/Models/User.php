@@ -16,7 +16,7 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * Cast the property to an enum
+     * Cast the property to an enum.
      *
      * @var array
      */
@@ -25,9 +25,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are fillable.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $fillable = [
         'name',
@@ -39,7 +39,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -49,14 +49,14 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
     /**
-     * Hash password
+     * The "booted" method of the model.
      *
      * @return void
      */
