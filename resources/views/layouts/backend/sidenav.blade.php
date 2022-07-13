@@ -7,7 +7,7 @@
                         <a class="nav-link py-0 p-0 pb-1 mb-1 border-bottom"
                             href="{{ route('bo.home') }}">{{ __('Home') }}</a>
                         {{-- GAMES --}}
-                        <h6 class="pb-1 mb-1 mt-3 text-dark border-bottom">{{ __('Games') }}</h6>
+                        <h6 class="pb-1 mb-1 mt-3 text-dark border-bottom fw-bold">{{ __('Games') }}</h6>
                         @can('isAdmin')
                             <a class="nav-link py-0 px-0 mx-4"
                                 href="{{ route('bo.games.create') }}">{{ __('Add_game') }}</a>
