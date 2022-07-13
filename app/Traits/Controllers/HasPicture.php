@@ -15,7 +15,7 @@ trait HasPicture
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
-    private function storePicture(Request $request, Model $model)
+    private function storePicture(Request $request, Model $model): void
     {
         $model->picture = Utils::storeImage($model, $request->picture);
     }
@@ -26,7 +26,7 @@ trait HasPicture
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
-    private function storePictures(Request $request, Model $model)
+    private function storePictures(Request $request, Model $model): void
     {
         if (is_array($request->pictures)) {
             $model->pictures = [];

@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
         |--------------------------------------------------------------------------
         | Package driver
@@ -11,6 +12,7 @@ return [
         | Supported: "file", "database"
         |
     */
+
     'driver' => 'file',
 
     /*
@@ -22,6 +24,7 @@ return [
         | configuration here to configure the routes with your preferred group options.
         |
     */
+
     'route_group_config' => [
         'middleware' => [
             'web',
@@ -38,6 +41,7 @@ return [
         | when finding missing translations.
         |
     */
+
     'translation_methods' => ['trans', '__'],
 
     /*
@@ -49,9 +53,8 @@ return [
         | looking for missing translations.
         |
     */
+
     'scan_paths' => [
-        // app_path(),
-        // resource_path().'\views\back',
         resource_path() . '\views\front',
         resource_path() . '\views\layouts\frontend',
     ],
@@ -64,6 +67,7 @@ return [
         | Define the URL used to access the language management too.
         |
     */
+
     'ui_url' => 'bo/languages',
 
     /*
@@ -74,6 +78,7 @@ return [
         | Define the settings for the database driver here.
         |
     */
+
     'database' => [
 
         'connection' => '',

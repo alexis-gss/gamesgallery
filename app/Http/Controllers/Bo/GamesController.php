@@ -48,6 +48,7 @@ class GamesController extends Controller
      *
      * @param App\Models\Game $game
      * @return \Illuminate\Contracts\View\View
+     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
@@ -83,6 +84,7 @@ class GamesController extends Controller
      *
      * @param App\Models\Game $game
      * @return \Illuminate\Contracts\View\View
+     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {

@@ -19,7 +19,7 @@ class FrontController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show a specific game.
      *
      * @param string $slug
      * @return Illuminate\Contracts\View\View

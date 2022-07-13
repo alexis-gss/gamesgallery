@@ -12,7 +12,7 @@ class UpdateChangeOrderRequest extends FormRequest
      *
      * @return boolean
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return auth()->check() && Gate::allowIf('isAdmin');
     }
@@ -22,7 +22,7 @@ class UpdateChangeOrderRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'direction' => $this->direction === 'up' ? true : false
@@ -34,7 +34,7 @@ class UpdateChangeOrderRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'direction' => 'required|boolean',

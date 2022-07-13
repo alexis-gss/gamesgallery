@@ -26,6 +26,7 @@ class UserCreate extends Command
      * Create a new command instance.
      *
      * @return void
+     * @ignore phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
      */
     public function __construct()
     {
@@ -37,7 +38,7 @@ class UserCreate extends Command
      *
      * @return integer
      */
-    public function handle()
+    public function handle(): int
     {
         $user           = new User();
         $user->name     = $this->ask('Name ?', 'Visitor');

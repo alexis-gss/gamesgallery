@@ -47,6 +47,7 @@ class FoldersController extends Controller
      *
      * @param \App\Models\Folder $folder
      * @return \Illuminate\Contracts\View\View
+     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function create(Folder $folder): \Illuminate\Contracts\View\View
     {
@@ -73,6 +74,7 @@ class FoldersController extends Controller
      *
      * @param \App\Models\Folder $folder
      * @return \Illuminate\Contracts\View\View
+     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function edit(Folder $folder): \Illuminate\Contracts\View\View
     {

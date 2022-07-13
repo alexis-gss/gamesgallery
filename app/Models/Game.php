@@ -30,9 +30,9 @@ class Game extends Model
     /**
      * Get the Folder that owns the Game.
      *
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function folder()
+    public function folder(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Folder::class);
     }
@@ -42,7 +42,7 @@ class Game extends Model
      *
      * @return void
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
@@ -61,7 +61,7 @@ class Game extends Model
      * @param Model $game
      * @return void
      */
-    private static function updateImages(Model $game)
+    private static function updateImages(Model $game): void
     {
         if (
             $game->getOriginal('pictures') and

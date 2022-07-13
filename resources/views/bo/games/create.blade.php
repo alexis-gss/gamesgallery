@@ -4,7 +4,6 @@
 
 @section('content')
     <form action="{{ route('bo.games.store') }}" method="POST" enctype="multipart/form-data">
-        @method('PUT')
         @csrf
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
             <h1 class="h2 m-0 fw-bold">

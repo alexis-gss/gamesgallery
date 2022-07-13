@@ -12,7 +12,7 @@ class StoreFolderRequest extends FormRequest
      *
      * @return boolean
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return auth()->check() && Gate::allowIf('isAdmin');
     }
@@ -22,7 +22,7 @@ class StoreFolderRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|max:255'
@@ -34,7 +34,7 @@ class StoreFolderRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

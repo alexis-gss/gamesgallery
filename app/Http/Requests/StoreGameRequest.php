@@ -12,7 +12,7 @@ class StoreGameRequest extends FormRequest
      *
      * @return boolean
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return auth()->check() && Gate::allowIf('isAdmin');
     }
@@ -22,7 +22,7 @@ class StoreGameRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'folder_id' => 'required|nullable',

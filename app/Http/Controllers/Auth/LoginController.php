@@ -41,9 +41,9 @@ class LoginController extends Controller
     /**
      * Logout trait
      *
-     * @return resource The page to redirect to
+     * @return \Illuminate\Http\RedirectResponse
      */
-    protected function logout()
+    protected function logout(): \Illuminate\Http\RedirectResponse
     {
         Auth::logout();
 

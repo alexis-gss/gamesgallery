@@ -18,9 +18,9 @@ class Folder extends Model
     /**
      * Get Games for the Range.
      *
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function games()
+    public function games(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Game::class);
     }

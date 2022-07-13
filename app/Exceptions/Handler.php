@@ -19,8 +19,9 @@ class Handler extends ExceptionHandler
      *
      * @param \Throwable $e
      * @return void
+     * @ignore phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
      */
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         parent::report($e);
     }

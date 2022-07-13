@@ -43,16 +43,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -60,7 +50,7 @@ class User extends Authenticatable
      *
      * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         static::creating(function (User $user) {
             if (Hash::needsRehash($user->password)) {
