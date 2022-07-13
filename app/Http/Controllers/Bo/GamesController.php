@@ -114,10 +114,10 @@ class GamesController extends Controller
 
         if (!$game->saveOrFail()) {
             return redirect()->route('bo.games.edit', $game->id)
-                ->with('error', trans(__('Modification_failed')));
+                ->with('error', trans(__('modification.modification_failed')));
         }
         return redirect()->route('bo.games.edit', $game->id)
-            ->with('success', trans(__('Changes_saved')));
+            ->with('success', trans(__('modification.changes_saved')));
     }
 
     /**

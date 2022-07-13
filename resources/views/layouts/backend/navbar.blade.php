@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('homepage') }}" target="_blank" title="{{ __('Access_website') }}">
+        <a class="navbar-brand" href="{{ route('homepage') }}" target="_blank"
+            title="{{ __('navbar.access_website') }}">
             @if (auth()->user()->site ?? false)
-                {{ __('Site') }} : <b class="text-primary">{{ ucwords(auth()->user()->site->name) }}</b>
+                {{ __('navbar.site') }} : <b class="text-primary">{{ ucwords(auth()->user()->site->name) }}</b>
             @else
                 {{ config('app.name', 'Laravel') }}
             @endif
@@ -16,7 +17,7 @@
                 <ul class="navbar-nav ms-auto my-2 my-lg-0 mt-0 mb-0 navbar-nav-scroll px-4"
                     style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <span class="nav-link text-info">{{ __('Role') }} : {{ auth()->user()->role }}</span>
+                        <span class="nav-link text-info">{{ __('navbar.role') }} : {{ auth()->user()->role }}</span>
                     </li>
                     <li class="nav-item">
                         <span class="nav-link text-success px-0">{{ auth()->user()->name }}</span>
@@ -24,7 +25,8 @@
                 </ul>
                 <form action="{{ route('bo.logout') }}" method="POST">
                     @csrf
-                    <button class="btn btn-primary" title="{{ __('To_disconnect') }}">{{ __('Disconnect') }}</button>
+                    <button class="btn btn-primary"
+                        title="{{ __('navbar.to_disconnect') }}">{{ __('navbar.disconnect') }}</button>
                 </form>
             </div>
         @endauth

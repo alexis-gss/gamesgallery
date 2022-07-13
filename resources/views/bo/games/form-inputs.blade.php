@@ -1,12 +1,13 @@
 <div>
-    <h2 class="fs-4 fw-bold mt-2 mb-0">{{ __('Organization') }}</h2>
+    <h2 class="fs-4 fw-bold mt-2 mb-0">{{ __('form.organization') }}</h2>
 </div>
 
 <div class="form-group d-flex flex-column">
-    <label for="folder_id">{{ __('Folder_associated') }}*</label>
-    <select class="form-select w-fit" id="folder_id" name="folder_id" title="{{ __('Select_folder') }}" role="button">
+    <label for="folder_id">{{ __('form.folder_associated') }}*</label>
+    <select class="form-select w-fit" id="folder_id" name="folder_id" title="{{ __('form.select_folder') }}"
+        role="button">
         <option value="0" @if ($game->folder_id === '0') selected @endif>
-            ---- No associated folder ----
+            ---- {{ __('form.no_associated_folder') }} ----
         </option>
         @foreach ($folders as $folder)
             <option value="{{ $folder->id }}" @if ($folder->id === $game->folder_id) selected @endif>
@@ -17,25 +18,25 @@
 </div>
 
 <div>
-    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('Identification') }}</p>
+    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('form.identification') }}</p>
 </div>
 <div class="form-group">
-    <label for="name">{{ __('Name') }}*</label>
+    <label for="name">{{ __('form.name') }}*</label>
     <input type="text" id="name" name="name" class="form-control w-22"
-        placeholder="{{ __('Type_name_game') }}*" value="{{ old('name', $game->name ?? '') }}"
-        title="{{ __('Type_name_game') }}" required>
+        placeholder="{{ __('form.type_name_game') }}*" value="{{ old('name', $game->name ?? '') }}"
+        title="{{ __('form.type_name_game') }}" required>
     @include('bo.modules.input-error', ['inputName' => 'name'])
 </div>
 
 <div>
-    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('Visuals') }}</p>
+    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('form.visuals') }}</p>
 </div>
 <div class="form-group">
-    <label for="pictures">{{ __('Images') }}
+    <label for="pictures">{{ __('form.images') }}
         <small class="text-muted"> - JPG</small>
     </label>
     <input type="file" id="pictures" name="pictures[]" accept="image/jpg" class="form-control mb-1 w-22"
-        title="{{ __('Select_images') }}" multiple>
+        title="{{ __('form.select_images') }}" multiple>
     <div class="preview w-fit position-relative">
         @if ($game->pictures !== null)
             @foreach ($game->pictures as $key => $picture)
@@ -47,7 +48,7 @@
                 @endif
             @endforeach
         @else
-            No related images
+            {{ __('form.no_related_images') }}
         @endif
     </div>
     @include('bo.modules.input-error', ['inputName' => 'picture'])

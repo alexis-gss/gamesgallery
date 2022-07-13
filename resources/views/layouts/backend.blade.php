@@ -10,9 +10,11 @@
     <div id="app">
         @include('layouts.backend.navbar')
         <div class="container-fluid">
-            <div class="row">
-                @include('bo.modules.message')
-            </div>
+            @auth
+                <div class="row">
+                    @include('bo.modules.message')
+                </div>
+            @endauth
             <div class="row d-flex flex-row">
                 @auth
                     @include('layouts.backend.sidenav')
