@@ -10,16 +10,19 @@
                 <span class="float-center text-danger">{{ $error }}</span>
             @endforeach
         @endif
-        <form action="{{ route('bo.games.search') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-row">
-            @csrf
-            <input class="form-control" type="text" title="{{ __('filter.search_game') }}"
-                placeholder="{{ __('filter.search_game') }}" id="filter" name="filter"
-                value="{{ old('filter', $filter ?? '') }}">
-            <button class="btn btn-primary mx-2" type="submit"
-                title="{{ __('filter.apply_filter') }}">{{ __('filter.filtered') }}</button>
-            <a class="btn btn-info" title="{{ __('filter.remove_filter') }}"
-                href="{{ route('bo.games.index') }}">{{ __('filter.no_filter') }}</a>
-        </form>
+        @if (count($games) > 1 || Route::is('bo.games.search'))
+            <form action="{{ route('bo.games.search') }}" method="POST" enctype="multipart/form-data"
+                class="d-flex flex-row">
+                @csrf
+                <input class="form-control" type="text" title="{{ __('filter.search_game') }}"
+                    placeholder="{{ __('filter.search_game') }}" id="filter" name="filter"
+                    value="{{ old('filter', $filter ?? '') }}">
+                <button class="btn btn-primary mx-2" type="submit"
+                    title="{{ __('filter.apply_filter') }}">{{ __('filter.filtered') }}</button>
+                <a class="btn btn-info" title="{{ __('filter.remove_filter') }}"
+                    href="{{ route('bo.games.index') }}">{{ __('filter.no_filter') }}</a>
+            </form>
+        @endif
         @can('isAdmin')
             <a href="{{ route('bo.games.create') }}" class="btn btn-primary float-right"
                 title="{{ __('list.create_new_game') }}">{{ __('list.create_a_game') }}</a>
