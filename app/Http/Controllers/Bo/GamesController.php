@@ -104,10 +104,6 @@ class GamesController extends Controller
     {
         // Save new images.
         $game->fill($request->validated());
-        // Check if a folder is associated.
-        if ($game->folder_id === "0") {
-            $game->folder_id = null;
-        }
         $game->pictures_alt = "Image of the " . $game->name . " game";
         $game->slug         = str_slug($game->name);
         $this->storePictures($request, $game);

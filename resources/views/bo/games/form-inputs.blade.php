@@ -6,7 +6,7 @@
     <label for="folder_id">{{ __('form.folder_associated') }}*</label>
     <select class="form-select w-fit" id="folder_id" name="folder_id" title="{{ __('form.select_folder') }}"
         role="button">
-        <option value="0" @if ($game->folder_id === '0') selected @endif>
+        <option value="" @if (isset($game->folder_id)) selected @endif>
             ---- {{ __('form.no_associated_folder') }} ----
         </option>
         @foreach ($folders as $folder)

@@ -25,7 +25,7 @@ class StoreGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'folder_id' => 'required|nullable',
+            'folder_id' => 'sometimes|nullable',
             'name' => 'required',
             'pictures' => 'sometimes|array',
             'pictures.*' => 'required|image|mimes:jpg'
