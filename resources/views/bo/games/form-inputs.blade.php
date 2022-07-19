@@ -1,5 +1,5 @@
 <div>
-    <h2 class="fs-4 fw-bold mt-2 mb-0">{{ __('form.organization') }}</h2>
+    <p class="fw-bold mt-2 mb-0">{{ __('form.organization') }}</p>
 </div>
 
 <div class="form-group d-flex flex-column">
@@ -18,7 +18,7 @@
 </div>
 
 <div>
-    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('form.identification') }}</p>
+    <p class="fw-bold mt-2 mb-0">{{ __('form.identification') }}</p>
 </div>
 <div class="form-group">
     <label for="name">{{ __('form.name') }}*</label>
@@ -29,7 +29,7 @@
 </div>
 
 <div>
-    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('form.visuals') }}</p>
+    <p class="fw-bold mt-2 mb-0">{{ __('form.visuals') }}</p>
 </div>
 <div class="form-group">
     <label for="pictures">{{ __('form.images') }}

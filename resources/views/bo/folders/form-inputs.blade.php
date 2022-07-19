@@ -1,5 +1,5 @@
 <div>
-    <p class="fs-4 fw-bold mt-2 mb-0">{{ __('form.identification') }}</p>
+    <p class="fw-bold mt-2 mb-0">{{ __('form.identification') }}</p>
 </div>
 <div class="form-group">
     <label for="name">{{ __('form.name') }}*</label>
