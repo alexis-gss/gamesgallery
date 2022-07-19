@@ -76,7 +76,8 @@ class GamesController extends Controller
         $this->storePictures($request, $game);
         $game->saveOrFail();
 
-        return redirect()->route('bo.games.edit', $game->id)->with('success', 'Game created !');
+        return redirect()->route('bo.games.edit', $game->id)
+            ->with('success', trans(__('modification.game_created')));
     }
 
     /**
@@ -127,9 +128,11 @@ class GamesController extends Controller
         $this->deleteFolder($game);
 
         if (!$game->delete()) {
-            return redirect()->route('bo.games.index')->with('error', trans('Suppression failed !'));
+            return redirect()->route('bo.games.index')
+                ->with('error', trans('modification.deletion_failed'));
         }
-        return redirect()->route('bo.games.index')->with('success', trans('Successful deletion !'));
+        return redirect()->route('bo.games.index')
+            ->with('success', trans('modification.deletion_successful'));
     }
 
     /**

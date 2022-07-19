@@ -66,7 +66,8 @@ class FoldersController extends Controller
         $folder->order = $this->getLastOrder();
         $folder->saveOrFail();
 
-        return redirect()->route('bo.folders.edit', $folder->id)->with('success', 'Folder created !');
+        return redirect()->route('bo.folders.edit', $folder->id)
+            ->with('success', trans(__('modification.folder_created')));
     }
 
     /**
@@ -108,10 +109,17 @@ class FoldersController extends Controller
      */
     public function destroy(Folder $folder): \Illuminate\Http\RedirectResponse
     {
-        if (!$folder->delete()) {
-            return redirect()->route('bo.folders.index')->with('error', trans('Suppression failed'));
+        if (count($folder->games) === 0) {
+            if (!$folder->delete()) {
+                return redirect()->route('bo.games.index')
+                    ->with('error', trans('modification.deletion_failed'));
+            }
+            return redirect()->route('bo.games.index')
+                ->with('success', trans('modification.deletion_successful'));
+        } else {
+            return redirect()->route('bo.folders.index')
+                ->with('error', trans('modification.deletion_associated'));
         }
-        return redirect()->route('bo.folders.index')->with('success', trans('Successful deletion'));
     }
 
     /**

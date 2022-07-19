@@ -12,5 +12,10 @@ return [
     'add_folder' => 'Add this folder',
     'save' => 'Save',
     'changes_saved' => 'Registered changes !',
-    'modification_failed' => 'Modification failed !'
+    'modification_failed' => 'Modification failed !',
+    'deletion_failed' => 'Failed deletion !',
+    'deletion_successful' => 'Successful deletion !',
+    'deletion_associated' => 'Games are still associated with this folder !',
+    'game_created' => 'Game created !',
+    'folder_created' => 'Folder created !'
 ];
