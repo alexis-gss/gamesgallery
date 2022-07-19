@@ -119,11 +119,13 @@ class GamesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param App\Models\Game $game
+     * @param \App\Models\Game $game
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Game $game): \Illuminate\Http\RedirectResponse
     {
+        $this->deleteFolder($game);
+
         if (!$game->delete()) {
             return redirect()->route('bo.games.index')->with('error', trans('Suppression failed !'));
         }

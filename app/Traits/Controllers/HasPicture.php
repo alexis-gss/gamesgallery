@@ -9,17 +9,6 @@ use Illuminate\Http\Request;
 trait HasPicture
 {
     /**
-     * Save Model Image
-     *
-     * @param \Illuminate\Http\Request            $request
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return void
-     */
-    private function storePicture(Request $request, Model $model): void
-    {
-        $model->picture = Utils::storeImage($model, $request->picture);
-    }
-    /**
      * Save Model Images
      *
      * @param \Illuminate\Http\Request            $request
@@ -35,5 +24,16 @@ trait HasPicture
                     return Utils::storeImage($model, $picture);
                 })->all();
         }
+    }
+
+    /**
+     * Delete the specified folder of images from storage.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
+    private function deleteFolder(Model $model): void
+    {
+        Utils::destroyFolder($model);
     }
 }

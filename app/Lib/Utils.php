@@ -12,6 +12,19 @@ use Illuminate\Support\Str;
 class Utils
 {
     /**
+     * Destroy folder.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
+    public static function destroyFolder(Model $model): void
+    {
+        $pathFolder = \storage_path(sprintf('app/public/images/%s', $model->slug));
+        if (File::exists($pathFolder)) {
+            File::deleteDirectory($pathFolder);
+        }
+    }
+    /**
      * Store an image of different types
      *
      * @param \Illuminate\Database\Eloquent\Model               $model
