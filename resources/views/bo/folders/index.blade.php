@@ -34,6 +34,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col" class="w-25">{{ __('list.name') }}</th>
+                    <th scope="col" class="w-25">{{ __('list.games_associated') }}</th>
                     @can('isAdmin')
                         @if (count($folders) > 1)
                             <th scope="col" class="w-10 px-4">{{ __('list.order') }}</th>
@@ -45,6 +46,7 @@
                 @foreach ($folders as $folder)
                     <tr>
                         <td class="w-25">{{ $folder->name }}</td>
+                        <td class="w-25">{{ count($folder->games) }}</td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
                                 <td class="w-10">

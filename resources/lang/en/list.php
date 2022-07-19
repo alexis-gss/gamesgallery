@@ -3,6 +3,7 @@
 return [
     'list' => 'List',
     'name' => 'Name',
+    'games_associated' => 'Games associated',
     'folder_associated' => 'Folder associated',
     'show_folder' => 'Show the folder associated',
     'images' => 'Images',
