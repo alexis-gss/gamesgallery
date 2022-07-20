@@ -96,12 +96,15 @@
                                 <a href="{{ route('bo.games.edit', ['game' => $game->id]) }}"
                                     class="btn btn-sm btn-primary mx-1"
                                     title="{{ __('list.edit_game') }}">{{ __('list.edit') }}</a>
-                                <form action="{{ route('bo.games.destroy', $game->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('bo.games.destroy', $game->id) }}" method="POST" class="d-inline"
+                                    onsubmit="popupDelete(event, 
+                                    '{{ __('list.are_you_sure') }}', 
+                                    '{{ __('list.data_lost', ['item' => $game->name]) }}', 
+                                    '{{ __('list.form_confirm') }}')">
                                     @method('DELETE')
                                     @csrf
                                     <input type="submit" class="btn btn-sm btn-danger" value="{{ __('list.delete') }}"
-                                        title="{{ __('list.delete_game') }}"
-                                        onclick="return confirm(`{{ __('list.are_you_sure') }}`)">
+                                        title="{{ __('list.delete_game') }}">
                                 </form>
                             </td>
                         @endcan

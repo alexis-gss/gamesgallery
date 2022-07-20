@@ -76,13 +76,15 @@
                                 <a href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
                                     class="btn btn-sm btn-primary mx-1"
                                     title="{{ __('list.edit_folder') }}">{{ __('list.edit') }}</a>
-                                <form action="{{ route('bo.folders.destroy', $folder->id) }}" method="POST"
-                                    class="d-inline">
+                                <form action="{{ route('bo.folders.destroy', $folder->id) }}" method="POST" class="d-inline"
+                                    onsubmit="popupDelete(event, 
+                                    '{{ __('list.are_you_sure') }}', 
+                                    '{{ __('list.data_lost', ['item' => $folder->name]) }}', 
+                                    '{{ __('list.form_confirm') }}')">
                                     @method('DELETE')
                                     @csrf
                                     <input type="submit" class="btn btn-sm btn-danger" value="{{ __('list.delete') }}"
-                                        title="{{ __('list.delete_folder') }}"
-                                        onclick="return confirm(`{{ __('list.are_you_sure') }}`)">
+                                        title="{{ __('list.delete_folder') }}">
                                 </form>
                             </td>
                         @endcan
