@@ -12,8 +12,6 @@ return [
     'order_not_changed' => 'The order could not be changed !',
     'up' => 'Up',
     'down' => 'Down',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
     'edit_game' => 'Edit this game',
     'edit_folder' => 'Edit this folder',
     'delete_game' => 'Delete this game',

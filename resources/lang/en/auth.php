@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Back-end connection form',
+    'title' => 'Back-office connection form',
     'login' => 'Login',
     'login_btn' => 'To login',
     'login_mail' => 'E-Mail address',

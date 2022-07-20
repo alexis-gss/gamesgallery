@@ -15,7 +15,7 @@
 .w-22 {
     width: 22rem !important;
 }
-.w-test {
+.w-2 {
     width: 2rem !important;
 }
 .preview {
@@ -29,4 +29,16 @@
 .pagination{
     float: right;
     margin: 0;
+}
+svg {
+    vertical-align: sub !important;
+}
+#filter {
+    a {
+        top: 0 !important;
+        left: -2.6rem !important;
+    }
+}
+.list_item:hover {
+    background-color: rgb(248, 249, 250) !important;
 }

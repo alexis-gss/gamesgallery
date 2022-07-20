@@ -10,7 +10,7 @@
             <h1 class="h2 m-0 fw-bold">
                 <a href="{{ route('bo.games.index') }}" class="h2 text-decoration-none m-0"
                     title="{{ __('modification.return_list') }}">←</a>
-                {{ __('modification.games') }}
+                {{ __('modification.game') }}
                 <small class="text-muted h4">{{ __('modification.edition') }}</small>
             </h1>
             <div class="btn-toolbar mb-2 mb-md-0">

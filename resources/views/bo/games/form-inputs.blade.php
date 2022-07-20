@@ -3,9 +3,8 @@
 </div>
 
 <div class="form-group d-flex flex-column">
-    <label for="folder_id">{{ __('form.folder_associated') }}*</label>
-    <select class="form-select w-fit" id="folder_id" name="folder_id" title="{{ __('form.select_folder') }}"
-        role="button">
+    <label for="folder_id">{{ __('form.folder_associated') }}</label>
+    <select class="form-select w-fit" id="folder_id" name="folder_id" title="{{ __('form.select_folder') }}" role="button">
         <option value="" @if (isset($game->folder_id)) selected @endif>
             ---- {{ __('form.no_associated_folder') }} ----
         </option>
