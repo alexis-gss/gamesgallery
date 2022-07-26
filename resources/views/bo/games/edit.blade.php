@@ -1,6 +1,8 @@
 @extends('layouts.backend')
 
-@section('title', __('modification.edition'))
+@section('title', __('meta.games_edition'))
+@section('description', __('meta.games_edition_desc'))
+@section('metaIndex', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.games.update', $game->id) }}" method="POST" enctype="multipart/form-data">

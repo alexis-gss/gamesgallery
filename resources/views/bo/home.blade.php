@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
-@section('title', 'Back office')
-@section('description', 'Page d\'accueil du Back office')
+@section('title', __('meta.back_office'))
+@section('description', __('meta.back_office_desc'))
 @section('metaIndex', 'noindex,nofollow')
 
 @section('content')

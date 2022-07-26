@@ -1,6 +1,8 @@
 @extends('layouts.backend')
 
-@section('title', __('Games'))
+@section('title', __('meta.all_games'))
+@section('description', __('meta.all_games_desc'))
+@section('metaIndex', 'noindex,nofollow')
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">

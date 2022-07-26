@@ -1,6 +1,8 @@
 @extends('layouts.backend')
 
-@section('title', __('modification.creation'))
+@section('title', __('meta.games_creation'))
+@section('description', __('meta.games_creation_desc'))
+@section('metaIndex', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.games.store') }}" method="POST" enctype="multipart/form-data">

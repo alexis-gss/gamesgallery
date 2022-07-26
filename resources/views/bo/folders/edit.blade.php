@@ -1,6 +1,8 @@
 @extends('layouts.backend')
 
-@section('title', __('modification.edition'))
+@section('title', __('meta.folders_edition'))
+@section('description', __('meta.folders_edition_desc'))
+@section('metaIndex', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.folders.update', $folder->id) }}" method="POST" enctype="multipart/form-data">
