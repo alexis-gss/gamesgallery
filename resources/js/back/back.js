@@ -1,1 +1,3 @@
-require('./sweetalert');
+import './tooltip';
+
+import './sweetalert';

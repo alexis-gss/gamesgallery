@@ -16,11 +16,12 @@
                 class="d-flex flex-row">
                 @csrf
                 <div class="position-relative">
-                    <input class="form-control" type="text" title="{{ __('filter.search_folder') }}"
-                        placeholder="{{ __('filter.search_folder') }}" id="filter" name="filter"
-                        value="{{ old('filter', $filter ?? '') }}">
+                    <input class="form-control" type="text" data-bs="tooltip" data-bs-placement="top"
+                        title="{{ __('filter.search_folder') }}" placeholder="{{ __('filter.search_folder') }}"
+                        id="filter" name="filter" value="{{ old('filter', $filter ?? '') }}">
                     <a class="btn position-absolute @if (Route::is('bo.folders.search')) visible @else invisible @endif"
-                        title="{{ __('filter.remove_filter') }}" href="{{ route('bo.folders.index') }}">
+                        data-bs="tooltip" data-bs-placement="top" title="{{ __('filter.remove_filter') }}"
+                        href="{{ route('bo.folders.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-x-lg" viewBox="0 0 16 16">
                             <path
@@ -28,7 +29,8 @@
                         </svg>
                     </a>
                 </div>
-                <button class="btn btn-primary" type="submit" title="{{ __('filter.apply_filter') }}">
+                <button class="btn btn-primary" type="submit" data-bs="tooltip" data-bs-placement="top"
+                    title="{{ __('filter.apply_filter') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-search" viewBox="0 0 16 16">
                         <path
@@ -38,8 +40,8 @@
             </form>
         @endif
         @can('isAdmin')
-            <a href="{{ route('bo.folders.create') }}" class="btn btn-primary float-right"
-                title="{{ __('list.create_new_folder') }}">{{ __('list.create_a_folder') }}</a>
+            <a href="{{ route('bo.folders.create') }}" class="btn btn-primary float-right" data-bs="tooltip"
+                data-bs-placement="top" title="{{ __('list.create_new_folder') }}">{{ __('list.create_a_folder') }}</a>
         @endcan
     </div>
     <table class="table">
@@ -65,7 +67,8 @@
                                 <td class="w-10">
                                     @if ($loop->first)
                                         <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'down']) }}"
-                                            class="btn-link text-decoration-none" title="{{ __('list.down') }}">
+                                            class="btn-link text-decoration-none" data-bs="tooltip" data-bs-placement="top"
+                                            title="{{ __('list.down') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd"
@@ -74,7 +77,8 @@
                                         </a>
                                     @elseif($loop->last)
                                         <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'up']) }}"
-                                            class="btn-link text-decoration-none" title="{{ __('list.up') }}">
+                                            class="btn-link text-decoration-none" data-bs="tooltip" data-bs-placement="top"
+                                            title="{{ __('list.up') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd"
@@ -83,7 +87,8 @@
                                         </a>
                                     @else
                                         <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'up']) }}"
-                                            class="btn-link text-decoration-none" title="{{ __('list.up') }}">
+                                            class="btn-link text-decoration-none" data-bs="tooltip" data-bs-placement="top"
+                                            title="{{ __('list.up') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd"
@@ -91,7 +96,8 @@
                                             </svg>
                                         </a>
                                         <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'down']) }}"
-                                            class="btn-link text-decoration-none" title="{{ __('list.down') }}">
+                                            class="btn-link text-decoration-none" data-bs="tooltip" data-bs-placement="top"
+                                            title="{{ __('list.down') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd"
@@ -103,7 +109,8 @@
                             @endif
                             <td class="w-10 px-0 ta-end">
                                 <a href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
-                                    class="btn btn-sm btn-primary mx-1" title="{{ __('list.edit_folder') }}">
+                                    class="btn btn-sm btn-primary mx-1" data-bs="tooltip" data-bs-placement="top"
+                                    title="{{ __('list.edit_folder') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                                         <path
@@ -118,8 +125,8 @@
                                     '{{ __('list.form_confirm') }}')">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        title="{{ __('list.delete_folder') }}">
+                                    <button type="submit" class="btn btn-sm btn-danger" data-bs="tooltip"
+                                        data-bs-placement="top" title="{{ __('list.delete_folder') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                             <path

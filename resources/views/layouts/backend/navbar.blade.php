@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('homepage') }}" target="_blank"
+        <a class="navbar-brand" href="{{ route('homepage') }}" target="_blank" data-bs="tooltip" data-bs-placement="bottom"
             title="{{ __('navbar.access_website') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
@@ -27,7 +27,7 @@
                 </ul>
                 <form action="{{ route('bo.logout') }}" method="POST">
                     @csrf
-                    <button class="btn btn-primary"
+                    <button class="btn btn-primary" data-bs="tooltip" data-bs-placement="bottom"
                         title="{{ __('navbar.to_disconnect') }}">{{ __('navbar.disconnect') }}</button>
                 </form>
             </div>
