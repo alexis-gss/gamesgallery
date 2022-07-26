@@ -38,7 +38,7 @@
     <input type="file" id="pictures" name="pictures[]" accept="image/jpg" class="form-control mb-1 w-22"
         data-bs="tooltip" data-bs-placement="top" title="{{ __('form.select_images') }}" multiple>
     <div class="preview w-fit position-relative">
-        @if ($game->pictures !== null)
+        @if ($game->pictures !== null && count($game->pictures) > 0)
             @foreach ($game->pictures as $key => $picture)
                 @if ($key < 4)
                     <img src="{{ asset($picture) }}" alt="{{ $game->pictures_alt }}" style="max-height: 100px;">

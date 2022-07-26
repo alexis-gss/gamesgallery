@@ -27,5 +27,4 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/back.js') }}" type="text/javascript"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 @stack('scripts')

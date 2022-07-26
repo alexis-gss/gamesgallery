@@ -111,10 +111,10 @@ class FoldersController extends Controller
     {
         if (count($folder->games) === 0) {
             if (!$folder->delete()) {
-                return redirect()->route('bo.games.index')
+                return redirect()->route('bo.folders.index')
                     ->with('error', trans('modification.deletion_failed'));
             }
-            return redirect()->route('bo.games.index')
+            return redirect()->route('bo.folders.index')
                 ->with('success', trans('modification.deletion_successful'));
         } else {
             return redirect()->route('bo.folders.index')

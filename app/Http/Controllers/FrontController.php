@@ -7,15 +7,16 @@ use App\Models\Game;
 class FrontController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the application homepage.
      *
      * @return Illuminate\Contracts\View\View
      */
     public function index(): \Illuminate\Contracts\View\View
     {
         $games = self::sortGamesArray();
+        $game  = Game::orderBy('slug', 'ASC')->first();
 
-        return view('front.home', compact('games'));
+        return view('front.games.show', ['game' => $game], compact('games'));
     }
 
     /**
