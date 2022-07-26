@@ -33,7 +33,9 @@
 </div>
 <div class="form-group">
     <label for="pictures">{{ __('form.images') }}
-        <small class="text-muted"> - JPG</small>
+        <small class="text-muted"> - {{ __('form.format') }} : {{ Config::get('images.format') }} -
+            {{ __('form.dimensions_max') }} :
+            {{ Config::get('images.maxwidth') }}/{{ Config::get('images.maxheight') }}px</small>
     </label>
     <input type="file" id="pictures" name="pictures[]" accept="image/jpg" class="form-control mb-1 w-22"
         data-bs="tooltip" data-bs-placement="top" title="{{ __('form.select_images') }}" multiple>

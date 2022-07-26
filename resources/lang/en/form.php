@@ -13,4 +13,6 @@ return [
     'folder_associated' => 'Folder associated',
     'no_associated_folder' => 'No associated folder',
     'select_folder' => 'Select the folder',
+    'format' => 'Format',
+    'dimensions_max' => 'Dimensions max.'
 ];

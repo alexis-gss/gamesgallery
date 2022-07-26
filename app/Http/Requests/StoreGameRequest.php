@@ -28,7 +28,9 @@ class StoreGameRequest extends FormRequest
             'folder_id' => 'sometimes|nullable',
             'name' => 'required',
             'pictures' => 'sometimes|array',
-            'pictures.*' => 'required|image|mimes:jpg'
+            'pictures.*' => 'required|mimes:' . config('images.format') .
+                '|dimensions:max_width=' . config('images.maxwidth') .
+                ',max_height=' . config('images.maxheight')
         ];
     }
 }
