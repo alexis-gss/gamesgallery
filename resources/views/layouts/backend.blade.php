@@ -6,26 +6,31 @@
     @stack('styles')
 </head>
 
-<body>
-    <div id="app">
-        @include('layouts.backend.navbar')
-        <div class="container-fluid">
+<body id="app">
+    <!-- Header -->
+    @include('layouts.backend.navbar')
+
+    <!-- Main -->
+    <section class="main container-fluid">
+        <div class="row d-flex flex-row">
             @auth
-                @include('bo.modules.message')
+                <!-- Navigation -->
+                @include('layouts.backend.sidenav')
             @endauth
-            <div class="row d-flex flex-row">
-                @auth
-                    @include('layouts.backend.sidenav')
-                @endauth
-                <main role="main" class="mt-2 mb-5 @auth col @endauth">
-                    @yield('content')
-                </main>
-            </div>
-            <div class="row">
-                @include('layouts.backend.footer')
-            </div>
+            <!-- Main content -->
+            <main role="main" class="mt-2 mb-5 @auth col @endauth">
+                @yield('content')
+            </main>
         </div>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    @include('layouts.backend.footer')
+
+    {{-- Show a message when an action is performed --}}
+    @auth
+        @include('bo.modules.message')
+    @endauth
 </body>
 
 </html>
