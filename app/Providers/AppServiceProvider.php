@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-        Paginator::useBootstrap();
+        Paginator::defaultView('bo.modules.pagination');
         URL::forceScheme('https');
 
         // Get data from composer.json.
