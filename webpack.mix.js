@@ -33,7 +33,6 @@ mix.options({
 });
 // mix Backend
 mix.js("resources/js/back/back.js", "public/js")
-    .vue()
     .sass('resources/sass/back/app.scss', 'public/css/back.css');
 // mix Frontend
 mix.js("resources/js/front/front.js", "public/js/front.js")
