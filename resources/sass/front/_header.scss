@@ -1,0 +1,97 @@
+header {
+    position: fixed;
+    top: 0;
+    left: $body-padding;
+    width: $header-width;
+    height: 100%;
+    @include flex(column, center, flex-start);
+    .search {
+        width: 100%;
+        padding-bottom: .5rem;
+        border-bottom: 2px solid var(--color-second);
+        @include flex(row, center, center);
+        input {
+            &[type=text] {
+                font-family: $font-family;
+                font-weight: $font-light;
+                font-size: $font-size;
+                width: calc(100% - 2rem);
+                height: 2rem;
+                padding: 0;
+                background: transparent;
+                border: none;
+                color: var(--color-third);
+                outline: none;
+            }
+        }
+        span {
+            width: 2rem;
+            cursor: pointer;
+            @include flex(row, center, center);
+        }
+    }
+    nav {
+        width: 100%;
+        height: calc(100% - 20rem);
+        padding: 1rem 0;
+        overflow-y: scroll;
+        @include flex(column, flex-start, flex-start);
+        a {
+            svg {
+                width: 0rem;
+                height: 1rem;
+            }
+            span {
+                transition: $transition-time;
+                @include visibility(0, hidden);
+            }
+            &:hover {
+                @include liActive();
+            }
+        }
+        .no-result {
+            margin: 0;
+            padding-left: 3px;
+            color: var(--color-second);
+        }
+        .nav_activated {
+            font-style: italic;
+            pointer-events: none;
+	        cursor: default;
+            @include liActive();
+        }
+    }
+    .btns {
+        width: 100%;
+        height: 4rem;
+        border-top: 2px solid var(--color-second);
+        @include flex(row, flex-start, center);
+        .btn_theme, .btn_connect, .btn_github {
+            width: 4rem;
+            height: 2rem;
+            margin: 0;
+            padding: 0;
+            &:hover svg {
+                fill: var(--color-second);
+            }
+        }
+        .btn_theme, .btn_connect {
+            border-right: 2px solid var(--color-second);
+        }
+        .btn_theme {
+            position: relative;
+            .theme_light, .theme_dark {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, 100%) rotate(45deg);
+                opacity: 0;
+                z-index: 1;
+            }
+            .theme_activated {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+    }
+}

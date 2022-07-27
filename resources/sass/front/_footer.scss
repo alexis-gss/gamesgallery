@@ -1,0 +1,15 @@
+footer {
+    width: calc(100% - $header-width);
+    margin-left: $header-width;
+    height: $footer-height;
+    @include flex(row, center, center);
+    .btn_top {
+        position: fixed;
+        right: 4vw;
+        bottom: 4vw;
+        transition: $transition-time;
+    }
+    p{
+        margin: 0;
+    }
+}

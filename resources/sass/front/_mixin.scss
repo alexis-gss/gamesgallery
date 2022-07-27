@@ -1,0 +1,20 @@
+@mixin flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+@mixin visibility($opacity, $visibility){
+  opacity: $opacity;
+  visibility: $visibility;
+}
+@mixin liActive(){
+  color: var(--color-second);
+  svg {
+      width: 1rem;
+      fill: var(--color-second);
+  }
+  span {
+      @include visibility(1, visible)
+  }
+}

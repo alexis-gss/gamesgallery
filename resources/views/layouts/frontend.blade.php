@@ -7,7 +7,13 @@
 </head>
 
 <body>
-    @yield('content')
+    <!-- Main content -->
+    <main>
+        @include('layouts.frontend.header')
+        @yield('content')
+    </main>
+
+    <!-- Footer -->
     @include('layouts.frontend.footer')
 
     <!-- Scripts -->
