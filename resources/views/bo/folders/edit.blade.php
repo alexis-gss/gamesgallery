@@ -22,4 +22,6 @@
         </div>
         @include('bo.folders.form-inputs')
     </form>
+
+    @include('bo.folders.table')
 @endsection

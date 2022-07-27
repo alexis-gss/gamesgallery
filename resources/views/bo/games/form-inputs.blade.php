@@ -1,9 +1,9 @@
 <div>
-    <p class="fw-bold mt-2 mb-0">{{ __('form.organization') }}</p>
+    <p class="fw-bold mt-2 mb-0 px-2">{{ __('form.organization') }}</p>
 </div>
 
 <div class="form-group d-flex flex-column">
-    <label for="folder_id">{{ __('form.folder_associated') }}</label>
+    <label class="px-2" for="folder_id">{{ __('form.folder_associated') }}</label>
     <select class="form-select w-fit" id="folder_id" name="folder_id" data-bs="tooltip" data-bs-placement="top"
         title="{{ __('form.select_folder') }}" role="button">
         <option value="" @if (isset($game->folder_id)) selected @endif>
@@ -18,10 +18,10 @@
 </div>
 
 <div>
-    <p class="fw-bold mt-2 mb-0">{{ __('form.identification') }}</p>
+    <p class="fw-bold mt-2 mb-0 px-2">{{ __('form.identification') }}</p>
 </div>
 <div class="form-group">
-    <label for="name">{{ __('form.name') }}*</label>
+    <label class="px-2" for="name">{{ __('form.name') }}*</label>
     <input type="text" id="name" name="name" class="form-control w-22"
         placeholder="{{ __('form.type_name_game') }}*" value="{{ old('name', $game->name ?? '') }}" data-bs="tooltip"
         data-bs-placement="top" title="{{ __('form.type_name_game') }}" required>
@@ -29,10 +29,10 @@
 </div>
 
 <div>
-    <p class="fw-bold mt-2 mb-0">{{ __('form.visuals') }}</p>
+    <p class="fw-bold mt-2 mb-0 px-2">{{ __('form.visuals') }}</p>
 </div>
 <div class="form-group">
-    <label for="pictures">{{ __('form.images') }}
+    <label class="px-2" for="pictures">{{ __('form.images') }}
         <small class="text-muted"> - {{ __('form.format') }} : {{ Config::get('images.format') }} -
             {{ __('form.dimensions_max') }} :
             {{ Config::get('images.maxwidth') }}/{{ Config::get('images.maxheight') }}px</small>
@@ -50,7 +50,9 @@
                 @endif
             @endforeach
         @else
-            {{ __('form.no_related_images') }}
+            <p class="px-2 m-0">
+                {{ __('form.no_related_images') }}
+            </p>
         @endif
     </div>
     @include('bo.modules.input-error', ['inputName' => 'picture'])
