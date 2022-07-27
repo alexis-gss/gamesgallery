@@ -36,21 +36,21 @@ Route::prefix('bo')
                                     Route::get('/games/change-order/{game}/{direction}', [GamesController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('games.change-order');
-                                    Route::resource('games', GamesController::class);
+                                    Route::resource('games', GamesController::class)->except('show');
 
                                     // phpcs:ignore Generic.Files.LineLength.TooLong
                                     Route::get('/folders/change-order/{folder}/{direction}', [FoldersController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('folders.change-order');
-                                    Route::resource('folders', FoldersController::class);
+                                    Route::resource('folders', FoldersController::class)->except('show');
                                 }
                             );
 
                         Route::get('/', [BackController::class, 'index'])->name('home');
                         Route::get('/games', [GamesController::class, 'index'])->name('games.index');
-                        Route::post('/games/search', [GamesController::class, 'search'])->name('games.search');
+                        Route::get('/games/search', [GamesController::class, 'index'])->name('games.search');
                         Route::get('/folders', [FoldersController::class, 'index'])->name('folders.index');
-                        Route::post('/folders/search', [FoldersController::class, 'search'])->name('folders.search');
+                        Route::get('/folders/search', [FoldersController::class, 'index'])->name('folders.search');
                     }
                 );
         }

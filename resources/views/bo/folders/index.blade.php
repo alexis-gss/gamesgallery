@@ -13,9 +13,8 @@
             @endforeach
         @endif
         @if (count($folders) > 1 || Route::is('bo.folders.search'))
-            <form action="{{ route('bo.folders.search') }}" method="POST" enctype="multipart/form-data" id="filter"
+            <form action="{{ route('bo.folders.search') }}" method="GET" enctype="multipart/form-data" id="filter"
                 class="d-flex flex-row">
-                @csrf
                 <input class="form-control" type="text" data-bs="tooltip" data-bs-placement="top"
                     title="{{ __('filter.search_folder') }}" placeholder="{{ __('filter.search_folder') }}" id="filter"
                     name="filter" value="{{ old('filter', $filter ?? '') }}">

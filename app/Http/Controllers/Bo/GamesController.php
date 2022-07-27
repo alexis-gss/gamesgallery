@@ -18,27 +18,20 @@ class GamesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function index(): \Illuminate\Contracts\View\View
-    {
-        $games = Game::orderBy('order', 'ASC')->paginate(12);
-
-        return view('bo.games.index', compact('games'));
-    }
-
-    /**
-     * Show only game(s) which corresponds to the filter.
-     *
      * @param \Illuminate\Http\Request $request
+     * @param string                   $filter
      * @return \Illuminate\Contracts\View\View
      */
-    public function search(Request $request): \Illuminate\Contracts\View\View
+    public function index(Request $request, string $filter = null): \Illuminate\Contracts\View\View
     {
-        $filter = $request->filter;
-        $games  = Game::where('name', 'LIKE', '%' . $filter . '%')
-            ->orderBy('order', 'ASC')
-            ->paginate(12);
+        if (isset($request->filter) && !empty($request->filter)) {
+            $filter = $request->filter;
+            $games  = Game::where('name', 'LIKE', '%' . $filter . '%')
+                ->orderBy('order', 'ASC')
+                ->paginate(12);
+        } else {
+            $games = Game::orderBy('order', 'ASC')->paginate(12);
+        }
 
         return view('bo.games.index', compact('games', 'filter'));
     }
@@ -128,10 +121,10 @@ class GamesController extends Controller
         $this->deleteFolder($game);
 
         if (!$game->delete()) {
-            return redirect()->route('bo.games.index')
+            return redirect()->back()
                 ->with('error', trans('modification.deletion_failed'));
         }
-        return redirect()->route('bo.games.index')
+        return redirect()->back()
             ->with('success', trans('modification.deletion_successful'));
     }
 
