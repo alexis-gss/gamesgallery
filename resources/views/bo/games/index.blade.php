@@ -16,20 +16,9 @@
             <form action="{{ route('bo.games.search') }}" method="POST" enctype="multipart/form-data" id="filter"
                 class="d-flex flex-row">
                 @csrf
-                <div class="position-relative">
-                    <input class="form-control" type="text" data-bs="tooltip" data-bs-placement="top"
-                        title="{{ __('filter.search_game') }}" placeholder="{{ __('filter.search_game') }}" id="filter"
-                        name="filter" value="{{ old('filter', $filter ?? '') }}">
-                    <a class="btn position-absolute @if (Route::is('bo.games.search')) visible @else invisible @endif"
-                        data-bs="tooltip" data-bs-placement="top" title="{{ __('filter.remove_filter') }}"
-                        href="{{ route('bo.games.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-x-lg" viewBox="0 0 16 16">
-                            <path
-                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                        </svg>
-                    </a>
-                </div>
+                <input class="form-control" type="text" data-bs="tooltip" data-bs-placement="top"
+                    title="{{ __('filter.search_game') }}" placeholder="{{ __('filter.search_game') }}" id="filter"
+                    name="filter" value="{{ old('filter', $filter ?? '') }}" required>
                 <button class="btn btn-primary" type="submit" data-bs="tooltip" data-bs-placement="top"
                     title="{{ __('filter.apply_filter') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -38,6 +27,14 @@
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                 </button>
+                <a class="btn btn-danger @if (Route::is('bo.games.search')) visible @else invisible @endif" data-bs="tooltip"
+                    data-bs-placement="top" title="{{ __('filter.remove_filter') }}" href="{{ route('bo.games.index') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </a>
             </form>
         @endif
         @can('isAdmin')

@@ -24,7 +24,7 @@ return [
     'create_new_game' => 'Create a new game',
     'create_new_folder' => 'Create a new folder',
     'games' => 'Games',
-    'no_games_found' => 'No folder found',
+    'no_games_found' => 'No game found',
     'folders' => 'Folders',
     'no_associated_folder' => 'No associated folder',
     'no_folders_found' => 'No folder found'
