@@ -26,7 +26,7 @@ class StoreGameRequest extends FormRequest
     {
         return [
             'folder_id' => 'sometimes|nullable',
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'pictures' => 'sometimes|array',
             'pictures.*' => 'required|mimes:' . config('images.format') .
                 '|dimensions:max_width=' . config('images.maxwidth') .
