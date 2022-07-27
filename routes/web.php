@@ -36,13 +36,13 @@ Route::prefix('bo')
                                     Route::get('/games/change-order/{game}/{direction}', [GamesController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('games.change-order');
-                                    Route::resource('games', GamesController::class)->except(['index']);
+                                    Route::resource('games', GamesController::class);
 
                                     // phpcs:ignore Generic.Files.LineLength.TooLong
                                     Route::get('/folders/change-order/{folder}/{direction}', [FoldersController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('folders.change-order');
-                                    Route::resource('folders', FoldersController::class)->except(['index']);
+                                    Route::resource('folders', FoldersController::class);
                                 }
                             );
 
