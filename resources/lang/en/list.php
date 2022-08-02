@@ -19,8 +19,6 @@ return [
     'are_you_sure' => 'Are you sure ?',
     'data_lost' => 'All data from <strong>:item</strong> will be lost.',
     'form_confirm' => 'Yes, delete it !',
-    'create_a_game' => 'Create a game',
-    'create_a_folder' => 'Create a folder',
     'create_new_game' => 'Create a new game',
     'create_new_folder' => 'Create a new folder',
     'games' => 'Games',

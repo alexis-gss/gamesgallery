@@ -33,7 +33,7 @@ class GamesController extends Controller
             $games = Game::orderBy('order', 'ASC')->paginate(12);
         }
 
-        return view('bo.games.index', compact('games', 'filter'));
+        return view('back.games.index', compact('games', 'filter'));
     }
 
     /**
@@ -47,7 +47,7 @@ class GamesController extends Controller
     {
         $folders = Folder::orderBy('order', 'ASC')->get();
 
-        return view('bo.games.create', compact('game', 'folders'));
+        return view('back.games.create', compact('game', 'folders'));
     }
 
     /**
@@ -84,7 +84,7 @@ class GamesController extends Controller
     {
         $folders = Folder::orderBy('order', 'ASC')->get();
 
-        return view('bo.games.edit', compact('game', 'folders'));
+        return view('back.games.edit', compact('game', 'folders'));
     }
 
     /**

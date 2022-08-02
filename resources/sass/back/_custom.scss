@@ -5,18 +5,9 @@
     width: fit-content !important;
     width: -moz-fit-content !important;
     width: -webkit-fit-content !important;
-    @media screen and (max-width: 770px) {
-        width: 100% !important;
-    }
-}
-.w-10 {
-    width: 10% !important;
 }
 .w-22 {
     width: 22rem !important;
-}
-.w-2 {
-    width: 2rem !important;
 }
 .preview {
     .filtre {
@@ -34,15 +25,12 @@
 svg {
     vertical-align: sub !important;
 }
-#filter {
-    a {
-        top: 0 !important;
-        left: -2.6rem !important;
-    }
-}
 .list_item:hover {
     background-color: rgb(248, 249, 250) !important;
 }
-.main {
-    min-height: calc(100vh - 96px);
+main {
+    min-height: calc(100vh - $header-height - $footer-height);
+}
+.container-fluid {
+    margin-top: $header-height;
 }

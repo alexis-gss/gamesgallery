@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'general_informations' => 'General informations',
     'identification' => 'Identification',
     'name' => 'Name',
     'type_name_folder' => 'Type the name of the folder',
@@ -8,6 +9,7 @@ return [
     'organization' => 'Organization',
     'visuals' => 'Visuals',
     'images' => 'Images',
+    'preview' => 'Preview',
     'select_images' => 'Select images',
     'no_related_images' => 'No related images',
     'folder_associated' => 'Folder associated',

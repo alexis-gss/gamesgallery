@@ -8,29 +8,22 @@
 
 <body id="app">
     <!-- Header -->
-    @include('layouts.backend.navbar')
+    @include('layouts.backend.header')
 
-    <!-- Main -->
-    <section class="main container-fluid">
-        <div class="row d-flex flex-row">
-            @auth
-                <!-- Navigation -->
-                @include('layouts.backend.sidenav')
-            @endauth
-            <!-- Main content -->
-            <main role="main" class="mt-2 mb-5 @auth col @endauth">
+    <main class="container-fluid">
+        {{-- Show a message when an action is performed --}}
+        @auth
+            @include('back.modules.message')
+        @endauth
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 py-4">
                 @yield('content')
-            </main>
+            </div>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     @include('layouts.backend.footer')
-
-    {{-- Show a message when an action is performed --}}
-    @auth
-        @include('bo.modules.message')
-    @endauth
 </body>
 
 </html>

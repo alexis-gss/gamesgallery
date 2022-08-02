@@ -18,6 +18,6 @@ class BackController extends Controller
         $parsedown = new Parsedown();
         $changelog = $parsedown->text(File::get(\app_path('../CHANGELOG.md')));
 
-        return view('bo.home', ['changelog' => $changelog]);
+        return view('back.home', ['changelog' => $changelog]);
     }
 }

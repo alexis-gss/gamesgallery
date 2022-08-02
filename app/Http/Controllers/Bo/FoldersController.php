@@ -32,7 +32,7 @@ class FoldersController extends Controller
             $folders = Folder::orderBy('order', 'ASC')->paginate(12);
         }
 
-        return view('bo.folders.index', compact('folders', 'filter'));
+        return view('back.folders.index', compact('folders', 'filter'));
     }
 
     /**
@@ -44,7 +44,7 @@ class FoldersController extends Controller
      */
     public function create(Folder $folder): \Illuminate\Contracts\View\View
     {
-        return view('bo.folders.create', compact('folder'));
+        return view('back.folders.create', compact('folder'));
     }
 
     /**
@@ -59,7 +59,7 @@ class FoldersController extends Controller
         $folder->order = $this->getLastOrder();
         $folder->saveOrFail();
 
-        return redirect()->route('bo.folders.edit', $folder->id)
+        return redirect()->route('back.folders.edit', $folder->id)
             ->with('success', trans(__('modification.folder_created')));
     }
 
@@ -72,7 +72,7 @@ class FoldersController extends Controller
      */
     public function edit(Folder $folder): \Illuminate\Contracts\View\View
     {
-        return view('bo.folders.edit', compact('folder'));
+        return view('back.folders.edit', compact('folder'));
     }
 
     /**
@@ -87,10 +87,10 @@ class FoldersController extends Controller
         $folder->fill($request->validated());
 
         if (!$folder->saveOrFail()) {
-            return redirect()->route('bo.folders.edit', $folder->id)
+            return redirect()->route('back.folders.edit', $folder->id)
                 ->with('error', trans(__('modification.modification_failed')));
         }
-        return redirect()->route('bo.folders.edit', $folder->id)
+        return redirect()->route('back.folders.edit', $folder->id)
             ->with('success', trans(__('modification.changes_saved')));
     }
 

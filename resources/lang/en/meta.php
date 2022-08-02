@@ -14,5 +14,7 @@ return [
     'folders_creation' => 'Creating a folder',
     'folders_creation_desc' => 'Form for entering information to create a new folder',
     'folders_edition' => 'Editing a folder',
-    'folders_edition_desc' => 'Editing information of a previously saved folder'
+    'folders_edition_desc' => 'Editing information of a previously saved folder',
+    'connexion' => 'Connexion',
+    'connexion_desc' => 'Form for connexion to the back office'
 ];

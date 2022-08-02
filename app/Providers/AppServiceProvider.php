@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
@@ -19,9 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191);
-        Paginator::defaultView('bo.modules.pagination');
         URL::forceScheme('https');
+
+        // Set default view of the paginator.
+        Paginator::defaultView('back.modules.pagination');
 
         // Get data from composer.json.
         $appInfos = Cache::remember('composer', 360, function () {
