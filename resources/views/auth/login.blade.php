@@ -1,4 +1,7 @@
 @extends('layouts.backend')
+@section('title', __('meta.back_office_login'))
+@section('description', __('meta.back_office_login_desc'))
+@section('metaIndex', 'noindex,nofollow')
 
 @section('title', __('meta.connexion'))
 @section('description', __('meta.connexion_desc'))

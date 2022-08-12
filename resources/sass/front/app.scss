@@ -1,8 +1,13 @@
-// Variables
 @import 'variables';
 
-// Variables
-@import 'global';
+@import 'mixin';
 
-// Footer
+@import 'utils';
+
+@import 'general';
+
+@import 'header';
+
+@import 'article';
+
 @import 'footer';
