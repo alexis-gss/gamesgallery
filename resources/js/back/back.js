@@ -1,0 +1,3 @@
+import './tooltip';
+
+import './sweetalert';

@@ -1,0 +1,27 @@
+article {
+    width: calc(100% - $header-width);
+    min-height: calc(100vh - $footer-height);
+    margin-left: $header-width;
+    padding-left: 1rem;
+    text-align: center;
+    .wrapper {
+        @include flex(row, space-around, center);
+        flex-wrap: wrap;
+        .content {
+            width: 49.5%;
+            height: fit-content;
+            transform: translateY(50%);
+            -webkit-transform: translateY(50%);
+            opacity: 0;
+            transition: $transition-time;
+            img {
+                width: 100%;
+            }
+        }
+        .contentInView {
+            opacity: 1;
+            transform: translateY(0px);
+            -webkit-transform: translateY(0px);
+        }
+    }
+}

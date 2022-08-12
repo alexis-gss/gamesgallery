@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateGamesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('games', function (Blueprint $table) {
+            $table->id();
+            $table->index('folder_id')->unsigned();
+            $table->foreignId('folder_id')->nullable()->references('id')->on('folders');
+            $table->text('name');
+            $table->text('slug');
+            $table->text('pictures')->nullable();
+            $table->text('pictures_alt');
+            $table->integer('order')->default(1);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('games');
+    }
+}

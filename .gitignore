@@ -1,1 +1,14 @@
-/img
+/public/assets/*
+/public/js/*
+/public/css/*
+/public/fonts/*
+/public/storage
+/storage/*.key
+/storage/inco/*.*
+/storage/eleveur/*.*
+/storage/app/public/*.*
+/storage/debugbar
+node_modules
+vendor
+.env
+mix-manifest.json
