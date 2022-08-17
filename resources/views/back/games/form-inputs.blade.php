@@ -10,7 +10,7 @@
                         <option value="" @if (isset($game->folder_id)) selected @endif>
                             {{ __('form.no_associated_folder') }}
                         </option>
-                        @foreach ($folders as $folder)
+                        @foreach ($globalFolders as $folder)
                             <option value="{{ $folder->id }}" @if ($folder->id === $game->folder_id) selected @endif>
                                 {{ $folder->name }}</option>
                         @endforeach

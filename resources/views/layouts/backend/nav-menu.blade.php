@@ -7,12 +7,12 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @if (request()->routeIs('bo.games.*')) active @endif" href="{{ route('bo.games.index') }}"
-                title="{{ __('sidenav.title_list_games') }}" data-bs="tooltip"
+                title="{{ __('sidenav.title_list_games', ['games' => count($globalGames)]) }}" data-bs="tooltip"
                 data-bs-placement="bottom">{{ __('sidenav.list_games') }}</a>
         </li>
         <li class="nav-item">
             <a class="nav-link @if (request()->routeIs('bo.folders.*')) active @endif" href="{{ route('bo.folders.index') }}"
-                title="{{ __('sidenav.title_list_folders') }}" data-bs="tooltip"
+                title="{{ __('sidenav.title_list_folders', ['folders' => count($globalFolders)]) }}" data-bs="tooltip"
                 data-bs-placement="bottom">{{ __('sidenav.list_folders') }}</a>
         </li>
     </ul>

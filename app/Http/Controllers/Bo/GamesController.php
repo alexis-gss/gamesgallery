@@ -45,9 +45,7 @@ class GamesController extends Controller
      */
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
-        $folders = Folder::orderBy('order', 'ASC')->get();
-
-        return view('back.games.create', compact('game', 'folders'));
+        return view('back.games.create', compact('game'));
     }
 
     /**
@@ -82,9 +80,7 @@ class GamesController extends Controller
      */
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {
-        $folders = Folder::orderBy('order', 'ASC')->get();
-
-        return view('back.games.edit', compact('game', 'folders'));
+        return view('back.games.edit', compact('game'));
     }
 
     /**
