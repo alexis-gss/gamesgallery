@@ -14,8 +14,11 @@ article {
             -webkit-transform: translateY(50%);
             opacity: 0;
             transition: $transition-time;
-            img {
+            .image {
                 width: 100%;
+                &-soon {
+                    border: 2px solid var(--color-second);
+                }
             }
         }
         .contentInView {

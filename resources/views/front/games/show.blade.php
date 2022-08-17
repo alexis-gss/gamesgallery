@@ -15,6 +15,11 @@
                                 alt="{{ $game->pictures_alt }}">
                         </div>
                     @endforeach
+                @else
+                    <div class="content">
+                        <img class="image image-soon" src="{{ asset('assets/images/load.gif') }}"
+                            data-src="{{ asset('assets/images/visual-soon.png') }}" alt="{{ __('show.default_image') }}">
+                    </div>
                 @endif
             </div>
         @endif
