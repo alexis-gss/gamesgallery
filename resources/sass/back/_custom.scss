@@ -10,6 +10,8 @@
     width: 22rem !important;
 }
 .preview {
+    display: block ruby;
+    overflow: hidden;
     .filtre {
         width: 5rem;
         top: 0;

@@ -15,6 +15,6 @@ return [
     'folder_associated' => 'Folder associated',
     'no_associated_folder' => 'No associated folder',
     'select_folder' => 'Select the folder',
-    'format' => 'Format',
-    'dimensions_max' => 'Dimensions max.'
+    'images_rules' => 'Format : .:format - Width : :widthpx - Height : :heightpx.',
+    'actual_images' => 'Actual :number image(s).'
 ];

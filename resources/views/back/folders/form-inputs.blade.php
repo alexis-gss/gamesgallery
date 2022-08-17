@@ -7,7 +7,7 @@
                     <label for="name" class="col-form-label"><b>{{ __('form.identification') }}</b></label>
                     <input type="text" id="name" name="name" class="form-control w-22"
                         placeholder="{{ __('form.type_name_folder') }}*" value="{{ old('name', $folder->name ?? '') }}"
-                        data-bs="tooltip" data-bs-placement="top" title="{{ __('form.type_name_folder') }}" required>
+                        data-bs="tooltip" data-bs-placement="top" title="{{ __('form.type_name_folder') }}">
                     <small class="text-muted">{{ __('form.name') }}*</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
