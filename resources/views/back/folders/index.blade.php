@@ -23,11 +23,7 @@
             </a>
         @endcan
     </div>
-    @include('back.modules.search', [
-        'routeSearch' => 'bo.folders.search',
-        'routeIndex' => 'bo.folders.index',
-        'target' => $folders,
-    ])
+    @include('back.modules.search', ['routeIndex' => 'bo.folders.index'])
     <table class="table">
         @if (count($folders) > 0)
             <thead class="thead-dark">

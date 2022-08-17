@@ -23,11 +23,7 @@
             </a>
         @endcan
     </div>
-    @include('back.modules.search', [
-        'routeSearch' => 'bo.games.search',
-        'routeIndex' => 'bo.games.index',
-        'target' => $games,
-    ])
+    @include('back.modules.search', ['routeIndex' => 'bo.games.index'])
     <table class="table">
         @if (count($games) > 0)
             <thead class="thead-dark">

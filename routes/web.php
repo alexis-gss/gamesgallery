@@ -48,9 +48,7 @@ Route::prefix('bo')
 
                         Route::get('/', [BackController::class, 'index'])->name('home');
                         Route::get('/games', [GamesController::class, 'index'])->name('games.index');
-                        Route::get('/games/search', [GamesController::class, 'index'])->name('games.search');
                         Route::get('/folders', [FoldersController::class, 'index'])->name('folders.index');
-                        Route::get('/folders/search', [FoldersController::class, 'index'])->name('folders.search');
                     }
                 );
         }
