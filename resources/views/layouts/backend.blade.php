@@ -10,6 +10,7 @@
     <!-- Header -->
     @include('layouts.backend.header')
 
+    <!-- Main content -->
     <main class="container-fluid">
         {{-- Show a message when an action is performed --}}
         @auth

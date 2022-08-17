@@ -59,7 +59,7 @@ class FoldersController extends Controller
         $folder->order = $this->getLastOrder();
         $folder->saveOrFail();
 
-        return redirect()->route('back.folders.edit', $folder->id)
+        return redirect()->route('bo.folders.edit', $folder->id)
             ->with('success', trans(__('modification.folder_created')));
     }
 
