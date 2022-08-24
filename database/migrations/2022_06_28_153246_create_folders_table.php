@@ -15,8 +15,8 @@ class CreateFoldersTable extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->integer('order')->default(1);
+            $table->text('name')->comment('Name of the folder.');
+            $table->integer('order')->default(1)->comment('Order of this folder, which is 1 by default.');
             $table->timestamps();
         });
     }

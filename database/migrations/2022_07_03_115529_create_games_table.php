@@ -17,10 +17,10 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->index('folder_id')->unsigned();
             $table->foreignId('folder_id')->nullable()->references('id')->on('folders');
-            $table->text('name');
-            $table->text('slug');
-            $table->text('pictures')->nullable();
-            $table->text('pictures_alt');
+            $table->text('name')->comment('Name of the game.');
+            $table->text('slug')->comment('Slugify of the name of the game.');
+            $table->text('pictures')->nullable()->comment('Json who contains pictures, it can be also null.');
+            $table->text('pictures_alt')->comment('Alt attribute of the images.');
             $table->integer('order')->default(1);
             $table->timestamps();
         });
