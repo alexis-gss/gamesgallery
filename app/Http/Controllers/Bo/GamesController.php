@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
-use App\Models\Folder;
 use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
 use Illuminate\Http\Request;
@@ -19,21 +18,32 @@ class GamesController extends Controller
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
+     * @param string                   $search
      * @param string                   $filter
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request, string $filter = null): \Illuminate\Contracts\View\View
-    {
-        if (isset($request->filter) && !empty($request->filter)) {
-            $filter = $request->filter;
-            $games  = Game::where('name', 'LIKE', '%' . $filter . '%')
-                ->orderBy('order', 'ASC')
-                ->paginate(12);
-        } else {
-            $games = Game::orderBy('order', 'ASC')->paginate(12);
-        }
+    public function index(
+        Request $request,
+        string $search = null,
+        string $filter = null
+    ): \Illuminate\Contracts\View\View {
+        $search = $request->search;
+        $filter = $request->filter;
+        $query  = Game::when($search, function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        })
+        ->when($filter, function ($query) use ($filter) {
+            if ($filter === "no_associated_folder") {
+                $query->whereNull('folder_id');
+            } elseif (strlen($filter) > 0) {
+                $query->where('folder_id', $filter);
+            }
+        });
 
-        return view('back.games.index', compact('games', 'filter'));
+        $games = $query->orderBy('order', 'ASC')
+        ->paginate(12);
+
+        return view('back.games.index', compact('games', 'search', 'filter'));
     }
 
     /**
@@ -58,9 +68,6 @@ class GamesController extends Controller
     {
         $game = new Game($request->validated());
         // Check if a folder is associated.
-        if ($game->folder_id === "0") {
-            $game->folder_id = null;
-        }
         $game->pictures_alt = "Image of the " . $game->name . " game";
         $game->slug         = str_slug($game->name);
         $game->order        = $this->getLastOrder();

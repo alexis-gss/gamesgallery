@@ -18,21 +18,21 @@ class FoldersController extends Controller
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param string                   $filter
+     * @param string                   $search
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request, string $filter = null): \Illuminate\Contracts\View\View
+    public function index(Request $request, string $search = null): \Illuminate\Contracts\View\View
     {
-        if (isset($request->filter) && !empty($request->filter)) {
-            $filter  = $request->filter;
-            $folders = Folder::where('name', 'LIKE', '%' . $filter . '%')
+        if (isset($request->search) && !empty($request->search)) {
+            $search  = $request->search;
+            $folders = Folder::where('name', 'LIKE', '%' . $search . '%')
                 ->orderBy('order', 'ASC')
                 ->paginate(12);
         } else {
             $folders = Folder::orderBy('order', 'ASC')->paginate(12);
         }
 
-        return view('back.folders.index', compact('folders', 'filter'));
+        return view('back.folders.index', compact('folders', 'search'));
     }
 
     /**

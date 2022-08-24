@@ -14,7 +14,8 @@ return [
     'no_related_images' => 'No related images',
     'folder_associated' => 'Folder associated',
     'no_associated_folder' => 'No associated folder',
-    'select_folder' => 'Select the folder',
+    'select_folder' => 'Select a folder',
+    'no_filter' => 'No folder selected',
     'images_rules' => 'Format : .:format - Width : :widthpx - Height : :heightpx.',
     'actual_images' => 'Actual :number image(s).'
 ];

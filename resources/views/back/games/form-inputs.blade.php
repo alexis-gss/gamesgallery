@@ -13,16 +13,7 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label"><b>{{ __('form.organization') }}</b></label>
-                    <select class="form-select" id="folder_id" name="folder_id" data-bs="tooltip"
-                        data-bs-placement="top" title="{{ __('form.select_folder') }}" role="button">
-                        <option value="" @if (isset($game->folder_id)) selected @endif>
-                            {{ __('form.no_associated_folder') }}
-                        </option>
-                        @foreach ($globalFolders as $folder)
-                            <option value="{{ $folder->id }}" @if ($folder->id === $game->folder_id) selected @endif>
-                                {{ $folder->name }}</option>
-                        @endforeach
-                    </select>
+                    @include('back.modules.select-folder', ['type' => 'folder_id', 'target' => $game->folder_id])
                     <small class="text-muted">{{ __('form.folder_associated') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'folder_id'])
                 </div>
