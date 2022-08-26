@@ -6,6 +6,7 @@ return [
     'games_associated' => 'Game(s) associated',
     'folder_associated' => 'Folder associated',
     'show_folder' => 'Show the folder associated',
+    'show_games' => 'Show games associated to this folder',
     'images' => 'Image(s)',
     'order' => 'Order',
     'order_changed' => 'The order has been changed !',

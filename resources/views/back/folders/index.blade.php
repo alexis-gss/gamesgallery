@@ -58,7 +58,11 @@
                 @foreach ($folders as $folder)
                     <tr class="list_item">
                         <td class="w-22">{{ $folder->name }}</td>
-                        <td>{{ count($folder->games) }}</td>
+                        <td>
+                            <a href="{{ route('bo.games.index', ['filter' => $folder->id]) }}" data-bs="tooltip"
+                                data-bs-placement="top" title="{{ __('list.show_games') }}"
+                                class="text-decoration-none">{{ count($folder->games) }}</a>
+                        </td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
                                 <td>
