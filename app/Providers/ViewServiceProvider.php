@@ -8,6 +8,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 
 class ViewServiceProvider extends ServiceProvider
@@ -31,9 +32,11 @@ class ViewServiceProvider extends ServiceProvider
         View::share('license', $appInfos->license);
 
         // Shares this data with all views.
-        $globalGames   = Game::orderBy('order', 'ASC')->get();
-        $globalFolders = Folder::orderBy('order', 'ASC')->get();
-        View::share('globalGames', $globalGames);
-        View::share('globalFolders', $globalFolders);
+        if (Schema::hasTable('games') and Schema::hasTable('folders')) {
+            $globalGames   = Game::orderBy('order', 'ASC')->get();
+            $globalFolders = Folder::orderBy('order', 'ASC')->get();
+            View::share('globalGames', $globalGames);
+            View::share('globalFolders', $globalFolders);
+        }
     }
 }
