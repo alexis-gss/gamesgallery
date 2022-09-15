@@ -1,9 +1,11 @@
-.d-none{
+.d-none {
     display: none;
 }
+
 .v-hidden {
     @include visibility(0, hidden);
 }
+
 .v-visible {
     @include visibility(1, visible);
 }

@@ -4,6 +4,7 @@
     --color-second: #949494;
     --color-third: #fff;
 }
+
 .light-theme {
     --color-first: #fff;
     --color-second: #949494;
@@ -11,7 +12,7 @@
 }
 
 // Fonts.
-$font-family: 'Antonio', sans-serif;
+$font-family: "Antonio", sans-serif;
 $font-light: 100;
 $font-heavy: 700;
 $font-size: 20px;
@@ -22,4 +23,4 @@ $header-width: 24rem;
 $footer-height: 10rem;
 
 // Others.
-$transition-time: .2s;
+$transition-time: 0.2s;

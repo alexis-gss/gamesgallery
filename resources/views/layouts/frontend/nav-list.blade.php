@@ -1,6 +1,6 @@
 @foreach ($folder as $item)
     <a href="{{ route('games.specific', $item->slug) }}"
-        class="game @if ($item->slug === $game->slug) nav_activated @endif"
+        class="game @if ($item->slug === $game->slug) nav-activated @endif"
         title="{{ __('nav.list_game', ['game' => $item->name]) }}">
         <svg>
             <path

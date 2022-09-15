@@ -1,20 +1,24 @@
 @mixin flex($direction, $justify, $align) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
 }
-@mixin visibility($opacity, $visibility){
-  opacity: $opacity;
-  visibility: $visibility;
+
+@mixin visibility($opacity, $visibility) {
+    opacity: $opacity;
+    visibility: $visibility;
 }
-@mixin liActive(){
-  color: var(--color-second);
-  svg {
-      width: 1rem;
-      fill: var(--color-second);
-  }
-  span {
-      @include visibility(1, visible)
-  }
+
+@mixin li-active() {
+    color: var(--color-second);
+
+    svg {
+        width: 1rem;
+        fill: var(--color-second);
+    }
+
+    span {
+        @include visibility(1, visible);
+    }
 }

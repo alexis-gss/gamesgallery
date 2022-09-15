@@ -1,46 +1,95 @@
-const path = require('path');
-const mix = require('laravel-mix');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-require('laravel-mix-polyfill');
+const path = require("path");
+const mix = require("laravel-mix");
+
+require("laravel-mix-polyfill");
+require("laravel-mix-clean");
+require("laravel-mix-eslint");
+require("laravel-mix-stylelint");
+
+const assetDir = "assets";
+const polyfill = {
+    enabled: true,
+    bugfixes: true,
+    useBuiltIns: "usage",
+    targets: "last 3 version, not dead, >0.3%"
+};
+
 mix.webpackConfig({
     resolve: {
+        extensions: ["*", ".js", ".vue", ".ts"],
         alias: {
-            '@': path.resolve('resources/assets')
-        }
+            "@": path.resolve("resources/assets"),
+        },
     },
-    plugins: [
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: [
-                'js/*',
-                'images/*',
-                'fonts/*',
-                'assets/*'
-            ]
-        })
-    ],
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: "ts-loader",
+                options: {
+                    appendTsSuffixTo: [/\.vue$/],
+                },
+            },
+            {
+                test: /\.vue$/,
+                loader: "vue-loader",
+                options: {
+                    esModule: true,
+                },
+            },
+        ],
+    }
 });
-let assetDir = 'assets';
+
 mix.options({
     fileLoaderDirs: {
-        images: `${assetDir}/images/global`,
-        fonts: `${assetDir}/fonts`
+        images: `${assetDir}/images`,
     },
     postCss: [
-        require('postcss-discard-comments')({
-            removeAll: true
-        })
+        require("postcss-discard-comments")({
+            removeAll: true,
+        }),
+    ],
+});
+
+mix.clean({
+    cleanOnceBeforeBuildPatterns: [
+        "css/*",
+        "js/*",
+        "images/*",
+        "fonts/*",
+        "assets/*",
+        "webfonts/*"
     ]
 });
-// mix Backend
-mix.js("resources/js/back/back.js", "public/js")
-    .sass('resources/sass/back/app.scss', 'public/css/back.css');
-// mix Frontend
-mix.js("resources/js/front/front.js", "public/js/front.js")
-    .sass("resources/sass/front/app.scss", "public/css")
-    .polyfill({
-        enabled: true,
-        useBuiltIns: "usage",
-        targets: { "firefox": "50", "ie": 11 }
-    });
-// Copy Blade Images Assets
-mix.copyDirectory('resources/assets', 'public/assets');
+
+// * BO
+mix.js("resources/js/back/back.js", "public/js/bo.js")
+    .eslint({
+        fix: true,
+        extensions: ["js", "ts"],
+    })
+    .sass("resources/sass/back/back.scss", "public/css/bo.css")
+    .stylelint({
+        configFile: ".stylelintrc.json",
+        files: ["**/*.scss"],
+    })
+    .polyfill(polyfill)
+    .version();
+
+// * FO
+mix.js("resources/js/front/front.js", "public/js/fo.js")
+    .eslint({
+        fix: true,
+        extensions: ["js", "ts"],
+    })
+    .sass("resources/sass/front/front.scss", "public/css/fo.css")
+    .stylelint({
+        configFile: ".stylelintrc.json",
+        files: ["**/*.scss"],
+    })
+    .polyfill(polyfill)
+    .version();
+
+// * Copy Blade Images Assets
+mix.copyDirectory("resources/assets", "public/assets");

@@ -27,8 +27,8 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 <!-- Styles -->
-<link href="{{ asset('css/back.css') }}" rel="stylesheet">
+<link href="{{ asset('css/bo.css') }}" rel="stylesheet">
 
 <!-- Scripts -->
-<script src="{{ asset('js/back.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/bo.js') }}" type="text/javascript"></script>
 @stack('scripts')

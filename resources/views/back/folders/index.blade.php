@@ -56,7 +56,7 @@
             </thead>
             <tbody>
                 @foreach ($folders as $folder)
-                    <tr class="list_item">
+                    <tr class="list-item">
                         <td class="w-22">{{ $folder->name }}</td>
                         <td>
                             <a href="{{ route('bo.games.index', ['filter' => $folder->id]) }}" data-bs="tooltip"

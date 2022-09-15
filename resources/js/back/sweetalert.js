@@ -1,9 +1,9 @@
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 window.popupDelete = function(e, title, message, confirm) {
     e.preventDefault();
     Swal.fire({
-        icon: 'warning',
+        icon: "warning",
         title: title,
         html: message,
         showCancelButton: true,
@@ -24,14 +24,14 @@ window.popupMessage = function(type, message) {
         icon: type,
         title: message,
         toast: true,
-        position: 'center',
+        position: "center",
         timer: 3000,
         showConfirmButton: false,
         timerProgressBar: true,
         showCloseButton: true,
         didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
         }
     });
 };

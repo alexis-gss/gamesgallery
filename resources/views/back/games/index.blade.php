@@ -58,7 +58,7 @@
             </thead>
             <tbody>
                 @foreach ($games as $game)
-                    <tr class="list_item">
+                    <tr class="list-item">
                         <td class="w-22">{{ $game->name }}</td>
                         <td class="w-22 text-secondary">
                             @if (isset($game->folder_id))
@@ -130,9 +130,9 @@
                             <td class="ta-end">
                                 <form action="{{ route('bo.games.destroy', $game->id) }}" method="POST" class="btn-group"
                                     novalidate
-                                    onsubmit="popupDelete(event, 
-                                    '{{ __('list.are_you_sure') }}', 
-                                    '{{ __('list.data_lost', ['item' => $game->name]) }}', 
+                                    onsubmit="popupDelete(event,
+                                    '{{ __('list.are_you_sure') }}',
+                                    '{{ __('list.data_lost', ['item' => $game->name]) }}',
                                     '{{ __('list.form_confirm') }}')">
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.games.edit', ['game' => $game->id]) }}" data-bs="tooltip"
