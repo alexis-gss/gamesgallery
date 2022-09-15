@@ -3,6 +3,7 @@
 use App\Http\Controllers\Bo\BackController;
 use App\Http\Controllers\Bo\GamesController;
 use App\Http\Controllers\Bo\FoldersController;
+use App\Http\Controllers\Bo\UsersController;
 use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ Route::prefix('bo')
     ->group(
         function () {
             Route::middleware([])
+                ->namespace('\App\Http\Controllers\Bo')
                 ->group(
                     function () {
                         Auth::routes(
@@ -43,12 +45,19 @@ Route::prefix('bo')
                                         ->where('direction', 'up|down')
                                         ->name('folders.change-order');
                                     Route::resource('folders', FoldersController::class)->except('show');
+
+                                    // phpcs:ignore Generic.Files.LineLength.TooLong
+                                    Route::get('/users/change-order/{user}/{direction}', [UsersController::class, 'changeOrder'])
+                                        ->where('direction', 'up|down')
+                                        ->name('users.change-order');
                                 }
                             );
 
+                        Route::resource('users', UsersController::class)->except('show');
                         Route::get('/', [BackController::class, 'index'])->name('home');
                         Route::get('/games', [GamesController::class, 'index'])->name('games.index');
                         Route::get('/folders', [FoldersController::class, 'index'])->name('folders.index');
+                        Route::get('/users', [UsersController::class, 'index'])->name('users.index');
                     }
                 );
         }

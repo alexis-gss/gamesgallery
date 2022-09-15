@@ -74,11 +74,17 @@ class UserCreate extends Command
         $this->role = null;
         $this->addRole();
 
+        $this->order = null;
+        $this->addOrder();
+
         $user = new User([
             'name' => $this->name,
+            'slug' => str_slug($this->name),
             'email' => $this->email,
             'password' => $this->password,
-            'role' => $this->role
+            'picture' => asset(\config('images.default')),
+            'role' => $this->role,
+            'order' => $this->order
         ]);
         $user->saveOrFail();
 
@@ -186,6 +192,24 @@ class UserCreate extends Command
                     \implode(',', collect($e->errors())->flatten()->all())
                 ));
                 continue;
+            } //end try
+        }; //end while
+    }
+
+    /**
+     * Add an order to the user.
+     *
+     * @return void
+     */
+    private function addOrder(): void
+    {
+        while (is_null($this->order)) {
+            try {
+                $maxOrder       = User::max('order');
+                $this->order = $maxOrder + 1;
+            } catch (ValidationException $e) {
+                $this->error(sprintf('Can\t define an order, please try again later'));
+                break;
             } //end try
         }; //end while
     }

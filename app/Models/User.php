@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Role;
+use App\Lib\Utils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,9 +32,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'slug',
         'email',
+        'picture',
+        'picture_alt',
         'password',
-        'role'
+        'role',
+        'order'
     ];
 
     /**
@@ -53,16 +58,42 @@ class User extends Authenticatable
     protected static function boot(): void
     {
         static::creating(function (User $user) {
-            if (Hash::needsRehash($user->password)) {
-                $user->password = Hash::make($user->password);
-            }
+            $user->updateImage($user);
+            $user->password = $user->updatePassword($user->password);
         });
 
         static::updating(function (User $user) {
-            if (Hash::needsRehash($user->password)) {
-                $user->password = Hash::make($user->password);
-            }
+            $user->updateImage($user);
+            $user->password = $user->updatePassword($user->password);
         });
         parent::boot();
+    }
+
+    /**
+     * Update images.
+     *
+     * @param User $target
+     * @return void
+     */
+    private static function updateImage(User $target): void
+    {
+        if ($target->picture) {
+            $target->picture = Utils::storeImage($target, $target->picture);
+        }
+    }
+
+    /**
+     * Update password.
+     *
+     * @param string $target
+     * @return string
+     */
+    private static function updatePassword(string $target): string
+    {
+        if (Hash::needsRehash($target)) {
+            return Hash::make($target);
+        } else {
+            return $target;
+        }
     }
 }

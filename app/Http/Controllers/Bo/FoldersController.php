@@ -5,14 +5,12 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFolderRequest;
 use App\Models\Folder;
-use App\Traits\Controllers\HasPicture;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
 
 class FoldersController extends Controller
 {
     use ChangesModelOrder;
-    use HasPicture;
 
     /**
      * Display a listing of the resource.
