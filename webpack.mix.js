@@ -75,7 +75,8 @@ mix.js("resources/js/back/back.js", "public/js/bo.js")
         files: ["**/*.scss"],
     })
     .polyfill(polyfill)
-    .version();
+    .version()
+    .sourceMaps(true, "inline-source-map");
 
 // * FO
 mix.js("resources/js/front/front.js", "public/js/fo.js")
@@ -89,7 +90,8 @@ mix.js("resources/js/front/front.js", "public/js/fo.js")
         files: ["**/*.scss"],
     })
     .polyfill(polyfill)
-    .version();
+    .version()
+    .sourceMaps(true, "inline-source-map");
 
 // * Copy Blade Images Assets
 mix.copyDirectory("resources/assets", "public/assets");
