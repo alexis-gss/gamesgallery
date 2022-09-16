@@ -2,8 +2,8 @@ header {
     @include flex(column, center, flex-start);
     position: fixed;
     top: 0;
-    left: $body-padding;
-    width: $header-width;
+    left: $fo-body-padding;
+    width: $fo-header-width;
     height: 100%;
 
     .search {

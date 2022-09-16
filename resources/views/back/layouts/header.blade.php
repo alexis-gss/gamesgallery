@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm position-fixed fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ route('homepage') }}" target="_blank" data-bs="tooltip" data-bs-placement="bottom"
             title="{{ __('header.access_website') }}">
@@ -13,7 +13,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            @include('layouts.backend.nav-menu')
+            @include('back.layouts.nav-menu')
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

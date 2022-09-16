@@ -1,0 +1,17 @@
+// ADD SOME CLASSES IN BOOTSTRAP BREAKPOINTS
+@each $type, $classes, $keys in $targets {
+    @each $key, $data in $keys {
+        @each $breakpoint in map-keys($grid-breakpoints) {
+            @include media-breakpoint-up($breakpoint) {
+                .#{$type}-#{$breakpoint}-#{$key} {
+                    @each $class in $classes {
+                        #{$class}: #{$data} !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ADDITIONAL BOOTSTRAP IMPORTS
+.row {margin: 0;}

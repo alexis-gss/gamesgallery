@@ -1,7 +1,7 @@
 @auth
     <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <a class="nav-link @if (request()->routeIs('bo.home')) active @endif" href="{{ route('bo.home') }}"
+            <a class="nav-link @if (request()->routeIs('bo.homepage')) active @endif" href="{{ route('bo.homepage') }}"
                 title="{{ __('sidenav.title_home') }}" data-bs="tooltip"
                 data-bs-placement="bottom">{{ __('sidenav.home') }}</a>
         </li>

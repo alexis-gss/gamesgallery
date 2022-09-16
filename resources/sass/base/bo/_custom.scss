@@ -37,11 +37,11 @@ svg {
 }
 
 main {
-    min-height: calc(100vh - $header-height - $footer-height);
+    min-height: calc(100vh - $bo-header-height - $bo-footer-height);
 }
 
 .container-fluid {
-    margin-top: $header-height;
+    margin-top: $bo-header-height;
 }
 
 #footer {

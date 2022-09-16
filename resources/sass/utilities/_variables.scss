@@ -17,10 +17,15 @@ $font-light: 100;
 $font-heavy: 700;
 $font-size: 20px;
 
-// Dimensions.
-$body-padding: 10vw;
-$header-width: 24rem;
-$footer-height: 10rem;
+// Dimensions front.
+$fo-body-padding: 10vw;
+$fo-header-width: 24rem;
+$fo-footer-height: 10rem;
+
+// Dimensions back.
+$bo-header-height: 56px;
+$bo-footer-height: 40px;
 
 // Others.
 $transition-time: 0.2s;
+

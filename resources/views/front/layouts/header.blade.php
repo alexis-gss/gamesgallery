@@ -1,7 +1,7 @@
 <header>
     <h1>{{ config('app.name') }}</h1>
     <form class="search">
-        <input name="search" placeholder="{{ __('nav.search', ['games' => array_sum(array_map('count', $games))]) }}"
+        <input name="search" value="" placeholder="{{ __('nav.search', ['games' => isset($games) ? array_sum(array_map('count', $games)) : '0']) }}"
             title="{{ __('nav.search_title') }}" type="text" maxlength="60" autocomplete="off">
         <span title="{{ __('nav.search_btn') }}">
             <svg viewBox="0 0 16 16">
@@ -12,10 +12,12 @@
         <input type="submit" value="submit" class="d-none" disabled>
     </form>
     <nav>
-        @foreach ($games as $key => $folder)
-            @include('layouts.frontend.nav-list')
-        @endforeach
-        <p class="no-result d-none">{{ __('nav.no_result') }}</p>
+        @if (isset($games))
+            @foreach ($games as $key => $folder)
+                @include('front.layouts.nav-list')
+            @endforeach
+        @endif
+        <p class="no-result @if (isset($games)) d-none @endif">{{ __('nav.no_result') }}</p>
     </nav>
     <section class="btns">
         <button class="btn-theme" title="{{ __('nav.btn-theme') }}">

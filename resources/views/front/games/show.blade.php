@@ -1,9 +1,13 @@
 @extends('layouts.frontend')
-@section('title', __($game->name))
-@section('description', __('show.description', ['game' => $game->name]))
-@section('keywords', __('show.keywords', ['game' => $game->name]))
+@section('title', isset($game->name))
+@section('description', __('show.description', ['game' => isset($game) ? $game->name : 'no game here']))
+@section('keywords', __('show.keywords', ['game' => isset($game) ? $game->name : 'no game here']))
 
 @section('content')
+    <!-- Navigation -->
+    @include('front.layouts.header')
+
+    <!-- Content -->
     <article>
         @if (isset($game))
             <h2>{{ $game->name }}</h2>

@@ -2,22 +2,19 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @include('layouts.frontend.head')
+    @include('front.layouts.head')
     @stack('styles')
 </head>
 
 <body>
     <!-- Main content -->
-    <main>
-        @include('layouts.frontend.header')
-        @yield('content')
-    </main>
+    @yield('content')
 
     <!-- Footer -->
-    @include('layouts.frontend.footer')
+    @include('front.layouts.footer')
 
     <!-- Scripts -->
-    <script src="{{ asset('js/front.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/fo.js') }}" type="text/javascript"></script>
     @stack('scripts')
 </body>
 

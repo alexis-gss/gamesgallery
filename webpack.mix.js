@@ -69,7 +69,7 @@ mix.js("resources/js/back/back.js", "public/js/bo.js")
         fix: true,
         extensions: ["js", "ts"],
     })
-    .sass("resources/sass/back/back.scss", "public/css/bo.css")
+    .sass("resources/sass/back.scss", "public/css/bo.css")
     .stylelint({
         configFile: ".stylelintrc.json",
         files: ["**/*.scss"],
@@ -83,7 +83,7 @@ mix.js("resources/js/front/front.js", "public/js/fo.js")
         fix: true,
         extensions: ["js", "ts"],
     })
-    .sass("resources/sass/front/front.scss", "public/css/fo.css")
+    .sass("resources/sass/front.scss", "public/css/fo.css")
     .stylelint({
         configFile: ".stylelintrc.json",
         files: ["**/*.scss"],

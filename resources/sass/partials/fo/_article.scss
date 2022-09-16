@@ -1,8 +1,8 @@
 article {
-    width: calc(100% - $header-width);
-    min-height: calc(100vh - $footer-height);
+    width: calc(100% - $fo-header-width);
+    min-height: calc(100vh - $fo-footer-height);
     padding-left: 1rem;
-    margin-left: $header-width;
+    margin-left: $fo-header-width;
     text-align: center;
 
     .wrapper {

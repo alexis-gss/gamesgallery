@@ -22,7 +22,7 @@
 <link rel="canonical" href="{{ url()->current() }}" />
 
 <!-- Styles -->
-<link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/fo.css') }}" />
 
 <!-- Font -->
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100;700&display=swap" rel="stylesheet" />

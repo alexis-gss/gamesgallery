@@ -1,8 +1,8 @@
 footer {
     @include flex(row, center, center);
-    width: calc(100% - $header-width);
-    height: $footer-height;
-    margin-left: $header-width;
+    width: calc(100% - $fo-header-width);
+    height: $fo-footer-height;
+    margin-left: $fo-header-width;
 
     .btn-top {
         position: fixed;
