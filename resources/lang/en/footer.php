@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'website' => 'Access to the Alexis Gousseau website'
+    "website" => "Access to the Alexis Gousseau website"
 ];

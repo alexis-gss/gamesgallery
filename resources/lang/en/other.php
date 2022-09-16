@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'back_office' => 'Back office',
-    'logs' => 'Logs',
-    'close' => 'Close'
+    "back_office" => "Back office",
+    "logs" => "Logs",
+    "close" => "Close"
 ];
