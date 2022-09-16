@@ -7,10 +7,10 @@
 @import "./utilities/mixin";
 
 // BASE.
-@import "./base/fo/utils";
-@import "./base/fo/general";
+@import "./fo/base/utils";
+@import "./fo/base/general";
 
 // PARTIALS.
-@import "./partials/fo/header";
-@import "./partials/fo/article";
-@import "./partials/fo/footer";
+@import "./fo/partials/header";
+@import "./fo/partials/article";
+@import "./fo/partials/footer";
