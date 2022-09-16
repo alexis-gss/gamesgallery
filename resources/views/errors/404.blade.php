@@ -1,11 +1,5 @@
-@extends('layouts.frontend')
-@section('title', __('Home'))
-@section('description', __('metadesc_home'))
-@section('keywords', __('metatag_home'))
+@extends('layouts.error')
 
-@section('content')
-    <a href="{{ route('homepage') }}">Home</a>
-    <main>
-        erreur 404 là
-    </main>
-@endsection
+@section('errorCode', '404')
+@section('errorTitle', __('errors.404_title'))
+@section('errorMessage', __('errors.404_message'))
