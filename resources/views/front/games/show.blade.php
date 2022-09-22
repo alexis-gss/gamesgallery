@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
-@section('title', isset($game->name))
-@section('description', __('show.description', ['game' => isset($game) ? $game->name : 'no game here']))
-@section('keywords', __('show.keywords', ['game' => isset($game) ? $game->name : 'no game here']))
+@section('title', (isset($game) ? $game->name : __('meta.default_title')))
+@section('description', (isset($game) ? __('meta.description',  ['game' =>  $game->name]) :  __('meta.default_description')))
+@section('keywords', __('meta.keywords', ['game' => (isset($game) ? $game->name : __('meta.default_keyword'))]))
 
 @section('content')
     <!-- Navigation -->

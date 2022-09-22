@@ -18,5 +18,8 @@ return [
     "folders_edition" => "Editing a folder",
     "folders_edition_desc" => "Editing information of a previously saved folder.",
     "connexion" => "Connexion",
-    "connexion_desc" => "Form for connexion to the back office"
+    "connexion_desc" => "Form for connexion to the back office",
+    "default_title" => "Project",
+    "default_description" => "Gallery of images about video games",
+    "default_keyword" => "laravel"
 ];
