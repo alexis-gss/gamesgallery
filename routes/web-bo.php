@@ -3,7 +3,6 @@
 use App\Http\Controllers\Bo\BackController;
 use App\Http\Controllers\Bo\GamesController;
 use App\Http\Controllers\Bo\FoldersController;
-use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,7 +52,3 @@ Route::prefix('bo')
                 );
         }
     );
-
-Route::get('/', [FrontController::class, 'index'])->name('homepage');
-Route::get('/{slug}', [FrontController::class, 'show'])->name('games.specific')
-    ->where('slug', '^[a-zA-Z0-9-]*$');
