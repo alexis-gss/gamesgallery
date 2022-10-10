@@ -15,5 +15,10 @@
                 title="{{ __('sidenav.title_list_folders', ['folders' => count($globalFolders)]) }}" data-bs="tooltip"
                 data-bs-placement="bottom">{{ __('sidenav.list_folders') }}</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link @if (request()->routeIs('bo.users.*')) active @endif" href="{{ route('bo.users.index') }}"
+                title="{{ __('sidenav.title_list_users', ['users' => count($globalUsers)]) }}" data-bs="tooltip"
+                data-bs-placement="bottom">{{ __('sidenav.list_users') }}</a>
+        </li>
     </ul>
 @endauth

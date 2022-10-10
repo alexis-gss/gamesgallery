@@ -5,9 +5,15 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label"><b>{{ __('form.identification') }}</b></label>
-                    <input type="text" id="name" name="name" class="form-control"
-                        placeholder="{{ __('form.type_name_game') }}*" value="{{ old('name', $game->name ?? '') }}"
-                        data-bs="tooltip" data-bs-placement="top" title="{{ __('form.type_name_game') }}">
+                    <input type="text"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        placeholder="{{ __('form.type_name_game') }}*"
+                        value="{{ old('name', $game->name ?? '') }}"
+                        data-bs="tooltip"
+                        data-bs-placement="top"
+                        title="{{ __('form.type_name_game') }}">
                     <small class="text-muted">{{ __('form.name') }}*</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
@@ -28,9 +34,15 @@
             <legend>{{ __('form.visuals') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
-                    <label for="folder_id" class="col-form-label"><b>{{ __('form.images') }}</b></label>
-                    <input type="file" id="pictures" name="pictures[]" accept="image/jpg" class="form-control mb-1"
-                        data-bs="tooltip" data-bs-placement="top" title="{{ __('form.select_images') }}" multiple>
+                    <label for="pictures" class="col-form-label"><b>{{ __('form.images') }}</b></label>
+                    <input type="file"
+                        id="pictures"
+                        name="pictures[]"
+                        accept="image/jpg"
+                        class="form-control mb-1"
+                        data-bs="tooltip"
+                        data-bs-placement="top"
+                        title="{{ __('form.select_images') }}" multiple>
                     <small
                         class="text-muted">{{ __('form.images_rules', [
                             'format' => Config::get('images.format'),
@@ -55,12 +67,12 @@
                     </div>
                     <small
                         class="text-muted">{{ __('form.actual_images', ['number' => $game->pictures !== null ? count($game->pictures) : 0]) }}</small>
-                @else
-                    <p class="m-0">{{ __('form.no_related_images') }}</p>
-                @endif
-                @include('back.modules.input-error', ['inputName' => 'picture'])
+                    @else
+                        <p class="m-0">{{ __('form.no_related_images') }}</p>
+                    @endif
+                    @include('back.modules.input-error', ['inputName' => 'picture'])
+                </div>
             </div>
-        </div>
-    </fieldset>
-</div>
+        </fieldset>
+    </div>
 </div>

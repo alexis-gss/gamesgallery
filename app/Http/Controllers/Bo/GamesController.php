@@ -66,8 +66,7 @@ class GamesController extends Controller
      */
     public function store(StoreGameRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $game = new Game($request->validated());
-        // Check if a folder is associated.
+        $game               = new Game($request->validated());
         $game->pictures_alt = "Image of the " . $game->name . " game";
         $game->slug         = str_slug($game->name);
         $game->order        = $this->getLastOrder();
