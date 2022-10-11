@@ -82,9 +82,13 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label class="col-form-label"><b>{{ __('form.preview') }}</b></label>
-                    <div class="preview position-relative">
-                        <img src="{{ asset($user->picture) }}" alt="{{ $user->picture_alt }}" style="max-height: 100px;">
-                    <div class="filtre position-absolute h-100"></div>
+                    @if($user->picture)
+                        <div class="preview position-relative">
+                            <img src="{{ asset($user->picture) }}" alt="{{ $user->picture_alt }}" style="max-height: 100px;">
+                        <div class="filtre position-absolute h-100"></div>
+                    @else
+                        <p class="m-0">{{ __('form.no_related_images') }}</p>
+                    @endif
                     @include('back.modules.input-error', ['inputName' => 'picture'])
                 </div>
             </div>

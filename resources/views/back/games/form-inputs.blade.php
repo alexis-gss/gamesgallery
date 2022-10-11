@@ -65,8 +65,9 @@
                             @endforeach
                         <div class="filtre position-absolute h-100"></div>
                     </div>
-                    <small
-                        class="text-muted">{{ __('form.actual_images', ['number' => $game->pictures !== null ? count($game->pictures) : 0]) }}</small>
+                    <small class="text-muted">
+                        {{ __('form.actual_images', ['number' => $game->pictures !== null ? count($game->pictures) : 0]) }}
+                    </small>
                     @else
                         <p class="m-0">{{ __('form.no_related_images') }}</p>
                     @endif

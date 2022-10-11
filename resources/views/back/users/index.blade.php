@@ -37,29 +37,30 @@
     </form>
     <table class="table">
         @if (count($users) > 0)
-            <thead class="thead-dark">
+            <thead>
                 <tr>
-                    <th scope="col">{{ __('list.name') }}</th>
-                    <th scope="col">{{ __('list.email') }}</th>
-                    <th scope="col">{{ __('list.role') }}</th>
+                    <th scope="col" class="col-3">{{ __('list.name') }}</th>
+                    <th scope="col" class="col-4">{{ __('list.email') }}</th>
+                    <th scope="col" class="col-3">{{ __('list.role') }}</th>
                     @can('isAdmin')
                         @if (count($users) > 1)
-                            <th scope="col">{{ __('list.order') }}</th>
+                            <th scope="col" class="col-1">{{ __('list.order') }}</th>
                         @endif
+                        <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
                     <tr class="list_item">
-                        <td class="w-22">{{ $user->name }}</td>
-                        <td class="w-22">{{ $user->email }}</td>
-                        <td class="w-22">
+                        <td class="align-middle">{{ $user->name }}</td>
+                        <td class="align-middle">{{ $user->email }}</td>
+                        <td class="align-middle">
                             {{ ($user->role == App\Enums\Role::admin()->value) ? App\Enums\Role::admin()->label : App\Enums\Role::visitor()->label }}
                         </td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
-                                <td>
+                                <td class="align-middle">
                                     @if ($loop->first)
                                         <a href="{{ route('bo.users.change-order', ['user' => $user->id, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none" data-bs="tooltip" data-bs-placement="top"
@@ -98,27 +99,33 @@
                                     @endif
                                 </td>
                             @endif
-                            <td class="ta-end">
-                                <form action="{{ route('bo.users.destroy', $user->id) }}" method="POST" class="btn-group"
+                            <td class="text-end align-middle">
+                                <form action="{{ route('bo.users.destroy', $user->id) }}"
+                                    method="POST"
+                                    class="btn-group"
+                                    role="group"
                                     novalidate
                                     onsubmit="popupDelete(event,
                                     '{{ __('list.are_you_sure') }}',
                                     '{{ __('list.data_lost', ['item' => $user->name]) }}',
                                     '{{ __('list.form_confirm') }}')">
                                     <a class="btn btn-sm btn-primary"
-                                        href="{{ route('bo.users.edit', ['user' => $user->id]) }}" data-bs="tooltip"
-                                        data-bs-placement="top" title="{{ __('list.edit_user') }}">
-                                        <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-fill"
-                                            viewBox="0 0 16 16">
+                                        href="{{ route('bo.users.edit', ['user' => $user->id]) }}"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ __('list.edit_user') }}">
+                                        <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                             <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
                                         </svg>
                                     </a>
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" data-bs="tooltip"
-                                        data-bs-placement="top" title="{{ __('list.delete_user') }}">
-                                        <svg width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
-                                            viewBox="0 0 16 16">
+                                    <button class="btn btn-sm btn-danger"
+                                        type="submit"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ __('list.delete_user') }}">
+                                        <svg width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                             <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                                         </svg>
                                     </button>

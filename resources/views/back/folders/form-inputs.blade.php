@@ -8,7 +8,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control w-22"
+                        class="form-control"
                         placeholder="{{ __('form.type_name_folder') }}*"
                         value="{{ old('name', $folder->name ?? '') }}"
                         data-bs="tooltip"
