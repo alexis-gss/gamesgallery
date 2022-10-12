@@ -2,7 +2,7 @@
 
 @section('title', __('meta.folders_creation'))
 @section('description', __('meta.folders_creation_desc'))
-@section('metaIndex', 'noindex,nofollow')
+@section('keywords', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.folders.store') }}" method="POST" enctype="multipart/form-data">

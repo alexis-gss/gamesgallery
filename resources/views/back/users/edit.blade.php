@@ -2,7 +2,7 @@
 
 @section('title', __('meta.users_edition'))
 @section('description', __('meta.users_edition_desc'))
-@section('metaIndex', 'noindex,nofollow')
+@section('keywords', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">

@@ -2,7 +2,7 @@
 
 @section('title', __('meta.users_creation'))
 @section('description', __('meta.users_creation_desc'))
-@section('metaIndex', 'noindex,nofollow')
+@section('keywords', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.users.store') }}" method="POST" enctype="multipart/form-data">

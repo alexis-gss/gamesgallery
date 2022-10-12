@@ -2,7 +2,7 @@
 
 @section('title', __('meta.games_creation'))
 @section('description', __('meta.games_creation_desc'))
-@section('metaIndex', 'noindex,nofollow')
+@section('keywords', 'noindex,nofollow')
 
 @section('content')
     <form action="{{ route('bo.games.store') }}" method="POST" enctype="multipart/form-data">
