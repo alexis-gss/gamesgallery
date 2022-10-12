@@ -24,8 +24,8 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'email:rfc,strict,dns,spoof,filter',
+            'name' => 'required|min:3',
+            'email' => 'email:rfc,strict,dns,spoof,filter|min:10',
             'role' => 'sometimes|nullable',
             'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255',
             'picture' => 'sometimes|mimes:' . config('images.format') .

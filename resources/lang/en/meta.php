@@ -22,7 +22,5 @@ return [
     'users_creation' => 'Creating a user',
     'users_creation_desc' => 'Form for entering information to create a new user.',
     'users_edition' => 'Editing a user',
-    'users_edition_desc' => 'Editing information of a previously saved user.',
-    'connexion' => 'Connexion',
-    'connexion_desc' => 'Form for connexion to the back office'
+    'users_edition_desc' => 'Editing information of a previously saved user.'
 ];

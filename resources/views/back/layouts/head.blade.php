@@ -19,7 +19,7 @@
 <meta property="og:description" content="@yield('description')" />
 
 <!-- Others -->
-<link rel="icon" type="image/png" href="{{ asset('assets/images/icon.png') }}" />
+<link rel="icon" type="image/png" href="{{ asset('assets/icons/pictures.png') }}" />
 <link rel="canonical" href="{{ url()->current() }}">
 
 <!-- Fonts -->

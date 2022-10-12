@@ -65,7 +65,7 @@ class UsersController extends Controller
         $user->saveOrFail();
 
         return redirect()->route('bo.users.edit', $user->id)
-            ->with('success', trans(__('modification.user_created')));
+            ->with('success', trans(__('changes.user_created')));
     }
 
     /**
@@ -96,10 +96,10 @@ class UsersController extends Controller
 
         if (!$user->saveOrFail()) {
             return redirect()->route('bo.users.edit', $user->id)
-                ->with('error', trans(__('modification.modification_failed')));
+            ->with('error', trans(__('changes.modification_failed')));
         }
         return redirect()->route('bo.users.edit', $user->id)
-            ->with('success', trans(__('modification.changes_saved')));
+            ->with('success', trans(__('changes.saved')));
     }
 
     /**
@@ -114,10 +114,10 @@ class UsersController extends Controller
 
         if (!$user->delete()) {
             return redirect()->back()
-                ->with('error', trans('modification.deletion_failed'));
+                ->with('error', trans('changes.deletion_failed'));
         }
         return redirect()->back()
-            ->with('success', trans('modification.deletion_successful'));
+            ->with('success', trans('changes.deletion_successful'));
     }
 
     /**

@@ -74,7 +74,7 @@ class GamesController extends Controller
         $game->saveOrFail();
 
         return redirect()->route('bo.games.edit', $game->id)
-            ->with('success', trans(__('modification.game_created')));
+            ->with('success', trans(__('changes.game_created')));
     }
 
     /**
@@ -106,10 +106,10 @@ class GamesController extends Controller
 
         if (!$game->saveOrFail()) {
             return redirect()->route('bo.games.edit', $game->id)
-                ->with('error', trans(__('modification.modification_failed')));
+            ->with('error', trans(__('changes.modification_failed')));
         }
         return redirect()->route('bo.games.edit', $game->id)
-            ->with('success', trans(__('modification.changes_saved')));
+            ->with('success', trans(__('changes.saved')));
     }
 
     /**
@@ -124,10 +124,10 @@ class GamesController extends Controller
 
         if (!$game->delete()) {
             return redirect()->back()
-                ->with('error', trans('modification.deletion_failed'));
+                ->with('error', trans('changes.deletion_failed'));
         }
         return redirect()->back()
-            ->with('success', trans('modification.deletion_successful'));
+            ->with('success', trans('changes.deletion_successful'));
     }
 
     /**

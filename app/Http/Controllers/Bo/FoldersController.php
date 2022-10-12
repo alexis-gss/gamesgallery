@@ -58,7 +58,7 @@ class FoldersController extends Controller
         $folder->saveOrFail();
 
         return redirect()->route('bo.folders.edit', $folder->id)
-            ->with('success', trans(__('modification.folder_created')));
+            ->with('success', trans(__('changes.folder_created')));
     }
 
     /**
@@ -86,10 +86,10 @@ class FoldersController extends Controller
 
         if (!$folder->saveOrFail()) {
             return redirect()->route('back.folders.edit', $folder->id)
-                ->with('error', trans(__('modification.modification_failed')));
+                ->with('error', trans(__('changes.modification_failed')));
         }
         return redirect()->route('back.folders.edit', $folder->id)
-            ->with('success', trans(__('modification.changes_saved')));
+            ->with('success', trans(__('changes.saved')));
     }
 
     /**
@@ -103,13 +103,13 @@ class FoldersController extends Controller
         if (count($folder->games) === 0) {
             if (!$folder->delete()) {
                 return redirect()->back()
-                    ->with('error', trans('modification.deletion_failed'));
+                    ->with('error', trans('changes.deletion_failed'));
             }
             return redirect()->back()
-                ->with('success', trans('modification.deletion_successful'));
+                ->with('success', trans('changes.deletion_successful'));
         } else {
             return redirect()->back()
-                ->with('error', trans('modification.deletion_associated'));
+                ->with('error', trans('changes.deletion_associated'));
         }
     }
 

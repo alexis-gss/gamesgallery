@@ -1,38 +1,67 @@
 <?php
 
 return [
+    // Header.
+    'edition' => 'Edition',
+    'creation' => 'Creation',
+    'return_list' => 'Return to the list',
+    'game' => 'Game',
+    'folder' => 'Folder',
+    'user' => 'User',
+    'save' => 'Save informations',
+
+    // Titles.
     'general_informations' => 'General informations',
-    'identification' => 'Identification',
-    'authentification' => 'Authentification',
-    'access' => 'Access rights',
-    'security' => 'Security',
-    'password' => 'Password',
-    'password_new' => 'New password',
-    'password_confirm' => 'Confirm password',
-    'confirmation' => 'Confirmation',
-    'name' => 'Name',
-    'role' => 'Role',
-    'email' => 'Email',
-    'account' => 'Account',
-    'account_delete' => 'Shutdown account',
-    'type_name_folder' => 'Type the name of the folder',
-    'type_name_game' => 'Type the name of the game',
-    'type_name_user' => 'Type your name or a nickname',
-    'type_password_user' => 'Type your new password',
-    'type_confirm_password_user' => 'Confirm your new password',
-    'type_email' => 'Type your email',
     'organization' => 'Organization',
     'visuals' => 'Visuals',
-    'images' => 'Images',
-    'preview' => 'Preview',
-    'select_images' => 'Select images',
-    'select_role' => 'Select a role',
-    'no_related_images' => 'No related image(s)',
+    'security' => 'Security',
+    'account' => 'Account',
+
+    // Subtitles.
+    'identification' => 'Identification',
+    'authentification_name' => 'Authentification (name)',
+    'authentification_email' => 'Authentification (e-mail)',
+    'access' => 'Access rights',
+    'images' => 'Image(s)',
+    'images_result' => 'Your image(s)',
+    'password_new' => 'New password',
+    'password_confirm' => 'Confirm password',
+    'account_delete' => 'Shutdown account',
+
+    // Labels.
+    'name_label' => 'Requires min. 3 characters',
+    'email_label' => 'Requires min. 10 characters',
+    'role_label' => 'Choose a role among the list',
+    'images_label' => 'Respect the format (.:format) and dimensions (max.) : :widthpx (width) x :heightpx (height)',
+    'actual_images' => ':number image(s) saved',
+    'password_label' => 'Requires min. 8 characters',
+    'confirmation_label' => 'Must be identical to the password',
+    'action_irreversible' => 'This action is irreversible !',
+    'folders_label' => 'Choose a folder among the list',
+
+    // Inputs tooltip.
+    'tooltip_name_folder' => 'Type the name of the folder',
+    'tooltip_name_game' => 'Type the name of the game',
+    'tooltip_name_user' => 'Type your name or a nickname',
+    'tooltip_email' => 'Type your e-mail that respect the naming convention of e-mails :
+        firstname.lastname@yourdomain.com',
+    'tooltip_role' => 'There is two roles : Admin and visitor. By default, a new user is a visitor',
+    'tooltip_image' => 'Select one image that define your profile picture',
+    'tooltip_game_images' => 'Select one or multiple images',
+    'tooltip_game_images_preview' => 'Images related to this game',
+    'tooltip_password_user' => 'Type your new password to change it',
+    'tooltip_confirm_password_user' => 'Confirm your new password to validate it',
+    'tooltip_folders' => 'Select a folder among :number folders created',
+
+    // Placeholder.
+    'name' => 'Name',
+    'email' => 'Email',
+    'password' => 'Password',
+    'confirm' => 'Confirm',
+
+    // Others.
     'folder_associated' => 'Folder associated',
     'no_associated_folder' => 'No associated folder',
     'select_folder' => 'Select a folder',
-    'no_filter' => 'No folder selected',
-    'images_rules' => 'Format : .:format - Width : :widthpx - Height : :heightpx.',
-    'actual_images' => 'Actual :number image(s).',
-    'action_irreversible' => 'This action is irreversible !'
+    'no_filter' => 'No folder selected'
 ];
