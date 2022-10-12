@@ -116,7 +116,7 @@ class UsersController extends Controller
             return redirect()->back()
                 ->with('error', trans('changes.deletion_failed'));
         }
-        return redirect()->back()
+        return redirect()->route('bo.users.index')
             ->with('success', trans('changes.deletion_successful'));
     }
 
