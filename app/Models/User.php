@@ -59,12 +59,12 @@ class User extends Authenticatable
     {
         static::creating(function (User $user) {
             $user->updateImage($user);
-            $user->password = $user->updatePassword($user->password);
+            $user->updatePassword($user);
         });
 
         static::updating(function (User $user) {
             $user->updateImage($user);
-            $user->password = $user->updatePassword($user->password);
+            $user->updatePassword($user);
         });
         parent::boot();
     }
@@ -85,15 +85,15 @@ class User extends Authenticatable
     /**
      * Update password.
      *
-     * @param string $target
-     * @return string
+     * @param User $target
+     * @return void
      */
-    private static function updatePassword(string $target): string
+    private static function updatePassword(User $target): void
     {
-        if (Hash::needsRehash($target)) {
-            return Hash::make($target);
+        if ($target->password != null and Hash::needsRehash($target->password)) {
+            $target->password = Hash::make($target->password);
         } else {
-            return $target;
+            $target->password = $target->getOriginal('password');
         }
     }
 }

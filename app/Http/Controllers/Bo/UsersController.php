@@ -60,7 +60,6 @@ class UsersController extends Controller
         $user->picture_alt = "Picture for the " . $user->name . " account";
         $user->slug        = str_slug($user->name);
         $user->order       = $this->getLastOrder();
-        $user->password    = Hash::make($user->password);
         $this->storePictures($request, $user);
         $user->saveOrFail();
 
@@ -92,7 +91,6 @@ class UsersController extends Controller
         $user->fill($request->validated());
         $user->picture_alt = "Picture for the " . $user->name . " account";
         $user->slug        = str_slug($user->name);
-        $user->password    = Hash::make($user->password);
 
         if (!$user->saveOrFail()) {
             return redirect()->route('bo.users.edit', $user->id)
