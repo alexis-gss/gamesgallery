@@ -1,5 +1,5 @@
-#### **10.10.22**
-- Adding an users administration.
+#### **10.10.22 ► v2.1**
+- Adding a users administration.
 
 #### **08.02.22**
 - New interface for the back-office.
