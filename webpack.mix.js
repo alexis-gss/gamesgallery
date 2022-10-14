@@ -19,6 +19,7 @@ mix.webpackConfig({
         extensions: ["*", ".js", ".vue", ".ts"],
         alias: {
             "@": path.resolve("resources/assets"),
+            'vue$': 'vue/dist/vue.runtime.esm-bundler.js',
         },
     },
     module: {
@@ -54,22 +55,24 @@ mix.options({
 
 mix.clean({
     cleanOnceBeforeBuildPatterns: [
-        "css/*",
-        "js/*",
-        "images/*",
-        "fonts/*",
         "assets/*",
-        "webfonts/*"
+        "css/*",
+        "js/*"
     ]
 });
 
-// * BO
-mix.js("resources/js/back/back.js", "public/js/bo.js")
+// * BACK
+mix.ts("resources/ts/back.ts", "public/js/back.js", { transpileOnly: true })
+    .vue({
+        runtimeOnly: true,
+        extractStyles: true,
+        globalStyles: false,
+    })
     .eslint({
         fix: true,
         extensions: ["js", "ts"],
     })
-    .sass("resources/sass/back.scss", "public/css/bo.css")
+    .sass("resources/sass/back.scss", "public/css/back.css")
     .stylelint({
         configFile: ".stylelintrc.json",
         files: ["**/*.scss"],
@@ -78,13 +81,18 @@ mix.js("resources/js/back/back.js", "public/js/bo.js")
     .version()
     .sourceMaps(true, "inline-source-map");
 
-// * FO
-mix.js("resources/js/front/front.js", "public/js/fo.js")
+// * FRONT
+mix.js("resources/ts/front.ts", "public/js/front.js", { transpileOnly: true })
+    .vue({
+        runtimeOnly: true,
+        extractStyles: true,
+        globalStyles: false,
+    })
     .eslint({
         fix: true,
         extensions: ["js", "ts"],
     })
-    .sass("resources/sass/front.scss", "public/css/fo.css")
+    .sass("resources/sass/front.scss", "public/css/front.css")
     .stylelint({
         configFile: ".stylelintrc.json",
         files: ["**/*.scss"],

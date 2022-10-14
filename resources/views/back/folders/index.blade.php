@@ -120,12 +120,8 @@
                             <td class="text-end align-middle">
                                 <form action="{{ route('bo.folders.destroy', $folder->id) }}"
                                     method="POST"
-                                    class="btn-group"
-                                    novalidate
-                                    onsubmit="popupDelete(event,
-                                    '{{ __('list.are_you_sure') }}',
-                                    '{{ __('list.data_lost', ['item' => $folder->name]) }}',
-                                    '{{ __('list.form_confirm') }}')">
+                                    class="btn-group confirmDeleteTS"
+                                    novalidate>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
                                         data-bs="tooltip"

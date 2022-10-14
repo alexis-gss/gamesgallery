@@ -116,13 +116,9 @@
                             <td class="text-end align-middle">
                                 <form action="{{ route('bo.users.destroy', $user->id) }}"
                                     method="POST"
-                                    class="btn-group"
+                                    class="btn-group confirmDeleteTS"
                                     role="group"
-                                    novalidate
-                                    onsubmit="popupDelete(event,
-                                    '{{ __('list.are_you_sure') }}',
-                                    '{{ __('list.data_lost', ['item' => $user->name]) }}',
-                                    '{{ __('list.form_confirm') }}')">
+                                    novalidate>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.users.edit', ['user' => $user->id]) }}"
                                         data-bs="tooltip"

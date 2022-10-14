@@ -138,12 +138,8 @@
                             <td class="text-end align-middle">
                                 <form action="{{ route('bo.games.destroy', $game->id) }}"
                                     method="POST"
-                                    class="btn-group"
-                                    novalidate
-                                    onsubmit="popupDelete(event,
-                                    '{{ __('list.are_you_sure') }}',
-                                    '{{ __('list.data_lost', ['item' => $game->name]) }}',
-                                    '{{ __('list.form_confirm') }}')">
+                                    class="btn-group confirmDeleteTS"
+                                    novalidate>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.games.edit', ['game' => $game->id]) }}"
                                         data-bs="tooltip"

@@ -8,12 +8,9 @@
                         <b>{{ __('form.account_delete') }}</b>
                     </label>
                     <form action="{{ route('bo.users.destroy', $user->id) }}"
+                        class="confirmDeleteTS"
                         method="POST"
-                        novalidate
-                        onsubmit="popupDelete(event,
-                        '{{ __('list.are_you_sure') }}',
-                        '{{ __('list.data_lost', ['item' => $user->name]) }}',
-                        '{{ __('list.form_confirm') }}')">
+                        novalidate>
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger">

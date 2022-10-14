@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="@yield('description')" />
 <meta name="keywords" content="@yield('keywords')" />
 
@@ -21,8 +22,12 @@
 <link rel="icon" type="image/png" href="{{ asset('assets/icons/pictures.png') }}" />
 <link rel="canonical" href="{{ url()->current() }}" />
 
-<!-- Styles -->
-<link rel="stylesheet" href="{{ asset('css/fo.css') }}" />
-
 <!-- Font -->
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100;700&display=swap" rel="stylesheet" />
+
+<!-- Styles -->
+<link href="{{ asset('css/front.css') }}" rel="stylesheet" />
+
+<!-- Scripts -->
+<script src="{{ asset('js/front.js') }}" type="text/javascript"></script>
+@stack('scripts')
