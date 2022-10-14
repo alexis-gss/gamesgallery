@@ -30,7 +30,7 @@ return [
 
     // Labels.
     'name_label' => 'Requires min. 3 characters',
-    'email_label' => 'Requires min. 10 characters',
+    'email_label' => 'Must be a valid email address',
     'role_label' => 'Choose a role among the list',
     'images_label' => 'Respect the format (.:format) and dimensions (max.) : :widthpx (width) x :heightpx (height)',
     'actual_images' => ':number image(s) saved',
