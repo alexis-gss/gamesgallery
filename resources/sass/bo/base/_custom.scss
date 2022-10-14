@@ -2,10 +2,6 @@
     text-align: end;
 }
 
-.w-fit {
-    width: fit-content !important;
-}
-
 .preview {
     display: block ruby;
     overflow: hidden;
@@ -47,4 +43,10 @@ main {
 .profile-picture {
     width: 2rem;
     height: 2rem;
+}
+
+input.form-control[type="text"],
+input.form-control[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
