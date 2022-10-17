@@ -1,14 +1,12 @@
 <template>
-  <div
-    class="wordCounter d-flex flex-row justify-content-around align-items-center w-100"
-  >
-    <span class="words">
-      {{ "Mots" }}
+  <div class="d-flex flex-row justify-content-around align-items-center w-100">
+    <span>
+      {{ "Words" }}
       &nbsp;:&nbsp;
       <b>{{ intWords }}</b>
     </span>
-    <span class="chars">
-      {{ "Caractères" }}
+    <span>
+      {{ "Characters" }}
       &nbsp;:&nbsp;
       <b>{{ intChars }}</b>
     </span>
@@ -105,14 +103,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss">
-.wordCounter {
-  border-top-left-radius: 0.375rem;
-  border-top-right-radius: 0.375rem;
-  color: initial;
-  border: 1px solid rgb(196, 196, 196);
-  border-bottom: 0;
-  background-color: #fafafa;
-}
-</style>

@@ -30,8 +30,8 @@
                 @auth
                     <li class="nav-item dropdown">
                         <button class="btn nav-link dropdown-toggle border-0 d-flex flex-row align-items-center"
+                            type="button"
                             id="navbarDropdown"
-                            role="button"
                             data-bs-toggle="dropdown">
                             <div class="profile-picture me-2">
                                 <img class="w-100 h-100 rounded-circle" src="{{ asset(Auth::user()->picture) }}" alt="{{ Auth::user()->picture_alt }}">

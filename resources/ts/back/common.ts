@@ -12,7 +12,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     "confirmDoneJS can only be executed on an exising form"
                 );
             }
-            console.log(el);
             sweetalert.methods.confirm(
                 "Are you sure ?",
                 "All data will be lost.",

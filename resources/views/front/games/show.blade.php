@@ -4,28 +4,18 @@
 @section('keywords', __('meta.keywords', ['game' => (isset($game) ? $game->name : __('meta.default_keyword'))]))
 
 @section('content')
-    <!-- Navigation -->
-    @include('front.layouts.header')
-
-    <!-- Content -->
-    <article>
-        @if (isset($game))
-            <h2>{{ $game->name }}</h2>
-            <div class="wrapper">
-                @if (isset($game->pictures))
-                    @foreach ($game->pictures as $picture)
-                        <div class="content">
-                            <img class="image" src="{{ asset('assets/images/load.gif') }}" data-src="{{ asset($picture) }}"
-                                alt="{{ $game->pictures_alt }}">
-                        </div>
-                    @endforeach
-                @else
-                    <div class="content">
-                        <img class="image image-soon" src="{{ asset('assets/images/load.gif') }}"
-                            data-src="{{ asset('assets/images/visual-soon.png') }}" alt="{{ __('show.default_image') }}">
-                    </div>
-                @endif
-            </div>
-        @endif
-    </article>
+    <main class="row">
+        <div class="col-12">
+            @if (isset($game))
+                <h1 class="text-center my-5">{{ $game->name }}</h1>
+                @php
+                    $dataGame = [
+                        'game' => $game,
+                        'gamePictures' => $gamePictures,
+                    ];
+                @endphp
+                <div class="game-pictures position-relative" data-json='@json($dataGame)'></div>
+            @endif
+        </div>
+    </main>
 @endsection

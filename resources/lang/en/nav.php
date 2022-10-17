@@ -21,9 +21,10 @@ return [
     "search_title" => "Type a video game name",
     "search_btn" => "Clear the search",
     "no_result" => "No results matching your search",
-    "btn-theme" => "Change the theme of the website",
-    "btn-connect" => "Access to the back-office",
-    "btn-github" => "Access to the code on github",
-    "btn-top" => "Back to top",
-    "list_game" => "Showing the image(s) from the :game video game"
+    "btn_theme_dark" => "Dark",
+    "btn_theme_light" => "Light",
+    "btn_theme_neon" => "Neon",
+    "btn_connect" => "Access to the back-office",
+    "btn_github" => "Access to the code on github",
+    "list_game" => "Showing the :number image(s) from the :game video game"
 ];

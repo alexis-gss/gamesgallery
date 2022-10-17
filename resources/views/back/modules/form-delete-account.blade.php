@@ -13,7 +13,7 @@
                         novalidate>
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">
+                        <button class="btn btn-sm btn-danger" type="submit">
                             <span>{{ __('list.delete_user') }}</span>
                         </button>
                     </form>

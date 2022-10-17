@@ -14,7 +14,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control"
+                        class="form-control need-word-counter"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $folder->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}*</small>

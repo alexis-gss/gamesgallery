@@ -6,7 +6,10 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="container position-relative bg-first light-theme">
+    <!-- Navigation -->
+    @include('front.layouts.nav')
+
     <!-- Main content -->
     @yield('content')
 

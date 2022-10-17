@@ -8,9 +8,7 @@
             class="text-reset text-decoration-none">
             {{ $name }}
         </a>
-        -
-        v{{ $version }}
-        -
+        - v2.1 -
         <span class="text-reset">
             {{ config('app.name') }}
         </span>

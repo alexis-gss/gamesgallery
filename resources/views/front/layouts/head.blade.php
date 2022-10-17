@@ -22,9 +22,6 @@
 <link rel="icon" type="image/png" href="{{ asset('assets/icons/pictures.png') }}" />
 <link rel="canonical" href="{{ url()->current() }}" />
 
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100;700&display=swap" rel="stylesheet" />
-
 <!-- Styles -->
 <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
 

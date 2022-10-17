@@ -14,7 +14,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control"
+                        class="form-control need-word-counter"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $user->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}</small>
@@ -31,7 +31,7 @@
                     <input type="text"
                         id="email"
                         name="email"
-                        class="form-control"
+                        class="form-control need-word-counter"
                         placeholder="{{ __('form.email') }}"
                         value="{{ old('email', $user->email ?? '') }}">
                     <small class="text-muted">{{ __('form.email_label') }}</small>
@@ -121,7 +121,7 @@
                     <input type="text"
                         id="password"
                         name="password"
-                        class="form-control"
+                        class="form-control need-word-counter"
                         placeholder="{{ __('form.password') }}"
                         value="{{ old('password') }}">
                     <small class="text-muted">{{ __('form.password_label') }}</small>
@@ -138,7 +138,7 @@
                     <input type="text"
                         id="password_confirmation"
                         name="password_confirmation"
-                        class="form-control"
+                        class="form-control need-word-counter"
                         placeholder="{{ __('form.confirm') }}"
                         value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}">
                     <small class="text-muted">{{ __('form.confirmation_label') }}</small>

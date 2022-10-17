@@ -1,31 +1,24 @@
 // Themes.
 .dark-theme {
     --color-first: #212529;
-    --color-second: #949494;
+    --color-second: #555;
     --color-third: #fff;
 }
 
 .light-theme {
     --color-first: #fff;
-    --color-second: #949494;
+    --color-second: #555;
     --color-third: #212529;
+    --color-fourth: #212529cc;
+    --color-fifth: #ffae00;
 }
 
-// Fonts.
-$font-family: "Antonio", sans-serif;
-$font-light: 100;
-$font-heavy: 700;
-$font-size: 20px;
-
-// Dimensions front.
-$fo-body-padding: 10vw;
-$fo-header-width: 24rem;
-$fo-footer-height: 10rem;
-
-// Dimensions back.
+// Dimensions.
 $bo-header-height: 56px;
 $bo-footer-height: 40px;
+$fo-footer-height: 10rem;
+$fo-menu-height: 30rem;
 
-// Others.
-$transition-time: 0.2s;
-
+// Others:
+$time-transition-global: 0.3s ease;
+$time-transition-arrow: 0.1s ease;

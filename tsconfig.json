@@ -1,4 +1,5 @@
 {
+    "sourceMap": true,
     "compilerOptions": {
         "target": "esnext",
         "lib": ["es5", "es6", "es2021", "dom", "dom.iterable"],
@@ -10,5 +11,6 @@
     },
     "include": ["resources/**/*.js", "resources/**/*.ts", "resources/**/*.vue"],
     "exclude": ["node_modules"],
-    "compileOnSave": false
+    "compileOnSave": false,
+    "experimentalDecorators": true
 }

@@ -1,7 +1,7 @@
 // ADD BOOTSTRAP SPACING
 $spacers-override: (
     6: $spacer * 6,
-    10: $spacer * 10,
+    7: $spacer * 10,
 );
 $spacers: map-merge($spacers-override, $spacers);
 

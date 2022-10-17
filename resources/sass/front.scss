@@ -1,4 +1,5 @@
 // LIBS.
+@import "./libs/aos";
 @import "./libs/bootstrap";
 
 // UTILITIES.
@@ -8,9 +9,8 @@
 
 // BASE.
 @import "./fo/base/utils";
-@import "./fo/base/general";
+@import "./fo/base/common";
 
 // PARTIALS.
-@import "./fo/partials/header";
-@import "./fo/partials/article";
+@import "./fo/partials/nav";
 @import "./fo/partials/footer";
