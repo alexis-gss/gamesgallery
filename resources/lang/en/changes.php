@@ -8,6 +8,7 @@ return [
     'deletion_associated' => 'Game(s) are still associated with this folder !',
     'game_created' => 'Game created !',
     'folder_created' => 'Folder created !',
+    'tag_created' => 'Tag created !',
     'user_created' => 'User created !',
     'order_changed' => 'The order has been changed !',
     'order_not_changed' => 'The order could not be changed !'

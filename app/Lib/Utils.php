@@ -4,7 +4,9 @@ namespace App\Lib;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 /**
  * Some utilities methods
@@ -156,5 +158,83 @@ class Utils
         // * ".file-name.-" becomes "file-name"
         $filename = trim($filename, '.-');
         return $filename;
+    }
+
+    /**
+     * Asserts that the field is unique
+     *
+     * @param string        $table
+     * @param string        $field
+     * @param mixed         $value
+     * @param integer|null  $id
+     * @param callable|null $query
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException If the field is not unique.
+     */
+    public static function assertFieldIsUnique(
+        string $table,
+        string $field,
+        $value,
+        ?int $id = null,
+        ?callable $query = null
+    ) {
+        if (!$query) {
+            Validator::make([$field => $value], [
+                self::mbReplace('.', '\.', $field) => Rule::unique($table, $field)->ignore($id),
+            ], [
+                self::mbReplace('.', '\.', "{$field}.unique")
+                => trans('La valeur :value pour le champ :attribute est déjà utilisé', [
+                    'attribute' => $field,
+                    'value' => $value
+                ])
+            ])->validate();
+            return;
+        }
+        Validator::make([$field => $value], [
+            $field => Rule::unique($table)->where($query)->ignore($id),
+        ], [
+            $field . '.unique' => trans('La valeur pour le champ :attribute est déjà utilisé', [
+                'attribute' => $field
+            ])
+        ])->validate();
+    }
+
+    /**
+     * Mutltibyte string replace
+     * @param mixed   $search
+     * @param mixed   $replace
+     * @param mixed   $subject
+     * @param integer $count
+     * @return mixed
+     */
+    public static function mbReplace($search, $replace, $subject, int &$count = 0)
+    {
+        if (!is_array($search) && is_array($replace)) {
+            return false;
+        }
+        if (is_array($subject)) {
+            // Call mb_replace for each single string in $subject .
+            foreach ($subject as &$string) {
+                $string = &self::mbReplace($search, $replace, $string, $count);
+            }
+        } elseif (is_array($search)) {
+            if (!is_array($replace)) {
+                foreach ($search as &$string) {
+                    $subject = self::mbReplace($string, $replace, $subject, $count);
+                }
+            } else {
+                $n = max(count($search), count($replace));
+                while ($n--) {
+                    $subject = self::mbReplace(current($search), current($replace), $subject, $count);
+                    next($search);
+                    next($replace);
+                }
+            }
+        } else {
+            $parts   = mb_split(preg_quote($search), $subject);
+            $count   = count($parts) - 1;
+            $subject = implode($replace, $parts);
+        } //end if
+        return $subject;
     }
 }

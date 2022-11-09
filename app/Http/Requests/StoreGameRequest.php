@@ -30,7 +30,11 @@ class StoreGameRequest extends FormRequest
             'pictures' => 'sometimes|array',
             'pictures.*' => 'required|mimes:' . config('images.format') .
                 '|dimensions:max_width=' . config('images.maxwidth') .
-                ',max_height=' . config('images.maxheight')
+                ',max_height=' . config('images.maxheight'),
+            'tags' => 'sometimes|array',
+            'tags.*' => 'required|array',
+            'tags.*.id' => 'required|numeric|exists:tags,id|distinct',
+            'tags.*.name' => 'required|string',
         ];
     }
 }

@@ -1,3 +1,6 @@
+#### **11.09.22 ► v2.2**
+- Adding tags for games.
+
 #### **10.10.22 ► v2.1**
 - Adding a users administration.
 

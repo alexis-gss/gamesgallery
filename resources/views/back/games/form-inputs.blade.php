@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
             <legend>{{ __('form.visuals') }}</legend>
@@ -82,6 +82,29 @@
                         @include('back.modules.input-error', ['inputName' => 'picture'])
                     </div>
                 @endif
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <fieldset class="p-3">
+            <legend>{{ __('form.general_informations') }}</legend>
+            <div class="row mb-3">
+                <div class="col-12 col-md-6 form-group">
+                    @php
+                        $data = [
+                            'name' => 'tags',
+                            'value' => old('tags', $game->tags ?? []),
+                            'tags' => $tags,
+                        ];
+                    @endphp
+                    <div id="taggable-dropdown" data-json='@json($data)'></div>
+                    @include('back.modules.input-error', [
+                        'inputName' => 'tags', 'helperId' => 'gameTagsHelp' , 'helper' => __('Les étiquettes associées à l\'article')
+                    ])
+                </div>
             </div>
         </fieldset>
     </div>

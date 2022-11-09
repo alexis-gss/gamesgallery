@@ -26,6 +26,9 @@
 
     <!-- Footer -->
     @include('back.layouts.footer')
+
+    <!-- Other -->
+    @include('back.modules.window-system')
 </body>
 
 </html>

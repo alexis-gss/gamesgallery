@@ -7,8 +7,9 @@ use App\Http\Requests\StoreFolderRequest;
 use App\Models\Folder;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class FoldersController extends Controller
+class FolderController extends Controller
 {
     use ChangesModelOrder;
 
@@ -53,12 +54,17 @@ class FoldersController extends Controller
      */
     public function store(StoreFolderRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $folder        = new Folder($request->validated());
-        $folder->order = $this->getLastOrder();
-        $folder->saveOrFail();
+        return DB::transaction(function () use ($request) {
+            $folder = new Folder();
+            $folder->fill($request->validated());
+            $folder->order = $this->getLastOrder();
 
-        return redirect()->route('bo.folders.edit', $folder->id)
-            ->with('success', trans(__('changes.folder_created')));
+            if ($folder->saveOrFail()) {
+                return redirect()->route('bo.folders.edit', $folder->id)
+                    ->with('success', trans(__('changes.folder_created')));
+            }
+            return back();
+        });
     }
 
     /**
@@ -82,14 +88,16 @@ class FoldersController extends Controller
      */
     public function update(StoreFolderRequest $request, Folder $folder): \Illuminate\Http\RedirectResponse
     {
-        $folder->fill($request->validated());
+        return DB::transaction(function () use ($request, $folder) {
+            $folder->fill($request->validated());
 
-        if (!$folder->saveOrFail()) {
+            if ($folder->saveOrFail()) {
+                return redirect()->route('back.folders.edit', $folder->id)
+                    ->with('success', trans(__('changes.saved')));
+            }
             return redirect()->route('back.folders.edit', $folder->id)
                 ->with('error', trans(__('changes.modification_failed')));
-        }
-        return redirect()->route('back.folders.edit', $folder->id)
-            ->with('success', trans(__('changes.saved')));
+        });
     }
 
     /**
@@ -101,12 +109,12 @@ class FoldersController extends Controller
     public function destroy(Folder $folder): \Illuminate\Http\RedirectResponse
     {
         if (count($folder->games) === 0) {
-            if (!$folder->delete()) {
+            if ($folder->deleteOrFail()) {
                 return redirect()->back()
-                    ->with('error', trans('changes.deletion_failed'));
+                    ->with('success', trans('changes.deletion_successful'));
             }
             return redirect()->back()
-                ->with('success', trans('changes.deletion_successful'));
+                ->with('error', trans('changes.deletion_failed'));
         } else {
             return redirect()->back()
                 ->with('error', trans('changes.deletion_associated'));

@@ -1,0 +1,48 @@
+// * TAGS COMPONENT STYLE
+.vue-tags-input {
+    max-width: 100% !important;
+}
+
+.ti- {
+    &autocomplete {
+        max-height: 10rem !important;
+        border-radius: 0.375rem;
+        box-shadow: 0 0 4px var(--bs-gray-400);
+        overflow-y: auto !important;
+    }
+
+    &input {
+        padding: 0.375rem !important;
+        border-radius: 0.375rem;
+    }
+
+
+    &tags {
+        line-height: inherit !important;
+    }
+
+    &tag,
+    &new-tag-input-wrapper {
+        padding: 0.1rem !important;
+        margin: 0.1rem !important;
+    }
+
+    &new-tag-input-wrapper {
+        font-size: 1em !important;
+
+        input {
+            min-width: 70px !important;
+        }
+    }
+
+    &tag {
+        padding: 0.1rem 0.3rem !important;
+        background-color: var(--bs-blue) !important;
+        border-radius: 0.375rem !important;
+    }
+
+    &selected-item {
+        background-color: var(--bs-gray-300) !important;
+        color: var(--bs-gray-900) !important;
+    }
+}

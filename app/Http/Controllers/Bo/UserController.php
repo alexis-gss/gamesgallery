@@ -8,9 +8,9 @@ use App\Models\User;
 use App\Traits\Controllers\HasPicture;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     use ChangesModelOrder;
     use HasPicture;
@@ -56,15 +56,20 @@ class UsersController extends Controller
      */
     public function store(StoreUserRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $user              = new User($request->validated());
-        $user->picture_alt = "Picture for the " . $user->name . " account";
-        $user->slug        = str_slug($user->name);
-        $user->order       = $this->getLastOrder();
-        $this->storePictures($request, $user);
-        $user->saveOrFail();
+        return DB::transaction(function () use ($request) {
+            $user = new User();
+            $user->fill($request->validated());
+            $user->picture_alt = "Picture for the " . $user->name . " account";
+            $user->slug        = str_slug($user->name);
+            $user->order       = $this->getLastOrder();
+            $this->storePictures($request, $user);
 
-        return redirect()->route('bo.users.edit', $user->id)
-            ->with('success', trans(__('changes.user_created')));
+            if ($user->saveOrFail()) {
+                return redirect()->route('bo.users.edit', $user->id)
+                    ->with('success', trans(__('changes.user_created')));
+            }
+            return back();
+        });
     }
 
     /**
@@ -88,16 +93,18 @@ class UsersController extends Controller
      */
     public function update(StoreUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
-        $user->fill($request->validated());
-        $user->picture_alt = "Picture for the " . $user->name . " account";
-        $user->slug        = str_slug($user->name);
+        return DB::transaction(function () use ($request, $user) {
+            $user->fill($request->validated());
+            $user->picture_alt = "Picture for the " . $user->name . " account";
+            $user->slug        = str_slug($user->name);
 
-        if (!$user->saveOrFail()) {
+            if ($user->saveOrFail()) {
+                return redirect()->route('bo.users.edit', $user->id)
+                    ->with('success', trans(__('changes.saved')));
+            }
             return redirect()->route('bo.users.edit', $user->id)
-            ->with('error', trans(__('changes.modification_failed')));
-        }
-        return redirect()->route('bo.users.edit', $user->id)
-            ->with('success', trans(__('changes.saved')));
+                ->with('error', trans(__('changes.modification_failed')));
+        });
     }
 
     /**
@@ -110,12 +117,12 @@ class UsersController extends Controller
     {
         $this->deleteFolder($user);
 
-        if (!$user->delete()) {
-            return redirect()->back()
-                ->with('error', trans('changes.deletion_failed'));
+        if ($user->deleteOrFail()) {
+            return redirect()->route('bo.users.index')
+                ->with('success', trans('changes.deletion_successful'));
         }
-        return redirect()->route('bo.users.index')
-            ->with('success', trans('changes.deletion_successful'));
+        return redirect()->back()
+            ->with('error', trans('changes.deletion_failed'));
     }
 
     /**
