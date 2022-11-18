@@ -87,6 +87,7 @@ class FrontController extends Controller
                 $array = array_merge($array, [$game->name => [$game]]);
             }
         }
+        ksort($array);
         return $array;
     }
 }

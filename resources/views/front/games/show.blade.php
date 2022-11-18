@@ -7,7 +7,7 @@
     <main class="row">
         <div class="col-12">
             @if (isset($game))
-                <h1 class="text-center my-5">{{ $game->name }}</h1>
+                {{-- <h1 class="text-center my-5">{{ $game->name }}</h1> --}}
                 @php
                     $dataGame = [
                         'game' => $game,

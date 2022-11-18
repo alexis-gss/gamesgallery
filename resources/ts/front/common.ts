@@ -14,7 +14,6 @@ const V = {
     menuGames: HTMLDivElement.prototype,
     menuOptions: HTMLDivElement.prototype,
     btnGames: HTMLButtonElement.prototype,
-    btnOptions: HTMLButtonElement.prototype,
     btnScroll: HTMLButtonElement.prototype,
 
     init: function () {
@@ -28,16 +27,12 @@ const V = {
             ".nav-options"
         ) as HTMLDivElement;
         V.btnGames = document.querySelector(".btn-games") as HTMLButtonElement;
-        V.btnOptions = document.querySelector(
-            ".btn-options"
-        ) as HTMLButtonElement;
         V.btnScroll = document.querySelector(
             ".btn-scroll"
         ) as HTMLButtonElement;
     },
     events: function () {
         V.btnGames.addEventListener("click", V.displayMenuGames);
-        V.btnOptions.addEventListener("click", V.displayMenuOptions);
         V.btnScroll.addEventListener("click", V.scrollToTheTop);
     },
     displayMenuGames: function () {

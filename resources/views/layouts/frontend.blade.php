@@ -15,6 +15,9 @@
 
     <!-- Footer -->
     @include('front.layouts.footer')
+
+    <!-- Other -->
+    @include('front.modules.window-system')
 </body>
 
 </html>
