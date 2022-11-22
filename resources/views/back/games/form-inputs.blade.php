@@ -55,7 +55,7 @@
                         class="form-control mb-1"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('form.select_images') }}" multiple>
+                        title="{{ __('form.tooltip_game_images') }}" multiple>
                     <small class="text-muted">{{ __('form.images_label', [
                             'format' => Config::get('images.format'),
                             'width' => Config::get('images.maxwidth'),
