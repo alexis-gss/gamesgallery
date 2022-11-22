@@ -81,9 +81,9 @@ class GameController extends Controller
             if ($game->saveOrFail()) {
                 $game->tags()->sync(collect($request->tags)->pluck('id'));
                 return redirect()->route('bo.games.edit', $game->id)
-                    ->with('success', trans(__('changes.game_created')));
+                ->with('success', trans(__('changes.creation_saved')));
             }
-            return back();
+            return back()->with('success', trans(__('changes.creation_failed')));
         });
     }
 
@@ -121,7 +121,7 @@ class GameController extends Controller
 
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game->id)
-                    ->with('success', trans(__('changes.saved')));
+                ->with('success', trans(__('changes.modification_saved')));
             }
             return redirect()->route('bo.games.edit', $game->id)
                 ->with('error', trans(__('changes.modification_failed')));

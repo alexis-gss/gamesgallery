@@ -61,9 +61,9 @@ class FolderController extends Controller
 
             if ($folder->saveOrFail()) {
                 return redirect()->route('bo.folders.edit', $folder->id)
-                    ->with('success', trans(__('changes.folder_created')));
+                ->with('success', trans(__('changes.creation_saved')));
             }
-            return back();
+            return back()->with('error', trans(__('changes.creation_failed')));
         });
     }
 
@@ -93,7 +93,7 @@ class FolderController extends Controller
 
             if ($folder->saveOrFail()) {
                 return redirect()->route('back.folders.edit', $folder->id)
-                    ->with('success', trans(__('changes.saved')));
+                ->with('success', trans(__('changes.modification_saved')));
             }
             return redirect()->route('back.folders.edit', $folder->id)
                 ->with('error', trans(__('changes.modification_failed')));

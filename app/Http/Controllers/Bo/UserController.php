@@ -66,9 +66,9 @@ class UserController extends Controller
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)
-                    ->with('success', trans(__('changes.user_created')));
+                ->with('success', trans(__('changes.creation_saved')));
             }
-            return back();
+            return back()->with('success', trans(__('changes.creation_failed')));
         });
     }
 
@@ -100,7 +100,7 @@ class UserController extends Controller
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)
-                    ->with('success', trans(__('changes.saved')));
+                ->with('success', trans(__('changes.modification_saved')));
             }
             return redirect()->route('bo.users.edit', $user->id)
                 ->with('error', trans(__('changes.modification_failed')));

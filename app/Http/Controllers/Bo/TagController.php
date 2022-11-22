@@ -62,9 +62,9 @@ class TagController extends Controller
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag->id)
-                    ->with('success', trans(__('changes.tag_created')));
+                ->with('success', trans(__('changes.creation_saved')));
             }
-            return back();
+            return back()->with('success', trans(__('changes.creation_failed')));
         });
     }
 
@@ -111,7 +111,7 @@ class TagController extends Controller
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('back.tags.edit', $tag->id)
-                    ->with('success', trans(__('changes.saved')));
+                ->with('success', trans(__('changes.modification_saved')));
             }
             return redirect()->route('back.tags.edit', $tag->id)
                 ->with('error', trans(__('changes.modification_failed')));
