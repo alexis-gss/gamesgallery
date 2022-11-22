@@ -1,5 +1,5 @@
 <template>
-  <div class="taggableDropdown">
+  <div class="taggableDropdown user-select-none">
     <div v-if="errorMessages.length">
       <span
         class="d-block text-danger"
