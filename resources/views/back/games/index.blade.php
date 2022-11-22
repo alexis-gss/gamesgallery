@@ -51,10 +51,10 @@
         @if (count($games) > 0)
             <thead>
                 <tr>
-                    <th scope="col" class="col-4">{{ __('list.name') }}</th>
-                    <th scope="col" class="col-4">{{ __('list.folder_associated') }}</th>
-                    <th scope="col" class="col-4">{{ __('list.tags') }}</th>
-                    <th scope="col" class="col-2">{{ __('list.images') }}</th>
+                    <th scope="col" class="col-3">{{ __('list.name') }}</th>
+                    <th scope="col" class="col-3">{{ __('list.folder_associated') }}</th>
+                    <th scope="col" class="col-3">{{ __('list.tags') }}</th>
+                    <th scope="col" class="col-1">{{ __('list.images') }}</th>
                     @can('isAdmin')
                         @if (count($games) > 1)
                             <th scope="col" class="col-1">{{ __('list.order') }}</th>

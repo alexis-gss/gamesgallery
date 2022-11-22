@@ -9,9 +9,9 @@
         @method('PUT')
         @csrf
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
-            <h1 class="h2 m-0 fw-bold">
+            <h1 class="d-flex flex-row align-items-start h2 m-0 fw-bold">
                 <a href="{{ route('bo.folders.index') }}"
-                    class="btn btn-primary h2 text-decoration-none m-0"
+                    class="btn btn-primary text-decoration-none m-0"
                     data-bs="tooltip"
                     data-bs-placement="top"
                     title="{{ __('form.return_list') }}">
@@ -19,8 +19,10 @@
                         <path d="M9.375 233.4l128-128c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L109.3 224H480c17.69 0 32 14.31 32 32s-14.31 32-32 32H109.3l73.38 73.38c12.5 12.5 12.5 32.75 0 45.25c-12.49 12.49-32.74 12.51-45.25 0l-128-128C-3.125 266.1-3.125 245.9 9.375 233.4z" />
                     </svg>
                 </a>
-                {{ __('form.folder') }}
-                <small class="text-muted h4">{{ __('form.edition') }}</small>
+                <span class="ms-2">
+                    {{ __('form.folder') }}
+                    <small class="text-muted h4">{{ __('form.edition') }}</small>
+                </span>
             </h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <button type="submit"
