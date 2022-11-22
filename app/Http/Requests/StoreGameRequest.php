@@ -37,4 +37,22 @@ class StoreGameRequest extends FormRequest
             'tags.*.name' => 'required|string',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => trans('name of the game'),
+            'pictures' => trans('pictures of the game'),
+            'pictures.*' => trans('pictures of the game'),
+            'tags' => trans('tags of the game'),
+            'tags.*' => trans('tags of the game'),
+            'tags.*.id' => trans('tag\'s id'),
+            'tags.*.name' => trans('tag\'s name'),
+        ];
+    }
 }

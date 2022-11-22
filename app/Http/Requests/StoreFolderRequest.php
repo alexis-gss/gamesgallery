@@ -30,12 +30,14 @@ class StoreFolderRequest extends FormRequest
     }
 
     /**
-     * Get custom messages for validator errors.
+     * Get custom attributes for validator errors.
      *
      * @return array
      */
-    public function messages(): array
+    public function attributes(): array
     {
-        return [];
+        return [
+            'name' => trans('name of the folder')
+        ];
     }
 }

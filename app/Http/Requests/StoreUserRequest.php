@@ -33,4 +33,20 @@ class StoreUserRequest extends FormRequest
                 ',max_height=' . config('images.maxheight')
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => trans('name of the user'),
+            'email' => trans('email of the user'),
+            'role' => trans('role of the user'),
+            'password' => trans('password of the user'),
+            'picture' => trans('picture of the user')
+        ];
+    }
 }

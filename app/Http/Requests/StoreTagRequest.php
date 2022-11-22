@@ -50,8 +50,8 @@ class StoreTagRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name'),
-            'slug' => trans('slug')
+            'name' => trans('name of the tag'),
+            'slug' => trans('slug of the tag')
         ];
     }
 }
