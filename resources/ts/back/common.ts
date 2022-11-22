@@ -2,7 +2,12 @@ import { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
 import sweetalert from "../modules/sweetalert";
 
 window.addEventListener("DOMContentLoaded", () => {
-    let elements = document.getElementsByClassName("confirmDeleteTS");
+    /**
+     * Popup delete item.
+     */
+    let elements = document.getElementsByClassName(
+        "confirmDeleteTS"
+    ) as HTMLCollectionOf<Element>;
     for (const element of elements) {
         element.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -25,7 +30,12 @@ window.addEventListener("DOMContentLoaded", () => {
             return false;
         });
     }
-    elements = document.getElementsByClassName("confirmJS");
+    /**
+     * Popup confim.
+     */
+    elements = document.getElementsByClassName(
+        "confirmJS"
+    ) as HTMLCollectionOf<Element>;
     for (const element of elements) {
         if (!element.getAttribute("confirmJS")) {
             const el = element;
@@ -51,5 +61,26 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             })();
         }
+    }
+    /**
+     * Show/hide password.
+     */
+    elements = document.getElementsByClassName(
+        "passwordBtn"
+    ) as HTMLCollectionOf<Element>;
+    const inputPassword = document.getElementsByClassName(
+        "passwordInput"
+    ) as HTMLCollectionOf<HTMLInputElement>;
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener("click", function () {
+            for (const item of elements[i].children) {
+                item.classList.toggle("d-none");
+            }
+            if (inputPassword[i].type === "password") {
+                inputPassword[i].type = "text";
+            } else {
+                inputPassword[i].type = "password";
+            }
+        });
     }
 });

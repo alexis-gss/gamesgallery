@@ -118,12 +118,25 @@
                         </svg>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'password'])'></div>
-                    <input type="text"
-                        id="password"
-                        name="password"
-                        class="form-control need-word-counter"
-                        placeholder="{{ __('form.password') }}"
-                        value="{{ old('password') }}">
+                    <div class="input-group">
+                        <input type="password"
+                            id="password"
+                            name="password"
+                            class="form-control need-word-counter passwordInput"
+                            placeholder="{{ __('form.password') }}"
+                            value="{{ old('password') }}"
+                            aria-describedby="btn-password">
+                        <button class="btn btn-primary need-word-counter passwordBtn" type="button" id="btn-password">
+                            <svg width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            </svg>
+                            <svg width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill d-none" viewBox="0 0 16 16">
+                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                            </svg>
+                        </button>
+                    </div>
                     <small class="text-muted">{{ __('form.password_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'password'])
                 </div>
@@ -135,12 +148,25 @@
                         </svg>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'password_confirmation'])'></div>
-                    <input type="text"
-                        id="password_confirmation"
-                        name="password_confirmation"
-                        class="form-control need-word-counter"
-                        placeholder="{{ __('form.confirm') }}"
-                        value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}">
+                    <div class="input-group">
+                        <input type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            class="form-control need-word-counter passwordInput"
+                            placeholder="{{ __('form.confirm') }}"
+                            value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}"
+                            aria-describedby="btn-password-confirm">
+                        <button class="btn btn-primary need-word-counter passwordBtn" type="button" id="btn-password-confirm">
+                            <svg width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            </svg>
+                            <svg width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill d-none" viewBox="0 0 16 16">
+                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                            </svg>
+                        </button>
+                    </div>
                     <small class="text-muted">{{ __('form.confirmation_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'passwordConfirm'])
                 </div>

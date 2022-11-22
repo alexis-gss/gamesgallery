@@ -35,7 +35,7 @@ return [
     'role_label' => 'Choose a role among the list',
     'images_label' => 'Respect the format (.:format) and dimensions (max.) : :widthpx (width) x :heightpx (height)',
     'actual_images' => ':number image(s) saved',
-    'password_label' => 'Requires min. 8 characters',
+    'password_label' => 'Requires min. 8 characters, leave the field empty to keep the actual password',
     'confirmation_label' => 'Must be identical to the password',
     'action_irreversible' => 'This action is irreversible !',
     'folders_label' => 'Choose a folder among the list',
