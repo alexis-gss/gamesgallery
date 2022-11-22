@@ -80,7 +80,8 @@ class TagController extends Controller
             /** @var \App\Models\Tag */
             $tag = Tag::where('slug', Str::slug($request->name))->firstOrNew();
             $tag->fill($request->validated());
-            $saved = $tag->saveOrFail();
+            $tag->order = $this->getLastOrder();
+            $saved      = $tag->saveOrFail();
             return \response()->json($saved ? $tag->toArray() : [], $saved ? 200 : 500);
         });
     }
