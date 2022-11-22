@@ -35,6 +35,7 @@
         "stylelint": "^14.11.0",
         "stylelint-config-idiomatic-order": "^8.1.0",
         "stylelint-config-sass-guidelines": "^9.0.1",
+        "stylelint-config-standard-scss": "^6.1.0",
         "stylelint-webpack-plugin": "^3.3.0",
         "sweetalert2": "^11.4.23",
         "ts-loader": "^9.3.1",

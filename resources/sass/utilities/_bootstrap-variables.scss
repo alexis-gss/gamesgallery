@@ -1,20 +1,8 @@
-// ADD BOOTSTRAP SPACING
-$spacers-override: (
-    6: $spacer * 6,
-    7: $spacer * 10,
-);
-$spacers: map-merge($spacers-override, $spacers);
-
 // RESPONSIVE VARIABLES FOR BOOTSTRAP
+
 /**
  * FORMAT : 'class name' ('attribute(s) added') (key:values, key:values...),
  * EXAMPLE : 'w' ('width') (0:0%, 25:25%, 50:50%, 75:75%, 100:100%)
  * RESULT : .w-sm-25 { width: 25%; }  |  .w-md-100 { width: 100%; }  etc...
  */
-$targets: (
-    "w" ("width") (0:0%, 25:25%, 50:50%, 75:75%, 100:100%),
-    "h" ("height") (0:0%, 25:25%, 50:50%, 75:75%, 100:100%),
-    "opacity" ("opacity") (0:0, 25:0.25, 50:0.5, 75:0.75, 100:1),
-    "position" ("position") (relative:relative, absolute:absolute, fixed:fixed, sticky:sticky),
-    "text" ("text") (center:center, start:left, end:right)
-);
+$targets: ();

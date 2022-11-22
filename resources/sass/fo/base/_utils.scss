@@ -1,50 +1,60 @@
 .bg-first {
     @include bg-hover(var(--color-first));
+
     background-color: var(--color-first);
 }
 
 .bg-second {
     @include bg-hover(var(--color-second));
+
     background-color: var(--color-second);
 }
 
 .bg-third {
     @include bg-hover(var(--color-third));
+
     background-color: var(--color-third);
 }
 
 .bg-fourth {
     @include bg-hover(var(--color-fourth));
+
     background-color: var(--color-fourth);
 }
 
 .bg-fifth {
     @include bg-hover(var(--color-fifth));
+
     background-color: var(--color-fifth);
 }
 
 .text-first {
     @include text-hover(var(--color-first));
+
     color: var(--color-first) !important;
 }
 
 .text-second {
     @include text-hover(var(--color-second));
+
     color: var(--color-second) !important;
 }
 
 .text-third {
     @include text-hover(var(--color-third));
+
     color: var(--color-third) !important;
 }
 
 .text-fourth {
     @include text-hover(var(--color-fourth));
+
     color: var(--color-fourth) !important;
 }
 
 .text-fifth {
     @include text-hover(var(--color-fifth));
+
     color: var(--color-fifth) !important;
 }
 

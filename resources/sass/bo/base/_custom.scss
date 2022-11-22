@@ -10,7 +10,7 @@
         top: 0;
         right: 0;
         width: 5rem;
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);;
+        background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
     }
 }
 
@@ -25,7 +25,7 @@ svg {
 }
 
 .list-item:hover {
-    background-color: rgb(248, 249, 250) !important;
+    background-color: rgb(248 249 250) !important;
 }
 
 main {
@@ -37,7 +37,7 @@ main {
 }
 
 #footer {
-    box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    box-shadow: 0 -0.125rem 0.25rem rgb(0 0 0 / 7.5%) !important;
 }
 
 .profile-picture {
@@ -51,7 +51,7 @@ main {
 }
 
 .word-counter {
-    border: 1px solid rgb(196, 196, 196);
+    border: 1px solid rgb(196 196 196);
     border-bottom: 0;
     background-color: #fafafa;
     border-top-left-radius: 0.375rem;
