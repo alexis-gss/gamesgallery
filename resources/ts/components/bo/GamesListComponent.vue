@@ -148,8 +148,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import route from "../modules/route";
-import trans from "../modules/trans";
+import route from "../../modules/route";
+import trans from "../../modules/trans";
 import { Tooltip } from "bootstrap";
 
 export default defineComponent({

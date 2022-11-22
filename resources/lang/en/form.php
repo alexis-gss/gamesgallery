@@ -7,6 +7,7 @@ return [
     'return_list' => 'Return to the list',
     'game' => 'Game',
     'folder' => 'Folder',
+    'tag' => 'Tag',
     'user' => 'User',
     'save' => 'Save informations',
 

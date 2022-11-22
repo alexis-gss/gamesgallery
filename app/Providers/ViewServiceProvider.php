@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Game;
 use App\Models\Folder;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -33,13 +34,20 @@ class ViewServiceProvider extends ServiceProvider
         View::share('license', $appInfos->license);
 
         // Shares this data with all views.
-        if (Schema::hasTable('games') and Schema::hasTable('folders')) {
+        if (
+            Schema::hasTable('games') and
+            Schema::hasTable('folders') and
+            Schema::hasTable('tags') and
+            Schema::hasTable('users')
+        ) {
             $globalGames   = Game::orderBy('order', 'ASC')->get();
             $globalFolders = Folder::orderBy('order', 'ASC')->get();
             $globalUsers   = User::orderBy('order', 'ASC')->get();
+            $globalTags    = Tag::orderBy('order', 'ASC')->get();
             View::share('globalGames', $globalGames);
             View::share('globalFolders', $globalFolders);
             View::share('globalUsers', $globalUsers);
+            View::share('globalTags', $globalTags);
         }
     }
 }

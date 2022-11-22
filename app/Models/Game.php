@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Lib\Utils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class Game extends Model
 {
@@ -28,16 +30,6 @@ class Game extends Model
     ];
 
     /**
-     * Get the Folder that owns the Game.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function folder(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Folder::class);
-    }
-
-    /**
      * The "booted" method of the model.
      *
      * @return void
@@ -47,13 +39,17 @@ class Game extends Model
         parent::boot();
 
         static::updating(function (self $game) {
+            static::assertNameIsUnique($game->name, $game->id);
             $game->updateImages($game);
         });
 
         static::deleting(function (self $game) {
+            static::assertNameIsUnique($game->name, $game->id);
             $game->updateImages($game);
         });
     }
+
+    // * METHODS
 
     /**
      * Remove old images.
@@ -72,5 +68,42 @@ class Game extends Model
                 File::delete($oldImage);
             }
         }
+    }
+
+    /**
+     * Asserts using validation that the name is unique
+     *
+     * @param mixed        $name
+     * @param integer|null $id
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException If a tag name already exists.
+     */
+    private static function assertNameIsUnique($name, ?int $id = null)
+    {
+        $table = (new self())->getTable();
+        Utils::assertFieldIsUnique($table, 'name', $name, $id);
+        Utils::assertFieldIsUnique($table, 'slug', Str::slug($name), $id);
+    }
+
+    // * RELATIONSHIPS
+
+    /**
+     * Get the Folder that owns the Game.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function folder(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    /**
+     * MorphToMany tags relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

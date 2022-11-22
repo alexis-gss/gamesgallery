@@ -11,6 +11,8 @@ return [
     'all_folders_desc' => 'Listing of all folder.',
     'all_users' => 'All users',
     'all_users_desc' => 'Listing of all user.',
+    'all_tags' => 'All tags',
+    'all_tags_desc' => 'Listing of all tag.',
     'games_creation' => 'Creating a game',
     'games_creation_desc' => 'Form for entering information to create a new video game.',
     'games_edition' => 'Editing a game',
@@ -22,5 +24,9 @@ return [
     'users_creation' => 'Creating a user',
     'users_creation_desc' => 'Form for entering information to create a new user.',
     'users_edition' => 'Editing a user',
-    'users_edition_desc' => 'Editing information of a previously saved user.'
+    'users_edition_desc' => 'Editing information of a previously saved user.',
+    'tags_creation' => 'Creating a tag',
+    'tags_creation_desc' => 'Form for entering information to create a new tag.',
+    'tags_edition' => 'Editing a tag',
+    'tags_edition_desc' => 'Editing information of a previously saved tag.'
 ];

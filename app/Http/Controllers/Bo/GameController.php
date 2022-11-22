@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
+use App\Models\Tag;
 use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class GamesController extends Controller
+class GameController extends Controller
 {
     use ChangesModelOrder;
     use HasPicture;
@@ -32,16 +34,16 @@ class GamesController extends Controller
         $query  = Game::when($search, function ($query) use ($search) {
             $query->where('name', 'LIKE', '%' . $search . '%');
         })
-        ->when($filter, function ($query) use ($filter) {
-            if ($filter === "no_associated_folder") {
-                $query->whereNull('folder_id');
-            } elseif (strlen($filter) > 0) {
-                $query->where('folder_id', $filter);
-            }
-        });
+            ->when($filter, function ($query) use ($filter) {
+                if ($filter === "no_associated_folder") {
+                    $query->whereNull('folder_id');
+                } elseif (strlen($filter) > 0) {
+                    $query->where('folder_id', $filter);
+                }
+            });
 
         $games = $query->orderBy('order', 'ASC')
-        ->paginate(12);
+            ->paginate(12);
 
         return view('back.games.index', compact('games', 'search', 'filter'));
     }
@@ -55,7 +57,9 @@ class GamesController extends Controller
      */
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
-        return view('back.games.create', compact('game'));
+        /** @var \Illuminate\Database\Eloquent\Collection */
+        $tags = Tag::query()->select(['id', 'name', 'slug'])->get();
+        return view('back.games.create', compact('game', 'tags'));
     }
 
     /**
@@ -66,15 +70,21 @@ class GamesController extends Controller
      */
     public function store(StoreGameRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $game               = new Game($request->validated());
-        $game->pictures_alt = "Image of the " . $game->name . " game";
-        $game->slug         = str_slug($game->name);
-        $game->order        = $this->getLastOrder();
-        $this->storePictures($request, $game);
-        $game->saveOrFail();
+        return DB::transaction(function () use ($request) {
+            $game = new Game();
+            $game->fill($request->validated());
+            $game->pictures_alt = "Image of the " . $game->name . " game";
+            $game->slug         = str_slug($game->name);
+            $game->order        = $this->getLastOrder();
+            $this->storePictures($request, $game);
 
-        return redirect()->route('bo.games.edit', $game->id)
-            ->with('success', trans(__('changes.game_created')));
+            if ($game->saveOrFail()) {
+                $game->tags()->sync(collect($request->tags)->pluck('id'));
+                return redirect()->route('bo.games.edit', $game->id)
+                    ->with('success', trans(__('changes.game_created')));
+            }
+            return back();
+        });
     }
 
     /**
@@ -86,7 +96,11 @@ class GamesController extends Controller
      */
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {
-        return view('back.games.edit', compact('game'));
+        /** @var \Illuminate\Database\Eloquent\Collection */
+        $tags = Tag::whereNotIn('id', $game->tags()->pluck('id'))
+            ->select(['id', 'name', 'slug'])->get();
+
+        return view('back.games.edit', compact('game', 'tags'));
     }
 
     /**
@@ -98,18 +112,20 @@ class GamesController extends Controller
      */
     public function update(StoreGameRequest $request, Game $game): \Illuminate\Http\RedirectResponse
     {
-        // Save new images.
-        $game->fill($request->validated());
-        $game->pictures_alt = "Image of the " . $game->name . " game";
-        $game->slug         = str_slug($game->name);
-        $this->storePictures($request, $game);
+        return DB::transaction(function () use ($request, $game) {
+            $game->fill($request->validated());
+            $game->pictures_alt = "Image of the " . $game->name . " game";
+            $game->slug         = str_slug($game->name);
+            $game->tags()->sync(collect($request->tags)->pluck('id'));
+            $this->storePictures($request, $game);
 
-        if (!$game->saveOrFail()) {
+            if ($game->saveOrFail()) {
+                return redirect()->route('bo.games.edit', $game->id)
+                    ->with('success', trans(__('changes.saved')));
+            }
             return redirect()->route('bo.games.edit', $game->id)
-            ->with('error', trans(__('changes.modification_failed')));
-        }
-        return redirect()->route('bo.games.edit', $game->id)
-            ->with('success', trans(__('changes.saved')));
+                ->with('error', trans(__('changes.modification_failed')));
+        });
     }
 
     /**
@@ -122,12 +138,12 @@ class GamesController extends Controller
     {
         $this->deleteFolder($game);
 
-        if (!$game->delete()) {
+        if ($game->deleteOrFail()) {
             return redirect()->back()
-                ->with('error', trans('changes.deletion_failed'));
+                ->with('success', trans('changes.deletion_successful'));
         }
         return redirect()->back()
-            ->with('success', trans('changes.deletion_successful'));
+            ->with('error', trans('changes.deletion_failed'));
     }
 
     /**

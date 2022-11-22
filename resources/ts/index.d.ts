@@ -1,6 +1,7 @@
 export {};
 
 import { AxiosStatic } from "axios";
+import type VueTagsInput from "@sipec/vue3-tags-input";
 
 // * Recursive List<string>
 type StringList = Record<PropertyKey, string>;
@@ -26,7 +27,13 @@ interface NestedModelInterface extends Model {}
 
 type NestedStringList = NestedStringListInterface | StringList | string;
 type NestedNumberList = NestedNumberListInterface | NumberList | number;
+type ModelList = Array<Model>;
+
 declare global {
+    type CustomTag = LaravelModel & VueTagsInput.ITag;
+    type LaravelModel = Model;
+    type LaravelModelList = ModelList;
+
     interface Window {
         axios: AxiosStatic;
         Swal: Function;

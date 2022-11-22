@@ -28,6 +28,15 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link @if (request()->routeIs('bo.tags.*')) active @endif"
+                href="{{ route('bo.tags.index') }}"
+                title="{{ __('nav.title_list_tags', ['tags' => count($globalTags)]) }}"
+                data-bs="tooltip"
+                data-bs-placement="bottom">
+                {{ __('nav.list_tags') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link @if (request()->routeIs('bo.users.*')) active @endif"
                 href="{{ route('bo.users.index') }}"
                 title="{{ __('nav.title_list_users', ['users' => count($globalUsers)]) }}"
