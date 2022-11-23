@@ -25,8 +25,8 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'email' => 'email:rfc,strict,dns,spoof,filter',
-            'role' => 'sometimes|nullable',
+            'email' => 'required|email:rfc,strict,dns,spoof,filter',
+            'role' => 'required|nullable',
             'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255',
             'picture' => 'sometimes|mimes:' . config('images.format') .
                 '|dimensions:max_width=' . config('images.maxwidth') .
