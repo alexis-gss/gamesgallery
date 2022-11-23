@@ -26,7 +26,12 @@
     </div>
     <form action="{{ request()->url() }}" enctype="multipart/form-data" id="search"
         class="d-flex flex-row input-group pt-3">
-        @include('back.modules.search', ['target' => 'search.search_game'])
+        <input class="form-control"
+            type="text"
+            placeholder="{{ __('search.search_game') }}"
+            id="search"
+            name="search"
+            value="{{ old('search', $search ?? '') }}">
         @include('back.modules.select-folder', ['type' => 'filter', 'target' => $filter])
         <button class="btn btn-primary"
             type="submit"
