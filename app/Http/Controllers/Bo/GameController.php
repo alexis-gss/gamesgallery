@@ -77,6 +77,9 @@ class GameController extends Controller
             $game->slug         = str_slug($game->name);
             $game->order        = $this->getLastOrder();
             $this->storePictures($request, $game);
+            if ($game->folder_id == "no_associated_folder") {
+                $game->folder_id = null;
+            };
 
             if ($game->saveOrFail()) {
                 $game->tags()->sync(collect($request->tags)->pluck('id'));
@@ -118,6 +121,9 @@ class GameController extends Controller
             $game->slug         = str_slug($game->name);
             $game->tags()->sync(collect($request->tags)->pluck('id'));
             $this->storePictures($request, $game);
+            if ($game->folder_id == "no_associated_folder") {
+                $game->folder_id = null;
+            };
 
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game->id)
