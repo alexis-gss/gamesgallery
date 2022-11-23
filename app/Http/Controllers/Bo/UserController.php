@@ -60,7 +60,6 @@ class UserController extends Controller
             $user = new User();
             $user->fill($request->validated());
             $user->picture_alt = "Picture for the " . $user->name . " account";
-            $user->slug        = str_slug($user->name);
             $user->order       = $this->getLastOrder();
             $this->storePictures($request, $user);
 
@@ -96,7 +95,6 @@ class UserController extends Controller
         return DB::transaction(function () use ($request, $user) {
             $user->fill($request->validated());
             $user->picture_alt = "Picture for the " . $user->name . " account";
-            $user->slug        = str_slug($user->name);
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)

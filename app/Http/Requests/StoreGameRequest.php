@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreGameRequest extends FormRequest
 {
@@ -18,6 +19,16 @@ class StoreGameRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge(['slug' => Str::slug(strip_tags($this->name))]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -27,6 +38,7 @@ class StoreGameRequest extends FormRequest
         return [
             'folder_id' => 'sometimes|nullable',
             'name' => 'required|string|min:3,max:255',
+            'slug' => 'required|string|min:3|max:255',
             'pictures' => 'sometimes|array',
             'pictures.*' => 'required|mimes:' . config('images.format') .
                 '|dimensions:max_width=' . config('images.maxwidth') .
@@ -47,6 +59,7 @@ class StoreGameRequest extends FormRequest
     {
         return [
             'name' => trans('name of the game'),
+            'slug' => trans('slug of the game'),
             'pictures' => trans('pictures of the game'),
             'pictures.*' => trans('pictures of the game'),
             'tags' => trans('tags of the game'),

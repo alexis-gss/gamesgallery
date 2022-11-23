@@ -74,7 +74,6 @@ class GameController extends Controller
             $game = new Game();
             $game->fill($request->validated());
             $game->pictures_alt = "Image of the " . $game->name . " game";
-            $game->slug         = str_slug($game->name);
             $game->order        = $this->getLastOrder();
             $this->storePictures($request, $game);
             if ($game->folder_id == "no_associated_folder") {
@@ -118,7 +117,6 @@ class GameController extends Controller
         return DB::transaction(function () use ($request, $game) {
             $game->fill($request->validated());
             $game->pictures_alt = "Image of the " . $game->name . " game";
-            $game->slug         = str_slug($game->name);
             $game->tags()->sync(collect($request->tags)->pluck('id'));
             $this->storePictures($request, $game);
             if ($game->folder_id == "no_associated_folder") {
