@@ -125,7 +125,8 @@
                             class="form-control need-word-counter passwordInput"
                             placeholder="{{ __('form.password') }}"
                             value="{{ old('password') }}"
-                            aria-describedby="btn-password">
+                            aria-describedby="btn-password"
+                            autocomplete="new-password">
                         <button class="btn btn-primary need-word-counter passwordBtn" type="button" id="btn-password">
                             <svg width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -155,7 +156,8 @@
                             class="form-control need-word-counter passwordInput"
                             placeholder="{{ __('form.confirm') }}"
                             value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}"
-                            aria-describedby="btn-password-confirm">
+                            aria-describedby="btn-password-confirm"
+                            autocomplete="new-password">
                         <button class="btn btn-primary need-word-counter passwordBtn" type="button" id="btn-password-confirm">
                             <svg width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
