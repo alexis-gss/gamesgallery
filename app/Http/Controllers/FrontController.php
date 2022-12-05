@@ -75,7 +75,7 @@ class FrontController extends Controller
     public function sortGamesArray(): array
     {
         $array = [];
-        $query = Game::orderBy('slug', 'ASC')->get();
+        $query = Game::where('status', 1)->orderBy('slug', 'ASC')->get();
         foreach ($query as $game) {
             if (!is_null($game->folder_id)) {
                 if (isset($array[$game->folder->name])) {

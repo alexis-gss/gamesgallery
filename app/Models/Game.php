@@ -17,7 +17,8 @@ class Game extends Model
         'folder_id',
         'name',
         'slug',
-        'pictures_alt'
+        'pictures_alt',
+        'status'
     ];
 
     /**
@@ -26,7 +27,8 @@ class Game extends Model
      * @var array
      */
     protected $casts = [
-        'pictures' => 'array'
+        'pictures' => 'array',
+        'status' => 'bool'
     ];
 
     /**

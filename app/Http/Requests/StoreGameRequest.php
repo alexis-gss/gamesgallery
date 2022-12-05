@@ -28,7 +28,10 @@ class StoreGameRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge(['slug' => Str::slug(strip_tags($this->name))]);
+        $this->merge([
+            'slug' => Str::slug(strip_tags($this->name)),
+            'status' => $this->status ? true : false
+        ]);
         $this->mergePictures('pictures');
     }
 
@@ -47,6 +50,7 @@ class StoreGameRequest extends FormRequest
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|numeric|exists:tags,id|distinct',
             'tags.*.name' => 'required|string',
+            'status' => 'required|boolean'
         ];
         return \array_merge($rules, $this->picturesRules('pictures'));
     }
@@ -67,6 +71,7 @@ class StoreGameRequest extends FormRequest
             'tags.*' => trans('tags of the game'),
             'tags.*.id' => trans('tag\'s id'),
             'tags.*.name' => trans('tag\'s name'),
+            'status' => trans('the game is published ?')
         ];
     }
 }

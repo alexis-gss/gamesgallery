@@ -59,7 +59,7 @@
                     <th scope="col" class="col-3">{{ __('list.role') }}</th>
                     @can('isAdmin')
                         @if (count($users) > 1)
-                            <th scope="col" class="col-1">{{ __('list.order') }}</th>
+                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -75,7 +75,7 @@
                         </td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
-                                <td class="align-middle">
+                                <td class="text-center align-middle">
                                     @if ($loop->first)
                                         <a href="{{ route('bo.users.change-order', ['user' => $user->id, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none"

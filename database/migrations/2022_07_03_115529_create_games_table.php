@@ -21,6 +21,7 @@ class CreateGamesTable extends Migration
             $table->string('slug')->unique()->comment('Slugify the name of the game.');
             $table->text('pictures')->nullable()->comment('Json who contains pictures, it can be also null.');
             $table->string('pictures_alt')->comment('Alt attribute of the images.');
+            $table->boolean('status')->comment('The game is published or not');
             $table->integer('order')->default(1);
             $table->timestamps();
         });

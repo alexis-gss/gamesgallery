@@ -58,7 +58,7 @@
                     <th scope="col" class="col-5">{{ __('list.name') }}</th>
                     @can('isAdmin')
                         @if (count($tags) > 1)
-                            <th scope="col" class="col-1">{{ __('list.order') }}</th>
+                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -70,7 +70,7 @@
                         <td class="align-middle">{{ $tag->name }}</td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
-                                <td class="align-middle">
+                                <td class="text-center align-middle">
                                     @if ($loop->first)
                                         <a href="{{ route('bo.tags.change-order', ['tag' => $tag->id, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none"

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
 use App\Models\Tag;
 use App\Traits\Controllers\HasPicture;
+use App\Traits\Controllers\UpdateModelStatus;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class GameController extends Controller
 {
     use ChangesModelOrder;
+    use UpdateModelStatus;
     use HasPicture;
 
     /**

@@ -38,6 +38,9 @@ Route::prefix('bo')
                                     Route::get('/games/change-order/{game}/{direction}', [GameController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('games.change-order');
+                                    // phpcs:ignore Generic.Files.LineLength.TooLong
+                                    Route::post('/games/{game}/change-published', [GameController::class, 'changePublished'])
+                                        ->name('games.change-published');
                                     Route::resource('games', GameController::class)->except('show');
 
                                     // phpcs:ignore Generic.Files.LineLength.TooLong

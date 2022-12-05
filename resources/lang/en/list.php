@@ -44,5 +44,8 @@ return [
     'no_games_found' => 'No games found',
     'no_folders_found' => 'No folders found',
     'no_users_found' => 'No users found',
-    'no_tags_found' => 'No tags found'
+    'no_tags_found' => 'No tags found',
+    'publishment' => 'Publishment',
+    'publish' => 'Publish',
+    'unpublish' => 'Unpublish'
 ];

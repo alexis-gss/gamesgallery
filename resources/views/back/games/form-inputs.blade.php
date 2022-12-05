@@ -87,7 +87,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
             <legend>{{ __('form.general_informations') }}</legend>
@@ -101,9 +101,25 @@
                         ];
                     @endphp
                     <div id="taggable-dropdown" data-json='@json($data)'></div>
-                    @include('back.modules.input-error', [
-                        'inputName' => 'tags', 'helperId' => 'gameTagsHelp' , 'helper' => __('Les étiquettes associées à l\'article')
-                    ])
+                    @include('back.modules.input-error', ['inputName' => 'tags'])
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <fieldset class="p-3">
+            <legend>{{ __('form.visibility') }}</legend>
+            <div class="row mb-3">
+                <div class="col-12 col-md-6 form-check form-switch">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" name="status" type="checkbox" value="1" id="flexSwitchCheckDefault" @if (old('status', $game->status ?? '')) checked @endif>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">{{ __('form.publish') }}</label>
+                    </div>
+                    <br>
+                    @include('back.modules.input-error', ['inputName' => 'status'])
                 </div>
             </div>
         </fieldset>

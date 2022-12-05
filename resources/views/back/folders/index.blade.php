@@ -59,7 +59,7 @@
                     <th scope="col" class="col-5">{{ __('list.games_associated') }}</th>
                     @can('isAdmin')
                         @if (count($folders) > 1)
-                            <th scope="col" class="col-1">{{ __('list.order') }}</th>
+                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -79,7 +79,7 @@
                         </td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
-                                <td class="align-middle">
+                                <td class="text-center align-middle">
                                     @if ($loop->first)
                                         <a href="{{ route('bo.folders.change-order', ['folder' => $folder->id, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none"

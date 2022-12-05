@@ -17,6 +17,7 @@ return [
     'visuals' => 'Visuals',
     'security' => 'Security',
     'account' => 'Account',
+    'visibility' => 'Visibility',
 
     // Subtitles.
     'identification' => 'Identification',
@@ -40,6 +41,7 @@ return [
     'confirmation_label' => 'Must be identical to the password',
     'action_irreversible' => 'This action is irreversible !',
     'folders_label' => 'Choose a folder among the list',
+    'publish' => 'Should be publish ?',
 
     // Inputs tooltip.
     'tooltip_name_folder' => 'Type the name of the folder',
