@@ -62,8 +62,6 @@ Route::prefix('bo')
                                 }
                             );
 
-                        Route::resource('users', UserController::class)->except('show');
-
                         Route::get('/', [BackController::class, 'index'])->name('homepage');
                         Route::get('/games', [GameController::class, 'index'])->name('games.index');
                         Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
