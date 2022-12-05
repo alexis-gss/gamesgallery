@@ -17,7 +17,7 @@
                         class="form-control need-word-counter"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $tag->name ?? '') }}">
-                    <small class="text-muted">{{ __('form.name_label') }}*</small>
+                    <small class="text-muted">{{ __('form.tag_label') }}*</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
             </div>

@@ -31,6 +31,7 @@ return [
 
     // Labels.
     'name_label' => 'Requires min. 3 characters',
+    'tag_label' => 'Requires min. 2 characters',
     'email_label' => 'Must be a valid email address',
     'role_label' => 'Choose a role among the list',
     'images_label' => 'Respect the format (.:format) and dimensions (max.) : :widthpx (width) x :heightpx (height)',
