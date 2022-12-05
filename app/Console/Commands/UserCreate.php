@@ -74,21 +74,17 @@ class UserCreate extends Command
         $this->role = null;
         $this->addRole();
 
-        $this->order = null;
-        $this->addOrder();
-
         $user = new User([
             'name' => $this->name,
             'slug' => str_slug($this->name),
             'email' => $this->email,
             'password' => $this->password,
-            'picture' => asset(\config('images.default')),
-            'role' => $this->role,
-            'order' => $this->order
+            'picture' => asset('assets/images/profile.jpg'),
+            'role' => $this->role
         ]);
         $user->saveOrFail();
 
-        $this->info('User created.');
+        $this->info('User created 👌');
 
         return 0;
     }
@@ -104,7 +100,7 @@ class UserCreate extends Command
             try {
                 $tmp       = $this->ask('Type the wanted user name', 'Visitor');
                 $validator = Validator::make(['name' => $tmp], [
-                    'name' => 'required|min:4,max:255'
+                    'name' => 'required|min:3|max:255'
                 ]);
                 $validator->validate();
                 $this->name = $tmp;
@@ -192,24 +188,6 @@ class UserCreate extends Command
                     \implode(',', collect($e->errors())->flatten()->all())
                 ));
                 continue;
-            } //end try
-        }; //end while
-    }
-
-    /**
-     * Add an order to the user.
-     *
-     * @return void
-     */
-    private function addOrder(): void
-    {
-        while (is_null($this->order)) {
-            try {
-                $maxOrder       = User::max('order');
-                $this->order = $maxOrder + 1;
-            } catch (ValidationException $e) {
-                $this->error(sprintf('Can\t define an order, please try again later'));
-                break;
             } //end try
         }; //end while
     }

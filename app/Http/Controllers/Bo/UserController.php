@@ -59,15 +59,13 @@ class UserController extends Controller
         return DB::transaction(function () use ($request) {
             $user = new User();
             $user->fill($request->validated());
-            $user->picture_alt = "Picture for the " . $user->name . " account";
-            $user->order       = $this->getLastOrder();
-            $this->storePictures($request, $user);
+            $this->storePicture($request, $user);
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)
                 ->with('success', trans(__('changes.creation_saved')));
             }
-            return back()->with('success', trans(__('changes.creation_failed')));
+            return back()->with('error', trans(__('changes.creation_failed')));
         });
     }
 
@@ -94,7 +92,7 @@ class UserController extends Controller
     {
         return DB::transaction(function () use ($request, $user) {
             $user->fill($request->validated());
-            $user->picture_alt = "Picture for the " . $user->name . " account";
+            $this->storePicture($request, $user);
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)
@@ -108,7 +106,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user): \Illuminate\Http\RedirectResponse
@@ -121,20 +119,5 @@ class UserController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
-    }
-
-    /**
-     * Get by order the last element of the list.
-     *
-     * @return integer
-     */
-    private function getLastOrder(): int
-    {
-        $order = User::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($order === null) {
-            return 1;
-        }
-        return $order->order + 1;
     }
 }

@@ -39,7 +39,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Logout trait
+     * Logout trait.
      *
      * @return \Illuminate\Http\RedirectResponse
      */

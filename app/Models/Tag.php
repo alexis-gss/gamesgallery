@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Lib\Utils;
+use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -24,7 +24,8 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'slug'
     ];
 
     /**
@@ -32,39 +33,67 @@ class Tag extends Model
      *
      * @return void
      */
-    protected static function booted()
+    protected static function booted(): void
     {
-        static::creating(function (Tag $tag) {
-            static::assertNameIsUnique($tag->name);
-            $tag->slug = Str::slug($tag->name);
+        static::creating(function (self $tag) {
+            static::setSlug($tag);
+            static::assertFieldIsUnique($tag->slug);
+            static::setOrder($tag);
         });
-        static::updating(function (Tag $tag) {
-            static::assertNameIsUnique($tag->name, $tag->id);
-            $tag->slug = Str::slug($tag->name);
+        static::updating(function (self $tag) {
+            static::assertFieldIsUnique($tag->slug, $tag->id);
         });
     }
 
     // * METHODS
 
     /**
-     * Asserts using validation that the name is unique
+     * Set the slug.
      *
-     * @param mixed        $name
+     * @param \Illuminate\Database\Eloquent\Model $tag
+     *
+     * @return void
+     */
+    private static function setSlug(Model $tag)
+    {
+        $tag->slug = Str::slug($tag->name);
+    }
+
+    /**
+     * Asserts using validation that the field is unique.
+     *
+     * @param string       $slug
      * @param integer|null $id
      * @return void
-     * @throws \Illuminate\Validation\ValidationException If a tag name already exists.
+     * @throws \Illuminate\Validation\ValidationException If field already exists.
      */
-    private static function assertNameIsUnique($name, ?int $id = null)
+    private static function assertFieldIsUnique(string $slug, ?int $id = null)
     {
         $table = (new self())->getTable();
-        Utils::assertFieldIsUnique($table, 'name', $name, $id);
-        Utils::assertFieldIsUnique($table, 'slug', Str::slug($name), $id);
+        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $id);
+    }
+
+    /**
+     * Set order after the last element of the list.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $tag
+     * @return void
+     */
+    public function setOrder(Model $tag): void
+    {
+        $lastTag = Tag::select('order')->orderBy('order', 'DESC')->first();
+
+        if ($lastTag === null) {
+            $tag->order = 1;
+        } else {
+            $tag->order = $lastTag->order + 1;
+        }
     }
 
     // * RELATIONSHIPS
 
     /**
-     * MorphToMany games relation
+     * MorphToMany games relation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 trait ChangesModelOrder
 {
     /**
-     * Change order
+     * Change order.
      *
      * @param \App\Http\Requests\UpdateChangeOrderRequest $request
      * @param integer                                     $modelId
@@ -49,6 +49,7 @@ trait ChangesModelOrder
             $tmp->saveOrFail();
             $model->saveOrFail();
             Session::flash('success', trans('changes.order_changed'));
+
             return back();
         });
     }

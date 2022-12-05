@@ -2,7 +2,7 @@
 
 namespace App\Traits\Controllers;
 
-use App\Lib\Utils;
+use App\Lib\Helpers\FileStorageHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ trait HasPicture
      */
     private function storePicture(Request $request, Model $model)
     {
-        $model->picture = Utils::storeImage($model, $request->picture);
+        $model->picture = FileStorageHelper::storeFile($model, $request->picture);
     }
 
     /**
@@ -33,7 +33,7 @@ trait HasPicture
             $model->pictures = [];
             $model->pictures = collect($request->pictures)
                 ->map(function ($picture) use ($model) {
-                    return Utils::storeImage($model, $picture);
+                    return FileStorageHelper::storeFile($model, $picture);
                 })->all();
         }
     }
@@ -46,6 +46,6 @@ trait HasPicture
      */
     private function deleteFolder(Model $model): void
     {
-        Utils::destroyFolder($model);
+        // !FIX: supression du dossier contenant les images
     }
 }

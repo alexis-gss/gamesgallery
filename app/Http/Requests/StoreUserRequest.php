@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\Requests\HasPicture;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
 class StoreUserRequest extends FormRequest
 {
+    use HasPicture;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,6 +28,7 @@ class StoreUserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge(['slug' => Str::slug(strip_tags($this->name))]);
+        $this->mergePicture('picture');
     }
 
     /**
@@ -34,16 +38,14 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|min:3',
+        $rules = [
+            'name' => 'required|string|min:3|max:255',
             'slug' => 'required|string|min:3|max:255',
             'email' => 'required|email:rfc,strict,dns,spoof,filter',
             'role' => 'required|nullable|numeric',
-            'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255',
-            'picture' => 'sometimes|mimes:' . config('images.format') .
-                '|dimensions:max_width=' . config('images.maxwidth') .
-                ',max_height=' . config('images.maxheight')
+            'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255'
         ];
+        return \array_merge($rules, $this->pictureRules('picture'));
     }
 
     /**
@@ -58,8 +60,9 @@ class StoreUserRequest extends FormRequest
             'slug' => trans('slug of the user'),
             'email' => trans('email of the user'),
             'role' => trans('role of the user'),
-            'password' => trans('password of the user'),
-            'picture' => trans('picture of the user')
+            'picture' => trans('picture of the user'),
+            'picture.*' => trans('picture of the user'),
+            'password' => trans('password of the user')
         ];
     }
 }

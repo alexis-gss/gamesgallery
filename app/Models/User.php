@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\Role;
-use App\Lib\Utils;
+use App\Lib\Helpers\ToolboxHelper;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -55,31 +57,34 @@ class User extends Authenticatable
      *
      * @return void
      */
-    protected static function boot(): void
+    protected static function booted(): void
     {
-        static::creating(function (User $user) {
-            $user->updateImage($user);
-            $user->updatePassword($user);
+        static::creating(function (self $user) {
+            static::setSlug($user);
+            static::assertFieldsAreUnique($user);
+            static::setAttributeAlt($user);
+            static::updatePassword($user);
+            static::setOrder($user);
         });
-
-        static::updating(function (User $user) {
-            $user->updateImage($user);
-            $user->updatePassword($user);
+        static::updating(function (self $user) {
+            static::assertFieldsAreUnique($user, $user->id);
+            static::setAttributeAlt($user);
+            static::updatePassword($user);
         });
-        parent::boot();
     }
 
+    // * METHODS
+
     /**
-     * Update images.
+     * Set the slug.
      *
-     * @param User $target
+     * @param \Illuminate\Database\Eloquent\Model $user
+     *
      * @return void
      */
-    private static function updateImage(User $target): void
+    private static function setSlug(Model $user)
     {
-        if ($target->picture) {
-            $target->picture = Utils::storeImage($target, $target->picture);
-        }
+        $user->slug = Str::slug($user->name);
     }
 
     /**
@@ -95,5 +100,44 @@ class User extends Authenticatable
         } else {
             $target->password = $target->getOriginal('password');
         }
+    }
+
+    /**
+     * Asserts using validation that the fields are unique.
+     *
+     * @param mixed        $model
+     * @param integer|null $id
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException If field already exists.
+     */
+    private static function assertFieldsAreUnique($model, ?int $id = null)
+    {
+        $table = (new self())->getTable();
+        ToolboxHelper::assertFieldIsUnique($table, 'slug', $model->slug, $id);
+        ToolboxHelper::assertFieldIsUnique($table, 'email', $model->email, $id);
+    }
+
+    /**
+     * Set 'alt' attribute for the profile picture.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $user
+     * @return void
+     */
+    public function setAttributeAlt(Model $user): void
+    {
+        $user->picture_alt = "Picture for the " . $user->name . " account";
+    }
+
+    /**
+     * Set order after the last element of the list.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $user
+     * @return void
+     */
+    public function setOrder(Model $user): void
+    {
+        $lastUser = User::select('order')->orderBy('order', 'DESC')->first();
+
+        ($lastUser == null) ? $user->order = 1 : $user->order = $lastUser->order + 1;
     }
 }

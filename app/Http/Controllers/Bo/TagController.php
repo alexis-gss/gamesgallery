@@ -58,13 +58,12 @@ class TagController extends Controller
         return DB::transaction(function () use ($request) {
             $tag = new Tag();
             $tag->fill($request->validated());
-            $tag->order = $this->getLastOrder();
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag->id)
                 ->with('success', trans(__('changes.creation_saved')));
             }
-            return back()->with('success', trans(__('changes.creation_failed')));
+            return back()->with('error', trans(__('changes.creation_failed')));
         });
     }
 
@@ -80,9 +79,11 @@ class TagController extends Controller
             /** @var \App\Models\Tag */
             $tag = Tag::where('slug', Str::slug($request->name))->firstOrNew();
             $tag->fill($request->validated());
-            $tag->order = $this->getLastOrder();
-            $saved      = $tag->saveOrFail();
-            return \response()->json($saved ? $tag->toArray() : [], $saved ? 200 : 500);
+
+            if ($tag->saveOrFail()) {
+                $saved = $tag->saveOrFail();
+                return \response()->json($saved ? $tag->toArray() : [], $saved ? 200 : 500);
+            }
         });
     }
 
@@ -111,10 +112,10 @@ class TagController extends Controller
             $tag->fill($request->validated());
 
             if ($tag->saveOrFail()) {
-                return redirect()->route('back.tags.edit', $tag->id)
+                return redirect()->route('bo.tags.edit', $tag->id)
                 ->with('success', trans(__('changes.modification_saved')));
             }
-            return redirect()->route('back.tags.edit', $tag->id)
+            return redirect()->route('bo.tags.edit', $tag->id)
                 ->with('error', trans(__('changes.modification_failed')));
         });
     }
@@ -133,20 +134,5 @@ class TagController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
-    }
-
-    /**
-     * Get by order the last element of the list.
-     *
-     * @return integer
-     */
-    private function getLastOrder(): int
-    {
-        $order = tag::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($order === null) {
-            return 1;
-        }
-        return $order->order + 1;
     }
 }

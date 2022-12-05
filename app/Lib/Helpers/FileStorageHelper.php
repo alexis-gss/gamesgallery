@@ -1,0 +1,420 @@
+<?php
+
+namespace App\Lib\Helpers;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+/**
+ *  * The storage strategy will be using date.
+ * The file name may contain sufix timestamp highresolution time (hrtime or microtime) if is duplicate.
+ * (function() { return time() . ' ' . Str::slug(microtime(true)) . ' ' . hrtime(true); })();
+ *
+ * posts/                                                 - The model table name
+ *   10/                                                  - Year
+ *     04/                                                - Month
+ *       19/                                              - Day
+ *         5f/                                            - First two letters of md5 file
+ *           black-cat-under-red-car.png                  - Slugified file name
+ *           black-cat-under-red-car-286071690833400.png  - Slugified file name that is duplicated
+ *
+ * The final path will be storage/modelfiles/posts/10/04/19/5f/black-cat-under-red-car-286071690833400.png
+ *
+ * ! No limits of file per folder will be handled.
+ */
+class FileStorageHelper
+{
+    /**
+     * Destroy the file associate with the attribute.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string                              $attribute
+     * @return void
+     */
+    public static function removeFile(Model $model, string $attribute): void
+    {
+        $path = \ltrim(\urldecode($model->{$attribute}), '/');
+        if (\strpos($path, 'storage') !== 0) {
+            return;
+        }
+        $path = ToolboxHelper::mbReplace('storage/', '', $path);
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    /**
+     * Destroy the file associate with the attribute old value (before updated to DB).
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string                              $attribute
+     * @param boolean                             $onlyIfUpdated
+     * @return void
+     */
+    public static function removeOldFile(Model $model, string $attribute, bool $onlyIfUpdated = true): void
+    {
+        // * Ignore If removal has to be done only if the field has changed and it actually hasnt.
+        if ($onlyIfUpdated and $model->{$attribute} === $model->getOriginal($attribute)) {
+            return;
+        }
+        $originalPath = \ltrim(\urldecode($model->getOriginal($attribute)), '/');
+        if (\strpos($originalPath, 'storage') !== 0) {
+            return;
+        }
+        $originalPath = ToolboxHelper::mbReplace('storage/', '', $originalPath);
+        if (Storage::disk('public')->exists($originalPath)) {
+            Storage::disk('public')->delete($originalPath);
+        }
+    }
+
+    /**
+     * Store a file using optimized storage strategy.
+     *
+     * You can use filename param to overload file name.
+     *
+     * @param \Illuminate\Database\Eloquent\Model               $model    The model that will hold the picture.
+     * @param \Illuminate\Http\UploadedFile|\SplFileInfo|string $file     The file, will just return itself is string.
+     * @param boolean                                           $slugify  Force filename slugification.
+     * @param string|null                                       $filename This string may be used to store the file.
+     * @return string
+     * @throws \RuntimeException If file copy fails.
+     */
+    public static function storeFile(Model $model, $file, bool $slugify = false, string $filename = null): string
+    {
+        $tableName = $model->getTable();
+        if (\is_object($file) and $file instanceof \Illuminate\Http\UploadedFile) {
+            /** @var \Illuminate\Http\UploadedFile $file */
+            $filename = $filename ?: $file->getClientOriginalName();
+            $filename = $slugify ? self::slugifyFileName($filename) : $filename;
+            $newPath  = self::prepareMoveFile($tableName, $filename);
+            $newPath  = str_replace(storage_path('app'), '', $newPath);
+            $file->storePubliclyAs(
+                pathinfo($newPath, \PATHINFO_DIRNAME),
+                pathinfo($newPath, \PATHINFO_BASENAME)
+            );
+            return 'storage' . str_replace('/public', '', $newPath);
+        }
+        if (\is_object($file) and $file instanceof \SplFileInfo) {
+            /** @var \SplFileInfo $file */
+            $filename = $filename ?: $file->getBaseName();
+            $filename = $slugify ? self::slugifyFileName($filename) : $filename;
+            $newPath  = self::prepareMoveFile($tableName, $filename);
+            if (!File::copy($file->getRealPath(), $newPath)) {
+                throw new \RuntimeException(sprintf(
+                    'Failed to copy file %s to %s',
+                    $file->getRealPath(),
+                    $newPath
+                ));
+            }
+            return \ltrim(str_replace(\storage_path('app/public'), '/storage', $newPath), '/');
+        }
+        return strval($file);
+    }
+
+    /**
+     * Store all files from string attribute html
+     * If oldHtmlString is passed, a diff is done with new and old files
+     * to keep only files that are present in the new html string.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model         The model that will hold the picture.
+     * @param string                              $htmlString    The html string to parse and modify files.
+     * @param string|null                         $oldHtmlString The old html string with alreadyParsed
+     *                                                           files using storeModelFilesFromHtml.
+     * @return string Html with files pathes replaced using storage strategy.
+     */
+    public static function storeModelFilesFromHtml(
+        Model $model,
+        string $htmlString,
+        string $oldHtmlString = null
+    ): string {
+        \collect(self::onlyUploadedFilesWithFileManager(self::findFilesInHtml($htmlString)))
+            ->each(function (string $path) use ($model, &$htmlString) {
+                /** @var \Illuminate\Filesystem\FilesystemAdapter */
+                $disk       = Storage::disk('uploads');
+                $fileInfo   = new \SplFileInfo($disk->path(
+                    ToolboxHelper::mbReplace('/uploads/', '', \urldecode($path))
+                ));
+                $htmlString = ToolboxHelper::mbReplace(
+                    $path,
+                    '/' . self::storeFile($model, $fileInfo, true),
+                    $htmlString
+                );
+            });
+
+        if ($oldHtmlString) {
+            self::removeOldModelFilesFromHtml($htmlString, $oldHtmlString);
+        }
+
+        return $htmlString;
+    }
+
+    /**
+     * Remove all old files from string attribute html that are stored in public that
+     * are nove present anymore on new html string.
+     *
+     * @param string $newHtmlString The html string with alreadyParsed files using storeModelFilesFromHtml.
+     * @param string $oldHtmlString The old html string with alreadyParsed files using storeModelFilesFromHtml.
+     * @return void
+     */
+    public static function removeOldModelFilesFromHtml(string $newHtmlString, string $oldHtmlString): void
+    {
+        self::removeOldFiles(self::findFilesInHtml($oldHtmlString), self::findFilesInHtml($newHtmlString));
+    }
+
+    /**
+     * Remove all old files that are stored in public that
+     * are not present anymore on new array files
+     *
+     * @param string[] $oldFiles The old array files.
+     * @param string[] $newFiles The new array files.
+     * @return void
+     */
+    public static function removeOldFiles(array $oldFiles, array $newFiles): void
+    {
+        $oldFiles      = \collect(self::onlyUploadedFilesWithFileStorageHelper($oldFiles));
+        $filesToKeep   = \collect(self::onlyUploadedFilesWithFileStorageHelper($newFiles));
+        $filesToRemove = $oldFiles->diff($filesToKeep);
+        $filesToRemove->each(function (string $publicStorageFilePath) {
+            $path = ToolboxHelper::mbReplace('storage/', '', \ltrim(\urldecode($publicStorageFilePath), '/'));
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+        });
+    }
+
+    /**
+     * Remove all files from string attribute html that are stored in public.
+     *
+     * @param string $htmlString The html string with alreadyParsed files using storeModelFilesFromHtml.
+     * @return void
+     */
+    public static function removeModelFilesOfHtml(string $htmlString): void
+    {
+        $filesToRemove = \collect(self::onlyUploadedFilesWithFileStorageHelper(self::findFilesInHtml($htmlString)));
+        $filesToRemove->each(function (string $publicStorageFilePath) {
+            $path = ToolboxHelper::mbReplace('storage/', '', \ltrim(\urldecode($publicStorageFilePath), '/'));
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+        });
+    }
+
+    /**
+     * Find all occurence of files in html.
+     * @param string $html
+     * @return array
+     */
+    public static function findFilesInHtml(string $html): array
+    {
+        preg_match_all('/href="(?P<href>.*)"|src="(?P<src>.*)"|url="(?P<url>.*)"/Um', $html, $m, PREG_SET_ORDER, 0);
+        return collect($m)->pluck('href')->filter()
+            ->concat(collect($m)->pluck('url')->filter())
+            ->concat(collect($m)->pluck('src')->filter())
+            ->all();
+    }
+
+    /**
+     * Filter array to get only uploaded files that exists
+     * on disk 'public' (using helper storage strategy).
+     *
+     * @param array $urls
+     * @return array
+     */
+    public static function onlyUploadedFilesWithFileStorageHelper(array $urls): array
+    {
+        return \collect($urls)->unique()
+            // * Filter to get only /uploads and using app url or empty
+            ->filter(function (string $url) {
+                $path = \parse_url($url, \PHP_URL_PATH);
+                return \strpos(\ltrim($path, '/'), 'storage/modelfiles') === 0;
+            })->filter(function (string $url) {
+                $path = \parse_url($url, \PHP_URL_PATH);
+                return Storage::disk('public')
+                    ->exists(ToolboxHelper::mbReplace('storage/', '', \ltrim(\urldecode($path), '/')));
+            })->all();
+    }
+
+    /**
+     * Filter array to get only uploaded files that exists
+     * on disk 'uploads'.
+     *
+     * @param array $urls
+     * @return array
+     */
+    private static function onlyUploadedFilesWithFileManager(array $urls): array
+    {
+        return \collect($urls)->unique()
+            // * Filter to get only /uploads and using app url or empty
+            ->filter(function (string $url) {
+                $host = \parse_url($url, \PHP_URL_HOST);
+                $path = \parse_url($url, \PHP_URL_PATH);
+                return ($host === \parse_url(config('app.url'), PHP_URL_HOST) or \is_null($host)) and
+                    \strpos(\ltrim($path, '/'), 'uploads') === 0;
+            })->filter(function (string $url) {
+                $path = \parse_url($url, \PHP_URL_PATH);
+                return Storage::disk('uploads')
+                    ->exists(ToolboxHelper::mbReplace('uploads/', '', \ltrim(\urldecode($path), '/')));
+            })->all();
+    }
+
+    /**
+     * Prepare storage path and return
+     * the file full path.
+     *
+     * @param string $tableName Model table name.
+     * @param string $filename  The basename for the file.
+     * @return string
+     */
+    private static function prepareMoveFile(string $tableName, string $filename): string
+    {
+        // * Security filter + beautifier
+        $filename = self::sanitizeFileName($filename);
+        // * Security filter
+        $filename = \filter_var($filename, \FILTER_SANITIZE_STRING);
+        // * Slugify filename
+        $ext      = \pathinfo($filename, \PATHINFO_EXTENSION);
+        $filename = Str::slug(\pathinfo($filename, \PATHINFO_FILENAME)) .
+            (\strlen($ext) ? ".{$ext}" : '');
+
+        $folderPath = self::getStoragePath($tableName, $filename);
+        $filename   = self::getFileUniqueName($folderPath, $filename);
+        return "{$folderPath}/{$filename}";
+    }
+
+    /**
+     * Create sub folders to store files using pattern
+     * storage/modelfiles/posts/10/04/19/5f
+     * year/month/day/md5 first 2 letters.
+     *
+     * @param string $table
+     * @param string $filename
+     * @return string
+     */
+    private static function getStoragePath(string $table, string $filename): string
+    {
+        $filenameHash = \md5($filename);
+        $pathFolder   = \storage_path(sprintf(
+            'app/public/modelfiles/%s/%s/%s/%s/%s',
+            $table,
+            gmdate('y'),
+            gmdate('m'),
+            gmdate('d'),
+            substr($filenameHash, 0, 2)
+        ));
+        if (!File::exists($pathFolder)) {
+            File::makeDirectory($pathFolder, 0755, true);
+        }
+        return $pathFolder;
+    }
+
+    /**
+     * Get unique filename if the path is already occupied.
+     *
+     * @param string $folderPath
+     * @param string $filename
+     * @return string
+     * @throws \RuntimeException If a unique filename cannot be obtained.
+     */
+    private static function getFileUniqueName(string $folderPath, string $filename): string
+    {
+        $attempts    = 0;
+        $maxAttempts = 20;
+        while (File::exists("{$folderPath}/{$filename}")) {
+            if ($attempts++ >= $maxAttempts) {
+                throw new \RuntimeException("Failed to has a unique filename for {$folderPath}/{$filename}");
+            }
+            $filename = pathinfo($filename, \PATHINFO_FILENAME) .
+                \uniqid('-') . '.' .
+                pathinfo($filename, \PATHINFO_EXTENSION);
+        }
+        return $filename;
+    }
+
+    /**
+     * Slugify the filename.
+     *
+     * @param string $filename
+     * @return string
+     */
+    public static function slugifyFileName(string $filename): string
+    {
+        return Str::slug(pathinfo($filename, \PATHINFO_FILENAME)) . '.' . pathinfo($filename, \PATHINFO_EXTENSION);
+    }
+
+    /**
+     * Sanitize File name for uploaded files.
+     *
+     * @param string  $filename The original uploaded client file name.
+     * @param boolean $beautify Beautify the filename.
+     * @return string The sanitized file name.
+     */
+    public static function sanitizeFileName(string $filename, bool $beautify = true): string
+    {
+        // * Sanitize filename
+        // phpcs:disable Generic.Files.LineLength.TooLong
+        $filename = preg_replace(
+            '~
+            [<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+            [\x00-\x1F]|             # control characters http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
+            [\x7F\xA0\xAD]|          # non-printing characters DEL, NO-BREAK SPACE, SOFT HYPHEN
+            [#\[\]@!$&\'()+,;=]|     # URI reserved https://tools.ietf.org/html/rfc3986#section-2.2
+            [{}^\~`]                 # URL unsafe characters https://www.ietf.org/rfc/rfc1738.txt
+            ~x',
+            '-',
+            $filename
+        );
+        // phpcs:enable
+        // * Avoids '.' '..' or '.hiddenFiles' .
+        $filename = Str::of($filename)->ltrim('.-');
+        // * Optional beautification
+        if ($beautify) {
+            $filename = static::beautifyFilename($filename);
+        }
+        // * Maximize filename length to 255 bytes http://serverfault.com/a/9548/44086
+        /** @var string */
+        $extension = pathinfo($filename, \PATHINFO_EXTENSION);
+        /** @var string */
+        $filename = pathinfo($filename, \PATHINFO_FILENAME);
+
+        $encoding = mb_detect_encoding($filename);
+        $encoding = $encoding ? $encoding : null;
+        return \mb_strcut(
+            $filename,
+            0,
+            255 - (!empty($extension) ? strlen($extension) + 1 : 0),
+            $encoding
+        ) . (!empty($extension) ? ".$extension" : '');
+    }
+
+    /**
+     * Beautify a filename.
+     *
+     * @param string $filename
+     * @return string
+     */
+    private static function beautifyFilename(string $filename): string
+    {
+        // Reduce consecutive characters.
+        $filename = preg_replace([
+            // * "file   name.zip" becomes 'file-name.zip'
+            '/ +/',
+            // * "file___name.zip" becomes 'file-name.zip'
+            '/_+/',
+            // * "file---name.zip" becomes 'file-name.zip'
+            '/-+/'
+        ], '-', $filename);
+        $filename = preg_replace([
+            // * "file--.--.-.--name.zip" becomes "file.name.zip"
+            '/-*\.-*/',
+            // * "file...name..zip" becomes "file.name.zip"
+            '/\.{2,}/'
+        ], '.', $filename);
+        // Lowercase for windows/unix interoperability http://support.microsoft.com/kb/100625 .
+        $filename = mb_strtolower($filename, mb_detect_encoding($filename));
+        // * ".file-name.-" becomes "file-name"
+        $filename = trim($filename, '.-');
+        return $filename;
+    }
+}

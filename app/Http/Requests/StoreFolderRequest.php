@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreFolderRequest extends FormRequest
 {
@@ -18,6 +19,16 @@ class StoreFolderRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge(['slug' => Str::slug(strip_tags($this->name))]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -25,7 +36,8 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3,max:255'
+            'name' => 'required|string|min:3|max:255',
+            'slug' => 'required|string|min:3|max:255'
         ];
     }
 
@@ -37,7 +49,8 @@ class StoreFolderRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name of the folder')
+            'name' => trans('name of the folder'),
+            'slug' => trans('slug of the folder')
         ];
     }
 }

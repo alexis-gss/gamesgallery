@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
 use App\Models\Tag;
-use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
+use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -59,6 +59,7 @@ class GameController extends Controller
     {
         /** @var \Illuminate\Database\Eloquent\Collection */
         $tags = Tag::query()->select(['id', 'name', 'slug'])->get();
+
         return view('back.games.create', compact('game', 'tags'));
     }
 
@@ -73,19 +74,14 @@ class GameController extends Controller
         return DB::transaction(function () use ($request) {
             $game = new Game();
             $game->fill($request->validated());
-            $game->pictures_alt = "Image of the " . $game->name . " game";
-            $game->order        = $this->getLastOrder();
             $this->storePictures($request, $game);
-            if ($game->folder_id == "no_associated_folder") {
-                $game->folder_id = null;
-            };
 
             if ($game->saveOrFail()) {
                 $game->tags()->sync(collect($request->tags)->pluck('id'));
                 return redirect()->route('bo.games.edit', $game->id)
                 ->with('success', trans(__('changes.creation_saved')));
             }
-            return back()->with('success', trans(__('changes.creation_failed')));
+            return back()->with('error', trans(__('changes.creation_failed')));
         });
     }
 
@@ -116,12 +112,8 @@ class GameController extends Controller
     {
         return DB::transaction(function () use ($request, $game) {
             $game->fill($request->validated());
-            $game->pictures_alt = "Image of the " . $game->name . " game";
             $game->tags()->sync(collect($request->tags)->pluck('id'));
             $this->storePictures($request, $game);
-            if ($game->folder_id == "no_associated_folder") {
-                $game->folder_id = null;
-            };
 
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game->id)
@@ -148,20 +140,5 @@ class GameController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
-    }
-
-    /**
-     * Get by order the last element of the list.
-     *
-     * @return integer
-     */
-    private function getLastOrder(): int
-    {
-        $order = Game::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($order === null) {
-            return 1;
-        }
-        return $order->order + 1;
     }
 }

@@ -25,9 +25,7 @@ class StoreTagRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge([
-            'slug' => Str::slug($this->name),
-        ]);
+        $this->merge(['slug' => Str::slug($this->name)]);
     }
 
     /**
@@ -39,7 +37,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:2|max:25',
-            'slug' => 'required|string|min:2|max:255',
+            'slug' => 'required|string|min:2|max:255'
         ];
     }
 

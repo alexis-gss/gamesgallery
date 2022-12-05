@@ -57,7 +57,6 @@ class FolderController extends Controller
         return DB::transaction(function () use ($request) {
             $folder = new Folder();
             $folder->fill($request->validated());
-            $folder->order = $this->getLastOrder();
 
             if ($folder->saveOrFail()) {
                 return redirect()->route('bo.folders.edit', $folder->id)
@@ -92,10 +91,10 @@ class FolderController extends Controller
             $folder->fill($request->validated());
 
             if ($folder->saveOrFail()) {
-                return redirect()->route('back.folders.edit', $folder->id)
+                return redirect()->route('bo.folders.edit', $folder->id)
                 ->with('success', trans(__('changes.modification_saved')));
             }
-            return redirect()->route('back.folders.edit', $folder->id)
+            return redirect()->route('bo.folders.edit', $folder->id)
                 ->with('error', trans(__('changes.modification_failed')));
         });
     }
@@ -119,20 +118,5 @@ class FolderController extends Controller
             return redirect()->back()
                 ->with('error', trans('changes.deletion_associated'));
         }
-    }
-
-    /**
-     * Get by order the last element of the list.
-     *
-     * @return integer
-     */
-    private function getLastOrder(): int
-    {
-        $order = Folder::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($order === null) {
-            return 1;
-        }
-        return $order->order + 1;
     }
 }
