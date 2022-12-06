@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Folder;
 use App\Models\Game;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -40,6 +43,9 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::model('game', Game::class);
+        Route::model('folder', Folder::class);
+        Route::model('tag', Tag::class);
+        Route::model('user', User::class);
     }
 
     /**

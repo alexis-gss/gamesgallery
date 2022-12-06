@@ -3,6 +3,7 @@
 namespace App\Traits\Models;
 
 use App\Http\Requests\UpdateChangeOrderRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -13,11 +14,11 @@ trait ChangesModelOrder
      * Change order.
      *
      * @param \App\Http\Requests\UpdateChangeOrderRequest $request
-     * @param integer                                     $modelId
+     * @param \Illuminate\Database\Eloquent\Model         $model
      * @return \Illuminate\Http\RedirectResponse
      * @throws \RuntimeException Si le nom du parametre de la route ne correspond pas au model utilisé.
      */
-    public function changeOrder(UpdateChangeOrderRequest $request, int $modelId): \Illuminate\Http\RedirectResponse
+    public function changeOrder(UpdateChangeOrderRequest $request, Model $model): \Illuminate\Http\RedirectResponse
     {
         $params    = collect(request()->route()->parameterNames);
         $className = Str::ucfirst(Str::lower($params->get($params->count() - 2)));
@@ -28,7 +29,7 @@ trait ChangesModelOrder
         }
 
         /** @var \Illuminate\Database\Eloquent\Model|null */
-        $model = $className::where('id', $modelId)->first();
+        $model = $className::where('id', $model->id)->first();
 
         if (!$model) {
             return back()->with('error', trans('changes.order_not_changed'));

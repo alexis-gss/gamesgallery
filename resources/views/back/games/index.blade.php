@@ -118,7 +118,7 @@
                                         data-bs="tooltip"
                                         data-bs-placement="top">
                                         @if($game->status)
-                                            <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                                            <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-primary" viewBox="0 0 16 16">
                                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                             </svg>
                                         @else
@@ -132,7 +132,7 @@
                             @if ($loop->count > 1)
                                 <td class="text-center align-middle">
                                     @if ($loop->first)
-                                        <a href="{{ route('bo.games.change-order', ['game' => $game->id, 'direction' => 'down']) }}"
+                                        <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none"
                                             data-bs="tooltip"
                                             data-bs-placement="top"
@@ -142,7 +142,7 @@
                                             </svg>
                                         </a>
                                     @elseif($loop->last)
-                                        <a href="{{ route('bo.games.change-order', ['game' => $game->id, 'direction' => 'up']) }}"
+                                        <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
                                             class="btn-link text-decoration-none"
                                             data-bs="tooltip"
                                             data-bs-placement="top"
@@ -152,7 +152,7 @@
                                             </svg>
                                         </a>
                                     @else
-                                        <a href="{{ route('bo.games.change-order', ['game' => $game->id, 'direction' => 'up']) }}"
+                                        <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
                                             class="btn-link text-decoration-none"
                                             data-bs="tooltip"
                                             data-bs-placement="top"
@@ -161,7 +161,7 @@
                                                 <path d="M374.6 246.6C368.4 252.9 360.2 256 352 256s-16.38-3.125-22.62-9.375L224 141.3V448c0 17.69-14.33 31.1-31.1 31.1S160 465.7 160 448V141.3L54.63 246.6c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0l160 160C387.1 213.9 387.1 234.1 374.6 246.6z" />
                                             </svg>
                                         </a>
-                                        <a href="{{ route('bo.games.change-order', ['game' => $game->id, 'direction' => 'down']) }}"
+                                        <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'down']) }}"
                                             class="btn-link text-decoration-none"
                                             data-bs="tooltip"
                                             data-bs-placement="top"
@@ -178,6 +178,14 @@
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
                                     novalidate>
+                                    @if ($game->status)
+                                        <a href="{{ route('games.specific', $game->slug) }}" class="btn btn-sm btn-warning" target="_blank">
+                                            <svg width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                            </svg>
+                                        </a>
+                                    @endif
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.games.edit', ['game' => $game->id]) }}"
                                         data-bs="tooltip"
