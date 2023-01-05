@@ -72,13 +72,7 @@ class Folder extends Model
      */
     private function setOrder(Model $folder): void
     {
-        $lastFolder = Folder::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($lastFolder === null) {
-            $folder->order = 1;
-        } else {
-            $folder->order = $lastFolder->order + 1;
-        }
+        $folder->order = \intval(self::query()->max('order')) + 1;
     }
 
     // * RELATIONSHIPS

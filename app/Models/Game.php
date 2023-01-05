@@ -89,13 +89,7 @@ class Game extends Model
      */
     private function setOrder(Model $game): void
     {
-        $lastGame = Game::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($lastGame === null) {
-            $game->order = 1;
-        } else {
-            $game->order = $lastGame->order + 1;
-        }
+        $game->order = \intval(self::query()->max('order')) + 1;
     }
 
     /**

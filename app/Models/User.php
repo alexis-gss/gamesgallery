@@ -39,8 +39,7 @@ class User extends Authenticatable
         'picture',
         'picture_alt',
         'password',
-        'role',
-        'order'
+        'role'
     ];
 
     /**
@@ -136,8 +135,6 @@ class User extends Authenticatable
      */
     public function setOrder(Model $user): void
     {
-        $lastUser = User::select('order')->orderBy('order', 'DESC')->first();
-
-        ($lastUser == null) ? $user->order = 1 : $user->order = $lastUser->order + 1;
+        $user->order = \intval(self::query()->max('order')) + 1;
     }
 }

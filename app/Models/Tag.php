@@ -81,13 +81,7 @@ class Tag extends Model
      */
     public function setOrder(Model $tag): void
     {
-        $lastTag = Tag::select('order')->orderBy('order', 'DESC')->first();
-
-        if ($lastTag === null) {
-            $tag->order = 1;
-        } else {
-            $tag->order = $lastTag->order + 1;
-        }
+        $tag->order = \intval(self::query()->max('order')) + 1;
     }
 
     // * RELATIONSHIPS
