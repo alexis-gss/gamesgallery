@@ -1,8 +1,40 @@
 body {
     min-height: 100vh;
-    font-family: Barlow, sans-serif;
+    font-family: roboto-regular, sans-serif;
 }
 
-main {
-    min-height: calc(100vh - $fo-footer-height);
+.main {
+    &-home {
+        min-height: calc(100vh - 2rem);
+    }
+
+    &-page {
+        min-height: calc(100vh - 10rem - 3rem);
+    }
+}
+
+.angles {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background:
+        linear-gradient(to right, var(--color-third) 2px, transparent 2px) 0 0, // TOP LEFT
+        linear-gradient(to bottom, var(--color-third) 2px, transparent 2px) 0 0, // TOP LEFT
+        linear-gradient(to left, var(--color-third) 2px, transparent 2px) 100% 0, // TOP RIGHT
+        linear-gradient(to bottom, var(--color-third) 2px, transparent 2px) 100% 0, // TOP RIGHT
+        linear-gradient(to left, var(--color-third) 2px, transparent 2px) 100% 100%, // BOTTOM RIGHT
+        linear-gradient(to top, var(--color-third) 2px, transparent 2px) 100% 100%, // BOTTOM RIGHT
+        linear-gradient(to right, var(--color-third) 2px, transparent 2px) 0 100%, // BOTTOM LEFT
+        linear-gradient(to top, var(--color-third) 2px, transparent 2px) 0 100%; // BOTTOM LEFT
+
+    background-repeat: no-repeat;
+    background-size: 7px 7px;
+}
+
+.btn-scroll {
+    right: 0.75rem;
+    bottom: 1rem;
 }

@@ -1,10 +1,13 @@
 <?php
 
 return [
-    'back_office' => 'Back office',
-    'back_office_desc' => 'Page d\'accueil du Back office.',
-    'back_office_login' => 'Connexion',
-    'back_office_login_desc' => 'Formulaire d\'authentification du Back Office.',
+    'default_title' => 'Home',
+    'default_description' => 'Web application made with Laravel, listing all screenshots taken in video games.',
+    'default_keyword' => 'game, games, gallery, screenshot, screenshots, laravel, alexis, gousseau',
+    'back_office' => 'Back end',
+    'back_office_desc' => 'Homepage of the back end.',
+    'back_office_login' => 'Login',
+    'back_office_login_desc' => 'Authenticate form of the back office.',
     'all_games' => 'All games',
     'all_games_desc' => 'Listing of all video games.',
     'all_folders' => 'All folders',

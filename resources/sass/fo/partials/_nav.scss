@@ -12,6 +12,15 @@
         }
     }
 
+    .btn-games {
+        width: calc(100% - 3rem);
+
+        span {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
     &-modal {
         overflow: hidden;
         max-width: 100%;
@@ -24,58 +33,23 @@
             padding: 0 1rem !important;
             margin: 0 !important;
         }
+
+        .games-list {
+            .list-group-item .btn,
+            .list-group-item p {
+                color: var(--color-first) !important;
+            }
+        }
     }
 
     &-games {
         &-list {
-            height: calc($fo-menu-height - 5rem);
+            height: calc($fo-menu-height - 6rem);
             overflow-y: auto;
-
-            .list-group-folder {
-                &::before {
-                    position: absolute;
-                    top: -20px;
-                    left: 17px;
-                    display: inline-block;
-                    width: 1px;
-                    height: 100%;
-                    background: #fff;
-                    content: "";
-                }
-            }
-        }
-
-        .btn {
-            transition: 0s !important;
         }
 
         a:hover svg {
             width: 16px;
-        }
-
-        .badge {
-            width: auto;
-            min-width: 20px;
-            height: 100%;
-        }
-    }
-
-    &-options {
-        opacity: 1;
-        visibility: visible;
-
-        &-hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-    }
-
-    .btn-games {
-        width: calc(100% - 3rem);
-
-        span {
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
     }
 }

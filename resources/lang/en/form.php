@@ -67,5 +67,7 @@ return [
     'folder_associated' => 'Folder associated',
     'no_associated_folder' => 'No associated folder',
     'select_folder' => 'Select a folder',
-    'no_filter' => 'No folder selected'
+    'no_filter' => 'No folder selected',
+    'word_counter_words' => 'Word(s)',
+    'word_counter_characters' => "Character(s)"
 ];

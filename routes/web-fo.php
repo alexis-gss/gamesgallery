@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\FrontController;
+use App\Http\Controllers\Fo\FrontController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'index'])->name('homepage');

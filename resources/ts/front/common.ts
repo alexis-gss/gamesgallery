@@ -12,8 +12,7 @@ const C = {
 const V = {
     menuModal: HTMLDivElement.prototype,
     menuGames: HTMLDivElement.prototype,
-    menuOptions: HTMLDivElement.prototype,
-    btnGames: HTMLButtonElement.prototype,
+    btnGames: NodeList.prototype,
     btnScroll: HTMLButtonElement.prototype,
 
     init: function () {
@@ -23,25 +22,22 @@ const V = {
     selectors: function () {
         V.menuModal = document.querySelector(".nav-modal") as HTMLDivElement;
         V.menuGames = document.querySelector(".nav-games") as HTMLDivElement;
-        V.menuOptions = document.querySelector(
-            ".nav-options"
-        ) as HTMLDivElement;
-        V.btnGames = document.querySelector(".btn-games") as HTMLButtonElement;
+        V.btnGames = document.querySelectorAll(
+            ".btn-games > span"
+        ) as NodeListOf<HTMLSpanElement>;
         V.btnScroll = document.querySelector(
-            ".btn-scroll"
+            ".btn-scroll .btn"
         ) as HTMLButtonElement;
     },
     events: function () {
-        V.btnGames.addEventListener("click", V.displayMenuGames);
-        V.btnScroll.addEventListener("click", V.scrollToTheTop);
+        V.btnGames?.forEach((element) => {
+            element.addEventListener("click", V.displayMenuGames);
+        });
+        V.btnScroll?.addEventListener("click", V.scrollToTheTop);
     },
     displayMenuGames: function () {
         V.menuModal.classList.toggle("nav-modal-hidden");
         V.menuGames.classList.toggle("nav-games-hidden");
-    },
-    displayMenuOptions: function () {
-        V.menuModal.classList.toggle("nav-modal-hidden");
-        V.menuOptions.classList.toggle("nav-options-hidden");
     },
     scrollToTheTop: function () {
         window.scrollTo(0, 0);

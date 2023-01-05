@@ -1,3 +1,9 @@
-footer {
-    height: $fo-footer-height;
+.footer {
+    &-home {
+        height: 2rem;
+    }
+
+    &-page {
+        height: 10rem;
+    }
 }

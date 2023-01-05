@@ -44,6 +44,7 @@ mix.webpackConfig({
 
 mix.options({
     fileLoaderDirs: {
+        fonts: `${assetDir}/fonts`,
         images: `${assetDir}/images`,
     },
     postCss: [

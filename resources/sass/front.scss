@@ -10,7 +10,11 @@
 // BASE.
 @import "./fo/base/utils";
 @import "./fo/base/common";
+@import "./fo/base/fonts";
 
 // PARTIALS.
 @import "./fo/partials/nav";
 @import "./fo/partials/footer";
+
+// PAGES.
+@import "./fo/pages/home";

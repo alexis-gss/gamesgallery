@@ -1,122 +1,134 @@
 <template>
-  <div
-    v-for="n in incrementNumber"
-    :key="n"
-  >
-    <div class="row w-100 mx-auto p-0">
-      <div
-        v-for="(a, i) in 4"
-        :key="a"
-        :class="`position-relative col-12 col-sm-6 col-lg-${gameItems / 4} p-0`"
-      >
+  <div v-if="gamePictures.length > 0">
+    <div
+      v-for="n in incrementNumber"
+      :key="n"
+    >
+      <div class="row w-100 mx-auto p-0">
         <div
-          v-if="gamePictures[n + i]"
-          class="ratio ratio-16x9"
-          data-aos="fade-up"
+          v-for="(a, i) in 4"
+          :key="a"
+          :class="`position-relative col-12 col-sm-6 col-lg-${
+            gameItems / 4
+          } p-0`"
         >
-          <img
-            :src="gamePictures[n + i]"
-            alt="Image of the game."
-            class="d-none w-100 p-1"
-            @load="gameImageLazyLoad"
+          <div
+            v-if="gamePictures[n + i]"
+            class="ratio ratio-16x9"
+            data-aos="fade-up"
           >
-          <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-            <div class="w-100 h-100 text-bg-secondary" />
+            <img
+              :src="gamePictures[n + i]"
+              alt="Image of the game."
+              class="d-none w-100 p-1"
+              @load="gameImageLazyLoad"
+            >
+            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+              <div class="w-100 h-100 text-bg-secondary" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row w-100 mx-auto p-0">
+        <div
+          v-for="(b, i) in 3"
+          :key="b"
+          :class="`position-relative col-12 col-sm col-lg-${gameItems / 3} p-0`"
+        >
+          <div
+            v-if="gamePictures[n + 4 + i]"
+            class="ratio ratio-16x9"
+            data-aos="fade-up"
+          >
+            <img
+              :src="gamePictures[n + 4 + i]"
+              alt="Image of the game."
+              class="d-none w-100 p-1"
+              @load="gameImageLazyLoad"
+            >
+            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+              <div class="w-100 h-100 text-bg-secondary" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row w-100 mx-auto p-0">
+        <div
+          v-for="(c, i) in 2"
+          :key="c"
+          :class="`position-relative col-12 col-sm-${gameItems / 2} p-0`"
+        >
+          <div
+            v-if="gamePictures[n + 7 + i]"
+            class="ratio ratio-16x9"
+            data-aos="fade-up"
+          >
+            <img
+              :src="gamePictures[n + 7 + i]"
+              alt="Image of the game."
+              class="d-none w-100 p-1"
+              @load="gameImageLazyLoad"
+            >
+            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+              <div class="w-100 h-100 text-bg-secondary" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row w-100 mx-auto p-0">
+        <div
+          v-for="(d, i) in 3"
+          :key="d"
+          :class="`position-relative col-12 col-sm col-lg-${gameItems / 3} p-0`"
+        >
+          <div
+            v-if="gamePictures[n + 9 + i]"
+            class="ratio ratio-16x9"
+            data-aos="fade-up"
+          >
+            <img
+              :src="gamePictures[n + 9 + i]"
+              alt="Image of the game."
+              class="d-none w-100 p-1"
+              @load="gameImageLazyLoad"
+            >
+            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+              <div class="w-100 h-100 text-bg-secondary" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row w-100 mx-auto p-0">
+    <div class="w-100 text-center mt-5">
       <div
-        v-for="(b, i) in 3"
-        :key="b"
-        :class="`position-relative col-12 col-sm col-lg-${gameItems / 3} p-0`"
+        v-if="gameLoading"
+        class="spinner-border text-secondary"
+        role="status"
       >
-        <div
-          v-if="gamePictures[n + 4 + i]"
-          class="ratio ratio-16x9"
-          data-aos="fade-up"
-        >
-          <img
-            :src="gamePictures[n + 4 + i]"
-            alt="Image of the game."
-            class="d-none w-100 p-1"
-            @load="gameImageLazyLoad"
-          >
-          <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-            <div class="w-100 h-100 text-bg-secondary" />
-          </div>
-        </div>
+        <span class="visually-hidden">{{ __("nav.images_loading") }}</span>
       </div>
-    </div>
-    <div class="row w-100 mx-auto p-0">
       <div
-        v-for="(c, i) in 2"
-        :key="c"
-        :class="`position-relative col-12 col-sm-${gameItems / 2} p-0`"
+        v-if="gameAllLoaded"
+        class="fst-italic text-secondary"
       >
-        <div
-          v-if="gamePictures[n + 7 + i]"
-          class="ratio ratio-16x9"
-          data-aos="fade-up"
-        >
-          <img
-            :src="gamePictures[n + 7 + i]"
-            alt="Image of the game."
-            class="d-none w-100 p-1"
-            @load="gameImageLazyLoad"
-          >
-          <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-            <div class="w-100 h-100 text-bg-secondary" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row w-100 mx-auto p-0">
-      <div
-        v-for="(d, i) in 3"
-        :key="d"
-        :class="`position-relative col-12 col-sm col-lg-${gameItems / 3} p-0`"
-      >
-        <div
-          v-if="gamePictures[n + 9 + i]"
-          class="ratio ratio-16x9"
-          data-aos="fade-up"
-        >
-          <img
-            :src="gamePictures[n + 9 + i]"
-            alt="Image of the game."
-            class="d-none w-100 p-1"
-            @load="gameImageLazyLoad"
-          >
-          <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-            <div class="w-100 h-100 text-bg-secondary" />
-          </div>
-        </div>
+        {{ __("nav.images_loaded") }}
       </div>
     </div>
   </div>
-  <div class="w-100 text-center mt-5">
-    <div
-      v-if="gameLoading"
-      class="spinner-border text-secondary"
-      role="status"
-    >
-      <span class="visually-hidden">Loading...</span>
-    </div>
-    <div
-      v-if="gameAllLoaded"
-      class="fst-italic text-secondary"
-    >
-      All images are loaded
-    </div>
+  <div
+    v-else
+    class="text-center"
+  >
+    {{ __("nav.images_no_one") }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import trans from "../../modules/trans";
 
 export default defineComponent({
+  mixins: [trans],
   inheritAttrs: false,
   props: {
     jsonData: {
@@ -166,6 +178,7 @@ export default defineComponent({
   },
   methods: {
     /* EVENTS */
+
     /**
      * Increment the current page number when the
      * user scroll to the bottom.
@@ -187,7 +200,9 @@ export default defineComponent({
         }
       });
     },
+
     /* FUNCTIONS */
+
     /**
      * Load the current page.
      */
@@ -209,6 +224,7 @@ export default defineComponent({
           console.log(error.config);
         });
     },
+
     /**
      * Update game's pictures,
      * Set the loading to the false.
@@ -219,6 +235,7 @@ export default defineComponent({
       this.gamePictures = this.gamePictures.concat(data);
       this.gameLoading = false;
     },
+
     /**
      * Show image when she loaded,
      * Hide the placeholder's image.

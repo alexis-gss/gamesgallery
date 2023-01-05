@@ -1,12 +1,12 @@
 <template>
   <div class="d-flex flex-row justify-content-around align-items-center w-100">
     <span>
-      {{ "Words" }}
+      {{ __("form.word_counter_words") }}
       &nbsp;:&nbsp;
       <b>{{ intWords }}</b>
     </span>
     <span>
-      {{ "Characters" }}
+      {{ __("form.word_counter_characters") }}
       &nbsp;:&nbsp;
       <b>{{ intChars }}</b>
     </span>
@@ -15,8 +15,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import trans from "../../modules/trans";
 
 export default defineComponent({
+  mixins: [trans],
   mounted() {
     const json = String(this.$attrs.json ?? "{}");
     const data = JSON.parse(json);

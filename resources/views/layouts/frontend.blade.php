@@ -6,9 +6,12 @@
     @stack('styles')
 </head>
 
-<body class="container position-relative bg-first light-theme">
-    <!-- Navigation -->
-    @include('front.layouts.nav')
+<body class="container position-relative bg-first light-theme"
+    data-aos="fade">
+    @if (!Route::is('homepage'))
+        <!-- Navigation -->
+        @include('front.layouts.nav')
+    @endif
 
     <!-- Main content -->
     @yield('content')

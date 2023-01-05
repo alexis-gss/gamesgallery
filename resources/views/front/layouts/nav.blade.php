@@ -10,14 +10,15 @@
         <div class="games-list" data-json='@json($dataGame)'></div>
     </div>
     <!-- Buttons -->
-    <div class="d-flex flex-row justify-content-center align-items-center mx-auto w-100 mt-1">
-        <button class="btn btn-games d-flex flex-row justify-content-between align-items-center text-first text-start text-lowercase bg-third border-0 p-3">
-            <span class="overflow-hidden">{{ $game->name }}</span>
-        </button>
-        <button class="btn btn-scroll text-first bg-third border-0 p-3 ms-1">
-            <svg width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+    <button class="btn btn-games d-flex flex-row justify-content-start align-items-center bg-third rounded-2 text-first border-0 w-100 mt-1 p-0">
+        <span class="p-3">
+            <svg width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
             </svg>
-        </button>
-    </div>
+        </span>
+        <a class="d-flex flex-row align-items-center text-second text-decoration-none py-3" href="{{ route('homepage') }}">
+            <span class="overflow-hidden">homepage</span>
+        </a>
+        <span class="overflow-hidden text-start w-100 p-3 ps-0">/{{ $game->slug }}</span>
+    </button>
 </nav>

@@ -1,22 +1,23 @@
 // Themes.
 .dark-theme {
-    --color-first: #212529;
-    --color-second: #555;
-    --color-third: #fff;
+    --color-first: #121416;
+    --color-second: #212529;
+    --color-third: #747474;
+    --color-fourth: #747474cc;
+    --color-fifth: #fff;
 }
 
 .light-theme {
     --color-first: #fff;
-    --color-second: #555;
+    --color-second: #747474;
     --color-third: #212529;
     --color-fourth: #212529cc;
-    --color-fifth: #ffae00;
+    --color-fifth: #121416;
 }
 
 // Dimensions.
 $bo-header-height: 56px;
 $bo-footer-height: 40px;
-$fo-footer-height: 10rem;
 $fo-menu-height: 30rem;
 
 // Others:

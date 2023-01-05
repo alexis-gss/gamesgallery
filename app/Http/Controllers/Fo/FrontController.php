@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Fo;
 
+use App\Http\Controllers\Controller;
+use App\Models\Folder;
 use App\Models\Game;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -17,11 +20,9 @@ class FrontController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $games        = self::sortGamesArray();
-        $game         = Game::orderBy('slug', 'ASC')->first();
-        $gamePictures = $this->paginate($game->pictures, 12, ['path' => Paginator::resolveCurrentPath()]);
+        $games = Game::where('status', 1)->orderBy('slug', 'ASC')->get();
 
-        return view('front.games.show', ['game' => $game], compact('games', 'gamePictures'));
+        return view('front.pages.home', compact('games'));
     }
 
     /**
@@ -33,15 +34,23 @@ class FrontController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $games        = self::sortGamesArray();
-        $game         = Game::where('slug', $slug)->firstOrFail();
-        $gamePictures = $this->paginate($game->pictures, 12, ['path' => Paginator::resolveCurrentPath()]);
+        $games = Game::where('status', 1)->orderBy('slug', 'ASC')->get();
+        $game  = Game::where('status', 1)->where('slug', $slug)->firstOrFail();
+        if (isset($game->pictures)) {
+            $gamePictures = $this->paginate(
+                $game->pictures,
+                (count($game->pictures) <= 12) ? count($game->pictures) : 12,
+                ['path' => Paginator::resolveCurrentPath()]
+            );
+        } else {
+            $gamePictures = [];
+        }
 
         if ($request->ajax()) {
             return response()->json(['data' => $gamePictures]);
         }
 
-        return view('front.games.show', ['game' => $game], compact('games', 'gamePictures'));
+        return view('front.pages.game', compact('games', 'game', 'gamePictures'));
     }
 
     /**
@@ -65,29 +74,5 @@ class FrontController extends Controller
             $options
         );
         return $result;
-    }
-
-    /**
-     * Created a table sorted alphabetically and by folder.
-     *
-     * @return array
-     */
-    public function sortGamesArray(): array
-    {
-        $array = [];
-        $query = Game::where('status', 1)->orderBy('slug', 'ASC')->get();
-        foreach ($query as $game) {
-            if (!is_null($game->folder_id)) {
-                if (isset($array[$game->folder->name])) {
-                    array_push($array[$game->folder->name], $game);
-                } else {
-                    $array = array_merge($array, [$game->folder->name => [$game]]);
-                }
-            } else {
-                $array = array_merge($array, [$game->name => [$game]]);
-            }
-        }
-        ksort($array);
-        return $array;
     }
 }

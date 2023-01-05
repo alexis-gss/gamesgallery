@@ -1,7 +1,14 @@
-<footer class="text-center mt-5">
-    <p>
+<footer class="@if (Route::is('homepage')) footer-home m-0 @else footer-page mt-5 @endif text-center">
+    <p class="m-0">
         <span>© {{ date('Y') }}</span>
-        <a href="https://www.alexis-gousseau.com" target="_blank" data-bs="tooltip" data-bs-placement="top" title="{{ __('nav.access_website') }}">Alexis Gousseau</a>
+        <a href="https://www.alexis-gousseau.com"
+            class="text-third text-decoration-none"
+            target="_blank"
+            data-bs="tooltip"
+            data-bs-placement="top"
+            title="{{ __('nav.access_website') }}">
+            Alexis Gousseau
+        </a>
         | All rights reserved
     </p>
 </footer>
