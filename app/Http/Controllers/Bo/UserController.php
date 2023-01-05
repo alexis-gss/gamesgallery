@@ -24,14 +24,13 @@ class UserController extends Controller
      */
     public function index(Request $request, string $search = null): \Illuminate\Contracts\View\View
     {
-        if (isset($request->search) && !empty($request->search)) {
-            $search = $request->search;
-            $users  = User::where('name', 'LIKE', '%' . $search . '%')
-                ->orderBy('order', 'ASC')
-                ->paginate(12);
-        } else {
-            $users = User::orderBy('order', 'ASC')->paginate(12);
-        }
+        $search = $request->search;
+
+        $query = User::when($search, function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        });
+
+        $users = $query->orderBy('order', 'ASC')->paginate(12);
 
         return view('back.users.index', compact('users', 'search'));
     }

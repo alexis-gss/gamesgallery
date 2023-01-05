@@ -22,14 +22,13 @@ class FolderController extends Controller
      */
     public function index(Request $request, string $search = null): \Illuminate\Contracts\View\View
     {
-        if (isset($request->search) && !empty($request->search)) {
-            $search  = $request->search;
-            $folders = Folder::where('name', 'LIKE', '%' . $search . '%')
-                ->orderBy('order', 'ASC')
-                ->paginate(12);
-        } else {
-            $folders = Folder::orderBy('order', 'ASC')->paginate(12);
-        }
+        $search = $request->search;
+
+        $query = Folder::when($search, function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        });
+
+        $folders = $query->orderBy('order', 'ASC')->paginate(12);
 
         return view('back.folders.index', compact('folders', 'search'));
     }

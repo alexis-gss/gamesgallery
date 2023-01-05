@@ -22,30 +22,25 @@ class GameController extends Controller
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param string                   $search
-     * @param string                   $filter
      * @return \Illuminate\Contracts\View\View
      */
     public function index(
-        Request $request,
-        string $search = null,
-        string $filter = null
+        Request $request
     ): \Illuminate\Contracts\View\View {
         $search = $request->search;
         $filter = $request->filter;
-        $query  = Game::when($search, function ($query) use ($search) {
-            $query->where('name', 'LIKE', '%' . $search . '%');
-        })
-            ->when($filter, function ($query) use ($filter) {
-                if ($filter === "no_associated_folder") {
-                    $query->whereNull('folder_id');
-                } elseif (strlen($filter) > 0) {
-                    $query->where('folder_id', $filter);
-                }
-            });
 
-        $games = $query->orderBy('order', 'ASC')
-            ->paginate(12);
+        $query = Game::when($search, function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        })->when($filter, function ($query) use ($filter) {
+            if ($filter === "no_associated_folder") {
+                $query->whereNull('folder_id');
+            } elseif (strlen($filter) > 0) {
+                $query->where('folder_id', $filter);
+            }
+        });
+
+        $games = $query->orderBy('order', 'ASC')->paginate(12);
 
         return view('back.games.index', compact('games', 'search', 'filter'));
     }

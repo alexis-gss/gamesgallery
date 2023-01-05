@@ -23,14 +23,13 @@ class TagController extends Controller
      */
     public function index(Request $request, string $search = null): \Illuminate\Contracts\View\View
     {
-        if (isset($request->search) && !empty($request->search)) {
-            $search = $request->search;
-            $tags   = Tag::where('name', 'LIKE', '%' . $search . '%')
-                ->orderBy('order', 'ASC')
-                ->paginate(12);
-        } else {
-            $tags = Tag::orderBy('order', 'ASC')->paginate(12);
-        }
+        $search = $request->search;
+
+        $query = Tag::when($search, function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        });
+
+        $tags = $query->orderBy('order', 'ASC')->paginate(12);
 
         return view('back.tags.index', compact('tags', 'search'));
     }
