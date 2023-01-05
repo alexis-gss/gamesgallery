@@ -39,6 +39,16 @@ class LoginController extends Controller
     }
 
     /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('back.auth.login');
+    }
+
+    /**
      * Logout trait.
      *
      * @return \Illuminate\Http\RedirectResponse
