@@ -18,11 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('name')->comment('Name of the user.');
             $table->string('slug')->comment('Slugify the name of the user.');
             $table->string('email')->unique()->comment('Email of the user that is unique.');
-            $table->string('picture')->nullable()->comment('Picture associated to this user.');
+            $table->string('picture')->comment('Picture associated to this user.');
             $table->string('picture_alt')->comment('Alt attribute of the image.');
-            $table->string('password')->nullable()->comment('Encrypted password of the user.');
-            $table->boolean('role')->default(0)->comment('Role of the user who defines the rights/access.');
-            $table->integer('order')->default(1)->comment('Order of this folder, which is 1 by default.');
+            $table->string('password')->comment('Encrypted password of the user.');
+            $table->boolean('role')->comment('Role of the user who defines the rights/access.');
+            $table->integer('order')->comment('Order of this folder.');
             $table->timestamps();
         });
     }

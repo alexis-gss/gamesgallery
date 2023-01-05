@@ -17,7 +17,7 @@ class CreateFoldersTable extends Migration
             $table->id();
             $table->string('name')->comment('Name of the folder.');
             $table->string('slug')->unique()->comment('Slugify the name of the folder.');
-            $table->integer('order')->default(1)->comment('Order of this folder, which is 1 by default.');
+            $table->integer('order')->comment('Order of this folder.');
             $table->timestamps();
         });
     }
