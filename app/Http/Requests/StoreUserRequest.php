@@ -40,7 +40,6 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|string|min:3|max:255',
-            'slug' => 'required|string|min:3|max:255',
             'email' => 'required|email:rfc,strict,dns,spoof,filter',
             'role' => 'required|nullable|numeric',
             'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255'

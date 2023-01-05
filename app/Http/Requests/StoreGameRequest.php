@@ -45,7 +45,6 @@ class StoreGameRequest extends FormRequest
         $rules = [
             'folder_id' => 'sometimes|nullable',
             'name' => 'required|string|min:3|max:255',
-            'slug' => 'required|string|min:3|max:255',
             'tags' => 'sometimes|array',
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|numeric|exists:tags,id|distinct',
