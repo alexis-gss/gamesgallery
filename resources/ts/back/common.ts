@@ -66,10 +66,10 @@ window.addEventListener("DOMContentLoaded", () => {
      * Show/hide password.
      */
     elements = document.getElementsByClassName(
-        "passwordBtn"
+        "password-btn"
     ) as HTMLCollectionOf<Element>;
     const inputPassword = document.getElementsByClassName(
-        "passwordInput"
+        "password-input"
     ) as HTMLCollectionOf<HTMLInputElement>;
     for (let i = 0; i < elements.length; i++) {
         elements[i].addEventListener("click", function () {
