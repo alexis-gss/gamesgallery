@@ -18,7 +18,7 @@
         @before-adding-tag="beforeTagSave"
         @tags-changed="changedTags"
         :max-tags="6"
-        placeholder="Add a tag"
+        :placeholder="__('form.taggable_add')"
       />
       <div
         class="text-center py-2"
@@ -28,13 +28,13 @@
           class="btn btn-sm btn-primary ms-2"
           @click.prevent="addTags"
         >
-          Créer et ajouter à la liste
+          {{ __("form.taggable_create") }}
         </button>
         <button
           class="btn btn-sm btn-danger ms-2"
           @click.prevent="cancelTags"
         >
-          Annuler
+          {{ __("form.taggable_cancel") }}
         </button>
       </div>
     </div>
@@ -62,9 +62,10 @@ import type VueTagsInput from "@sipec/vue3-tags-input";
 import { VueTagsInput as VueTagsInputCls } from "@sipec/vue3-tags-input";
 import slugify from "slugify";
 import route from "../../modules/route";
+import trans from "../../modules/trans";
 
 export default defineComponent({
-  mixins: [route],
+  mixins: [route, trans],
   components: {
     VueTagsInputCls,
   },
@@ -122,7 +123,7 @@ export default defineComponent({
       this.showErrorMessages([]);
       // * Tag exists in selected tags
       if (this.tagExists(this.tags, obj.tag)) {
-        this.showErrorMessages(["Cette étiquette est déjà dans la liste."]);
+        this.showErrorMessages(["This tag already exist."]);
         return;
       }
       // * Tag exists in local list
@@ -154,7 +155,7 @@ export default defineComponent({
           this.tags.push(tag);
         })
         .catch((error) => {
-          let message = "Une erreur est survenue merci de ressayer plus tard";
+          let message = "An error has occurred please try again later";
           if (error.response.status === 422) {
             message =
               error.response?.data?.errors?.name?.[0] ||
