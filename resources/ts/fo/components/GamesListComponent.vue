@@ -144,11 +144,7 @@ export default defineComponent({
      * @return string
      */
     getGamePicturesCount(gamePictures: Array<string>): string {
-      if (gamePictures != null) {
-        return `${gamePictures.length}`;
-      } else {
-        return "0";
-      }
+      return gamePictures != null ? String(gamePictures.length) : "0";
     },
   },
 });

@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // * Init Using class
         for (const grpEl of elGroup) {
-            // * Hack to prevent loop weirdness
             const app = createApp(vues(key).default, {
                 json: (grpEl as HTMLElement).dataset.json ?? {},
             });
