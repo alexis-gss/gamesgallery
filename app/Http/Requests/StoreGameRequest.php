@@ -51,7 +51,10 @@ class StoreGameRequest extends FormRequest
             'tags.*.name' => 'required|string',
             'status' => 'required|boolean'
         ];
-        return \array_merge($rules, $this->picturesRules('pictures'));
+        return \array_merge(
+            $rules,
+            $this->picturesRules('pictures', true, 0, 100),
+        );
     }
 
     /**

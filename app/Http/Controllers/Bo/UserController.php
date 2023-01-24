@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     use ChangesModelOrder;
-    use HasPicture;
 
     /**
      * Display a listing of the resource.
@@ -58,7 +57,6 @@ class UserController extends Controller
         return DB::transaction(function () use ($request) {
             $user = new User();
             $user->fill($request->validated());
-            $this->storePicture($request, $user);
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)
@@ -91,7 +89,6 @@ class UserController extends Controller
     {
         return DB::transaction(function () use ($request, $user) {
             $user->fill($request->validated());
-            $this->storePicture($request, $user);
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user->id)
@@ -110,8 +107,6 @@ class UserController extends Controller
      */
     public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
-        $this->deleteFolder($user);
-
         if ($user->deleteOrFail()) {
             return redirect()->route('bo.users.index')
                 ->with('success', trans('changes.deletion_successful'));

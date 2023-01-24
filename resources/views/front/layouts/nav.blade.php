@@ -1,6 +1,6 @@
 <nav class="nav position-fixed start-50 translate-middle-x d-flex flex-column justify-content-center align-items-center bg-fourth rounded-3 p-1 pt-0">
     <!-- List of games -->
-    <div class="nav-modal nav-modal-hidden col bg-third rounded-3 w-100 mt-1 p-3">
+    <div class="nav-modal nav-modal-hidden col bg-third rounded-3 w-100 mt-1 p-3 pt-0">
         @php
             $dataGame = [
                 'games' => $games,

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Register components
-    const vues = require.context("../components/bo", true, /\.vue$/i);
+    const vues = require.context("./components", true, /\.vue$/i);
     vues.keys().map((key) => {
         let htmlKey = key.split("/").pop();
         if (!htmlKey) {
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // * Init Using class
         for (const grpEl of elGroup) {
+            // * Hack to prevent loop weirdness
             const app = createApp(vues(key).default, {
                 json: (grpEl as HTMLElement).dataset.json ?? {},
             });

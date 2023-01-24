@@ -20,6 +20,15 @@ import {
     faCircleXmark,
     faBars,
     faXmark,
+    faCrop,
+    faWandMagic,
+    faSyncAlt,
+    faSearchPlus,
+    faSearchMinus,
+    faArrowsAltH,
+    faArrowsAltV,
+    faUndoAlt,
+    faRedoAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 config.autoReplaceSvg = false;
@@ -43,4 +52,17 @@ library.add(faCircleCheck);
 library.add(faCircleXmark);
 library.add(faXmark);
 library.add(faBars);
+library.add(faCrop);
+library.add(faWandMagic);
+library.add(faSyncAlt);
+library.add(faSearchPlus);
+library.add(faSearchMinus);
+library.add(faArrowLeft);
+library.add(faArrowRight);
+library.add(faArrowUp);
+library.add(faArrowDown);
+library.add(faArrowsAltH);
+library.add(faArrowsAltV);
+library.add(faUndoAlt);
+library.add(faRedoAlt);
 dom.watch();

@@ -17,6 +17,7 @@ class Game extends Model
         'folder_id',
         'name',
         'slug',
+        'pictures',
         'pictures_alt',
         'status'
     ];

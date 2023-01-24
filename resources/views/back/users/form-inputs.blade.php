@@ -76,38 +76,20 @@
         <fieldset class="p-3">
             <legend>{{ __('form.visuals') }}</legend>
             <div class="row mb-3">
-                <div class="col-12 col-md-6 form-group">
-                    <label for="picture" class="col-form-label">
-                        <b>{{ __('form.images') }}</b>
-                        <span data-bs="tooltip"
-                            data-bs-placement="top"
-                            title="{{ __('form.tooltip_image') }}">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </span>
-                    </label>
-                    <input type="file"
-                        id="picture"
-                        name="picture"
-                        accept="image/jpg"
-                        class="form-control mb-1">
-                    <small class="text-muted">{{ __('form.images_label', [
-                            'format' => Config::get('images.format'),
-                            'width' => Config::get('images.maxwidth'),
-                            'height' => Config::get('images.maxheight'),
-                        ]) }}
-                    </small>
+                <div class="col-12 form-group">
+                    @php
+                        $data = [
+                            'id' => 'userPicture',
+                            'name' => 'picture',
+                            'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 100, 'height' => 100]),
+                            'width' => 100,
+                            'height' => 100,
+                            'value' => $user->picture ?? ''
+                        ];
+                    @endphp
+                    @include('back.modules.input-error', ['inputName' => 'picture'])
+                    <div class="image-input" data-json='@json($data)'></div>
                 </div>
-                @if($user->picture)
-                    <div class="col-12 col-md-6 form-group">
-                        <label class="col-form-label">
-                            <b>{{ __('form.images_result') }}</b>
-                        </label>
-                        <div class="preview position-relative">
-                            <img src="{{ asset($user->picture) }}" alt="{{ $user->picture_alt }}" style="max-height: 100px;">
-                        <div class="filtre position-absolute h-100"></div>
-                        @include('back.modules.input-error', ['inputName' => 'picture'])
-                    </div>
-                @endif
             </div>
         </fieldset>
     </div>
@@ -132,12 +114,16 @@
                         <input type="password"
                             id="password"
                             name="password"
-                            class="form-control need-word-counter password-input"
+                            class="form-control need-word-counter-password password-input"
                             placeholder="{{ __('form.password') }}"
                             value="{{ old('password') }}"
                             aria-describedby="btn-password"
                             autocomplete="new-password">
-                        <button class="btn btn-primary need-word-counter password-btn" type="button" id="btn-password">
+                        <button class="btn btn-primary need-word-counter-password-btn password-btn"
+                            title="{{ __('form.tooltip_password_show_hide') }}"
+                            data-bs="tooltip"
+                            type="button"
+                            id="btn-password">
                             <i class="fa-solid fa-eye"></i>
                             <i class="fa-solid fa-eye-slash d-none"></i>
                         </button>
@@ -159,12 +145,16 @@
                         <input type="password"
                             id="password_confirmation"
                             name="password_confirmation"
-                            class="form-control need-word-counter password-input"
+                            class="form-control need-word-counter-password password-input"
                             placeholder="{{ __('form.confirm') }}"
                             value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}"
                             aria-describedby="btn-password-confirm"
                             autocomplete="new-password">
-                        <button class="btn btn-primary need-word-counter password-btn" type="button" id="btn-password-confirm">
+                        <button class="btn btn-primary need-word-counter-password-btn password-btn"
+                            title="{{ __('form.tooltip_password_show_hide') }}"
+                            data-bs="tooltip"
+                            type="button"
+                            id="btn-password-confirm">
                             <i class="fa-solid fa-eye"></i>
                             <i class="fa-solid fa-eye-slash d-none"></i>
                         </button>

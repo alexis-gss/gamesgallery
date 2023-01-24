@@ -1,7 +1,7 @@
 <template>
   <div class="nav-games nav-games-hidden">
     <form
-      class="d-flex justify-content-center align-items-center bg-fifth rounded-3 px-3 py-2 pe-0 mb-3"
+      class="d-flex justify-content-center align-items-center bg-fifth rounded-3 px-3 py-2 pe-0 my-3"
       novalidate
     >
       <input

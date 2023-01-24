@@ -39,49 +39,16 @@ trait HasPicture
      * Image rules
      *
      * @param string       $name
+     * @param boolean      $required
      * @param integer|null $minWith
      * @param integer|null $minHeight
      * @param integer|null $maxWith
      * @param integer|null $maxHeight
-     * @param boolean      $nullable
      * @return array
      */
     public function pictureRules(
         string $name = 'picture',
-        ?int $minWith = null,
-        ?int $minHeight = null,
-        ?int $maxWith = null,
-        ?int $maxHeight = null,
-        bool $nullable = false
-    ): array {
-        $sizes = (object)[
-            'minWith'   => $minWith ?? $this->minWith,
-            'minHeight' => $minHeight ?? $this->minHeight,
-            'maxWith'   => $maxWith ?? $this->maxWith,
-            'maxHeight' => $maxHeight ?? $this->maxHeight
-        ];
-        return [
-            $name => [
-                !$nullable ? 'required' : 'nullable',
-                function (string $attribute, $value, callable $fail) use ($sizes) {
-                    return $this->validatePicture($attribute, $value, $fail, $sizes);
-                }
-            ]
-        ];
-    }
-
-    /**
-     * Images rules.
-     *
-     * @param string       $name
-     * @param integer|null $minWith
-     * @param integer|null $minHeight
-     * @param integer|null $maxWith
-     * @param integer|null $maxHeight
-     * @return array
-     */
-    public function picturesRules(
-        string $name = 'pictures',
+        bool $required = true,
         ?int $minWith = null,
         ?int $minHeight = null,
         ?int $maxWith = null,
@@ -94,9 +61,50 @@ trait HasPicture
             'maxHeight' => $maxHeight ?? $this->maxHeight
         ];
         return [
-            $name => 'sometimes|array',
-            "{$name}Validate" => "required_with:{$name}|array",
-            "{$name}Validate.*" => [
+            $name => [
+                $required ? 'required' : 'nullable',
+                function (string $attribute, $value, callable $fail) use ($sizes) {
+                    return $this->validatePicture($attribute, $value, $fail, $sizes);
+                }
+            ]
+        ];
+    }
+
+    /**
+     * Images rules
+     *
+     * @param string       $name
+     * @param boolean      $required
+     * @param integer|null $limitMin
+     * @param integer|null $limitMax
+     * @param integer|null $minWith
+     * @param integer|null $minHeight
+     * @param integer|null $maxWith
+     * @param integer|null $maxHeight
+     * @return array
+     */
+    public function picturesRules(
+        string $name = 'pictures',
+        bool $required = true,
+        ?int $limitMin = null,
+        ?int $limitMax = null,
+        ?int $minWith = null,
+        ?int $minHeight = null,
+        ?int $maxWith = null,
+        ?int $maxHeight = null
+    ): array {
+        $sizes = (object)[
+            'required'  => $required ?? $this->required,
+            'limitMin'  => $limitMin ?? $this->limitMin,
+            'limitMax'  => $limitMax ?? $this->limitMax,
+            'minWith'   => $minWith ?? $this->minWith,
+            'minHeight' => $minHeight ?? $this->minHeight,
+            'maxWith'   => $maxWith ?? $this->maxWith,
+            'maxHeight' => $maxHeight ?? $this->maxHeight
+        ];
+        return [
+            "{$name}" => ($required ? 'required' : 'nullable') . "|array|between:$limitMin,$limitMax",
+            "{$name}.*" => [
                 'required',
                 function (string $attribute, $value, callable $fail) use ($sizes) {
                     return $this->validatePicture($attribute, $value, $fail, $sizes);

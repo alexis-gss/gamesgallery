@@ -1,0 +1,157 @@
+/**
+ * WordCounterComponent.
+ */
+.ck-word-count {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around !important;
+    border: 1px solid #c4c4c4;
+    border-bottom: 0;
+    background-color: #fafafa;
+    color: initial;
+}
+
+.need-word-counter {
+    border-radius: 0 0 0.375rem 0.375rem !important;
+
+    &-password {
+        border-radius: 0 0 0 0.375rem !important;
+
+        &-btn {
+            border-radius: 0 0 0.375rem !important;
+        }
+    }
+}
+
+.word-counter {
+    border: 1px solid #c4c4c4;
+    border-bottom: 0;
+    background-color: #fafafa;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+    color: initial;
+}
+
+/**
+ * TaggableDropdownComponent.
+ */
+.vue-tags-input {
+    max-width: 100% !important;
+}
+
+.ti- {
+    &autocomplete {
+        max-height: 10rem !important;
+        border-radius: 0.375rem;
+        box-shadow: 0 0 4px var(--bs-gray-400);
+        overflow-y: auto !important;
+
+        ul {
+            padding: 0.25rem 0 !important;
+        }
+    }
+
+    &input {
+        padding: 0.375rem !important;
+        border-radius: 0.375rem;
+    }
+
+    &tags {
+        line-height: inherit !important;
+    }
+
+    &tag,
+    &new-tag-input-wrapper {
+        padding: 0.1rem !important;
+        margin: 0.1rem !important;
+    }
+
+    &new-tag-input-wrapper {
+        font-size: 1em !important;
+
+        input {
+            min-width: 70px !important;
+        }
+    }
+
+    &tag {
+        padding: 0.1rem 0.3rem !important;
+        background-color: var(--bs-blue) !important;
+        border-radius: 0.375rem !important;
+    }
+
+    &selected-item {
+        background-color: var(--bs-gray-300) !important;
+        color: var(--bs-gray-900) !important;
+    }
+}
+
+/**
+ * ImageInputComponent.
+ */
+.image-input,
+.images-input {
+    .image-modification {
+        display: block;
+        max-width: 100%;
+    }
+
+    .rotate-button {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rotate-drag {
+        display: flex;
+        width: 100%;
+        flex-direction: column-reverse;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .preview-image {
+        position: relative;
+
+        div {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            overflow: hidden;
+            border: 1px solid #000;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+
+    .right-aligned {
+        overflow: hidden !important;
+        direction: ltr !important;
+    }
+
+    .right-aligned:not(:focus) {
+        text-align: left !important;
+        text-overflow: ellipsis !important;
+    }
+}
+
+/**
+ * ImagesInputComponent.
+ */
+.images-input {
+    .btn-collapse svg {
+        transform: rotate(180deg);
+        transition: 0.3s;
+    }
+
+    .collapsed {
+        svg {
+            transform: rotate(0deg);
+        }
+    }
+
+    #multiple-images .row {
+        max-height: 30rem;
+        overflow-y: auto;
+    }
+}

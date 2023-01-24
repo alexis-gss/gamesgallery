@@ -33,6 +33,8 @@
 @import "~bootstrap/scss/transitions";
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/close";
 
 // 5. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";

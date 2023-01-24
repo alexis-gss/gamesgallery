@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Role;
+use App\Lib\Helpers\FileStorageHelper;
 use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -64,11 +65,19 @@ class User extends Authenticatable
             static::setAttributeAlt($user);
             static::updatePassword($user);
             static::setOrder($user);
+            static::setImage($user);
         });
         static::updating(function (self $user) {
             static::assertFieldsAreUnique($user, $user->id);
             static::setAttributeAlt($user);
             static::updatePassword($user);
+            static::setImage($user);
+        });
+        static::updated(function (self $model) {
+            FileStorageHelper::removeOldFile($model, 'picture');
+        });
+        static::deleted(function (self $model) {
+            FileStorageHelper::removeFile($model, 'picture');
         });
     }
 
@@ -84,6 +93,18 @@ class User extends Authenticatable
     private static function setSlug(Model $user)
     {
         $user->slug = Str::slug($user->name);
+    }
+
+    /**
+     * Set the image.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $user
+     *
+     * @return void
+     */
+    private static function setImage(Model $user)
+    {
+        $user->picture = FileStorageHelper::storeFile($user, $user->picture, true);
     }
 
     /**

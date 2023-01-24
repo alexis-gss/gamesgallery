@@ -1,3 +1,6 @@
+#### **24.01.23 ► v2.3**
+- Adding new method for saving images.
+
 #### **11.09.22 ► v2.2**
 - Adding tags for games.
 

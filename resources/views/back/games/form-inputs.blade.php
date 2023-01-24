@@ -57,20 +57,17 @@
                     @php
                         $data = [
                             'id' => 'gamePictures',
-                            'name' => 'game_pictures[]',
-                            'width' => 396,
-                            'height' => 286,
+                            'name' => 'pictures[]',
+                            'width' => 3840,
+                            'height' => 2160,
                             'value' => $game->pictures ?? [],
                             'limit' => [0,100],
+                            'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
                             'errors' => $errors->getBag('default')->getMessages()
                         ];
                     @endphp
                     <div class="images-input" data-json='@json($data)'></div>
-                    @include('back.modules.input-error', [
-                        'inputName' => 'game_pictures[]',
-                        'helper' => __('Les images du jeu doivent être de 396px (largeur) par 286px (hauteur),
-                            (minimum 0 et maximum 100 images sont autorisées).')
-                    ])
+                    @include('back.modules.input-error', ['inputName' => 'pictures[]'])
                 </div>
             </div>
         </fieldset>
@@ -120,9 +117,12 @@
                             id="flexSwitchCheckDefault"
                             @if (old('status', $game->status ?? '')) checked @endif
                             role="button">
-                        <label class="form-check-label" for="flexSwitchCheckDefault" role="button">{{ __('form.publish') }}</label>
+                        <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
+                            <b>{{ __('form.publish') }}</b>
+                        </label>
+                        <br>
+                        <small class="form-text text-muted">{{ __('form.publish_label') }}</small>
                     </div>
-                    <br>
                     @include('back.modules.input-error', ['inputName' => 'status'])
                 </div>
             </div>

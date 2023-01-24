@@ -129,8 +129,6 @@ class GameController extends Controller
      */
     public function destroy(Game $game): \Illuminate\Http\RedirectResponse
     {
-        $this->deleteFolder($game);
-
         if ($game->deleteOrFail()) {
             return redirect()->back()
                 ->with('success', trans('changes.deletion_successful'));

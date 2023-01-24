@@ -1,8 +1,8 @@
 import "./utilities/axios";
 import "./utilities/bootstrap";
 import "./utilities/fontawesome";
-import "./utilities/vue";
 
 import "./modules/console";
 
-import "./back/common";
+import "./bo/vue-bo";
+import "./bo/common";

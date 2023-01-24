@@ -44,7 +44,10 @@ class StoreUserRequest extends FormRequest
             'role' => 'required|nullable|numeric',
             'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255'
         ];
-        return \array_merge($rules, $this->pictureRules('picture'));
+        return \array_merge(
+            $rules,
+            $this->pictureRules('picture', true),
+        );
     }
 
     /**
@@ -60,7 +63,6 @@ class StoreUserRequest extends FormRequest
             'email' => trans('email of the user'),
             'role' => trans('role of the user'),
             'picture' => trans('picture of the user'),
-            'picture.*' => trans('picture of the user'),
             'password' => trans('password of the user')
         ];
     }

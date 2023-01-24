@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Fo;
 
 use App\Http\Controllers\Controller;
-use App\Models\Folder;
 use App\Models\Game;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;

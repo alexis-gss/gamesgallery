@@ -8,7 +8,7 @@
             class="text-reset text-decoration-none">
             {{ $name }}
         </a>
-        - v2.1 -
+        - v2.3 -
         <span class="text-reset">
             {{ config('app.name') }}
         </span>
