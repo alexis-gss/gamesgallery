@@ -20,3 +20,10 @@
         <span class="overflow-hidden text-start w-100 p-3 ps-0">/{{ $game->slug }}</span>
     </button>
 </nav>
+
+<!-- Button to scroll to the top -->
+<div class="btn-scroll position-fixed bg-fourth rounded-2 p-1">
+    <button class="btn text-first bg-third border-0 p-3">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+</div>

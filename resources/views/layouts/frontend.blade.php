@@ -6,18 +6,19 @@
     @stack('styles')
 </head>
 
-<body class="container position-relative bg-first light-theme"
-    data-aos="fade">
+<body class="container position-relative bg-first light-theme">
     @if (!Route::is('homepage'))
         <!-- Navigation -->
         @include('front.layouts.nav')
     @endif
 
-    <!-- Main content -->
-    @yield('content')
+    <div data-aos="fade">
+        <!-- Main content -->
+        @yield('content')
 
-    <!-- Footer -->
-    @include('front.layouts.footer')
+        <!-- Footer -->
+        @include('front.layouts.footer')
+    </div>
 
     <!-- Other -->
     @include('front.modules.window-system')

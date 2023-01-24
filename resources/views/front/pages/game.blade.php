@@ -29,9 +29,4 @@
             @endif
         </div>
     </main>
-    <div class="btn-scroll position-absolute bg-fourth rounded-2 p-1">
-        <button class="btn text-first bg-third border-0 p-3">
-            <i class="fa-solid fa-arrow-up"></i>
-        </button>
-    </div>
 @endsection

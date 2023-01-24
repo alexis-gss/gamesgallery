@@ -8,7 +8,7 @@
 
 <body id="app">
     <!-- Header -->
-    @include('back.layouts.header')
+    @include('back.layouts.nav')
 
     <!-- Main content -->
     <main class="container-fluid">

@@ -35,6 +35,7 @@ body {
 }
 
 .btn-scroll {
-    right: 0.75rem;
+    z-index: $zindex-fixed;
+    right: 4.5rem;
     bottom: 1rem;
 }
