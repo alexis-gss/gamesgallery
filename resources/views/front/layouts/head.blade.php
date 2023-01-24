@@ -13,8 +13,8 @@
 <!-- Open Graph -->
 <meta property="og:title" content="{{ config('app.name') }} - @yield('title')" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="{{ env('APP_URL') }}" />
-<meta property="og:site_name" content="{{ env('APP_NAME') }}" />
+<meta property="og:url" content="{{ config('app.url') }}" />
+<meta property="og:site_name" content="{{ config('app.name') }}" />
 <meta property="og:image" content="{{ asset('assets/images/visual-fo.png') }}" />
 <meta property="og:description" content="@yield('description')" />
 
