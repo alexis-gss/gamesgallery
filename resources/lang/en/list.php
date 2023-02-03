@@ -5,6 +5,7 @@ return [
     'list' => 'List',
 
     // Buttons.
+    'show_game' => 'Show this game',
     'edit_game' => 'Edit this game',
     'edit_folder' => 'Edit this folder',
     'edit_user' => 'Edit this user',

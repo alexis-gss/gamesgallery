@@ -19,7 +19,7 @@ return [
     'to_disconnect' => 'To disconnect',
 
     // FO.
-    "search" => "Search among the :games games...",
+    "search" => "Search among :games games...",
     "search_btn" => "Clear the search",
     "no_result" => "No results matching your search",
     "btn_theme_dark" => "Dark",
@@ -27,7 +27,9 @@ return [
     "btn_theme_neon" => "Neon",
     "btn_connect" => "Access to the back-office",
     "btn_github" => "Access to the code on github",
-    'images_loading' => 'Loading...',
     'images_loaded' => 'All images are loaded',
-    'images_no_one' => 'No images '
+    'images_no_one' => 'No images ',
+    'text_loading' => 'Loading...',
+    'search_tag' => 'All tags',
+    'search_folder' => 'All folders'
 ];

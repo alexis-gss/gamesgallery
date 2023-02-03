@@ -1,3 +1,6 @@
+// SET SOME CLASSES FOR BOOTSTRAP BREAKPOINTS
+@import "./bootstrap-variables";
+
 // ADD SOME CLASSES IN BOOTSTRAP BREAKPOINTS
 @each $type, $classes, $keys in $targets {
     @each $key, $data in $keys {

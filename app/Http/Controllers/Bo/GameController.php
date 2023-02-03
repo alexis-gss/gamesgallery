@@ -32,12 +32,8 @@ class GameController extends Controller
 
         $query = Game::when($search, function ($query) use ($search) {
             $query->where('name', 'LIKE', '%' . $search . '%');
-        })->when($filter, function ($query) use ($filter) {
-            if ($filter === "no_associated_folder") {
-                $query->whereNull('folder_id');
-            } elseif (strlen($filter) > 0) {
-                $query->where('folder_id', $filter);
-            }
+        })->when($filter != null, function ($query) use ($filter) {
+            $query->where('folder_id', $filter);
         });
 
         $games = $query->orderBy('order', 'ASC')->paginate(12);

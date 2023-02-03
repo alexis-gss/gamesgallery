@@ -13,7 +13,9 @@
             @php
                 $dataGame = [
                     'games' => $games,
-                    'gamesCount' => count($games)
+                    'gamesCount' => count($games),
+                    'allTags' => $globalTags,
+                    'allFolders' => $globalFolders
                 ];
             @endphp
             <div class="games-list games-list-home" data-json='@json($dataGame)'>

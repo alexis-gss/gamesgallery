@@ -105,7 +105,7 @@
         class="spinner-border text-secondary"
         role="status"
       >
-        <span class="visually-hidden">{{ __("nav.images_loading") }}</span>
+        <span class="visually-hidden">{{ __("nav.text_loading") }}</span>
       </div>
       <div
         v-if="gameAllLoaded"

@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->index('folder_id')->unsigned();
-            $table->foreignId('folder_id')->nullable()->references('id')->on('folders');
+            $table->foreignId('folder_id')->references('id')->on('folders');
             $table->string('name')->comment('Name of the game.');
             $table->string('slug')->unique()->comment('Slugify the name of the game.');
             $table->json('pictures')->nullable()->comment('Json who contains pictures.');

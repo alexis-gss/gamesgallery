@@ -68,21 +68,17 @@
                     <tr class="list-item">
                         <td class="align-middle">{{ $game->name }}</td>
                         <td class="align-middle text-secondary">
-                            @if (isset($game->folder_id))
-                                @can('isAdmin')
-                                    <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
-                                        data-bs="tooltip"
-                                        data-bs-placement="top"
-                                        title="{{ __('list.show_folder') }}"
-                                        class="text-decoration-none">
-                                    @endcan
-                                    {{ $game->folder->name }}
-                                    @can('isAdmin')
-                                    </a>
+                            @can('isAdmin')
+                                <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
+                                    data-bs="tooltip"
+                                    data-bs-placement="top"
+                                    title="{{ __('list.show_folder') }}"
+                                    class="text-decoration-none">
                                 @endcan
-                            @else
-                                {{ __('list.no_associated_folder') }}
-                            @endif
+                                {{ $game->folder->name }}
+                                @can('isAdmin')
+                                </a>
+                            @endcan
                         </td>
                         <td class="align-middle">
                             @if (count($game->tags) > 0)
@@ -147,7 +143,12 @@
                                     class="btn-group confirmDeleteTS"
                                     novalidate>
                                     @if ($game->status)
-                                        <a href="{{ route('games.specific', $game->slug) }}" class="btn btn-sm btn-warning" target="_blank">
+                                        <a href="{{ route('games.specific', $game->slug) }}"
+                                            class="btn btn-sm btn-warning"
+                                            target="_blank"
+                                            data-bs="tooltip"
+                                            data-bs-placement="top"
+                                            title="{{ __('list.show_game') }}">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
                                     @endif

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Fo;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -32,8 +33,8 @@ class FrontController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $games = Game::where('status', 1)->orderBy('slug', 'ASC')->get();
-        $game  = Game::where('status', 1)->where('slug', $slug)->firstOrFail();
+        $games = Game::where('status', true)->orderBy('slug', 'ASC')->get();
+        $game  = Game::where('status', true)->where('slug', $slug)->firstOrFail();
         if (isset($game->pictures)) {
             $gamePictures = $this->paginate(
                 $game->pictures,
@@ -72,5 +73,30 @@ class FrontController extends Controller
             $options
         );
         return $result;
+    }
+
+    /**
+     * Return a list of games filtered.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getGamesFiltered(Request $request)
+    {
+        $selectedTagId    = intval($request->FILTERSID[0] ?? 0);
+        $selectedFolderId = intval($request->FILTERSID[1] ?? 0);
+        /** @var HTMLCollection<\App\Models\Game> */
+        $gamesFiltered = Game::where('status', true)
+            ->when($selectedTagId, function ($query) use ($selectedTagId) {
+                $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
+                    $query->where('id', $selectedTagId);
+                });
+            })
+            ->when($selectedFolderId, function ($query) use ($selectedFolderId) {
+                $query->where('folder_id', $selectedFolderId);
+            })
+            ->orderBy('slug', 'ASC')
+            ->get();
+        return response()->json($gamesFiltered);
     }
 }

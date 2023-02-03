@@ -43,14 +43,12 @@ class Game extends Model
             static::setSlug($game);
             static::assertFieldIsUnique($game->slug);
             static::setAttributeAlt($game);
-            static::setFolderId($game);
             static::setOrder($game);
         });
         static::updating(function (self $game) {
             static::setSlug($game);
             static::assertFieldIsUnique($game->slug, $game->id);
             static::setAttributeAlt($game);
-            static::setFolderId($game);
         });
     }
 
@@ -102,19 +100,6 @@ class Game extends Model
     public function setAttributeAlt(Model $game): void
     {
         $game->pictures_alt = "Image of the " . $game->name . " game";
-    }
-
-    /**
-     * Set folder_id by null depending on specific condition.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $game
-     * @return void
-     */
-    public function setFolderId(Model $game): void
-    {
-        if ($game->folder_id == "no_associated_folder") {
-            $game->folder_id = null;
-        };
     }
 
     // * RELATIONSHIPS
