@@ -143,7 +143,7 @@ class User extends Authenticatable
      * @param \Illuminate\Database\Eloquent\Model $user
      * @return void
      */
-    public function setAttributeAlt(Model $user): void
+    private static function setAttributeAlt(Model $user): void
     {
         $user->picture_alt = "Picture for the " . $user->name . " account";
     }
@@ -154,7 +154,7 @@ class User extends Authenticatable
      * @param \Illuminate\Database\Eloquent\Model $user
      * @return void
      */
-    public function setOrder(Model $user): void
+    private static function setOrder(Model $user): void
     {
         $user->order = \intval(self::query()->max('order')) + 1;
     }

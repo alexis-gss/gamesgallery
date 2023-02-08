@@ -86,7 +86,7 @@ class Game extends Model
      * @param \Illuminate\Database\Eloquent\Model $game
      * @return void
      */
-    private function setOrder(Model $game): void
+    private static function setOrder(Model $game): void
     {
         $game->order = \intval(self::query()->max('order')) + 1;
     }
@@ -97,7 +97,7 @@ class Game extends Model
      * @param \Illuminate\Database\Eloquent\Model $game
      * @return void
      */
-    public function setAttributeAlt(Model $game): void
+    private static function setAttributeAlt(Model $game): void
     {
         $game->pictures_alt = "Image of the " . $game->name . " game";
     }

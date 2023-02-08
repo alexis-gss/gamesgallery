@@ -70,7 +70,7 @@ class Folder extends Model
      * @param \Illuminate\Database\Eloquent\Model $folder
      * @return void
      */
-    private function setOrder(Model $folder): void
+    private static function setOrder(Model $folder): void
     {
         $folder->order = \intval(self::query()->max('order')) + 1;
     }

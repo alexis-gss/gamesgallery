@@ -79,7 +79,7 @@ class Tag extends Model
      * @param \Illuminate\Database\Eloquent\Model $tag
      * @return void
      */
-    public function setOrder(Model $tag): void
+    private static function setOrder(Model $tag): void
     {
         $tag->order = \intval(self::query()->max('order')) + 1;
     }
