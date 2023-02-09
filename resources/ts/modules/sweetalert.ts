@@ -54,10 +54,11 @@ export default {
                 title: title,
                 icon: icon,
                 toast: true,
+                width: "fit-content",
                 position: "bottom-start",
                 showConfirmButton: false,
                 showCloseButton: true,
-                timer: 5000,
+                timer: 8000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener("mouseenter", Swal.stopTimer);
