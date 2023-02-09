@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use App\Traits\Controllers\HasPicture;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -81,11 +81,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\StoreUserRequest $request
-     * @param \App\Models\User                    $user
+     * @param \App\Http\Requests\UpdateUserRequest $request
+     * @param \App\Models\User                     $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request, $user) {
             $user->fill($request->validated());
