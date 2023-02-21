@@ -5,7 +5,7 @@
 @section('keywords', 'noindex,nofollow')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-3 border-top border-bottom">
         <h1 class="h2 m-0 fw-bold">{{ __('list.folders') }} <small class="text-muted h4">{{ __('list.list') }}</small></h1>
         @if ($errors->any())
             @foreach ($errors->all() as $error)

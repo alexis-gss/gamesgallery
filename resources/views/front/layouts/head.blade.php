@@ -21,9 +21,11 @@
 <!-- Others -->
 <link rel="icon" type="image/png" href="{{ asset('assets/icons/pictures.png') }}" />
 <link rel="canonical" href="{{ url()->current() }}" />
+@include('breadcrumbs.breadcrumb-head')
 
 <!-- Styles -->
 <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
+@stack('styles')
 
 <!-- Scripts -->
 <script src="{{ asset('js/front.js') }}" type="text/javascript"></script>

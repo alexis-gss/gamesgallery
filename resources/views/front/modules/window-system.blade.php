@@ -8,7 +8,7 @@
         window.__SYSTEM._routes = {}
     }
     window.__SYSTEM._routes.games = {
-        specific: "{{ route('games.specific', ['slug' => 'SLUG']) }}",
-        filtered: "{{ route('games.filtered', ['filtersId' => 'FILTERSID']) }}"
+        specific: "{{ route('fo.games.specific', ['slug' => 'SLUG']) }}",
+        filtered: "{{ route('fo.games.filtered', ['filtersId' => 'FILTERSID']) }}"
     };
 </script>

@@ -7,7 +7,7 @@
 @section('content')
     <form action="{{ route('bo.users.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-3 border-top border-bottom">
             <h1 class="d-flex flex-row align-items-start h2 m-0 fw-bold">
                 <a href="{{ route('bo.users.index') }}"
                     class="btn btn-primary text-decoration-none m-0"

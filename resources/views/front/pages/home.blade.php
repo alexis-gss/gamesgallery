@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+
 @section('title', __('meta.default_title'))
 @section('description', __('meta.default_description'))
 @section('keywords', __('meta.default_keyword'))

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "error_code" => "error code :",
+    "error_text" => "Let's go back to the homepage !",
     "error_title" => "Error",
     "error_message" => "It seems there is some errors to answer your request.",
     "401_title" => "Your VIP pass ?",

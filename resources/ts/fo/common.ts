@@ -23,7 +23,7 @@ const V = {
         V.menuModal = document.querySelector(".nav-modal") as HTMLDivElement;
         V.menuGames = document.querySelector(".nav-games") as HTMLDivElement;
         V.btnGames = document.querySelectorAll(
-            ".btn-games > span"
+            ".btn-games"
         ) as NodeListOf<HTMLSpanElement>;
         V.btnScroll = document.querySelector(
             ".btn-scroll .btn"

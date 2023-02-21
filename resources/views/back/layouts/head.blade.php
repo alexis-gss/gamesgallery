@@ -21,6 +21,7 @@
 <!-- Others -->
 <link rel="icon" type="image/png" href="{{ asset('assets/icons/pictures.png') }}" />
 <link rel="canonical" href="{{ url()->current() }}" />
+@include('breadcrumbs.breadcrumb-head')
 
 <!-- Fonts -->
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -28,6 +29,7 @@
 
 <!-- Styles -->
 <link href="{{ asset('css/back.css') }}" rel="stylesheet">
+@stack('styles')
 
 <!-- Scripts -->
 <script src="{{ asset('js/back.js') }}" type="text/javascript"></script>

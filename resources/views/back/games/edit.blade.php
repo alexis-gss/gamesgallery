@@ -1,14 +1,15 @@
-@extends('layouts.backend')
+@extends('layouts.backend', ['brParam' => $game])
 
 @section('title', __('meta.games_edition'))
 @section('description', __('meta.games_edition_desc'))
 @section('keywords', 'noindex,nofollow')
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <form action="{{ route('bo.games.update', $game->id) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-3 border-top border-bottom">
             <h1 class="d-flex flex-row align-items-start h2 m-0 fw-bold">
                 <a href="{{ route('bo.games.index') }}"
                     class="btn btn-primary text-decoration-none m-0"
