@@ -51,6 +51,7 @@
                 <tr>
                     <th scope="col" class="col-5">{{ __('list.name') }}</th>
                     @can('isAdmin')
+                        <th scope="col" class="d-none d-lg-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
                         @if (count($tags) > 1)
                             <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
                         @endif
@@ -63,6 +64,22 @@
                     <tr class="list-item">
                         <td class="align-middle">{{ $tag->name }}</td>
                         @can('isAdmin')
+                            <td class="d-none d-lg-table-cell text-center align-middle">
+                                <form action="{{ route('bo.tags.change-published', $tag->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="btn btn-sm"
+                                        title="{{ __($tag->status ? __('list.unpublish') : __('list.publish')) }}"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top">
+                                        @if($tag->status)
+                                            <i class="fa-solid fa-circle-check text-primary"></i>
+                                        @else
+                                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                        @endif
+                                    </button>
+                                </form>
+                            </td>
                             @if ($loop->count > 1)
                                 <td class="text-center align-middle">
                                     @if(!($loop->first and $tags->onFirstPage()))

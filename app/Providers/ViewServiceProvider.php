@@ -40,14 +40,14 @@ class ViewServiceProvider extends ServiceProvider
             Schema::hasTable('tags') and
             Schema::hasTable('users')
         ) {
-            $globalGames   = Game::orderBy('order', 'ASC')->get();
+            $globalGames   = Game::orderBy('order', 'ASC')->where('status', true)->get();
             $globalFolders = Folder::orderBy('order', 'ASC')->get();
+            $globalTags    = Tag::orderBy('order', 'ASC')->where('status', true)->get();
             $globalUsers   = User::orderBy('order', 'ASC')->get();
-            $globalTags    = Tag::orderBy('order', 'ASC')->get();
             View::share('globalGames', $globalGames);
             View::share('globalFolders', $globalFolders);
-            View::share('globalUsers', $globalUsers);
             View::share('globalTags', $globalTags);
+            View::share('globalUsers', $globalUsers);
         }
     }
 }
