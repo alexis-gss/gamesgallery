@@ -15,7 +15,17 @@ class Folder extends Model
      */
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'status'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'status' => 'bool'
     ];
 
     /**

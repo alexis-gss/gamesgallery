@@ -25,7 +25,10 @@ class StoreFolderRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge(['slug' => Str::slug(strip_tags($this->name))]);
+        $this->merge([
+            'slug' => Str::slug(strip_tags($this->name)),
+            'status' => $this->status ? true : false
+        ]);
     }
 
     /**
@@ -36,7 +39,8 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:255'
+            'name' => 'required|string|min:3|max:255',
+            'status' => 'required|boolean'
         ];
     }
 
@@ -49,7 +53,8 @@ class StoreFolderRequest extends FormRequest
     {
         return [
             'name' => trans('name of the folder'),
-            'slug' => trans('slug of the folder')
+            'slug' => trans('slug of the folder'),
+            'status' => trans('status of the folder')
         ];
     }
 }

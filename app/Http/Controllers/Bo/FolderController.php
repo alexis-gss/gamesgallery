@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFolderRequest;
 use App\Models\Folder;
 use App\Traits\Models\ChangesModelOrder;
+use App\Traits\Controllers\UpdateModelStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FolderController extends Controller
 {
     use ChangesModelOrder;
+    use UpdateModelStatus;
 
     /**
      * Display a listing of the resource.
