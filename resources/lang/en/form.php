@@ -46,7 +46,7 @@ return [
     'action_irreversible' => 'This action is irreversible !',
     'folders_label' => 'Choose a folder among the list',
     'publish' => 'Should be publish ?',
-    'publish_label' => 'The game is published or not',
+    'publish_label' => 'This model is published or not',
 
     // Inputs tooltip.
     'tooltip_name_folder' => 'Type the name of the folder',

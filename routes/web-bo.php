@@ -62,6 +62,9 @@ Route::prefix('bo')
                                     Route::get('/tags/change-order/{tag}/{direction}', [TagController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('tags.change-order');
+                                    // phpcs:ignore Generic.Files.LineLength.TooLong
+                                    Route::post('/tags/{tag}/change-published', [TagController::class, 'changePublished'])
+                                        ->name('tags.change-published');
                                     Route::resource('tags', TagController::class)->except('show');
                                     Route::post('/tags/store', [TagController::class, 'jsonStore'])
                                         ->name('tags.jsonStore');
