@@ -41,7 +41,7 @@ class ViewServiceProvider extends ServiceProvider
             Schema::hasTable('users')
         ) {
             $globalGames   = Game::orderBy('order', 'ASC')->get();
-            $globalFolders = Folder::orderBy('order', 'ASC')->get();
+            $globalFolders = Folder::orderBy('order', 'ASC')->where('status', true)->get();
             $globalUsers   = User::orderBy('order', 'ASC')->get();
             $globalTags    = Tag::orderBy('order', 'ASC')->get();
             View::share('globalGames', $globalGames);

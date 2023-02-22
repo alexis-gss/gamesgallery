@@ -47,6 +47,9 @@ Route::prefix('bo')
                                     Route::get('/folders/change-order/{folder}/{direction}', [FolderController::class, 'changeOrder'])
                                         ->where('direction', 'up|down')
                                         ->name('folders.change-order');
+                                    // phpcs:ignore Generic.Files.LineLength.TooLong
+                                    Route::post('/folders/{folder}/change-published', [FolderController::class, 'changePublished'])
+                                        ->name('folders.change-published');
                                     Route::resource('folders', FolderController::class)->except('show');
 
                                     // phpcs:ignore Generic.Files.LineLength.TooLong
