@@ -12,14 +12,11 @@
         <div class="games-list" data-json='@json($dataGame)'></div>
     </div>
     <!-- Buttons -->
-    <button class="btn btn-games d-flex flex-row justify-content-start align-items-center bg-third rounded-2 text-first border-0 w-100 mt-1 p-0">
-        <span class="p-3">
+    <button class="btn d-flex flex-row justify-content-start align-items-center bg-third rounded-2 text-first border-0 w-100 mt-1 p-0">
+        <span class="btn-games p-3">
             <i class="fa-solid fa-bars"></i>
         </span>
-        <a class="d-flex flex-row align-items-center text-second text-decoration-none py-3" href="{{ route('homepage') }}">
-            <span class="overflow-hidden">homepage</span>
-        </a>
-        <span class="overflow-hidden text-start w-100 p-3 ps-0">/{{ $game->slug }}</span>
+        @include('./../../breadcrumbs/breadcrumb-body')
     </button>
 </nav>
 

@@ -6,7 +6,9 @@
     <div clas="row">
         <h1>@yield('errorTitle')</h1>
         <p>@yield('errorMessage')</p>
-        <p class="text-muted">error code : @yield('errorCode')</p>
-        <a href="{{ Request::is('bo/*') ? route('bo.homepage') : route('homepage') }}">Let's go back to the homepage !</a>
+        <p class="text-muted">{{ __('errors.error_code') }} @yield('errorCode')</p>
+        <a class="text-decoration-none" href="{{ Request::is('bo/*') ? route('bo.homepage') : route('fo.homepage') }}">
+            {{ __('errors.error_text') }}
+        </a>
     </div>
 @endsection

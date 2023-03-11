@@ -28,7 +28,7 @@ return [
     'games' => 'Games',
     'folders' => 'Folders',
     'users' => 'Users',
-    'tags' => 'Tag',
+    'tags' => 'Tags',
     'name' => 'Name',
     'email' => 'Email',
     'role' => 'Role',

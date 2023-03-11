@@ -1,4 +1,4 @@
-<footer class="@if (Route::is('homepage')) footer-home m-0 @else footer-page mt-5 @endif text-center">
+<footer class="@if (Route::is('fo.homepage')) footer-home m-0 @else footer-page mt-5 @endif text-center">
     <p class="m-0">
         <span>© {{ date('Y') }}</span>
         <a href="https://www.alexis-gousseau.com"

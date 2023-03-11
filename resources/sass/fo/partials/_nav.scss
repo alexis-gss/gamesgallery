@@ -12,15 +12,6 @@
         }
     }
 
-    .btn-games {
-        width: calc(100% - 3rem);
-
-        span {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
-
     &-modal {
         overflow: hidden;
         max-width: 100%;

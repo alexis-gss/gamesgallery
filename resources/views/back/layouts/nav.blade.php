@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm position-fixed fixed-top">
     <div class="container">
         <a class="navbar-brand"
-            href="{{ route('homepage') }}"
+            href="{{ route('fo.homepage') }}"
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="bottom"

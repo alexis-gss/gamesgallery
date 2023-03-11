@@ -3,11 +3,10 @@
 
 <head>
     @include('front.layouts.head')
-    @stack('styles')
 </head>
 
 <body class="container position-relative bg-first light-theme">
-    @if (!Route::is('homepage'))
+    @if (!Route::is('fo.homepage'))
         <!-- Navigation -->
         @include('front.layouts.nav')
     @endif
