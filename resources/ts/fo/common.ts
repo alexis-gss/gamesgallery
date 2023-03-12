@@ -14,6 +14,7 @@ const V = {
     menuGames: HTMLDivElement.prototype,
     btnGames: NodeList.prototype,
     btnScroll: HTMLButtonElement.prototype,
+    btnScrollContent: HTMLDivElement.prototype,
 
     init: function () {
         V.selectors();
@@ -26,14 +27,18 @@ const V = {
             ".btn-games"
         ) as NodeListOf<HTMLSpanElement>;
         V.btnScroll = document.querySelector(
-            ".btn-scroll .btn"
+            ".btn-scroll"
         ) as HTMLButtonElement;
+        V.btnScrollContent = document.querySelector(
+            ".btn-scroll .btn"
+        ) as HTMLDivElement;
     },
     events: function () {
+        document.addEventListener("scroll", V.checkDistanceTop);
         V.btnGames?.forEach((element) => {
             element.addEventListener("click", V.displayMenuGames);
         });
-        V.btnScroll?.addEventListener("click", V.scrollToTheTop);
+        V.btnScrollContent?.addEventListener("click", V.scrollToTheTop);
     },
     displayMenuGames: function () {
         V.menuModal.classList.toggle("nav-modal-hidden");
@@ -41,6 +46,12 @@ const V = {
     },
     scrollToTheTop: function () {
         window.scrollTo(0, 0);
+    },
+    checkDistanceTop: function () {
+        document.documentElement.scrollTop < 200
+            ? V.btnScroll?.classList.add("btn-scroll-hidden")
+            : V.btnScroll?.classList.remove("btn-scroll-hidden");
+        console.log("test");
     },
 };
 
