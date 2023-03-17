@@ -85,7 +85,7 @@ trait HasPicture
      */
     public function picturesRules(
         string $name = 'pictures',
-        bool $required = true,
+        ?bool $required = null,
         ?int $limitMin = null,
         ?int $limitMax = null,
         ?int $minWith = null,
@@ -104,8 +104,7 @@ trait HasPicture
         ];
         return [
             "{$name}" => ($required ? 'required' : 'nullable') . "|array|between:$limitMin,$limitMax",
-            "{$name}.*" => [
-                'required',
+            "{$name}.*" => [ ($required ? 'required' : 'nullable'),
                 function (string $attribute, $value, callable $fail) use ($sizes) {
                     return $this->validatePicture($attribute, $value, $fail, $sizes);
                 }
@@ -156,7 +155,6 @@ trait HasPicture
             if ($sizes->minHeight === $sizes->maxHeight) {
                 $yMessage = trans(":attribute la hauteur doit être de {$sizes->minWith}px");
             }
-
             if (($width < $sizes->minWith) or ($width > $sizes->maxWith)) {
                 $fail($xMessage);
             }

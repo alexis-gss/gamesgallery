@@ -17,7 +17,7 @@
         <div class="input-group">
           <button
             @click.prevent="chooseAFile"
-            class="btn btn-outline-secondary"
+            class="btn btn-secondary"
             type="button"
             :title="__('form.tooltip_image_input_modify_source')"
             data-bs-tooltip="tooltip"
@@ -129,7 +129,7 @@
       data-bs-keyboard="false"
     >
       <div
-        class="modal-dialog modal-xl"
+        class="modal-dialog modal-xl d-flex align-items-center h-100 my-0"
         role="document"
       >
         <div class="modal-content">

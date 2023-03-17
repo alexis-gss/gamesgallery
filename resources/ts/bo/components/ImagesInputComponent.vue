@@ -6,7 +6,7 @@
         <div class="input-group">
           <button
             @click.prevent="chooseFiles"
-            class="btn btn-outline-secondary"
+            class="btn btn-secondary"
             type="button"
             :title="__('form.tooltip_image_input_modify_sources')"
             data-bs-tooltip="tooltip"
@@ -79,22 +79,94 @@
         <div
           v-for="n = 0 in intValues.length"
           :key="n"
-          class="col-12 col-sm-6 col-xl-4 col-xxl-3 form-group text-center"
-          :data-test="`test${n}`"
+          class="col-12 form-group text-center px-1"
         >
-          <label
-            v-if="intValues[n - 1]"
-            class="col-form-label w-100 fw-bold w-100"
+          <div
+            class="d-flex justify-content-between align-items-center pb-1"
+            :class="n != 1 ? 'border-top' : ''"
           >
-            {{ __("form.image_input_number_image") }}{{ n }}
-          </label>
-          <img
-            v-if="intValues[n - 1]"
-            class="img-fluid"
-            :src="intValues[n - 1]"
-            :alt="__('form.image_input_preview_image_placeholder')"
-            :aria-describedby="`PreviewHelp${intId}`"
-          >
+            <label
+              v-if="intValues[n - 1]"
+              class="col-form-label fw-bold"
+            >
+              {{ __("form.image_input_number_image") }}{{ n }}
+            </label>
+            <small
+              v-if="intValues[n - 1]"
+              :id="`PreviewHelp${intId}`"
+              class="form-text text-muted d-block m-0"
+            >
+              <span v-if="intOriginalFile[n - 1]">
+                {{ humanFileSize(intOriginalFile[n - 1].size) }}
+                {{ `largeur ${intOriginalFileDimensions[n - 1].width}px` }}
+                {{ `hauteur ${intOriginalFileDimensions[n - 1].height}px` }}.
+              </span>
+            </small>
+            <div class="input-group justify-content-center mt-1 w-auto">
+              <button
+                @click.prevent="viewImageSource(n - 1)"
+                class="btn btn-warning"
+                type="button"
+                data-bs-toggle="modal"
+                :data-bs-target="`#modalViewer${intId}`"
+                :title="__('form.tooltip_image_input_preview_image')"
+                data-bs-tooltip="tooltip"
+              >
+                <i class="fa-solid fa-eye" />
+              </button>
+              <button
+                @click.prevent="chooseAFile(n - 1)"
+                class="btn btn-secondary"
+                type="button"
+                :title="__('form.tooltip_image_input_modify_source')"
+                data-bs-tooltip="tooltip"
+              >
+                <i class="fa-solid fa-folder-open" />
+              </button>
+              <input
+                :id="intId"
+                ref="actualImage"
+                @change="changedImage($event, n - 1)"
+                type="file"
+                class="d-none"
+                :name="intName"
+                accept=".jpg,.jpeg,.gif,.png"
+                :aria-describedby="`Help${intId}`"
+              >
+              <button
+                @click.prevent="prepareImageEditor(n - 1)"
+                :disabled="!intHasImage[n - 1]"
+                :class="`btn ${
+                  !intHasModdedImage[n - 1] ? 'btn-primary' : 'btn-success'
+                }`"
+                type="button"
+                data-bs-toggle="modal"
+                :data-bs-target="`#Modal${intId}`"
+                :title="__('form.tooltip_image_input_resize_image')"
+                data-bs-tooltip="tooltip"
+              >
+                <i class="fa-solid fa-crop" />
+              </button>
+              <span
+                v-if="intHasModdedImage[n - 1]"
+                class="input-group-text text-success"
+                :title="__('form.tooltip_image_input_image_resized')"
+                data-bs-tooltip="tooltip"
+              >
+                <i class="fa-solid fa-wand-magic" />
+              </span>
+              <button
+                v-if="intValues.length > itemLimit[0]"
+                @click.prevent="removeFile(n - 1)"
+                class="btn btn-danger"
+                type="button"
+                :title="__('form.tooltip_image_input_remove_image')"
+                data-bs-tooltip="tooltip"
+              >
+                <i class="fas fa-trash" />
+              </button>
+            </div>
+          </div>
           <p class="text-danger m-0">
             {{
               parseValidationInput(
@@ -103,305 +175,298 @@
               )
             }}
           </p>
-          <small
-            v-if="intValues[n - 1]"
-            :id="`PreviewHelp${intId}`"
-            class="form-text text-muted d-block m-0"
+        </div>
+        <!-- Viewer modal -->
+        <div
+          :id="`modalViewer${intId}`"
+          class="modal"
+          tabindex="-1"
+          role="dialog"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+        >
+          <div
+            class="modal-dialog modal-xl d-flex align-items-center h-100 my-0 py-4"
           >
-            <span v-if="intOriginalFile[n - 1]">
-              {{ humanFileSize(intOriginalFile[n - 1].size) }}
-              {{ `largeur ${intOriginalFileDimensions[n - 1].width}px` }}
-              {{ `hauteur ${intOriginalFileDimensions[n - 1].height}px` }}.
-            </span>
-          </small>
-          <div class="input-group justify-content-center mt-1">
-            <button
-              @click.prevent="chooseAFile(n - 1)"
-              class="btn btn-outline-secondary"
-              type="button"
-              :title="__('form.tooltip_image_input_modify_source')"
-              data-bs-tooltip="tooltip"
-            >
-              <i class="fa-solid fa-folder-open" />
-            </button>
-            <input
-              :id="intId"
-              ref="actualImage"
-              @change="changedImage($event, n - 1)"
-              type="file"
-              class="d-none"
-              :name="intName"
-              accept=".jpg,.jpeg,.gif,.png"
-              :aria-describedby="`Help${intId}`"
-            >
-            <button
-              @click.prevent="prepareImageEditor(n - 1)"
-              :disabled="!intHasImage[n - 1]"
-              :class="`btn ${
-                !intHasModdedImage[n - 1] ? 'btn-primary' : 'btn-success'
-              }`"
-              type="button"
-              data-bs-toggle="modal"
-              :data-bs-target="`#Modal${intId}`"
-              :title="__('form.tooltip_image_input_resize_image')"
-              data-bs-tooltip="tooltip"
-            >
-              <i class="fa-solid fa-crop" />
-            </button>
-            <span
-              v-if="intHasModdedImage[n - 1]"
-              class="input-group-text text-success"
-              :title="__('form.tooltip_image_input_image_resized')"
-              data-bs-tooltip="tooltip"
-            >
-              <i class="fa-solid fa-wand-magic" />
-            </span>
-            <button
-              v-if="intValues.length > itemLimit[0]"
-              @click.prevent="removeFile(n - 1)"
-              class="btn btn-outline-danger"
-              type="button"
-              :title="__('form.tooltip_image_input_remove_image')"
-              data-bs-tooltip="tooltip"
-            >
-              <i class="fas fa-trash" />
-            </button>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  {{ __("form.images_result") }}
+                </h5>
+                <button
+                  @click.prevent="removeImageSource"
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  :aria-label="__('Fermer la fenêtre')"
+                  :title="__('form.tooltip_image_input_close')"
+                  data-bs-tooltip="tooltip"
+                />
+              </div>
+              <div class="modal-body">
+                <div
+                  v-if="intViewerLoadImage"
+                  class="text-center w-100"
+                >
+                  <div
+                    class="spinner-border text-secondary"
+                    role="status"
+                  >
+                    <span class="visually-hidden">
+                      {{ __("form.image_input_viewer_loading") }}
+                    </span>
+                  </div>
+                </div>
+                <img
+                  class="w-100"
+                  :class="intViewerLoadImage ? 'd-none' : ''"
+                  ref="imgViewer"
+                  src=""
+                >
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Cropper modal -->
-      <div
-        :id="`Modal${intId}`"
-        class="modal"
-        tabindex="-1"
-        role="dialog"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-      >
+        <!-- Cropper modal -->
         <div
-          class="modal-dialog modal-xl"
-          role="document"
+          :id="`Modal${intId}`"
+          class="modal"
+          tabindex="-1"
+          role="dialog"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
         >
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">
-                {{ __("form.image_input_edit_image_before_import") }}
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                :aria-label="__('Fermer la fenêtre')"
-                :title="
-                  __('form.tooltip_image_input_modal_close_without_saving')
-                "
-                data-bs-tooltip="tooltip"
-              />
-            </div>
-            <div class="modal-body">
-              <div class="container">
-                <div class="row">
-                  <div class="col text-center">
-                    <div class="btn-group me-4 mt-2">
-                      <button
-                        class="btn btn-warning"
-                        :title="__('form.tooltip_image_input_reset_image')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="reset()"
-                      >
-                        <i class="fa fa-sync-alt" />
-                      </button>
-                    </div>
-                    <div class="btn-group me-4 mt-2">
-                      <button
-                        class="btn btn-primary"
-                        :title="__('form.tooltip_image_input_zoom_in')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="zoom(0.1)"
-                      >
-                        <i class="fa fa-search-plus" />
-                      </button>
-                      <a
-                        class="btn btn-primary"
-                        :title="__('form.tooltip_image_input_zoom_out')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="zoom(-0.1)"
-                      >
-                        <i class="fa fa-search-minus" />
-                      </a>
-                    </div>
-                    <div class="btn-group me-4 mt-2">
-                      <a
-                        class="btn btn-primary"
-                        :title="__('form.tooltip_image_input_move_left')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="move(-10, 0)"
-                      >
-                        <i class="fa fa-arrow-left" />
-                      </a>
-                      <a
-                        class="btn btn-primary"
-                        :title="__('form.tooltip_image_input_move_right')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="move(10, 0)"
-                      >
-                        <i class="fa fa-arrow-right" />
-                      </a>
-                      <a
-                        class="btn btn-primary"
-                        data-bs-tooltip="tooltip"
-                        :title="__('form.tooltip_image_input_move_up')"
-                        @click.prevent="move(0, -10)"
-                      >
-                        <i class="fa fa-arrow-up" />
-                      </a>
-                      <a
-                        class="btn btn-primary"
-                        :title="__('form.tooltip_image_input_move_down')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="move(0, 10)"
-                      >
-                        <i class="fa fa-arrow-down" />
-                      </a>
-                    </div>
-                    <div class="btn-group me-4 mt-2">
-                      <a
-                        class="btn btn-primary"
-                        :title="
-                          __('form.tooltip_image_input_mirror_horizontal')
-                        "
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="scale(true)"
-                      >
-                        <i class="fa fa-arrows-alt-h" />
-                      </a>
-                      <a
-                        class="btn btn-primary"
-                        :title="__('form.tooltip_image_input_mirror_vertical')"
-                        data-bs-tooltip="tooltip"
-                        @click.prevent="scale(false)"
-                      >
-                        <i class="fa fa-arrows-alt-v" />
-                      </a>
+          <div
+            class="modal-dialog modal-xl"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  {{ __("form.image_input_edit_image_before_import") }}
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  :aria-label="__('Fermer la fenêtre')"
+                  :title="
+                    __('form.tooltip_image_input_modal_close_without_saving')
+                  "
+                  data-bs-tooltip="tooltip"
+                />
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center">
+                      <div class="btn-group me-4 mt-2">
+                        <button
+                          class="btn btn-warning"
+                          :title="__('form.tooltip_image_input_reset_image')"
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="reset()"
+                        >
+                          <i class="fa fa-sync-alt" />
+                        </button>
+                      </div>
+                      <div class="btn-group me-4 mt-2">
+                        <button
+                          class="btn btn-primary"
+                          :title="__('form.tooltip_image_input_zoom_in')"
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="zoom(0.1)"
+                        >
+                          <i class="fa fa-search-plus" />
+                        </button>
+                        <a
+                          class="btn btn-primary"
+                          :title="__('form.tooltip_image_input_zoom_out')"
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="zoom(-0.1)"
+                        >
+                          <i class="fa fa-search-minus" />
+                        </a>
+                      </div>
+                      <div class="btn-group me-4 mt-2">
+                        <a
+                          class="btn btn-primary"
+                          :title="__('form.tooltip_image_input_move_left')"
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="move(-10, 0)"
+                        >
+                          <i class="fa fa-arrow-left" />
+                        </a>
+                        <a
+                          class="btn btn-primary"
+                          :title="__('form.tooltip_image_input_move_right')"
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="move(10, 0)"
+                        >
+                          <i class="fa fa-arrow-right" />
+                        </a>
+                        <a
+                          class="btn btn-primary"
+                          data-bs-tooltip="tooltip"
+                          :title="__('form.tooltip_image_input_move_up')"
+                          @click.prevent="move(0, -10)"
+                        >
+                          <i class="fa fa-arrow-up" />
+                        </a>
+                        <a
+                          class="btn btn-primary"
+                          :title="__('form.tooltip_image_input_move_down')"
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="move(0, 10)"
+                        >
+                          <i class="fa fa-arrow-down" />
+                        </a>
+                      </div>
+                      <div class="btn-group me-4 mt-2">
+                        <a
+                          class="btn btn-primary"
+                          :title="
+                            __('form.tooltip_image_input_mirror_horizontal')
+                          "
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="scale(true)"
+                        >
+                          <i class="fa fa-arrows-alt-h" />
+                        </a>
+                        <a
+                          class="btn btn-primary"
+                          :title="
+                            __('form.tooltip_image_input_mirror_vertical')
+                          "
+                          data-bs-tooltip="tooltip"
+                          @click.prevent="scale(false)"
+                        >
+                          <i class="fa fa-arrows-alt-v" />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group d-flex flex-row">
-                      <div class="rotate-button">
-                        <div class="btn-group mt-1">
-                          <a
-                            class="btn btn-primary"
-                            :title="
-                              __(
-                                'form.tooltip_image_input_rotation_counterclockwise'
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group d-flex flex-row">
+                        <div class="rotate-button">
+                          <div class="btn-group mt-1">
+                            <a
+                              class="btn btn-primary"
+                              :title="
+                                __(
+                                  'form.tooltip_image_input_rotation_counterclockwise'
+                                )
+                              "
+                              data-bs-tooltip="tooltip"
+                              @click.prevent="rotate(-45)"
+                            >
+                              <i class="fa fa-undo-alt" />
+                            </a>
+                            <a
+                              class="btn btn-primary"
+                              :title="
+                                __(
+                                  'form.tooltip_image_input_rotation_clockwise'
+                                )
+                              "
+                              data-bs-tooltip="tooltip"
+                              @click.prevent="rotate(45)"
+                            >
+                              <i class="fa fa-redo-alt" />
+                            </a>
+                          </div>
+                        </div>
+                        <div class="mt-1 ms-4 rotate-drag">
+                          <label
+                            for="range"
+                            class="form-label me-4"
+                          >
+                            {{
+                              __("form.image_input_preview_rotation_degrees", {
+                                deg: String(intRotationText),
+                              })
+                            }}
+                          </label>
+                          <input
+                            ref="rotationSlider"
+                            @input.stop="rotationChange($event as Event)"
+                            @change.stop="
+                              rotateTo(
+                                Number.parseInt(
+                                  ($event.target as HTMLInputElement).value
+                                )
                               )
                             "
-                            data-bs-tooltip="tooltip"
-                            @click.prevent="rotate(-45)"
+                            type="range"
+                            class="form-range"
+                            id="range"
+                            min="0"
+                            max="360"
+                            value="0"
                           >
-                            <i class="fa fa-undo-alt" />
-                          </a>
-                          <a
-                            class="btn btn-primary"
-                            :title="
-                              __('form.tooltip_image_input_rotation_clockwise')
-                            "
-                            data-bs-tooltip="tooltip"
-                            @click.prevent="rotate(45)"
-                          >
-                            <i class="fa fa-redo-alt" />
-                          </a>
                         </div>
                       </div>
-                      <div class="mt-1 ms-4 rotate-drag">
-                        <label
-                          for="range"
-                          class="form-label me-4"
-                        >
-                          {{
-                            __("form.image_input_preview_rotation_degrees", {
-                              deg: String(intRotationText),
-                            })
-                          }}
-                        </label>
-                        <input
-                          ref="rotationSlider"
-                          @input.stop="rotationChange($event as Event)"
-                          @change.stop="
-                            rotateTo(
-                              Number.parseInt(
-                                ($event.target as HTMLInputElement).value
-                              )
-                            )
-                          "
-                          type="range"
-                          class="form-range"
-                          id="range"
-                          min="0"
-                          max="360"
-                          value="0"
-                        >
-                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-12 col-md-6 p-0 mb-3">
-                    <img
-                      class="image-modification"
-                      ref="imgEditor"
-                      src=""
-                    >
-                  </div>
-                  <div
-                    ref="previewBox"
-                    class="col-12 col-md-6 p-0 bg-light preview-image"
-                  >
+                  <div class="row mt-3">
+                    <div class="col-12 col-md-6 p-0 mb-3">
+                      <img
+                        class="image-modification"
+                        ref="imgEditor"
+                        src=""
+                      >
+                    </div>
                     <div
-                      :id="`Preview${intId}`"
-                      :style="intPreviewStyle"
-                    />
+                      ref="previewBox"
+                      class="col-12 col-md-6 p-0 bg-light preview-image"
+                    >
+                      <div
+                        :id="`Preview${intId}`"
+                        :style="intPreviewStyle"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                :title="
-                  __('form.tooltip_image_input_modal_close_without_saving')
-                "
-                data-bs-tooltip="tooltip"
-              >
-                {{ __("form.image_input_modal_close") }}
-              </button>
-              <button
-                @click.prevent="exportToBlob"
-                type="button"
-                class="btn btn-primary"
-                :title="__('form.tooltip_image_input_modal_close_with_saving')"
-                data-bs-tooltip="tooltip"
-                data-bs-dismiss="modal"
-              >
-                {{ __("form.image_input_modal_save") }}
-              </button>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  :title="
+                    __('form.tooltip_image_input_modal_close_without_saving')
+                  "
+                  data-bs-tooltip="tooltip"
+                >
+                  {{ __("form.image_input_modal_close") }}
+                </button>
+                <button
+                  @click.prevent="exportToBlob"
+                  type="button"
+                  class="btn btn-primary"
+                  :title="
+                    __('form.tooltip_image_input_modal_close_with_saving')
+                  "
+                  data-bs-tooltip="tooltip"
+                  data-bs-dismiss="modal"
+                >
+                  {{ __("form.image_input_modal_save") }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        <!-- End cropper modal -->
       </div>
-      <!-- End cropper modal -->
+      <!-- End content collapse -->
+      <small
+        :id="`Help${intId}`"
+        class="form-text text-muted"
+      >
+        {{ intHelper }}
+      </small>
     </div>
-    <!-- End content collapse -->
-    <small
-      :id="`Help${intId}`"
-      class="form-text text-muted"
-    >
-      {{ intHelper }}
-    </small>
   </div>
 </template>
 
@@ -480,6 +545,7 @@ export default defineComponent({
     intTooltipList: HTMLButtonElement[];
     intBtnCollapse: HTMLButtonElement | null;
     intLoopLoadImages: number;
+    intViewerLoadImage: boolean;
     intInputImages: HTMLInputElement[];
     itemLimit: number[];
     allErrors: Record<string, string[]>;
@@ -507,6 +573,7 @@ export default defineComponent({
       intBtnCollapse: null,
       intTooltipList: [],
       intLoopLoadImages: 0,
+      intViewerLoadImage: false,
       intInputImages: [],
       itemLimit: [0, 0],
       allErrors: {},
@@ -864,6 +931,27 @@ export default defineComponent({
         this.updateBootstrapTooltip();
         this.intLoopLoadImages = this.intValues.length;
       }
+    },
+    /**
+     * Update image source in the viewer.
+     */
+    viewImageSource(n: number) {
+      const imgEditor = this.$refs.imgViewer as HTMLImageElement;
+      this.intViewerLoadImage = true;
+      setTimeout(() => {
+        imgEditor.src = this.intValues[n];
+        imgEditor.onload = () => {
+          this.intViewerLoadImage = false;
+        };
+      }, 10);
+    },
+    /**
+     * Remove image source in the viewer.
+     */
+    removeImageSource() {
+      this.intViewerLoadImage = true;
+      const imgEditor = this.$refs.imgViewer as HTMLImageElement;
+      imgEditor.src = "";
     },
     /**
      * Set cropper to edit a specific image.
