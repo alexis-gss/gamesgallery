@@ -51,7 +51,6 @@ const V = {
         document.documentElement.scrollTop < 200
             ? V.btnScroll?.classList.add("btn-scroll-hidden")
             : V.btnScroll?.classList.remove("btn-scroll-hidden");
-        console.log("test");
     },
 };
 
