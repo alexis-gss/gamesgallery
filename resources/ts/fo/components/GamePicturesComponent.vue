@@ -161,7 +161,8 @@ export default defineComponent({
     this.gameName = data.game.name;
     this.gamePage = data.gamePictures.current_page;
     this.gameLastPage = data.gamePictures.last_page;
-    this.gameItems = data.gamePictures.per_page;
+    this.gameItems =
+      data.gamePictures.per_page < 12 ? 12 : data.gamePictures.per_page;
     this.checkScroll();
     this.getPictures();
   },
