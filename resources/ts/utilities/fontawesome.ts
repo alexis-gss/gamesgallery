@@ -29,6 +29,8 @@ import {
     faArrowsAltV,
     faUndoAlt,
     faRedoAlt,
+    faCircleArrowUp,
+    faCircleArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 config.autoReplaceSvg = false;
@@ -59,8 +61,8 @@ library.add(faSearchPlus);
 library.add(faSearchMinus);
 library.add(faArrowLeft);
 library.add(faArrowRight);
-library.add(faArrowUp);
-library.add(faArrowDown);
+library.add(faCircleArrowUp);
+library.add(faCircleArrowDown);
 library.add(faArrowsAltH);
 library.add(faArrowsAltV);
 library.add(faUndoAlt);

@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter"
+                        class="form-control need-word-counter @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $game->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}</small>
@@ -103,14 +103,14 @@
     </div>
 </div>
 
-<div class="row mb-3">
+<div class="row mb-3 border-bottom">
     <div class="col">
         <fieldset class="p-3">
             <legend>{{ __('form.visibility') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
-                        <input class="form-check-input"
+                        <input class="form-check-input @error('status') is-invalid @enderror"
                             name="status"
                             type="checkbox"
                             value="1"
@@ -129,3 +129,17 @@
         </fieldset>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Submit button clone.
+        const submit = document.getElementById('formSubmit')
+            submitClone = document.getElementById('formSubmitClone');
+        submitClone.addEventListener('click', (event) => {
+            event.preventDefault();
+            submit.click('');
+        })
+    });
+</script>
+@endpush

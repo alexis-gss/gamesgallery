@@ -51,13 +51,13 @@
             <thead>
                 <tr>
                     <th scope="col" class="col-3">{{ __('list.name') }}</th>
-                    <th scope="col" class="col-3">{{ __('list.folder_associated') }}</th>
-                    <th scope="col" class="col-3">{{ __('list.tags') }}</th>
-                    <th scope="col" class="d-none d-lg-table-cell col-1 text-center">{{ __('list.images') }}</th>
+                    <th scope="col" class="d-none d-lg-table-cell col-3">{{ __('list.folder_associated') }}</th>
+                    <th scope="col" class="d-none d-xxl-table-cell col-3">{{ __('list.tags') }}</th>
+                    <th scope="col" class="d-none d-md-table-cell col-1 text-center">{{ __('list.images') }}</th>
                     @can('isAdmin')
-                        <th scope="col" class="d-none d-lg-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
+                        <th scope="col" class="d-none d-xl-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
                         @if (count($games) > 1)
-                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
+                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -65,9 +65,11 @@
             </thead>
             <tbody>
                 @foreach ($games as $game)
-                    <tr class="list-item">
-                        <td class="align-middle">{{ $game->name }}</td>
-                        <td class="align-middle text-secondary">
+                    <tr class="list-item border-bottom">
+                        <td class="align-middle">
+                            <p class="col-10 text-truncate m-0">{{ $game->name }}</p>
+                        </td>
+                        <td class="d-none d-lg-table-cell align-middle text-secondary">
                             @can('isAdmin')
                                 <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
                                     data-bs="tooltip"
@@ -75,23 +77,35 @@
                                     title="{{ __('list.show_folder') }}"
                                     class="text-decoration-none">
                                 @endcan
-                                {{ $game->folder->name }}
+                                    <div class="badge bg-primary d-inline-block text-white rounded-2">
+                                        {{ $game->folder->name }}
+                                    </div>
                                 @can('isAdmin')
                                 </a>
                             @endcan
                         </td>
-                        <td class="align-middle">
+                        <td class="d-none d-xxl-table-cell align-middle">
                             @if (count($game->tags) > 0)
                                 @foreach($game->tags as $tag)
-                                    <div class="d-inline-block">
-                                        <span class="badge bg-primary text-white rounded-2">{{ $tag->name }}</span>
-                                    </div>
+                                    @can('isAdmin')
+                                        <a href="{{ route('bo.tags.edit', ['tag' => $tag->id]) }}"
+                                            data-bs="tooltip"
+                                            data-bs-placement="top"
+                                            title="{{ __('list.show_tag') }}"
+                                            class="text-decoration-none">
+                                        @endcan
+                                            <div class="badge bg-primary d-inline-block text-white rounded-2">
+                                                {{ $tag->name }}
+                                            </div>
+                                        @can('isAdmin')
+                                        </a>
+                                    @endcan
                                 @endforeach
                             @else
                                 <p class="m-0">{{ __('list.no_associated_tag') }}</p>
                             @endif
                         </td>
-                        <td class="d-none d-lg-table-cell text-center align-middle">
+                        <td class="d-none d-md-table-cell text-center align-middle">
                             @if (isset($game->pictures) && count($game->pictures) > 0)
                                 {{ count($game->pictures) }}
                             @else
@@ -99,11 +113,11 @@
                             @endif
                         </td>
                         @can('isAdmin')
-                            <td class="d-none d-lg-table-cell text-center align-middle">
+                            <td class="d-none d-xl-table-cell text-center align-middle">
                                 <form action="{{ route('bo.games.change-published', $game->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm"
+                                        class="btn btn-sm d-flex mx-auto"
                                         title="{{ __($game->status ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
@@ -116,25 +130,27 @@
                                 </form>
                             </td>
                             @if ($loop->count > 1)
-                                <td class="text-center align-middle">
-                                    @if(!($loop->first and $games->onFirstPage()))
-                                        <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.up') }}">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </a>
-                                    @endif
-                                    @if (!($loop->last and $games->currentPage() === $games->lastPage()))
-                                        <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'down']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.down') }}">
-                                            <i class="fa-solid fa-arrow-down"></i>
-                                        </a>
-                                    @endif
+                                <td class="d-none d-sm-table-cell border-0">
+                                    <div class="d-flex justify-content-center">
+                                        @if(!($loop->first and $games->onFirstPage()))
+                                            <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.up') }}">
+                                                <i class="fa-solid fa-circle-arrow-up"></i>
+                                            </a>
+                                        @endif
+                                        @if (!($loop->last and $games->currentPage() === $games->lastPage()))
+                                            <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'down']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.down') }}">
+                                                <i class="fa-solid fa-circle-arrow-down"></i>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </td>
                             @endif
                             <td class="text-end align-middle">

@@ -54,7 +54,7 @@
                     @can('isAdmin')
                         <th scope="col" class="d-none d-lg-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
                         @if (count($folders) > 1)
-                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
+                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -62,14 +62,16 @@
             </thead>
             <tbody>
                 @foreach ($folders as $folder)
-                    <tr class="list-item">
+                    <tr class="list-item border-bottom">
                         <td class="align-middle">{{ $folder->name }}</td>
                         <td>
                             <a href="{{ route('bo.games.index', ['filter' => $folder->id]) }}"
                                 data-bs="tooltip"
                                 data-bs-placement="top" title="{{ __('list.show_games') }}"
                                 class="text-decoration-none">
-                                {{ count($folder->games) }}
+                                <div class="badge bg-primary d-inline-block text-white rounded-2">
+                                    {{ count($folder->games) }}
+                                </div>
                             </a>
                         </td>
                         @can('isAdmin')
@@ -77,7 +79,7 @@
                                 <form action="{{ route('bo.folders.change-published', $folder->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm"
+                                        class="btn btn-sm d-flex mx-auto"
                                         title="{{ __($folder->status ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
@@ -90,25 +92,27 @@
                                 </form>
                             </td>
                             @if ($loop->count > 1)
-                                <td class="text-center align-middle">
-                                    @if(!($loop->first and $folders->onFirstPage()))
-                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'up']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.up') }}">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </a>
-                                    @endif
-                                    @if (!($loop->last and $folders->currentPage() === $folders->lastPage()))
-                                        <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'down']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.down') }}">
-                                            <i class="fa-solid fa-arrow-down"></i>
-                                        </a>
-                                    @endif
+                                <td class="d-none d-sm-table-cell border-0">
+                                    <div class="d-flex justify-content-center">
+                                        @if(!($loop->first and $folders->onFirstPage()))
+                                            <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'up']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.up') }}">
+                                                <i class="fa-solid fa-circle-arrow-up"></i>
+                                            </a>
+                                        @endif
+                                        @if (!($loop->last and $folders->currentPage() === $folders->lastPage()))
+                                            <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'down']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.down') }}">
+                                                <i class="fa-solid fa-circle-arrow-down"></i>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </td>
                             @endif
                             <td class="text-end align-middle">

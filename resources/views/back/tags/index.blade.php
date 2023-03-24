@@ -53,7 +53,7 @@
                     @can('isAdmin')
                         <th scope="col" class="d-none d-lg-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
                         @if (count($tags) > 1)
-                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
+                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -61,14 +61,14 @@
             </thead>
             <tbody>
                 @foreach ($tags as $tag)
-                    <tr class="list-item">
+                    <tr class="list-item border-bottom">
                         <td class="align-middle">{{ $tag->name }}</td>
                         @can('isAdmin')
                             <td class="d-none d-lg-table-cell text-center align-middle">
                                 <form action="{{ route('bo.tags.change-published', $tag->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm"
+                                        class="btn d-flex mx-auto border-0"
                                         title="{{ __($tag->status ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
@@ -81,25 +81,27 @@
                                 </form>
                             </td>
                             @if ($loop->count > 1)
-                                <td class="text-center align-middle">
-                                    @if(!($loop->first and $tags->onFirstPage()))
-                                        <a href="{{ route('bo.tags.change-order', ['tag' => $tag, 'direction' => 'up']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.up') }}">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </a>
-                                    @endif
-                                    @if (!($loop->last and $tags->currentPage() === $tags->lastPage()))
-                                        <a href="{{ route('bo.tags.change-order', ['tag' => $tag, 'direction' => 'down']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.down') }}">
-                                            <i class="fa-solid fa-arrow-down"></i>
-                                        </a>
-                                    @endif
+                                <td class="d-none d-sm-table-cell border-0">
+                                    <div class="d-flex justify-content-center">
+                                        @if(!($loop->first and $tags->onFirstPage()))
+                                            <a href="{{ route('bo.tags.change-order', ['tag' => $tag, 'direction' => 'up']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.up') }}">
+                                                <i class="fa-solid fa-circle-arrow-up"></i>
+                                            </a>
+                                        @endif
+                                        @if (!($loop->last and $tags->currentPage() === $tags->lastPage()))
+                                            <a href="{{ route('bo.tags.change-order', ['tag' => $tag, 'direction' => 'down']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.down') }}">
+                                                <i class="fa-solid fa-circle-arrow-down"></i>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </td>
                             @endif
                             <td class="text-end align-middle">

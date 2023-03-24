@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter"
+                        class="form-control need-word-counter @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $user->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}</small>
@@ -35,7 +35,7 @@
                     <input type="text"
                         id="email"
                         name="email"
-                        class="form-control need-word-counter"
+                        class="form-control need-word-counter @error('email') is-invalid @enderror"
                         placeholder="{{ __('form.email') }}"
                         value="{{ old('email', $user->email ?? '') }}">
                     <small class="text-muted">{{ __('form.email_label') }}</small>
@@ -51,7 +51,7 @@
                                 <i class="fa-solid fa-circle-info"></i>
                             </span>
                         </label>
-                        <select class="form-select"
+                        <select class="form-select @error('role') is-invalid @enderror"
                             id="role"
                             name="role"
                             role="button">
@@ -87,15 +87,15 @@
                             'value' => $user->picture ?? ''
                         ];
                     @endphp
-                    @include('back.modules.input-error', ['inputName' => 'picture'])
                     <div class="image-input" data-json='@json($data)'></div>
+                    @include('back.modules.input-error', ['inputName' => 'picture'])
                 </div>
             </div>
         </fieldset>
     </div>
 </div>
 
-<div class="row @if (!Route::is('bo.users.create')) border-bottom @endif">
+<div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
             <legend>{{ __('form.security') }}</legend>
@@ -114,7 +114,7 @@
                         <input type="password"
                             id="password"
                             name="password"
-                            class="form-control need-word-counter-password password-input"
+                            class="form-control need-word-counter-password password-input @error('password') is-invalid @enderror"
                             placeholder="{{ __('form.password') }}"
                             value="{{ old('password') }}"
                             aria-describedby="btn-password"
@@ -145,7 +145,7 @@
                         <input type="password"
                             id="password_confirmation"
                             name="password_confirmation"
-                            class="form-control need-word-counter-password password-input"
+                            class="form-control need-word-counter-password password-input @error('password_confirmation') is-invalid @enderror"
                             placeholder="{{ __('form.confirm') }}"
                             value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}"
                             aria-describedby="btn-password-confirm"
@@ -166,3 +166,52 @@
         </fieldset>
     </div>
 </div>
+
+@if (!Route::is('bo.users.create'))
+<div class="row border-bottom">
+    <div class="col">
+        <fieldset class="p-3">
+            <legend>{{ __('form.account') }}</legend>
+            <div class="row mb-3">
+                <div class="col-12 col-md-6 form-group">
+                    <div class="col-12">
+                        <label class="col-form-label">
+                            <b>{{ __('form.account_delete') }}</b>
+                        </label>
+                    </div>
+                    <form action="{{ route('bo.users.destroy', $user->id) }}"
+                        method="POST"
+                        class="confirmDeleteTS">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="btn btn-danger"
+                            data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('list.delete_user') }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                    <div class="col-12">
+                        <small class="col-12 text-muted">{{ __('form.action_irreversible') }}</small>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@endif
+
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Submit button clone.
+        const submit = document.getElementById('formSubmit')
+            submitClone = document.getElementById('formSubmitClone');
+        submitClone.addEventListener('click', (event) => {
+            event.preventDefault();
+            submit.click('');
+        })
+    });
+</script>
+@endpush

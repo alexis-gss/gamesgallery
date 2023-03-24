@@ -37,6 +37,7 @@ return [
     'games_associated' => 'Game(s) associated',
     'folder_associated' => 'Folder associated',
     'show_folder' => 'Show the folder associated',
+    'show_tag' => 'Show the tag associated',
     'show_games' => 'Show game(s) associated to this folder',
     'up' => 'Up',
     'down' => 'Down',

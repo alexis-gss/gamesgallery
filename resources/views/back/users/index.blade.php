@@ -53,7 +53,7 @@
                     <th scope="col" class="col-3">{{ __('list.role') }}</th>
                     @can('isAdmin')
                         @if (count($users) > 1)
-                            <th scope="col" class="col-1 text-center">{{ __('list.order') }}</th>
+                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
                         @endif
                         <th scope="col" class="col-1"><!-- Empty --></th>
                     @endcan
@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    <tr class="list_item">
+                    <tr class="list_item border-bottom">
                         <td class="align-middle">{{ $user->name }}</td>
                         <td class="align-middle">{{ $user->email }}</td>
                         <td class="align-middle">
@@ -69,25 +69,27 @@
                         </td>
                         @can('isAdmin')
                             @if ($loop->count > 1)
-                                <td class="text-center align-middle">
-                                    @if(!($loop->first and $users->onFirstPage()))
-                                        <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'up']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.up') }}">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </a>
-                                    @endif
-                                    @if (!($loop->last and $users->currentPage() === $users->lastPage()))
-                                        <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'down']) }}"
-                                            class="btn-link text-decoration-none"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.down') }}">
-                                            <i class="fa-solid fa-arrow-down"></i>
-                                        </a>
-                                    @endif
+                                <td class="d-none d-sm-table-cell border-0">
+                                    <div class="d-flex justify-content-center">
+                                        @if(!($loop->first and $users->onFirstPage()))
+                                            <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'up']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.up') }}">
+                                                <i class="fa-solid fa-circle-arrow-up"></i>
+                                            </a>
+                                        @endif
+                                        @if (!($loop->last and $users->currentPage() === $users->lastPage()))
+                                            <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'down']) }}"
+                                                class="btn d-flex btn-link w-fit"
+                                                data-bs="tooltip"
+                                                data-bs-placement="top"
+                                                title="{{ __('list.down') }}">
+                                                <i class="fa-solid fa-circle-arrow-down"></i>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </td>
                             @endif
                             <td class="text-end align-middle">
