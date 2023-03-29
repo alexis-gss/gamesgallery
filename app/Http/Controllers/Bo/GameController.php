@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\Bo\Games\StoreGameRequest;
+use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Models\Game;
 use App\Models\Tag;
 use App\Traits\Controllers\HasPicture;
@@ -59,7 +60,7 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreGameRequest $request
+     * @param \App\Http\Requests\Bo\Games\StoreGameRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreGameRequest $request): \Illuminate\Http\RedirectResponse
@@ -97,11 +98,11 @@ class GameController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\StoreGameRequest $request
-     * @param \App\Models\Game                    $game
+     * @param \App\Http\Requests\Bo\Games\UpdateGameRequest $request
+     * @param \App\Models\Game                              $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreGameRequest $request, Game $game): \Illuminate\Http\RedirectResponse
+    public function update(UpdateGameRequest $request, Game $game): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request, $game) {
             $game->fill($request->validated());
@@ -126,7 +127,7 @@ class GameController extends Controller
     public function destroy(Game $game): \Illuminate\Http\RedirectResponse
     {
         if ($game->deleteOrFail()) {
-            return redirect()->back()
+            return redirect()->route('bo.games.index')
                 ->with('success', trans('changes.deletion_successful'));
         }
         return redirect()->back()

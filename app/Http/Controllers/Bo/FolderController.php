@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFolderRequest;
+use App\Http\Requests\Bo\Folders\StoreFolderRequest;
+use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
 use App\Models\Folder;
 use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelStatus;
@@ -50,7 +51,7 @@ class FolderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreFolderRequest $request
+     * @param \App\Http\Requests\Bo\Folders\StoreFolderRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreFolderRequest $request): \Illuminate\Http\RedirectResponse
@@ -82,11 +83,11 @@ class FolderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\StoreFolderRequest $request
-     * @param \App\Models\Folder                    $folder
+     * @param \App\Http\Requests\Bo\Folders\UpdateFolderRequest $request
+     * @param \App\Models\Folder                                $folder
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreFolderRequest $request, Folder $folder): \Illuminate\Http\RedirectResponse
+    public function update(UpdateFolderRequest $request, Folder $folder): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request, $folder) {
             $folder->fill($request->validated());
@@ -110,7 +111,7 @@ class FolderController extends Controller
     {
         if (count($folder->games) === 0) {
             if ($folder->deleteOrFail()) {
-                return redirect()->back()
+                return redirect()->route('bo.folders.index')
                     ->with('success', trans('changes.deletion_successful'));
             }
             return redirect()->back()

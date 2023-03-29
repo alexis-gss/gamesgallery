@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Bo\Games;
 
+use App\Traits\Requests\HasPicture;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class StoreFolderRequest extends FormRequest
+class StoreGameRequest extends FormRequest
 {
+    use HasPicture;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,6 +32,7 @@ class StoreFolderRequest extends FormRequest
             'slug' => Str::slug(strip_tags($this->name)),
             'status' => $this->status ? true : false
         ]);
+        $this->mergePictures('pictures');
     }
 
     /**
@@ -38,10 +42,19 @@ class StoreFolderRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
+            'folder_id' => 'sometimes|nullable',
             'name' => 'required|string|min:3|max:255',
+            'tags' => 'sometimes|array',
+            'tags.*' => 'required|array',
+            'tags.*.id' => 'required|numeric|exists:tags,id|distinct',
+            'tags.*.name' => 'required|string',
             'status' => 'required|boolean'
         ];
+        return \array_merge(
+            $rules,
+            $this->picturesRules('pictures', true, 0, 100),
+        );
     }
 
     /**
@@ -52,9 +65,15 @@ class StoreFolderRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name of the folder'),
-            'slug' => trans('slug of the folder'),
-            'status' => trans('status of the folder')
+            'name' => trans('name of the game'),
+            'slug' => trans('slug of the game'),
+            'pictures' => trans('pictures of the game'),
+            'pictures.*' => trans('pictures of the game'),
+            'tags' => trans('tags of the game'),
+            'tags.*' => trans('tags of the game'),
+            'tags.*.id' => trans('tag\'s id'),
+            'tags.*.name' => trans('tag\'s name'),
+            'status' => trans('the game is published ?')
         ];
     }
 }

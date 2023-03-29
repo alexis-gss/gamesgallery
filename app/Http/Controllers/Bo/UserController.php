@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Bo\Users\StoreUserRequest;
+use App\Http\Requests\Bo\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreUserRequest $request
+     * @param \App\Http\Requests\Bo\Users\StoreUserRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreUserRequest $request): \Illuminate\Http\RedirectResponse
@@ -81,8 +81,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateUserRequest $request
-     * @param \App\Models\User                     $user
+     * @param \App\Http\Requests\Bo\Users\UpdateUserRequest $request
+     * @param \App\Models\User                              $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse

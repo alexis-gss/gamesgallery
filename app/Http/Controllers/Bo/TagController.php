@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\Bo\Tags\StoreTagRequest;
+use App\Http\Requests\Bo\Tags\UpdateTagRequest;
 use App\Models\Tag;
 use App\Traits\Models\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelStatus;
@@ -51,7 +52,7 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreTagRequest $request
+     * @param \App\Http\Requests\Bo\Tags\StoreTagRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreTagRequest $request): \Illuminate\Http\RedirectResponse
@@ -103,11 +104,11 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\StoreTagRequest $request
-     * @param \App\Models\Tag                    $tag
+     * @param \App\Http\Requests\Bo\Tags\UpdateTagRequest $request
+     * @param \App\Models\Tag                             $tag
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreTagRequest $request, Tag $tag): \Illuminate\Http\RedirectResponse
+    public function update(UpdateTagRequest $request, Tag $tag): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request, $tag) {
             $tag->fill($request->validated());
@@ -130,7 +131,7 @@ class TagController extends Controller
     public function destroy(Tag $tag): \Illuminate\Http\RedirectResponse
     {
         if ($tag->deleteOrFail()) {
-            return redirect()->back()
+            return redirect()->route('bo.tags.index')
                 ->with('success', trans('changes.deletion_successful'));
         }
         return redirect()->back()
