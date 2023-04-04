@@ -2,7 +2,7 @@
 
 namespace App\Traits\Models;
 
-use App\Http\Requests\UpdateChangeOrderRequest;
+use App\Http\Requests\Bo\UpdateChangeOrderRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -13,8 +13,8 @@ trait ChangesModelOrder
     /**
      * Change order.
      *
-     * @param \App\Http\Requests\UpdateChangeOrderRequest $request
-     * @param \Illuminate\Database\Eloquent\Model         $model
+     * @param \App\Http\Requests\Bo\UpdateChangeOrderRequest $request
+     * @param \Illuminate\Database\Eloquent\Model            $model
      * @return \Illuminate\Http\RedirectResponse
      * @throws \RuntimeException Si le nom du parametre de la route ne correspond pas au model utilisé.
      */
