@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\Role;
 use App\Lib\Helpers\FileStorageHelper;
 use App\Lib\Helpers\ToolboxHelper;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +12,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $slug
+ * @property string $email
+ * @property string $picture
+ * @property string $picture_alt
+ * @property string $picture_title
+ * @property string $password
+ * @property integer $role
+ * @property integer $order
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -39,6 +50,7 @@ class User extends Authenticatable
         'email',
         'picture',
         'picture_alt',
+        'picture_title',
         'password',
         'role'
     ];
@@ -62,14 +74,12 @@ class User extends Authenticatable
         static::creating(function (self $user) {
             static::setSlug($user);
             static::assertFieldsAreUnique($user);
-            static::setAttributeAlt($user);
             static::updatePassword($user);
             static::setOrder($user);
             static::setImage($user);
         });
         static::updating(function (self $user) {
             static::assertFieldsAreUnique($user, $user->id);
-            static::setAttributeAlt($user);
             static::updatePassword($user);
             static::setImage($user);
         });
@@ -86,11 +96,11 @@ class User extends Authenticatable
     /**
      * Set the slug.
      *
-     * @param \Illuminate\Database\Eloquent\Model $user
+     * @param \App\Models\User $user
      *
      * @return void
      */
-    private static function setSlug(Model $user)
+    private static function setSlug(User $user)
     {
         $user->slug = Str::slug($user->name);
     }
@@ -98,11 +108,11 @@ class User extends Authenticatable
     /**
      * Set the image.
      *
-     * @param \Illuminate\Database\Eloquent\Model $user
+     * @param \App\Models\User $user
      *
      * @return void
      */
-    private static function setImage(Model $user)
+    private static function setImage(User $user)
     {
         $user->picture = FileStorageHelper::storeFile($user, $user->picture, true);
     }
@@ -138,23 +148,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Set 'alt' attribute for the profile picture.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $user
-     * @return void
-     */
-    private static function setAttributeAlt(Model $user): void
-    {
-        $user->picture_alt = "Picture for the " . $user->name . " account";
-    }
-
-    /**
      * Set order after the last element of the list.
      *
-     * @param \Illuminate\Database\Eloquent\Model $user
+     * @param \App\Models\User $user
      * @return void
      */
-    private static function setOrder(Model $user): void
+    private static function setOrder(User $user): void
     {
         $user->order = \intval(self::query()->max('order')) + 1;
     }

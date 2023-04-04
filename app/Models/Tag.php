@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $slug
+ * @property boolean $status
+ * @property integer $order
+ */
 class Tag extends Model
 {
     use HasFactory;
@@ -53,6 +60,9 @@ class Tag extends Model
         static::updating(function (self $tag) {
             static::assertFieldIsUnique($tag->slug, $tag->id);
         });
+        static::deleting(function (self $tag) {
+            $tag->games()->detach();
+        });
     }
 
     // * METHODS
@@ -60,11 +70,11 @@ class Tag extends Model
     /**
      * Set the slug.
      *
-     * @param \Illuminate\Database\Eloquent\Model $tag
+     * @param \App\Models\Tag $tag
      *
      * @return void
      */
-    private static function setSlug(Model $tag)
+    private static function setSlug(Tag $tag)
     {
         $tag->slug = Str::slug($tag->name);
     }
@@ -86,10 +96,10 @@ class Tag extends Model
     /**
      * Set order after the last element of the list.
      *
-     * @param \Illuminate\Database\Eloquent\Model $tag
+     * @param \App\Models\Tag $tag
      * @return void
      */
-    private static function setOrder(Model $tag): void
+    private static function setOrder(Tag $tag): void
     {
         $tag->order = \intval(self::query()->max('order')) + 1;
     }

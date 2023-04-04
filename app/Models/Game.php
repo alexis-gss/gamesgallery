@@ -3,11 +3,25 @@
 namespace App\Models;
 
 use App\Lib\Helpers\ToolboxHelper;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @property integer $id
+ * @property integer $folder_id
+ * @property string $name
+ * @property string $slug
+ * @property string $pictures
+ * @property string $pictures_alt
+ * @property string $pictures_title
+ * @property boolean $status
+ * @property integer $order
+ */
 class Game extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are fillable.
      *
@@ -19,6 +33,7 @@ class Game extends Model
         'slug',
         'pictures',
         'pictures_alt',
+        'pictures_title',
         'status'
     ];
 
@@ -42,13 +57,11 @@ class Game extends Model
         static::creating(function (self $game) {
             static::setSlug($game);
             static::assertFieldIsUnique($game->slug);
-            static::setAttributeAlt($game);
             static::setOrder($game);
         });
         static::updating(function (self $game) {
             static::setSlug($game);
             static::assertFieldIsUnique($game->slug, $game->id);
-            static::setAttributeAlt($game);
         });
     }
 
@@ -57,11 +70,11 @@ class Game extends Model
     /**
      * Set the slug.
      *
-     * @param \Illuminate\Database\Eloquent\Model $game
+     * @param \App\Models\Game $game
      *
      * @return void
      */
-    private static function setSlug(Model $game)
+    private static function setSlug(Game $game)
     {
         $game->slug = Str::slug($game->name);
     }
@@ -83,23 +96,12 @@ class Game extends Model
     /**
      * Set order after the last element of the list.
      *
-     * @param \Illuminate\Database\Eloquent\Model $game
+     * @param \App\Models\Game $game
      * @return void
      */
-    private static function setOrder(Model $game): void
+    private static function setOrder(Game $game): void
     {
         $game->order = \intval(self::query()->max('order')) + 1;
-    }
-
-    /**
-     * Set 'alt' attribute for the game picture.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $game
-     * @return void
-     */
-    private static function setAttributeAlt(Model $game): void
-    {
-        $game->pictures_alt = "Image of the " . $game->name . " game";
     }
 
     // * RELATIONSHIPS

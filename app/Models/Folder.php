@@ -3,11 +3,21 @@
 namespace App\Models;
 
 use App\Lib\Helpers\ToolboxHelper;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $slug
+ * @property boolean $status
+ * @property integer $order
+ */
 class Folder extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are fillable.
      *
@@ -51,11 +61,11 @@ class Folder extends Model
     /**
      * Set the slug.
      *
-     * @param \Illuminate\Database\Eloquent\Model $folder
+     * @param \App\Models\Folder $folder
      *
      * @return void
      */
-    private static function setSlug(Model $folder)
+    private static function setSlug(Folder $folder)
     {
         $folder->slug = Str::slug($folder->name);
     }
@@ -77,10 +87,10 @@ class Folder extends Model
     /**
      * Set order after the last element of the list.
      *
-     * @param \Illuminate\Database\Eloquent\Model $folder
+     * @param \App\Models\Folder $folder
      * @return void
      */
-    private static function setOrder(Model $folder): void
+    private static function setOrder(Folder $folder): void
     {
         $folder->order = \intval(self::query()->max('order')) + 1;
     }

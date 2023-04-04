@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->comment('Email of the user that is unique.');
             $table->string('picture')->comment('Picture associated to this user.');
             $table->string('picture_alt')->comment('Alt attribute of the image.');
+            $table->string('picture_title')->comment('Title attribute of the image.');
             $table->string('password')->comment('Encrypted password of the user.');
             $table->boolean('role')->comment('Role of the user who defines the rights/access.');
             $table->integer('order')->comment('Order of this folder.');

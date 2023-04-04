@@ -80,6 +80,8 @@ class UserCreate extends Command
             'email' => $this->email,
             'password' => $this->password,
             'picture' => asset('assets/images/profile.jpg'),
+            'picture_alt' => "Alt of user picture profile.",
+            'picture_title' => "Title of user picture profile.",
             'role' => $this->role
         ]);
         $user->saveOrFail();
