@@ -23,11 +23,12 @@
         @endcan
     </div>
     <form action="{{ request()->url() }}" enctype="multipart/form-data" id="search"
-        class="d-flex flex-row input-group pt-3">
+        class="d-flex flex-row input-group pt-3 pb-2">
+        <label class="input-group-text" for="searchField">{{ $searchFields }}</label>
         <input class="form-control"
             type="text"
             placeholder="{{ __('search.search_folder') }}"
-            id="search"
+            id="searchField"
             name="search"
             value="{{ old('search', $search ?? '') }}">
         <button class="btn btn-primary"
@@ -48,72 +49,62 @@
     <table class="table">
         @if (count($folders) > 0)
             <thead>
-                <tr>
-                    <th scope="col" class="col-5">{{ __('list.name') }}</th>
-                    <th scope="col" class="col-5">{{ __('list.games_associated') }}</th>
-                    @can('isAdmin')
-                        <th scope="col" class="d-none d-lg-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
-                        @if (count($folders) > 1)
-                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
-                        @endif
-                        <th scope="col" class="col-1"><!-- Empty --></th>
-                    @endcan
-                </tr>
+                @php
+                $rst = !is_null(request()->rst);
+                $routeName = request()->route()->getName();
+                $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
+                $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
+                $cols = ['name' => __('list.name'), 'status' => __('list.publishment'), 'order' => __('list.order')];
+                @endphp
+                @include('back.modules.table-col-sorter', [
+                    'cols' => $cols,
+                    'mobileHide' => [],
+                ])
             </thead>
             <tbody>
                 @foreach ($folders as $folder)
                     <tr class="list-item border-bottom">
-                        <td class="align-middle">{{ $folder->name }}</td>
-                        <td>
-                            <a href="{{ route('bo.games.index', ['filter' => $folder->id]) }}"
-                                data-bs="tooltip"
-                                data-bs-placement="top" title="{{ __('list.show_games') }}"
-                                class="text-decoration-none">
-                                <div class="badge bg-primary d-inline-block text-white rounded-2">
-                                    {{ count($folder->games) }}
-                                </div>
-                            </a>
-                        </td>
+                        <td class="text-center align-middle">{{ $folder->name }}</td>
                         @can('isAdmin')
                             <td class="d-none d-lg-table-cell text-center align-middle">
                                 <form action="{{ route('bo.folders.change-published', $folder->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm d-flex mx-auto"
+                                        class="btn btn-sm @if($folder->status) btn-primary @else btn-danger @endif"
                                         title="{{ __($folder->status ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
                                         @if($folder->status)
-                                            <i class="fa-solid fa-circle-check text-primary"></i>
+                                            <i class="fa-solid fa-circle-check"></i>
                                         @else
-                                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                            <i class="fa-solid fa-circle-xmark"></i>
                                         @endif
                                     </button>
                                 </form>
                             </td>
-                            @if ($loop->count > 1)
-                                <td class="d-none d-sm-table-cell border-0">
-                                    <div class="d-flex justify-content-center">
-                                        @if(!($loop->first and $folders->onFirstPage()))
-                                            <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'up']) }}"
-                                                class="btn d-flex btn-link w-fit"
-                                                data-bs="tooltip"
-                                                data-bs-placement="top"
-                                                title="{{ __('list.up') }}">
-                                                <i class="fa-solid fa-circle-arrow-up"></i>
-                                            </a>
-                                        @endif
-                                        @if (!($loop->last and $folders->currentPage() === $folders->lastPage()))
-                                            <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'down']) }}"
-                                                class="btn d-flex btn-link w-fit"
-                                                data-bs="tooltip"
-                                                data-bs-placement="top"
-                                                title="{{ __('list.down') }}">
-                                                <i class="fa-solid fa-circle-arrow-down"></i>
-                                            </a>
-                                        @endif
-                                    </div>
-                                </td>
+                            @if(!$noOrder or $rst)
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'up']) }}"
+                                        class="@if($loop->first and $folders->onFirstPage()) invisible @endif">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-dark @if(($loop->first and $folders->onFirstPage())) disabled @endif"
+                                            title="{{ __('list.up') }}"
+                                            data-bs="tooltip">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </button>
+                                    </a>
+                                    <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'down']) }}"
+                                        class="@if($loop->last and $folders->currentPage() === $folders->lastPage()) invisible @endif">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-dark ms-1 @if($loop->last and $folders->currentPage() === $folders->lastPage()) disabled @endif"
+                                            title="{{ __('list.down') }}"
+                                            data-bs="tooltip">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                            </td>
                             @endif
                             <td class="text-end align-middle">
                                 <form action="{{ route('bo.folders.destroy', $folder->id) }}"

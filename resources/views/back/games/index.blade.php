@@ -23,14 +23,14 @@
         @endcan
     </div>
     <form action="{{ request()->url() }}" enctype="multipart/form-data" id="search"
-        class="d-flex flex-row input-group pt-3">
+        class="d-flex flex-row input-group pt-3 pb-2">
+        <label class="input-group-text" for="searchField">{{ $searchFields }}</label>
         <input class="form-control"
             type="text"
             placeholder="{{ __('search.search_game') }}"
-            id="search"
+            id="searchField"
             name="search"
             value="{{ old('search', $search ?? '') }}">
-        @include('back.modules.select-folder', ['type' => 'filter', 'target' => $filter])
         <button class="btn btn-primary"
             type="submit"
             data-bs="tooltip"
@@ -49,27 +49,31 @@
     <table class="table">
         @if (count($games) > 0)
             <thead>
-                <tr>
-                    <th scope="col" class="col-3">{{ __('list.name') }}</th>
-                    <th scope="col" class="d-none d-lg-table-cell col-3">{{ __('list.folder_associated') }}</th>
-                    <th scope="col" class="d-none d-xxl-table-cell col-3">{{ __('list.tags') }}</th>
-                    <th scope="col" class="d-none d-md-table-cell col-1 text-center">{{ __('list.images') }}</th>
-                    @can('isAdmin')
-                        <th scope="col" class="d-none d-xl-table-cell col-1 text-center">{{ __('list.publishment') }}</th>
-                        @if (count($games) > 1)
-                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
-                        @endif
-                        <th scope="col" class="col-1"><!-- Empty --></th>
-                    @endcan
-                </tr>
+                @php
+                $rst = !is_null(request()->rst);
+                $routeName = request()->route()->getName();
+                $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
+                $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
+                $cols = [
+                    'name' => __('list.name'),
+                    'folder_id' => __('list.folder_associated'),
+                    'pictures' => __('list.images'),
+                    'status' => __('list.publishment'),
+                    'order' => __('list.order')
+                ];
+                @endphp
+                @include('back.modules.table-col-sorter', [
+                    'cols' => $cols,
+                    'mobileHide' => [],
+                ])
             </thead>
             <tbody>
                 @foreach ($games as $game)
                     <tr class="list-item border-bottom">
-                        <td class="align-middle">
+                        <td class="text-center align-middle">
                             <p class="col-10 text-truncate m-0">{{ $game->name }}</p>
                         </td>
-                        <td class="d-none d-lg-table-cell align-middle text-secondary">
+                        <td class="d-none d-lg-table-cell align-middle text-center text-secondary">
                             @can('isAdmin')
                                 <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
                                     data-bs="tooltip"
@@ -84,27 +88,6 @@
                                 </a>
                             @endcan
                         </td>
-                        <td class="d-none d-xxl-table-cell align-middle">
-                            @if (count($game->tags) > 0)
-                                @foreach($game->tags as $tag)
-                                    @can('isAdmin')
-                                        <a href="{{ route('bo.tags.edit', ['tag' => $tag->id]) }}"
-                                            data-bs="tooltip"
-                                            data-bs-placement="top"
-                                            title="{{ __('list.show_tag') }}"
-                                            class="text-decoration-none">
-                                        @endcan
-                                            <div class="badge bg-primary d-inline-block text-white rounded-2">
-                                                {{ $tag->name }}
-                                            </div>
-                                        @can('isAdmin')
-                                        </a>
-                                    @endcan
-                                @endforeach
-                            @else
-                                <p class="m-0">{{ __('list.no_associated_tag') }}</p>
-                            @endif
-                        </td>
                         <td class="d-none d-md-table-cell text-center align-middle">
                             @if (isset($game->pictures) && count($game->pictures) > 0)
                                 {{ count($game->pictures) }}
@@ -117,41 +100,41 @@
                                 <form action="{{ route('bo.games.change-published', $game->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm d-flex mx-auto"
+                                        class="btn btn-sm @if($game->status) btn-primary @else btn-danger @endif"
                                         title="{{ __($game->status ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
                                         @if($game->status)
-                                            <i class="fa-solid fa-circle-check text-primary"></i>
+                                            <i class="fa-solid fa-circle-check"></i>
                                         @else
-                                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                            <i class="fa-solid fa-circle-xmark"></i>
                                         @endif
                                     </button>
                                 </form>
                             </td>
-                            @if ($loop->count > 1)
-                                <td class="d-none d-sm-table-cell border-0">
-                                    <div class="d-flex justify-content-center">
-                                        @if(!($loop->first and $games->onFirstPage()))
-                                            <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
-                                                class="btn d-flex btn-link w-fit"
-                                                data-bs="tooltip"
-                                                data-bs-placement="top"
-                                                title="{{ __('list.up') }}">
-                                                <i class="fa-solid fa-circle-arrow-up"></i>
-                                            </a>
-                                        @endif
-                                        @if (!($loop->last and $games->currentPage() === $games->lastPage()))
-                                            <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'down']) }}"
-                                                class="btn d-flex btn-link w-fit"
-                                                data-bs="tooltip"
-                                                data-bs-placement="top"
-                                                title="{{ __('list.down') }}">
-                                                <i class="fa-solid fa-circle-arrow-down"></i>
-                                            </a>
-                                        @endif
-                                    </div>
-                                </td>
+                            @if(!$noOrder or $rst)
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
+                                        class="@if($loop->first and $games->onFirstPage()) invisible @endif">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-dark @if(($loop->first and $games->onFirstPage())) disabled @endif"
+                                            title="{{ __('list.up') }}"
+                                            data-bs="tooltip">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </button>
+                                    </a>
+                                    <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'down']) }}"
+                                        class="@if($loop->last and $games->currentPage() === $games->lastPage()) invisible @endif">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-dark ms-1 @if($loop->last and $games->currentPage() === $games->lastPage()) disabled @endif"
+                                            title="{{ __('list.down') }}"
+                                            data-bs="tooltip">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                            </td>
                             @endif
                             <td class="text-end align-middle">
                                 <form action="{{ route('bo.games.destroy', $game->id) }}"

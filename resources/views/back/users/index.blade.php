@@ -22,11 +22,13 @@
             </a>
         @endcan
     </div>
-    <form action="{{ request()->url() }}" enctype="multipart/form-data" id="search" class="d-flex flex-row input-group pt-3">
+    <form action="{{ request()->url() }}" enctype="multipart/form-data" id="search"
+        class="d-flex flex-row input-group pt-3">
+        <label class="input-group-text" for="searchField">{{ $searchFields }}</label>
         <input class="form-control"
             type="text"
             placeholder="{{ __('search.search_user') }}"
-            id="search"
+            id="searchField"
             name="search"
             value="{{ old('search', $search ?? '') }}">
         <button class="btn btn-primary"
@@ -47,50 +49,50 @@
     <table class="table">
         @if (count($users) > 0)
             <thead>
-                <tr>
-                    <th scope="col" class="col-3">{{ __('list.name') }}</th>
-                    <th scope="col" class="col-4">{{ __('list.email') }}</th>
-                    <th scope="col" class="col-3">{{ __('list.role') }}</th>
-                    @can('isAdmin')
-                        @if (count($users) > 1)
-                            <th scope="col" class="d-none d-sm-table-cell col-1 text-center">{{ __('list.order') }}</th>
-                        @endif
-                        <th scope="col" class="col-1"><!-- Empty --></th>
-                    @endcan
-                </tr>
+                @php
+                $rst = !is_null(request()->rst);
+                $routeName = request()->route()->getName();
+                $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
+                $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
+                $cols = ['name' => __('list.name'), 'email' => __('list.email'), 'role' => __('list.role'), 'order' => __('list.order')];
+                @endphp
+                @include('back.modules.table-col-sorter', [
+                    'cols' => $cols,
+                    'mobileHide' => [],
+                ])
             </thead>
             <tbody>
                 @foreach ($users as $user)
                     <tr class="list_item border-bottom">
-                        <td class="align-middle">{{ $user->name }}</td>
-                        <td class="align-middle">{{ $user->email }}</td>
-                        <td class="align-middle">
+                        <td class="text-center align-middle">{{ $user->name }}</td>
+                        <td class="text-center align-middle">{{ $user->email }}</td>
+                        <td class="text-center align-middle">
                             {{ ($user->role == App\Enums\Role::admin()->value) ? App\Enums\Role::admin()->label : App\Enums\Role::visitor()->label }}
                         </td>
                         @can('isAdmin')
-                            @if ($loop->count > 1)
-                                <td class="d-none d-sm-table-cell border-0">
-                                    <div class="d-flex justify-content-center">
-                                        @if(!($loop->first and $users->onFirstPage()))
-                                            <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'up']) }}"
-                                                class="btn d-flex btn-link w-fit"
-                                                data-bs="tooltip"
-                                                data-bs-placement="top"
-                                                title="{{ __('list.up') }}">
-                                                <i class="fa-solid fa-circle-arrow-up"></i>
-                                            </a>
-                                        @endif
-                                        @if (!($loop->last and $users->currentPage() === $users->lastPage()))
-                                            <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'down']) }}"
-                                                class="btn d-flex btn-link w-fit"
-                                                data-bs="tooltip"
-                                                data-bs-placement="top"
-                                                title="{{ __('list.down') }}">
-                                                <i class="fa-solid fa-circle-arrow-down"></i>
-                                            </a>
-                                        @endif
-                                    </div>
-                                </td>
+                            @if(!$noOrder or $rst)
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'up']) }}"
+                                        class="@if($loop->first and $users->onFirstPage()) invisible @endif">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-dark @if(($loop->first and $users->onFirstPage())) disabled @endif"
+                                            title="{{ __('list.up') }}"
+                                            data-bs="tooltip">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </button>
+                                    </a>
+                                    <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'down']) }}"
+                                        class="@if($loop->last and $users->currentPage() === $users->lastPage()) invisible @endif">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-dark ms-1 @if($loop->last and $users->currentPage() === $users->lastPage()) disabled @endif"
+                                            title="{{ __('list.down') }}"
+                                            data-bs="tooltip">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                            </td>
                             @endif
                             <td class="text-end align-middle">
                                 <form action="{{ route('bo.users.destroy', $user->id) }}"

@@ -18,20 +18,29 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param string                   $search
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request, string $search = null): \Illuminate\Contracts\View\View
+    public function index(Request $request): \Illuminate\Contracts\View\View
     {
+        /** @var \Illuminate\Database\Eloquent\Builder $users */
+        $users  = User::query();
         $search = $request->search;
 
-        $query = User::when($search, function ($query) use ($search) {
-            $query->where('name', 'LIKE', '%' . $search . '%');
-        });
+        if ($search) {
+            $this->searchQuery(
+                $users,
+                $search,
+                null,
+                'name',
+            );
+        }
 
-        $users = $query->orderBy('order', 'ASC')->paginate(12);
+        $this->sortQuery($users);
+        $searchFields = trans('Name');
 
-        return view('back.users.index', compact('users', 'search'));
+        $users = $users->paginate(12);
+
+        return view('back.users.index', compact('users', 'search', 'searchFields'));
     }
 
     /**

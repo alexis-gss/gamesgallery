@@ -25,21 +25,27 @@ class GameController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(
-        Request $request
-    ): \Illuminate\Contracts\View\View {
+    public function index(Request $request): \Illuminate\Contracts\View\View
+    {
+        /** @var \Illuminate\Database\Eloquent\Builder $games */
+        $games  = Game::query();
         $search = $request->search;
-        $filter = $request->filter;
 
-        $query = Game::when($search, function ($query) use ($search) {
-            $query->where('name', 'LIKE', '%' . $search . '%');
-        })->when($filter != null, function ($query) use ($filter) {
-            $query->where('folder_id', $filter);
-        });
+        if ($search) {
+            $this->searchQuery(
+                $games,
+                $search,
+                null,
+                'name',
+            );
+        }
 
-        $games = $query->orderBy('order', 'ASC')->paginate(12);
+        $this->sortQuery($games);
+        $searchFields = trans('Name');
 
-        return view('back.games.index', compact('games', 'search', 'filter'));
+        $games = $games->paginate(12);
+
+        return view('back.games.index', compact('games', 'search', 'searchFields'));
     }
 
     /**
