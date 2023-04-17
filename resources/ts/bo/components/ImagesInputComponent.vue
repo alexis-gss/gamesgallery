@@ -198,7 +198,7 @@
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
-                  :aria-label="__('Fermer la fenêtre')"
+                  :aria-label="__('form.tooltip_image_input_close')"
                   :title="__('form.tooltip_image_input_close')"
                   data-bs-tooltip="tooltip"
                 />
