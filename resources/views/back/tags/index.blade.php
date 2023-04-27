@@ -5,13 +5,8 @@
 @section('keywords', 'noindex,nofollow')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-3 border-top border-bottom">
-        <h1 class="h2 m-0 fw-bold">{{ __('list.tags') }} <small class="text-muted h4">{{ __('list.list') }}</small></h1>
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <span class="float-center text-danger">{{ $error }}</span>
-            @endforeach
-        @endif
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
+        @include('breadcrumbs.breadcrumb-body')
         @can('isAdmin')
             <a href="{{ route('bo.tags.create') }}"
                 class="btn btn-primary float-right"

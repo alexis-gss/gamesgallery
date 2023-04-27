@@ -6,8 +6,8 @@
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-3 border-top border-bottom">
-    <h1 class="d-flex flex-row align-items-start h2 m-0 fw-bold">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
+    <div class="d-flex flex-row align-items-start">
         <a href="{{ route('bo.users.index') }}"
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
@@ -15,11 +15,8 @@
             title="{{ __('form.return_list') }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        <span class="ms-2">
-            {{ __('form.user') }}
-            <small class="text-muted h4">{{ __('form.edition') }}</small>
-        </span>
-    </h1>
+        @include('breadcrumbs.breadcrumb-body', ['brParam' => $user])
+    </div>
     <div class="mb-2 mb-md-0">
         <form action="{{ route('bo.users.destroy', $user->id) }}"
             method="POST"
