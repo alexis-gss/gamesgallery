@@ -1,20 +1,17 @@
-// LIBS.
+@charset "UTF-8";
+
+// * UTILITIES
+@import "./fo/utilities/variables";
+
+// * LIBS.
 @import "./libs/aos";
 @import "./libs/bootstrap";
 
-// UTILITIES.
-@import "./utilities/bootstrap-custom";
-@import "./utilities/variables";
-@import "./utilities/mixin";
-
-// BASE.
-@import "./fo/base/utils";
+// * BASE.
+@import "./fo/base/classes";
 @import "./fo/base/common";
 @import "./fo/base/fonts";
 
-// PARTIALS.
+// * PARTIALS.
 @import "./fo/partials/nav";
 @import "./fo/partials/footer";
-
-// PAGES.
-@import "./fo/pages/home";

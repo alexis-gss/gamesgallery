@@ -21,14 +21,14 @@ body {
     bottom: 0;
     left: 0;
     background:
-        linear-gradient(to right, var(--color-third) 2px, transparent 2px) 0 0, // TOP LEFT
-        linear-gradient(to bottom, var(--color-third) 2px, transparent 2px) 0 0, // TOP LEFT
-        linear-gradient(to left, var(--color-third) 2px, transparent 2px) 100% 0, // TOP RIGHT
-        linear-gradient(to bottom, var(--color-third) 2px, transparent 2px) 100% 0, // TOP RIGHT
-        linear-gradient(to left, var(--color-third) 2px, transparent 2px) 100% 100%, // BOTTOM RIGHT
-        linear-gradient(to top, var(--color-third) 2px, transparent 2px) 100% 100%, // BOTTOM RIGHT
-        linear-gradient(to right, var(--color-third) 2px, transparent 2px) 0 100%, // BOTTOM LEFT
-        linear-gradient(to top, var(--color-third) 2px, transparent 2px) 0 100%; // BOTTOM LEFT
+        linear-gradient(to right, $color-primary 2px, transparent 2px) 0 0, // TOP LEFT
+        linear-gradient(to bottom, $color-primary 2px, transparent 2px) 0 0, // TOP LEFT
+        linear-gradient(to left, $color-primary 2px, transparent 2px) 100% 0, // TOP RIGHT
+        linear-gradient(to bottom, $color-primary 2px, transparent 2px) 100% 0, // TOP RIGHT
+        linear-gradient(to left, $color-primary 2px, transparent 2px) 100% 100%, // BOTTOM RIGHT
+        linear-gradient(to top, $color-primary 2px, transparent 2px) 100% 100%, // BOTTOM RIGHT
+        linear-gradient(to right, $color-primary 2px, transparent 2px) 0 100%, // BOTTOM LEFT
+        linear-gradient(to top, $color-primary 2px, transparent 2px) 0 100%; // BOTTOM LEFT
 
     background-repeat: no-repeat;
     background-size: 7px 7px;
@@ -64,4 +64,13 @@ body {
     &:hover &-span {
         width: 100%;
     }
+}
+
+.show-image {
+    z-index: 10;
+    transform: scale(1) !important;
+}
+
+.ratio img {
+    transform: scale(1.1);
 }

@@ -19,8 +19,7 @@
                     'allFolders' => $globalFolders
                 ];
             @endphp
-            <div class="games-list games-list-home" data-json='@json($dataGame)'>
-            </div>
+            <div class="games-list bg-secondary rounded-2 px-3 pb-3" data-json='@json($dataGame)'></div>
         </div>
     </main>
 @endsection

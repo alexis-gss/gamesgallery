@@ -1,8 +1,19 @@
-// RESPONSIVE VARIABLES FOR BOOTSTRAP
-
-/**
- * FORMAT : 'class name' ('attribute(s) added') (key:values, key:values...),
- * EXAMPLE : 'w' ('width') (0:0%, 25:25%, 50:50%, 75:75%, 100:100%)
- * RESULT : .w-sm-25 { width: 25%; }  |  .w-md-100 { width: 100%; }  etc...
- */
-$targets: ();
+// Override bootstrap colors
+$primary: $color-primary;
+$secondary: $color-secondary;
+$success: $color-success;
+$info: $color-info;
+$warning: $color-warning;
+$danger: $color-danger;
+$light: $color-light;
+$dark: $color-dark;
+$theme-colors: (
+    primary: $primary,
+    secondary: $secondary,
+    success: $success,
+    info: $info,
+    warning: $warning,
+    danger: $danger,
+    light: $light,
+    dark: $dark,
+);

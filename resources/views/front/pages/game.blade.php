@@ -15,10 +15,12 @@
                         <span class="angles"></span>
                     </h1>
                     <div class="d-inline-block text-center w-100">
-                        <span class="badge text-white rounded-2 px-2 py-1" style="background-color:{{ $game->folder->color }}">{{ $game->folder->name }}</span> -
+                        <span class="badge text-light rounded-2 px-2 py-1" style="background-color:{{ $game->folder->color }}">{{ $game->folder->name }}</span>
+                        @if (count($game->tags) > 0)
                         @foreach ($game->tags as $tag)
-                            <span class="badge bg-third text-white rounded-2 px-2 py-1">{{ $tag->name }}</span>
+                        - <span class="badge bg-primary text-light rounded-2 px-2 py-1">{{ $tag->name }}</span>
                         @endforeach
+                        @endif
                     </div>
                 </div>
                 @php
@@ -27,8 +29,7 @@
                         'gamePictures' => $gamePictures
                     ];
                 @endphp
-                <div class="game-pictures position-relative" data-json='@json($dataGame)'>
-                </div>
+                <div class="game-pictures position-relative" data-json='@json($dataGame)'></div>
             @endif
         </div>
     </main>

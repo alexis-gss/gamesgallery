@@ -1,11 +1,11 @@
-// LIBS.
+@charset "UTF-8";
+
+// * UTILITIES
+@import "./bo/utilities/variables";
+
+// * LIBS.
 @import "./libs/bootstrap";
 
-// UTILITIES.
-@import "./utilities/bootstrap-custom";
-@import "./utilities/variables";
-@import "./utilities/mixin";
-
-// BASE.
+// * BASE.
 @import "./bo/base/custom";
 @import "./bo/base/component";
