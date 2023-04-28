@@ -39,8 +39,9 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:255',
-            'status' => 'required|boolean'
+            'name' => 'required|string|min:2|max:255',
+            'status' => 'required|boolean',
+            'color' => 'required|string|min:6|max:8|regex:(^[#]([A-Za-z0-9]{6,8})$)'
         ];
     }
 

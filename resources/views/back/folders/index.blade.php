@@ -26,7 +26,7 @@
                 $routeName = request()->route()->getName();
                 $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
                 $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
-                $cols = ['name' => __('list.name'), 'status' => __('list.publishment'), 'order' => __('list.order')];
+                $cols = ['name' => __('list.name'), 'color' => __('list.color'), 'status' => __('list.publishment'), 'order' => __('list.order')];
                 @endphp
                 @include('back.modules.table-col-sorter', [
                     'cols' => $cols,
@@ -37,6 +37,23 @@
                 @foreach ($folders as $folder)
                     <tr class="list-item border-bottom">
                         <td class="text-center align-middle">{{ $folder->name }}</td>
+                        <td class="text-center align-middle">
+                            @php
+                            $data = [
+                                'id' => "colorPicker" ,
+                                'name' => 'color',
+                                'value' => old('color', $folder->color ?? ''),
+                                'title' => __('Choisissez la couleur du paramètre'),
+                                'label' => __('Couleur du paramètre'),
+                                'rgbaMode' => false,
+                                'nullable' => false,
+                                'ariaDescribedby' => 'colorPickerHelp',
+                                'simple' => true,
+                                'disabled' => true
+                            ];
+                            @endphp
+                            <div class="color-picker" data-json='@json($data)'></div>
+                        </td>
                         @can('isAdmin')
                             <td class="d-none d-lg-table-cell text-center align-middle">
                                 <form action="{{ route('bo.folders.change-published', $folder->id) }}" method="POST">

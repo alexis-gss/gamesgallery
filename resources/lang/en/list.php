@@ -30,6 +30,7 @@ return [
     'users' => 'Users',
     'tags' => 'Tags',
     'name' => 'Name',
+    'color' => 'Color',
     'email' => 'Email',
     'role' => 'Role',
     'images' => 'Image(s)',

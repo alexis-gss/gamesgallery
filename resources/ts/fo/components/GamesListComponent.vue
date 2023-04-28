@@ -90,21 +90,35 @@
         class="list-group rounded-0"
         id="collapseGroup"
       >
-        <div v-if="filterGames().length > 0">
+        <template v-if="filterGames().length > 0">
           <li
             v-for="(game, key) in filterGames()"
             :key="key"
-            class="list-group-item border-0 rounded-2 bg-second bg-transparent p-0"
+            class="list-group-item border-0 rounded-2 bg-transparent p-0"
           >
             <a
               :href="getGameRoute(game.slug)"
               class="d-flex flex-row justify-content-between align-items-center btn border-0 text-decoration-none w-100 p-2"
             >
-              {{ game.name }}
+              <div
+                class="d-flex flex-row justify-content-start align-items-center"
+              >
+                <template
+                  v-for="(folder, folderIndex) in allFolders"
+                  :key="folderIndex"
+                >
+                  <span
+                    v-if="folder.id === game.folder_id"
+                    class="list-group-item-span me-1"
+                    :style="`background-color:${folder.color}`"
+                  />
+                </template>
+                <span>{{ game.name }}</span>
+              </div>
               <span>{{ getGamePicturesCount(game.pictures) }}</span>
             </a>
           </li>
-        </div>
+        </template>
         <li
           v-else
           class="list-group-item border-0 bg-transparent p-0"
@@ -136,6 +150,7 @@ export default defineComponent({
     games: [
       {
         id: number;
+        folder_id: number;
         slug: string;
         name: string;
         pictures: string[];
@@ -154,6 +169,7 @@ export default defineComponent({
       games: [
         {
           id: 0,
+          folder_id: 0,
           slug: "",
           name: "",
           pictures: [],
@@ -244,7 +260,6 @@ export default defineComponent({
       }
       return route;
     },
-
     /**
      * Return the count of the pictures of the game.
      *

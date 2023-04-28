@@ -45,3 +45,23 @@ body {
         visibility: hidden;
     }
 }
+
+.list-group-item {
+    span {
+        z-index: 5;
+    }
+
+    &-span {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 0.2rem;
+        height: 100%;
+    }
+
+    &:hover &-span {
+        width: 100%;
+    }
+}

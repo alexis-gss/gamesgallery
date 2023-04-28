@@ -155,3 +155,18 @@
         overflow-y: auto;
     }
 }
+
+/**
+ * ColorPickerComponent.
+ */
+.color-picker-component {
+    position: relative;
+
+    .chrome-picker {
+        z-index: 9;
+    }
+
+    &.no-transparent .vc-chrome-alpha-wrap {
+        display: none;
+    }
+}

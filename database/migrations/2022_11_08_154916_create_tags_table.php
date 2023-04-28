@@ -15,8 +15,8 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique()->comment('Slugify the name of the tag.');
             $table->string('name')->comment('Nom du tag qui sera unique.');
+            $table->string('slug')->unique()->comment('Slugify the name of the tag.');
             $table->boolean('status')->comment('The tag is published or not');
             $table->integer('order')->comment('Order of this tag.');
             $table->timestamps();

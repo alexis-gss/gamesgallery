@@ -9,6 +9,7 @@
         "eslint": "node ./node_modules/.bin/eslint -c .eslintrc.json ./resources"
     },
     "devDependencies": {
+        "@ckpack/vue-color": "^1.1.9",
         "@fortawesome/fontawesome-svg-core": "^6.1.2",
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
         "@fortawesome/vue-fontawesome": "^3.0.1",
