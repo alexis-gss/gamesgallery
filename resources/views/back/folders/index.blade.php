@@ -40,7 +40,7 @@
                         <td class="text-center align-middle">
                             @php
                             $data = [
-                                'id' => "colorPicker" ,
+                                'id' => "colorPicker" . $folder->id,
                                 'name' => 'color',
                                 'value' => old('color', $folder->color ?? ''),
                                 'title' => __('Choisissez la couleur du paramètre'),

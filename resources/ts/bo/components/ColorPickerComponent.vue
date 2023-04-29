@@ -32,10 +32,6 @@
           type="color"
           class="form-control form-control-color"
           :value="intInternalHex"
-          :title="
-            intSimple ? __('form.tooltip_color_picker') + intInternalHex : ''
-          "
-          data-bs-tooltip="tooltip"
           :aria-describedby="intAriaDescribedby"
           @click.prevent="togglePicker()"
           :disabled="intDisabled ? true : false"
@@ -198,7 +194,6 @@ export default defineComponent({
     this.intColorPickerFakeInput = this.$refs
       .colorPickerFakeInput as HTMLElement;
     this.intPicker = this.$refs.picker as typeof Chrome;
-
     const json = String(this.$attrs.json ?? "{}"),
           data = JSON.parse(json);
     this.intId = this.id ? this.id : data.id;

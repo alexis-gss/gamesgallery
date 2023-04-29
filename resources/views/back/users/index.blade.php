@@ -70,7 +70,6 @@
                                 <form action="{{ route('bo.users.destroy', $user->id) }}"
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
-                                    role="group"
                                     novalidate>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.users.edit', ['user' => $user->id]) }}"

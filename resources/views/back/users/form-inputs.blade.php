@@ -167,41 +167,6 @@
     </div>
 </div>
 
-@if (!Route::is('bo.users.create'))
-<div class="row border-bottom">
-    <div class="col">
-        <fieldset class="p-3">
-            <legend>{{ __('form.account') }}</legend>
-            <div class="row mb-3">
-                <div class="col-12 col-md-6 form-group">
-                    <div class="col-12">
-                        <label class="col-form-label">
-                            <b>{{ __('form.account_delete') }}</b>
-                        </label>
-                    </div>
-                    <form action="{{ route('bo.users.destroy', $user->id) }}"
-                        method="POST"
-                        class="confirmDeleteTS">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="btn btn-danger"
-                            data-bs="tooltip"
-                            data-bs-placement="top"
-                            title="{{ __('list.delete_user') }}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
-                    <div class="col-12">
-                        <small class="col-12 text-muted">{{ __('form.action_irreversible') }}</small>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </div>
-</div>
-@endif
-
 @push('scripts')
 <script>
     document.addEventListener("DOMContentLoaded", () => {

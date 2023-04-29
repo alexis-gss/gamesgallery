@@ -17,8 +17,9 @@
                     <div class="d-inline-block text-center w-100">
                         <span class="badge text-light rounded-2 px-2 py-1" style="background-color:{{ $game->folder->color }}">{{ $game->folder->name }}</span>
                         @if (count($game->tags) > 0)
+                        <span>-</span>
                         @foreach ($game->tags as $tag)
-                        - <span class="badge bg-primary text-light rounded-2 px-2 py-1">{{ $tag->name }}</span>
+                        <span class="badge bg-primary text-light rounded-2 px-2 py-1">{{ $tag->name }}</span>
                         @endforeach
                         @endif
                     </div>

@@ -19,7 +19,7 @@
                         class="form-control need-word-counter @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $tag->name ?? '') }}">
-                    <small class="text-muted">{{ __('form.tag_label') }}*</small>
+                    <small class="text-muted">{{ __('form.tag_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
             </div>
