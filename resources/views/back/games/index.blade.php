@@ -53,7 +53,7 @@
                                     title="{{ __('list.show_folder') }}"
                                     class="text-decoration-none">
                                 @endcan
-                                    <div class="badge bg-primary d-inline-block text-white rounded-2">
+                                    <div class="@can('isAdmin') badge bg-primary d-inline-block text-white rounded-2 @else text-dark @endcan">
                                         {{ $game->folder->name }}
                                     </div>
                                 @can('isAdmin')
@@ -67,8 +67,8 @@
                                 <p class="m-0">0</p>
                             @endif
                         </td>
-                        @can('isAdmin')
-                            <td class="d-none d-xl-table-cell text-center align-middle">
+                        <td class="d-none d-xl-table-cell text-center align-middle">
+                            @can('isAdmin')
                                 <form action="{{ route('bo.games.change-published', $game->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
@@ -83,9 +83,17 @@
                                         @endif
                                     </button>
                                 </form>
-                            </td>
-                            @if(!$noOrder or $rst)
-                            <td class="align-middle">
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
+                        @if(!$noOrder or $rst)
+                        <td class="text-center align-middle">
+                            @can('isAdmin')
                                 <div class="d-flex justify-content-center align-items-center">
                                     <a href="{{ route('bo.games.change-order', ['game' => $game, 'direction' => 'up']) }}"
                                         class="@if($loop->first and $games->onFirstPage()) invisible @endif">
@@ -106,9 +114,17 @@
                                         </button>
                                     </a>
                                 </div>
-                            </td>
-                            @endif
-                            <td class="text-end align-middle">
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
+                        @endif
+                        <td class="text-end align-middle">
+                            @can('isAdmin')
                                 <form action="{{ route('bo.games.destroy', $game->id) }}"
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
@@ -140,8 +156,14 @@
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
-                            </td>
-                        @endcan
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

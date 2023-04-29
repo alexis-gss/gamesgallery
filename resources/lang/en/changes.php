@@ -9,5 +9,6 @@ return [
     'deletion_successful' => 'Successful deletion !',
     'deletion_associated' => 'Game(s) are still associated with this folder !',
     'order_changed' => 'The order has been changed !',
-    'order_not_changed' => 'The order could not be changed !'
+    'order_not_changed' => 'The order could not be changed !',
+    'right' => 'You do not have the rights to access this page !'
 ];

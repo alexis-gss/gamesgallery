@@ -39,58 +39,46 @@ Route::prefix('bo')
                                      */
                                     Route::get('/games/change-order/{game}/{direction}', [
                                         GameController::class, 'changeOrder'
-                                    ])
-                                        ->where('direction', 'up|down')
-                                        ->name('games.change-order');
+                                    ])->where('direction', 'up|down')->name('games.change-order');
                                     Route::post('/games/{game}/change-published', [
                                         GameController::class, 'changePublished'
-                                    ])
-                                        ->name('games.change-published');
-                                    Route::resource('games', GameController::class)->except('show');
+                                    ])->name('games.change-published');
 
                                     /**
                                      * * FOLDERS
                                      */
                                     Route::get('/folders/change-order/{folder}/{direction}', [
                                         FolderController::class, 'changeOrder'
-                                    ])
-                                        ->where('direction', 'up|down')
-                                        ->name('folders.change-order');
+                                    ])->where('direction', 'up|down')->name('folders.change-order');
                                     Route::post('/folders/{folder}/change-published', [
                                         FolderController::class, 'changePublished'
-                                    ])
-                                        ->name('folders.change-published');
-                                    Route::resource('folders', FolderController::class)->except('show');
+                                    ])->name('folders.change-published');
 
                                     /**
                                      * * TAGS
                                      */
-                                    Route::resource('tags', TagController::class)->except('show');
                                     Route::get('/tags/change-order/{tag}/{direction}', [
                                         TagController::class, 'changeOrder'
-                                    ])
-                                        ->where('direction', 'up|down')
-                                        ->name('tags.change-order');
+                                    ])->where('direction', 'up|down')->name('tags.change-order');
                                     Route::post('/tags/{tag}/change-published', [
                                         TagController::class, 'changePublished'
-                                    ])
-                                        ->name('tags.change-published');
-                                    Route::resource('tags', TagController::class)->except('show');
+                                    ])->name('tags.change-published');
                                     Route::post('/tags/store', [TagController::class, 'jsonStore'])
                                         ->name('tags.jsonStore');
 
                                     /**
                                      * * USERS
                                      */
-                                    Route::resource('users', UserController::class)->except('show');
                                     Route::get('/users/change-order/{user}/{direction}', [
                                         UserController::class, 'changeOrder'
-                                    ])
-                                        ->where('direction', 'up|down')
-                                        ->name('users.change-order');
+                                    ])->where('direction', 'up|down')->name('users.change-order');
                                 }
                             );
                         Route::get('/', [BackController::class, 'index'])->name('homepage');
+                        Route::resource('games', GameController::class)->except('show');
+                        Route::resource('folders', FolderController::class)->except('show');
+                        Route::resource('tags', TagController::class)->except('show');
+                        Route::resource('users', UserController::class)->except('show');
                     }
                 );
         }

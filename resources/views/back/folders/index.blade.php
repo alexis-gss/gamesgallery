@@ -54,8 +54,8 @@
                             @endphp
                             <div class="color-picker" data-json='@json($data)'></div>
                         </td>
-                        @can('isAdmin')
-                            <td class="d-none d-lg-table-cell text-center align-middle">
+                        <td class="d-none d-lg-table-cell text-center align-middle">
+                            @can('isAdmin')
                                 <form action="{{ route('bo.folders.change-published', $folder->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
@@ -70,9 +70,17 @@
                                         @endif
                                     </button>
                                 </form>
-                            </td>
-                            @if(!$noOrder or $rst)
-                            <td class="align-middle">
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
+                        @if(!$noOrder or $rst)
+                        <td class="text-center align-middle">
+                            @can('isAdmin')
                                 <div class="d-flex justify-content-center align-items-center">
                                     <a href="{{ route('bo.folders.change-order', ['folder' => $folder, 'direction' => 'up']) }}"
                                         class="@if($loop->first and $folders->onFirstPage()) invisible @endif">
@@ -93,9 +101,17 @@
                                         </button>
                                     </a>
                                 </div>
-                            </td>
-                            @endif
-                            <td class="text-end align-middle">
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
+                        @endif
+                        <td class="text-end align-middle">
+                            @can('isAdmin')
                                 <form action="{{ route('bo.folders.destroy', $folder->id) }}"
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
@@ -117,8 +133,14 @@
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
-                            </td>
-                        @endcan
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

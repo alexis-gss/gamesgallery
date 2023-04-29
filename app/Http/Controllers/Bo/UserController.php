@@ -8,6 +8,7 @@ use App\Http\Requests\Bo\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -79,12 +80,16 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\User $user
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
-    public function edit(User $user): \Illuminate\Contracts\View\View
+    public function edit(User $user)
     {
-        return view('back.users.edit', compact('user'));
+        if (Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value) {
+            return view('back.users.edit', compact('user'));
+        } else {
+            return redirect()->route('bo.users.index')->with('error', trans(__('changes.right')));
+        }
     }
 
     /**

@@ -52,5 +52,6 @@ return [
     'sort_ascending' => 'Sort :name in ascending order',
     'sort_descending' => 'Sort :name in descending order',
     'sort_delete' => 'Delete sorting',
-    'sort_arrow' => 'Here, the arrows are used to sort and not to filter'
+    'sort_arrow' => 'Here, the arrows are used to sort and not to filter',
+    'right' => 'You do not have the rights'
 ];

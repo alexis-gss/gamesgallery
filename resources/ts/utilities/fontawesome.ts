@@ -32,6 +32,7 @@ import {
     faCircleArrowUp,
     faCircleArrowDown,
     faQuestionCircle,
+    faBan,
 } from "@fortawesome/free-solid-svg-icons";
 
 config.autoReplaceSvg = false;
@@ -69,4 +70,5 @@ library.add(faArrowsAltV);
 library.add(faUndoAlt);
 library.add(faRedoAlt);
 library.add(faQuestionCircle);
+library.add(faBan);
 dom.watch();

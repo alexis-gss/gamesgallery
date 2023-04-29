@@ -37,13 +37,23 @@
                 @foreach ($users as $user)
                     <tr class="list_item border-bottom">
                         <td class="text-center align-middle">{{ $user->name }}</td>
-                        <td class="text-center align-middle">{{ $user->email }}</td>
+                        <td class="text-center align-middle">
+                            @if(Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value)
+                                {{ $user->email }}
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endif
+                        </td>
                         <td class="text-center align-middle">
                             {{ ($user->role == App\Enums\Role::admin()->value) ? App\Enums\Role::admin()->label : App\Enums\Role::visitor()->label }}
                         </td>
-                        @can('isAdmin')
-                            @if(!$noOrder or $rst)
-                            <td class="align-middle">
+                        @if(!$noOrder or $rst)
+                        <td class="text-center align-middle">
+                            @can('isAdmin')
                                 <div class="d-flex justify-content-center align-items-center">
                                     <a href="{{ route('bo.users.change-order', ['user' => $user, 'direction' => 'up']) }}"
                                         class="@if($loop->first and $users->onFirstPage()) invisible @endif">
@@ -64,9 +74,17 @@
                                         </button>
                                     </a>
                                 </div>
-                            </td>
-                            @endif
-                            <td class="text-end align-middle">
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
+                        @endif
+                        <td class="text-end align-middle">
+                            @if(Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value)
                                 <form action="{{ route('bo.users.destroy', $user->id) }}"
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
@@ -88,8 +106,14 @@
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
-                            </td>
-                        @endcan
+                            @else
+                                <span class="text-danger"
+                                    title="{{ __('list.right') }}"
+                                    data-bs="tooltip">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endcan
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
