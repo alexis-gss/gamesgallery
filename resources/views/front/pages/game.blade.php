@@ -15,6 +15,15 @@
                         <span class="angles"></span>
                     </h1>
                     <div class="d-inline-block text-center w-100">
+                        <a href="{{ route('fo.homepage') }}" class="text-decoration-none">
+                            <button class="badge bg-primary border-0 text-light rounded-2 px-2"
+                                title="{{ __('list.back_home') }}"
+                                data-bs="tooltip"
+                                data-bs-placement="bottom">
+                                <i class="fa fa-arrow-left"></i>
+                            </button>
+                        </a>
+                        <span>-</span>
                         <span class="badge text-light rounded-2 px-2 py-1" style="background-color:{{ $game->folder->color }}">{{ $game->folder->name }}</span>
                         @if (count($game->tags) > 0)
                         <span>-</span>

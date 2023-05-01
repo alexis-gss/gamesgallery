@@ -53,5 +53,6 @@ return [
     'sort_descending' => 'Sort :name in descending order',
     'sort_delete' => 'Delete sorting',
     'sort_arrow' => 'Here, the arrows are used to sort and not to filter',
-    'right' => 'You do not have the rights'
+    'right' => 'You do not have the rights',
+    'back_home' => 'Return to the homepage'
 ];
