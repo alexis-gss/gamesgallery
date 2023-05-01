@@ -1,8 +1,8 @@
 <template>
-  <div class="nav-games nav-games-hidden pt-3">
+  <div class="nav-games">
     <!-- Filters -->
     <div
-      class="row w-100 justify-content-center align-items-center bg-primary rounded-3 px-0 py-2 mx-auto mb-3"
+      class="row w-100 justify-content-center align-items-center bg-primary rounded-3 px-0 py-2 mx-auto mb-2"
       novalidate
     >
       <div class="col-12">
@@ -73,10 +73,13 @@
       </div>
     </div>
     <!-- List of games -->
-    <div class="nav-games-list">
+    <simplebar
+      class="nav-games-list"
+      data-simplebar-auto-hide="false"
+    >
       <div
         v-if="gameLoading"
-        class="text-center w-100"
+        class="d-flex justify-content-center align-items-center h-100"
       >
         <div
           class="spinner-border text-light"
@@ -87,18 +90,18 @@
       </div>
       <ul
         v-else
-        class="list-group rounded-0"
+        class="list-group rounded-0 pe-2"
         id="collapseGroup"
       >
         <template v-if="filterGames().length > 0">
           <li
             v-for="(game, key) in filterGames()"
             :key="key"
-            class="list-group-item border-0 rounded-2 bg-transparent p-0"
+            class="list-group-item border-0 rounded-2 bg-transparent p-0 px-1"
           >
             <a
               :href="getGameRoute(game.slug)"
-              class="d-flex flex-row justify-content-between align-items-center btn border-0 text-light text-decoration-none w-100 p-2"
+              class="position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-light text-decoration-none w-100 p-2"
             >
               <div
                 class="d-flex flex-row justify-content-start align-items-center"
@@ -109,7 +112,7 @@
                 >
                   <span
                     v-if="folder.id === game.folder_id"
-                    class="list-group-item-span me-1"
+                    class="list-group-item-span"
                     :style="`background-color:${folder.color}`"
                   />
                 </template>
@@ -128,18 +131,22 @@
           </p>
         </li>
       </ul>
-    </div>
+    </simplebar>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import simplebar from "simplebar-vue";
 import route from "../../modules/route";
 import trans from "../../modules/trans";
 
 export default defineComponent({
   mixins: [route, trans],
   inheritAttrs: false,
+  components: {
+    simplebar,
+  },
   props: {
     jsonData: {
       type: String,
