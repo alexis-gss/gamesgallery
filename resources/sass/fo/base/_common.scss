@@ -73,3 +73,14 @@ body {
 .ratio img {
     transform: scale(1.1);
 }
+
+.github-icon {
+    z-index: $zindex-fixed;
+    width: 10rem;
+    height: 2rem;
+    transform: translate(-3rem, 1rem) rotate(-45deg);
+
+    svg {
+        transform: rotate(45deg);
+    }
+}

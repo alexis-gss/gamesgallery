@@ -34,6 +34,7 @@ import {
     faQuestionCircle,
     faBan,
 } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 config.autoReplaceSvg = false;
 library.add(faEraser);
@@ -71,4 +72,5 @@ library.add(faUndoAlt);
 library.add(faRedoAlt);
 library.add(faQuestionCircle);
 library.add(faBan);
+library.add(faGithub);
 dom.watch();
