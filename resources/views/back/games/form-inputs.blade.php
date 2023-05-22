@@ -31,7 +31,13 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    @include('back.modules.select-folder', ['type' => 'folder_id', 'target' => $game->folder_id])
+                    <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button">
+                        @foreach ($globalFolders as $folder)
+                            <option value="{{ $folder->id }}" @if ($folder->id == $game->folder_id) selected @endif>
+                                {{ $folder->name }}
+                            </option>
+                        @endforeach
+                    </select>
                     <small class="text-muted">{{ __('form.folders_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'folder_id'])
                 </div>

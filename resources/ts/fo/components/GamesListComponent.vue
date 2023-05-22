@@ -1,8 +1,8 @@
 <template>
-  <div class="nav-games nav-games-hidden">
+  <div class="nav-games">
     <!-- Filters -->
     <div
-      class="row w-100 justify-content-center align-items-center bg-fifth rounded-3 px-0 py-2 mx-auto my-3"
+      class="row w-100 justify-content-center align-items-center bg-primary rounded-3 px-0 py-2 mx-auto mb-2"
       novalidate
     >
       <div class="col-12">
@@ -11,7 +11,7 @@
           <input
             name="search"
             v-model="search"
-            class="form-control bg-transparent border-0 shadow-none text-first p-0 ps-2"
+            class="form-control bg-transparent border-0 shadow-none text-light p-0 ps-2"
             :placeholder="__('nav.search', { games: `${gamesCount}` })"
             type="text"
             maxlength="60"
@@ -20,7 +20,7 @@
           >
           <button
             @click="clearInputSearch()"
-            class="btn d-flex align-items-center text-first border-0"
+            class="btn d-flex align-items-center text-light border-0"
             type="button"
           >
             <i class="fa-solid fa-xmark" />
@@ -30,7 +30,7 @@
       <div class="col-12 row">
         <!-- Filter by folders -->
         <select
-          class="col-6 form-select bg-fifth border-0 border-end border-1 border-secondary shadow-none text-first rounded-0 w-50 px-2 py-1"
+          class="col-6 form-select bg-primary border-0 border-end border-1 border-secondary shadow-none text-light rounded-0 w-50 px-2 pt-2 py-1"
           name="folder"
           role="button"
           @change="setSelectedValue($event)"
@@ -51,7 +51,7 @@
         </select>
         <!-- Filter by tags -->
         <select
-          class="col-6 form-select bg-fifth border-0 shadow-none text-first rounded-0 w-50 px-2 py-1"
+          class="col-6 form-select bg-primary border-0 shadow-none text-light rounded-0 w-50 px-2 pt-2 py-1"
           name="tag"
           role="button"
           @change="setSelectedValue($event)"
@@ -73,13 +73,16 @@
       </div>
     </div>
     <!-- List of games -->
-    <div class="nav-games-list">
+    <simplebar
+      class="nav-games-list"
+      data-simplebar-auto-hide="false"
+    >
       <div
         v-if="gameLoading"
-        class="text-center w-100"
+        class="d-flex justify-content-center align-items-center h-100"
       >
         <div
-          class="spinner-border text-secondary"
+          class="spinner-border text-light"
           role="status"
         >
           <span class="visually-hidden">{{ __("nav.text_loading") }}</span>
@@ -87,45 +90,63 @@
       </div>
       <ul
         v-else
-        class="list-group rounded-0"
+        class="list-group rounded-0 pe-2"
         id="collapseGroup"
       >
-        <div v-if="filterGames().length > 0">
+        <template v-if="filterGames().length > 0">
           <li
             v-for="(game, key) in filterGames()"
             :key="key"
-            class="list-group-item border-0 rounded-2 bg-second bg-transparent p-0"
+            class="list-group-item border-0 rounded-2 bg-transparent p-0 px-1"
           >
             <a
               :href="getGameRoute(game.slug)"
-              class="d-flex flex-row justify-content-between align-items-center btn border-0 text-decoration-none w-100 p-2"
+              class="position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-light text-decoration-none w-100 p-2"
             >
-              {{ game.name }}
+              <div
+                class="d-flex flex-row justify-content-start align-items-center"
+              >
+                <template
+                  v-for="(folder, folderIndex) in allFolders"
+                  :key="folderIndex"
+                >
+                  <span
+                    v-if="folder.id === game.folder_id"
+                    class="list-group-item-span"
+                    :style="`background-color:${folder.color}`"
+                  />
+                </template>
+                <span>{{ game.name }}</span>
+              </div>
               <span>{{ getGamePicturesCount(game.pictures) }}</span>
             </a>
           </li>
-        </div>
+        </template>
         <li
           v-else
-          class="list-group-item border-0 bg-transparent p-0"
+          class="list-group-item border-0 bg-transparent text-light p-0"
         >
           <p class="text-decoration-none m-0 p-2">
             {{ __("nav.no_result") }}
           </p>
         </li>
       </ul>
-    </div>
+    </simplebar>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import simplebar from "simplebar-vue";
 import route from "../../modules/route";
 import trans from "../../modules/trans";
 
 export default defineComponent({
   mixins: [route, trans],
   inheritAttrs: false,
+  components: {
+    simplebar,
+  },
   props: {
     jsonData: {
       type: String,
@@ -136,6 +157,7 @@ export default defineComponent({
     games: [
       {
         id: number;
+        folder_id: number;
         slug: string;
         name: string;
         pictures: string[];
@@ -154,6 +176,7 @@ export default defineComponent({
       games: [
         {
           id: 0,
+          folder_id: 0,
           slug: "",
           name: "",
           pictures: [],
@@ -244,7 +267,6 @@ export default defineComponent({
       }
       return route;
     },
-
     /**
      * Return the count of the pictures of the game.
      *

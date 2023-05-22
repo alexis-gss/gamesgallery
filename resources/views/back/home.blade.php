@@ -5,7 +5,7 @@
 @section('keywords', 'noindex,nofollow')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
         <h1 class="h2 m-0 fw-bold">{{ __('other.back_office') }}
             <small class="text-muted h4">{{ __('other.logs') }}</small>
         </h1>

@@ -15,8 +15,9 @@ class CreateFoldersTable extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique()->comment('Slugify the name of the folder.');
             $table->string('name')->comment('Name of the folder.');
+            $table->string('slug')->unique()->comment('Slugify the name of the folder.');
+            $table->string('color')->comment('Color of the folder.');
             $table->boolean('status')->comment('The folder is published or not');
             $table->integer('order')->comment('Order of this folder.');
             $table->timestamps();

@@ -29,6 +29,7 @@ final class FolderFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
+            'color' => $this->faker->hexColor(),
             'status' => $this->faker->boolean(75)
         ];
     }

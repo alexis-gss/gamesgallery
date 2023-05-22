@@ -16,7 +16,6 @@ return [
     'organization' => 'Organization',
     'visuals' => 'Visuals',
     'security' => 'Security',
-    'account' => 'Account',
     'visibility' => 'Visibility',
 
     // Subtitles.
@@ -29,13 +28,14 @@ return [
     'tags' => 'Tags',
     'password_new' => 'New password',
     'password_confirm' => 'Confirm password',
-    'account_delete' => 'Shutdown account',
     'image_input_choose_file' => 'Choose a file',
     'image_input_preview_image' => 'Preview of the image',
     'image_input_edit_image_before_import' => 'Modification of the image before import',
+    'color' => 'Folder\'s color',
 
     // Labels.
     'name_label' => 'Requires min. 3 characters',
+    'name_folder_label' => 'Requires min. 2 characters',
     'tag_label' => 'Requires min. 2 characters',
     'email_label' => 'Must be a valid email address',
     'role_label' => 'Choose a role among the list',
@@ -43,10 +43,10 @@ return [
     'actual_images' => ':number image(s) saved',
     'password_label' => 'Requires min. 8 characters, leave the field empty to keep the actual password',
     'confirmation_label' => 'Must be identical to the password',
-    'action_irreversible' => 'This action is irreversible !',
     'folders_label' => 'Choose a folder among the list',
     'publish' => 'Should be publish ?',
     'publish_label' => 'This model is published or not',
+    'color_label' => 'Must be a color in hexadecimal format',
 
     // Inputs tooltip.
     'tooltip_name_folder' => 'Type the name of the folder',
@@ -91,6 +91,7 @@ return [
     'tooltip_image_input_close_without_saving' => 'Close the modal without saving the content',
     'tooltip_image_input_modal_close_without_saving' => 'Close the modal without saving',
     'tooltip_image_input_modal_close_with_saving' => 'Save and close the modal',
+    'tooltip_color_picker_title' => 'Select the color in the picker color',
 
     // Placeholder.
     'name' => 'Name',

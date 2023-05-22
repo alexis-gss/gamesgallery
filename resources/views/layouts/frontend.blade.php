@@ -5,7 +5,9 @@
     @include('front.layouts.head')
 </head>
 
-<body class="container position-relative bg-first light-theme">
+<body class="container position-relative text-font-regular bg-first">
+    @include('front.layouts.github')
+
     @if (!Route::is('fo.homepage'))
         <!-- Navigation -->
         @include('front.layouts.nav')

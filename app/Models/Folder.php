@@ -26,6 +26,7 @@ class Folder extends Model
     protected $fillable = [
         'name',
         'slug',
+        'color',
         'status'
     ];
 

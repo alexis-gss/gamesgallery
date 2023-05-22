@@ -12,6 +12,7 @@ const C = {
 const V = {
     menuModal: HTMLDivElement.prototype,
     menuGames: HTMLDivElement.prototype,
+    menuFilter: HTMLDivElement.prototype,
     btnGames: NodeList.prototype,
     btnScroll: HTMLButtonElement.prototype,
     btnScrollContent: HTMLDivElement.prototype,
@@ -23,6 +24,7 @@ const V = {
     selectors: function () {
         V.menuModal = document.querySelector(".nav-modal") as HTMLDivElement;
         V.menuGames = document.querySelector(".nav-games") as HTMLDivElement;
+        V.menuFilter = document.querySelector(".nav-filter") as HTMLDivElement;
         V.btnGames = document.querySelectorAll(
             ".btn-games"
         ) as NodeListOf<HTMLSpanElement>;
@@ -39,10 +41,11 @@ const V = {
             element.addEventListener("click", V.displayMenuGames);
         });
         V.btnScrollContent?.addEventListener("click", V.scrollToTheTop);
+        V.menuFilter?.addEventListener("click", V.displayMenuGames);
     },
     displayMenuGames: function () {
         V.menuModal.classList.toggle("nav-modal-hidden");
-        V.menuGames.classList.toggle("nav-games-hidden");
+        V.menuFilter.classList.toggle("nav-filter-hidden");
     },
     scrollToTheTop: function () {
         window.scrollTo(0, 0);

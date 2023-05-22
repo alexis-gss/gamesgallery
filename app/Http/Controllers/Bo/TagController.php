@@ -21,20 +21,29 @@ class TagController extends Controller
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param string                   $search
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request, string $search = null): \Illuminate\Contracts\View\View
+    public function index(Request $request): \Illuminate\Contracts\View\View
     {
+        /** @var \Illuminate\Database\Eloquent\Builder $tags */
+        $tags   = Tag::query();
         $search = $request->search;
 
-        $query = Tag::when($search, function ($query) use ($search) {
-            $query->where('name', 'LIKE', '%' . $search . '%');
-        });
+        if ($search) {
+            $this->searchQuery(
+                $tags,
+                $search,
+                null,
+                'name',
+            );
+        }
 
-        $tags = $query->orderBy('order', 'ASC')->paginate(12);
+        $this->sortQuery($tags);
+        $searchFields = trans('Name');
 
-        return view('back.tags.index', compact('tags', 'search'));
+        $tags = $tags->paginate(12);
+
+        return view('back.tags.index', compact('tags', 'search', 'searchFields'));
     }
 
     /**

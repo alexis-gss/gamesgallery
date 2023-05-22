@@ -18,7 +18,6 @@
 
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 py-4">
-                @include('breadcrumbs.breadcrumb-body')
                 @yield('content')
             </div>
         </div>

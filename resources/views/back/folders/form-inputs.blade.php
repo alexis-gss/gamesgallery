@@ -19,8 +19,27 @@
                         class="form-control need-word-counter @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $folder->name ?? '') }}">
-                    <small class="text-muted">{{ __('form.name_label') }}*</small>
+                    <small class="text-muted">{{ __('form.name_folder_label') }}*</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
+                </div>
+                <div class="col-12 col-md-6 form-group">
+                    @php
+                    $data = [
+                        'id' => "colorPicker" ,
+                        'name' => 'color',
+                        'value' => old('color', $folder->color ?? ''),
+                        'title' => __('form.tooltip_color_picker_title'),
+                        'label' => __('form.color'),
+                        'helper' => __('form.color_label'),
+                        'rgbaMode' => false,
+                        'nullable' => false,
+                        'ariaDescribedby' => 'colorPickerHelp',
+                        'simple' => false,
+                        'disabled' => false
+                    ];
+                    @endphp
+                    <div class="color-picker" data-json='@json($data)'></div>
+                    @include('back.modules.input-error', ['inputName' => 'color'])
                 </div>
             </div>
         </fieldset>

@@ -79,7 +79,7 @@ class UserCreate extends Command
             'slug' => str_slug($this->name),
             'email' => $this->email,
             'password' => $this->password,
-            'picture' => asset('assets/images/profile.jpg'),
+            'picture' => "./../../../database/factories/assets/users/default-user-picture.png",
             'picture_alt' => "Alt of user picture profile.",
             'picture_title' => "Title of user picture profile.",
             'role' => $this->role
