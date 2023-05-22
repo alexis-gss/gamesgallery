@@ -1,3 +1,14 @@
+#### **22.05.23 ► v2.4**
+- Add glightbox
+- Add simplebar
+- Add folder's color
+- Add github's icon
+- Update breadcrumbs bo
+- Update index filters
+- Update search bo
+- Update access rights
+- Minor fixes/bugs
+
 #### **04.04.23 ► v2.3**
 - Add github-actions/github-issue-templates
 - Add status for tags and folders
