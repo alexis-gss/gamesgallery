@@ -12,21 +12,27 @@
             gameItems / 4
           } p-0`"
         >
-          <div
+          <a
             v-if="gamePictures[n + i]"
-            class="ratio ratio-16x9"
-            data-aos="fade-up"
+            :href="getLocation() + '/' + gamePictures[n + i]"
+            class="glightbox"
+            data-gallery="games-pictures"
           >
-            <img
-              :src="gamePictures[n + i]"
-              alt="Image of the game."
-              class="d-none w-100 p-1"
-              @load="gameImageLazyLoad"
+            <div
+              class="ratio ratio-16x9"
+              data-aos="fade-up"
             >
-            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-              <div class="w-100 h-100 text-bg-secondary" />
+              <img
+                :src="gamePictures[n + i]"
+                alt="Image of the game."
+                class="d-none w-100 p-1"
+                @load="gameImageLazyLoad"
+              >
+              <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+                <div class="w-100 h-100 text-bg-secondary" />
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
       <div class="row w-100 mx-auto p-0">
@@ -35,21 +41,27 @@
           :key="b"
           :class="`position-relative col-12 col-sm col-lg-${gameItems / 3} p-0`"
         >
-          <div
+          <a
             v-if="gamePictures[n + 4 + i]"
-            class="ratio ratio-16x9"
-            data-aos="fade-up"
+            :href="getLocation() + '/' + gamePictures[n + 4 + i]"
+            class="glightbox"
+            data-gallery="games-pictures"
           >
-            <img
-              :src="gamePictures[n + 4 + i]"
-              alt="Image of the game."
-              class="d-none w-100 p-1"
-              @load="gameImageLazyLoad"
+            <div
+              class="ratio ratio-16x9"
+              data-aos="fade-up"
             >
-            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-              <div class="w-100 h-100 text-bg-secondary" />
+              <img
+                :src="gamePictures[n + 4 + i]"
+                alt="Image of the game."
+                class="d-none w-100 p-1"
+                @load="gameImageLazyLoad"
+              >
+              <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+                <div class="w-100 h-100 text-bg-secondary" />
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
       <div class="row w-100 mx-auto p-0">
@@ -58,21 +70,27 @@
           :key="c"
           :class="`position-relative col-12 col-sm-${gameItems / 2} p-0`"
         >
-          <div
+          <a
             v-if="gamePictures[n + 7 + i]"
-            class="ratio ratio-16x9"
-            data-aos="fade-up"
+            :href="getLocation() + '/' + gamePictures[n + 7 + i]"
+            class="glightbox"
+            data-gallery="games-pictures"
           >
-            <img
-              :src="gamePictures[n + 7 + i]"
-              alt="Image of the game."
-              class="d-none w-100 p-1"
-              @load="gameImageLazyLoad"
+            <div
+              class="ratio ratio-16x9"
+              data-aos="fade-up"
             >
-            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-              <div class="w-100 h-100 text-bg-secondary" />
+              <img
+                :src="gamePictures[n + 7 + i]"
+                alt="Image of the game."
+                class="d-none w-100 p-1"
+                @load="gameImageLazyLoad"
+              >
+              <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+                <div class="w-100 h-100 text-bg-secondary" />
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
       <div class="row w-100 mx-auto p-0">
@@ -81,21 +99,27 @@
           :key="d"
           :class="`position-relative col-12 col-sm col-lg-${gameItems / 3} p-0`"
         >
-          <div
+          <a
             v-if="gamePictures[n + 9 + i]"
-            class="ratio ratio-16x9"
-            data-aos="fade-up"
+            :href="getLocation() + '/' + gamePictures[n + 9 + i]"
+            class="glightbox"
+            data-gallery="games-pictures"
           >
-            <img
-              :src="gamePictures[n + 9 + i]"
-              alt="Image of the game."
-              class="d-none w-100 p-1"
-              @load="gameImageLazyLoad"
+            <div
+              class="ratio ratio-16x9"
+              data-aos="fade-up"
             >
-            <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-              <div class="w-100 h-100 text-bg-secondary" />
+              <img
+                :src="gamePictures[n + 9 + i]"
+                alt="Image of the game."
+                class="d-none w-100 p-1"
+                @load="gameImageLazyLoad"
+              >
+              <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
+                <div class="w-100 h-100 text-bg-secondary" />
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -125,7 +149,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import trans from "../../modules/trans";
+import GLightbox from "glightbox";
+import trans from "./../../modules/trans";
 
 export default defineComponent({
   mixins: [trans],
@@ -144,6 +169,7 @@ export default defineComponent({
     gameItems: number;
     gameLoading: boolean;
     gameAllLoaded: boolean;
+    gameViewer: GLightbox | null;
   } {
     return {
       gameName: "",
@@ -153,6 +179,7 @@ export default defineComponent({
       gameItems: 1,
       gameLoading: true,
       gameAllLoaded: false,
+      gameViewer: null,
     };
   },
   mounted() {
@@ -163,8 +190,7 @@ export default defineComponent({
     this.gameLastPage = data.gamePictures.last_page;
     this.gameItems =
       data.gamePictures.per_page < 12 ? 12 : data.gamePictures.per_page;
-    this.checkScroll();
-    this.getPictures();
+    this.initComponent();
   },
   computed: {
     /**
@@ -178,8 +204,25 @@ export default defineComponent({
     },
   },
   methods: {
-    /* EVENTS */
-
+    /**
+     * Get the location.
+     */
+    initComponent() {
+      this.checkScroll();
+      this.getPictures();
+      this.updateGlightbox();
+    },
+    /**
+     * Update Glightbox elements.
+     */
+    updateGlightbox() {
+      setTimeout(() => {
+        this.gameViewer?.destroy();
+        this.gameViewer = new GLightbox({
+          selector: ".glightbox",
+        });
+      }, 800);
+    },
     /**
      * Increment the current page number when the
      * user scroll to the bottom.
@@ -201,9 +244,12 @@ export default defineComponent({
         }
       });
     },
-
-    /* FUNCTIONS */
-
+    /**
+     * Get the location.
+     */
+    getLocation() {
+      return location.origin;
+    },
     /**
      * Load the current page.
      */
@@ -213,6 +259,7 @@ export default defineComponent({
         .get(url)
         .then((response) => {
           this.updatePictures(Object.values(response.data.data.data));
+          this.updateGlightbox();
         })
         .catch((error) => {
           if (error.response) {
@@ -225,7 +272,6 @@ export default defineComponent({
           console.log(error.config);
         });
     },
-
     /**
      * Update game's pictures,
      * Set the loading to the false.
@@ -236,7 +282,6 @@ export default defineComponent({
       this.gamePictures = this.gamePictures.concat(data);
       this.gameLoading = false;
     },
-
     /**
      * Show image when she loaded,
      * Hide the placeholder's image.
