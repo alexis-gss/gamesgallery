@@ -89,6 +89,13 @@
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
                                     novalidate>
+                                    <a class="btn btn-sm btn-secondary"
+                                        href="{{ route('bo.users.duplicate', ['user' => $user->id]) }}"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ __('list.duplicate_user') }}">
+                                        <i class="fa-solid fa-copy"></i>
+                                    </a>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.users.edit', ['user' => $user->id]) }}"
                                         data-bs="tooltip"

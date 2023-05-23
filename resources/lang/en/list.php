@@ -18,6 +18,10 @@ return [
     'create_new_folder' => 'Create a new folder',
     'create_new_user' => 'Create a new user',
     'create_new_tag' => 'Create a new tag',
+    'duplicate_game' => 'Duplicate this game',
+    'duplicate_folder' => 'Duplicate this folder',
+    'duplicate_tag' => 'Duplicate this tag',
+    'duplicate_user' => 'Duplicate this user',
 
     // Sweetalert.
     'are_you_sure' => 'Are you sure ?',

@@ -58,7 +58,8 @@ class GameController extends Controller
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Collection */
-        $tags = Tag::query()->select(['id', 'name', 'slug'])->get();
+        $tags = Tag::whereNotIn('id', $game->tags()->pluck('id'))
+            ->select(['id', 'name', 'slug'])->get();
 
         return view('back.games.create', compact('game', 'tags'));
     }
@@ -138,5 +139,16 @@ class GameController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\Game $game
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(Game $game): \Illuminate\Contracts\View\View
+    {
+        return $this->create($game->replicate());
     }
 }

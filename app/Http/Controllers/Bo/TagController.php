@@ -146,4 +146,15 @@ class TagController extends Controller
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
     }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\Tag $tag
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(Tag $tag): \Illuminate\Contracts\View\View
+    {
+        return $this->create($tag->replicate());
+    }
 }

@@ -99,6 +99,13 @@
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
                                     novalidate>
+                                    <a class="btn btn-sm btn-secondary"
+                                        href="{{ route('bo.tags.duplicate', ['tag' => $tag->id]) }}"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ __('list.duplicate_tag') }}">
+                                        <i class="fa-solid fa-copy"></i>
+                                    </a>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.tags.edit', ['tag' => $tag->id]) }}"
                                         data-bs="tooltip"

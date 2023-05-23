@@ -116,6 +116,13 @@
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
                                     novalidate>
+                                    <a class="btn btn-sm btn-secondary"
+                                        href="{{ route('bo.folders.duplicate', ['folder' => $folder->id]) }}"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ __('list.duplicate_folder') }}">
+                                        <i class="fa-solid fa-copy"></i>
+                                    </a>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
                                         data-bs="tooltip"

@@ -130,4 +130,15 @@ class FolderController extends Controller
                 ->with('error', trans('changes.deletion_associated'));
         }
     }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\Folder $folder
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(Folder $folder): \Illuminate\Contracts\View\View
+    {
+        return $this->create($folder->replicate());
+    }
 }

@@ -139,6 +139,13 @@
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
                                     @endif
+                                    <a class="btn btn-sm btn-secondary"
+                                        href="{{ route('bo.games.duplicate', ['game' => $game->id]) }}"
+                                        data-bs="tooltip"
+                                        data-bs-placement="top"
+                                        title="{{ __('list.duplicate_game') }}">
+                                        <i class="fa-solid fa-copy"></i>
+                                    </a>
                                     <a class="btn btn-sm btn-primary"
                                         href="{{ route('bo.games.edit', ['game' => $game->id]) }}"
                                         data-bs="tooltip"
