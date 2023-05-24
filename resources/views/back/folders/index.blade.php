@@ -26,7 +26,7 @@
                 $routeName = request()->route()->getName();
                 $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
                 $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
-                $cols = ['name' => __('list.name'), 'color' => __('list.color'), 'status' => __('list.publishment'), 'order' => __('list.order')];
+                $cols = ['name' => __('list.name'), 'color' => __('list.color'), 'published' => __('list.publishment'), 'order' => __('list.order')];
                 @endphp
                 @include('back.modules.table-col-sorter', [
                     'cols' => $cols,
@@ -59,11 +59,11 @@
                                 <form action="{{ route('bo.folders.change-published', $folder->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm @if($folder->status) btn-primary @else btn-danger @endif"
-                                        title="{{ __($folder->status ? __('list.unpublish') : __('list.publish')) }}"
+                                        class="btn btn-sm @if($folder->published) btn-primary @else btn-danger @endif"
+                                        title="{{ __($folder->published ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
-                                        @if($folder->status)
+                                        @if($folder->published)
                                             <i class="fa-solid fa-circle-check"></i>
                                         @else
                                             <i class="fa-solid fa-circle-xmark"></i>

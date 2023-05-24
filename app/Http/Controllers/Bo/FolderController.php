@@ -7,14 +7,14 @@ use App\Http\Requests\Bo\Folders\StoreFolderRequest;
 use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
 use App\Models\Folder;
 use App\Traits\Models\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelStatus;
+use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FolderController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelStatus;
+    use UpdateModelPublished;
 
     /**
      * Display a listing of the resource.

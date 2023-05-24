@@ -17,7 +17,8 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('name')->comment('Nom du tag qui sera unique.');
             $table->string('slug')->unique()->comment('Slugify the name of the tag.');
-            $table->boolean('status')->comment('The tag is published or not');
+            $table->boolean('published')->comment('The tag is published or not');
+            $table->timestamp('published_at')->nullable()->comment('The date on which the tag was published.');
             $table->integer('order')->comment('Order of this tag.');
             $table->timestamps();
         });

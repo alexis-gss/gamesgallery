@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
  * @property integer $id
  * @property string $name
  * @property string $slug
- * @property boolean $status
+ * @property boolean $published
+ * @property date $published_at
  * @property integer $order
  */
 class Folder extends Model
@@ -27,7 +28,8 @@ class Folder extends Model
         'name',
         'slug',
         'color',
-        'status'
+        'published',
+        'published_at'
     ];
 
     /**
@@ -36,7 +38,8 @@ class Folder extends Model
      * @var array
      */
     protected $casts = [
-        'status' => 'bool'
+        'published' => 'bool',
+        'published_at' => 'datetime'
     ];
 
     /**
@@ -50,10 +53,12 @@ class Folder extends Model
             static::setSlug($folder);
             static::assertFieldIsUnique($folder->slug);
             static::setOrder($folder);
+            static::setPublishedDate($folder);
         });
         static::updating(function (self $folder) {
             static::setSlug($folder);
             static::assertFieldIsUnique($folder->slug, $folder->id);
+            static::setPublishedDate($folder);
         });
     }
 
@@ -69,6 +74,18 @@ class Folder extends Model
     private static function setSlug(Folder $folder)
     {
         $folder->slug = Str::slug($folder->name);
+    }
+
+    /**
+     * Set the published date.
+     *
+     * @param \App\Models\Folder $folder
+     *
+     * @return void
+     */
+    private static function setPublishedDate(Folder $folder)
+    {
+        $folder->published_at = ($folder->published) ? now() : null;
     }
 
     /**

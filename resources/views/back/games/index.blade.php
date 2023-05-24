@@ -30,7 +30,7 @@
                     'name' => __('list.name'),
                     'folder_id' => __('list.folder_associated'),
                     'pictures' => __('list.images'),
-                    'status' => __('list.publishment'),
+                    'published' => __('list.publishment'),
                     'order' => __('list.order')
                 ];
                 @endphp
@@ -72,11 +72,11 @@
                                 <form action="{{ route('bo.games.change-published', $game->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm @if($game->status) btn-primary @else btn-danger @endif"
-                                        title="{{ __($game->status ? __('list.unpublish') : __('list.publish')) }}"
+                                        class="btn btn-sm @if($game->published) btn-primary @else btn-danger @endif"
+                                        title="{{ __($game->published ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
-                                        @if($game->status)
+                                        @if($game->published)
                                             <i class="fa-solid fa-circle-check"></i>
                                         @else
                                             <i class="fa-solid fa-circle-xmark"></i>
@@ -129,7 +129,7 @@
                                     method="POST"
                                     class="btn-group confirmDeleteTS"
                                     novalidate>
-                                    @if ($game->status)
+                                    @if ($game->published)
                                         <a href="{{ route('fo.games.specific', $game->slug) }}"
                                             class="btn btn-sm btn-warning"
                                             target="_blank"

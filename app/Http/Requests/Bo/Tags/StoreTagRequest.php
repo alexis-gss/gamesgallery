@@ -27,7 +27,7 @@ class StoreTagRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug($this->name),
-            'status' => $this->status ? true : false
+            'published' => $this->published ? true : false
         ]);
     }
 
@@ -40,7 +40,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:2|max:25',
-            'status' => 'required|boolean'
+            'published' => 'required|boolean'
         ];
     }
 
@@ -54,7 +54,7 @@ class StoreTagRequest extends FormRequest
         return [
             'name' => trans('name of the tag'),
             'slug' => trans('slug of the tag'),
-            'status' => trans('status of the tag')
+            'published' => trans('published status of the tag')
         ];
     }
 }

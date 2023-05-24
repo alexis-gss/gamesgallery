@@ -26,14 +26,16 @@ final class GameFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique()->word;
+        $name      = $this->faker->unique()->word;
+        $published = $this->faker->boolean(75);
         return [
             'folder_id' => $this->faker->randomElement(Folder::pluck('id')),
             'name' => $name,
             'slug' => Str::slug($name),
             'pictures_alt' => $this->faker->unique()->word,
             'pictures_title' => $this->faker->unique()->word,
-            'status' => $this->faker->boolean(75)
+            'published' => $published,
+            'published_at' => ($published) ? now() : null,
         ];
     }
 }

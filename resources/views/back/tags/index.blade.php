@@ -26,7 +26,7 @@
                 $routeName = request()->route()->getName();
                 $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
                 $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
-                $cols = ['name' => __('list.name'), 'status' => __('list.publishment'), 'order' => __('list.order')];
+                $cols = ['name' => __('list.name'), 'published' => __('list.publishment'), 'order' => __('list.order')];
                 @endphp
                 @include('back.modules.table-col-sorter', [
                     'cols' => $cols,
@@ -42,11 +42,11 @@
                                 <form action="{{ route('bo.tags.change-published', $tag->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="btn btn-sm @if($tag->status) btn-primary @else btn-danger @endif"
-                                        title="{{ __($tag->status ? __('list.unpublish') : __('list.publish')) }}"
+                                        class="btn btn-sm @if($tag->published) btn-primary @else btn-danger @endif"
+                                        title="{{ __($tag->published ? __('list.unpublish') : __('list.publish')) }}"
                                         data-bs="tooltip"
                                         data-bs-placement="top">
-                                        @if($tag->status)
+                                        @if($tag->published)
                                             <i class="fa-solid fa-circle-check"></i>
                                         @else
                                             <i class="fa-solid fa-circle-xmark"></i>

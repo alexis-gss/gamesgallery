@@ -25,12 +25,14 @@ final class FolderFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique()->word;
+        $name      = $this->faker->unique()->word;
+        $published = $this->faker->boolean(75);
         return [
             'name' => $name,
             'slug' => Str::slug($name),
             'color' => $this->faker->hexColor(),
-            'status' => $this->faker->boolean(75)
+            'published' => $published,
+            'published_at' => ($published) ? now() : null,
         ];
     }
 }

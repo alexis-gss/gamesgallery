@@ -27,7 +27,7 @@ class StoreFolderRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug(strip_tags($this->name)),
-            'status' => $this->status ? true : false
+            'published' => $this->published ? true : false
         ]);
     }
 
@@ -40,7 +40,7 @@ class StoreFolderRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:2|max:255',
-            'status' => 'required|boolean',
+            'published' => 'required|boolean',
             'color' => 'required|string|min:6|max:8|regex:(^[#]([A-Za-z0-9]{6,8})$)'
         ];
     }
@@ -55,7 +55,7 @@ class StoreFolderRequest extends FormRequest
         return [
             'name' => trans('name of the folder'),
             'slug' => trans('slug of the folder'),
-            'status' => trans('status of the folder')
+            'published' => trans('published status of the folder')
         ];
     }
 }

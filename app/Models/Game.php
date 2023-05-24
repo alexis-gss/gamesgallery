@@ -15,7 +15,8 @@ use Illuminate\Support\Str;
  * @property string $pictures
  * @property string $pictures_alt
  * @property string $pictures_title
- * @property boolean $status
+ * @property boolean $published
+ * @property date $published_at
  * @property integer $order
  */
 class Game extends Model
@@ -34,7 +35,8 @@ class Game extends Model
         'pictures',
         'pictures_alt',
         'pictures_title',
-        'status'
+        'published',
+        'published_at'
     ];
 
     /**
@@ -44,7 +46,8 @@ class Game extends Model
      */
     protected $casts = [
         'pictures' => 'array',
-        'status' => 'bool'
+        'published' => 'bool',
+        'published_at' => 'datetime'
     ];
 
     /**
@@ -58,10 +61,12 @@ class Game extends Model
             static::setSlug($game);
             static::assertFieldIsUnique($game->slug);
             static::setOrder($game);
+            static::setPublishedDate($game);
         });
         static::updating(function (self $game) {
             static::setSlug($game);
             static::assertFieldIsUnique($game->slug, $game->id);
+            static::setPublishedDate($game);
         });
     }
 
@@ -77,6 +82,18 @@ class Game extends Model
     private static function setSlug(Game $game)
     {
         $game->slug = Str::slug($game->name);
+    }
+
+    /**
+     * Set the published date.
+     *
+     * @param \App\Models\Game $game
+     *
+     * @return void
+     */
+    private static function setPublishedDate(Game $game)
+    {
+        $game->published_at = ($game->published) ? now() : null;
     }
 
     /**

@@ -7,7 +7,7 @@ use App\Http\Requests\Bo\Tags\StoreTagRequest;
 use App\Http\Requests\Bo\Tags\UpdateTagRequest;
 use App\Models\Tag;
 use App\Traits\Models\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelStatus;
+use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class TagController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelStatus;
+    use UpdateModelPublished;
 
     /**
      * Display a listing of the resource.
