@@ -19,9 +19,14 @@ class FrontController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $games       = Game::where('published', true)->orderBy('slug', 'ASC')->get();
+        $games             = Game::where('published', true)->orderBy('slug', 'ASC')->get();
+        $gamesLatest       = Game::where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
+        $gamesLatestString = "";
+        foreach ($gamesLatest as $lastGame) {
+            $gamesLatestString = $gamesLatestString . $lastGame->name . " / ";
+        }
 
-        return view('front.pages.home', compact('games'));
+        return view('front.pages.home', compact('games', 'gamesLatestString'));
     }
 
     /**
