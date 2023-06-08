@@ -35,8 +35,6 @@ body:
       label: Additional context
       description: Add any other context about the feature here.
       placeholder: Add any other context about the feature here.
-    validations:
-      required: true
   - type: markdown
     attributes:
       value: |
