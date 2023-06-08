@@ -93,7 +93,11 @@ class Game extends Model
      */
     private static function setPublishedDate(Game $game)
     {
-        $game->published_at = ($game->published) ? now() : null;
+        if ($game->published && !$game->getOriginal('published')) {
+            $game->published_at = now();
+        } elseif (!$game->published) {
+            $game->published_at = null;
+        }
     }
 
     /**
