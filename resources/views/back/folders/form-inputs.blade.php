@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter @error('name') is-invalid @enderror"
+                        class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $folder->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_folder_label') }}*</small>

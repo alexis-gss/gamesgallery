@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter @error('name') is-invalid @enderror"
+                        class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $user->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}</small>
@@ -35,7 +35,7 @@
                     <input type="text"
                         id="email"
                         name="email"
-                        class="form-control need-word-counter @error('email') is-invalid @enderror"
+                        class="form-control @error('email') is-invalid @enderror"
                         placeholder="{{ __('form.email') }}"
                         value="{{ old('email', $user->email ?? '') }}">
                     <small class="text-muted">{{ __('form.email_label') }}</small>
@@ -114,12 +114,12 @@
                         <input type="password"
                             id="password"
                             name="password"
-                            class="form-control need-word-counter-password password-input @error('password') is-invalid @enderror"
+                            class="form-control password-input @error('password') is-invalid @enderror"
                             placeholder="{{ __('form.password') }}"
                             value="{{ old('password') }}"
                             aria-describedby="btn-password"
                             autocomplete="new-password">
-                        <button class="btn btn-primary need-word-counter-password-btn password-btn"
+                        <button class="btn btn-primary password-btn"
                             title="{{ __('form.tooltip_password_show_hide') }}"
                             data-bs="tooltip"
                             type="button"
@@ -145,12 +145,12 @@
                         <input type="password"
                             id="password_confirmation"
                             name="password_confirmation"
-                            class="form-control need-word-counter-password password-input @error('password_confirmation') is-invalid @enderror"
+                            class="form-control password-input @error('password_confirmation') is-invalid @enderror"
                             placeholder="{{ __('form.confirm') }}"
                             value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}"
                             aria-describedby="btn-password-confirm"
                             autocomplete="new-password">
-                        <button class="btn btn-primary need-word-counter-password-btn password-btn"
+                        <button class="btn btn-primary password-btn"
                             title="{{ __('form.tooltip_password_show_hide') }}"
                             data-bs="tooltip"
                             type="button"

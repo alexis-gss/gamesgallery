@@ -10,16 +10,19 @@
     color: initial;
 }
 
-.need-word-counter {
+.word-counter + input[type="text"],
+.word-counter + textarea,
+.word-counter-varchar + textarea {
     border-radius: 0 0 0.375rem 0.375rem !important;
+}
 
-    &-password {
-        border-radius: 0 0 0 0.375rem !important;
+.word-counter + .input-group button[type="button"] {
+    border-radius: 0 0 0.375rem !important;
+}
 
-        &-btn {
-            border-radius: 0 0 0.375rem !important;
-        }
-    }
+.word-counter + .input-group input[type="text"],
+.word-counter + .input-group input[type="password"] {
+    border-radius: 0 0 0 0.375rem !important;
 }
 
 /**
