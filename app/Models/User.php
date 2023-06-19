@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property integer $id
@@ -26,7 +25,6 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
@@ -140,7 +138,7 @@ class User extends Authenticatable
      * @return void
      * @throws \Illuminate\Validation\ValidationException If field already exists.
      */
-    private static function assertFieldsAreUnique($model, ?int $id = null)
+    private static function assertFieldsAreUnique(mixed $model, ?int $id = null)
     {
         $table = (new self())->getTable();
         ToolboxHelper::assertFieldIsUnique($table, 'slug', $model->slug, $id);
