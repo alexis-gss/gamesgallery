@@ -1,5 +1,10 @@
 @php
-View::share('noOrder', $noOrder);
+$route = request()->route();
+$routeName = $route->getName();
+$rst = !is_null(request()->rst) || !Session::has("$routeName.sorted");
+$noOrder = !empty($noOrder);
+$noOrder = $noOrder || (Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way")));
+$noOrder = $noOrder || !empty(request()->search);
 $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
 @endphp
 <tr>
@@ -12,11 +17,10 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
     @endphp
     {{-- NO Sort for order column --}}
     @if($col === 'order' or in_array($col, $ignore))
-    @if(!$noOrder or $rst)
+    @if($noOrder and !in_array($col, $ignore)) @continue @endif
     <th scope="col" class="text-center @if(isset($mobileHide) and is_array($mobileHide) and in_array($col, $mobileHide)) d-none d-md-table-cell @endif">
-        <span>{{ $colname }}</span>
+        <span class="text-nowrap">{{ $colname }}</span>
     </th>
-    @endif
     @continue
     @endif
     <th scope="col" class="text-center @if(isset($mobileHide) and is_array($mobileHide) and in_array($col, $mobileHide)) d-none d-md-table-cell @endif">
@@ -49,7 +53,7 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
     @endforeach
     {{-- Buttons Col --}}
     <th scope="col" class="text-end">
-        @if($noOrder and !$rst)
+        @if(!$rst)
         <a class="btn btn-sm btn-danger"
             href="{{ request()->fullUrlWithQuery(['sort_col' => null, 'sort_way' => null, 'rst' => true, 'search' => null]) }}"
             data-bs="tooltip"

@@ -22,11 +22,12 @@
         @if (count($users) > 0)
             <thead>
                 @php
-                $rst = !is_null(request()->rst);
-                $routeName = request()->route()->getName();
-                $noOrder = Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
-                $noOrder = Session::get("$routeName.sort_col") !== '' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way"));
-                $cols = ['name' => __('list.name'), 'email' => __('list.email'), 'role' => __('list.role'), 'order' => __('list.order')];
+                $cols = [
+                    'name' => __('list.name'),
+                    'email' => __('list.email'),
+                    'role' => __('list.role'),
+                    'order' => __('list.order')
+                ];
                 @endphp
                 @include('back.modules.table-col-sorter', [
                     'cols' => $cols,
@@ -51,7 +52,8 @@
                         <td class="text-center align-middle">
                             {{ ($user->role == App\Enums\Role::admin()->value) ? App\Enums\Role::admin()->label : App\Enums\Role::visitor()->label }}
                         </td>
-                        @if(!$noOrder or $rst)
+                        @php $routeName = request()->route()->getName(); @endphp
+                        @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
                         <td class="text-center align-middle">
                             @can('isAdmin')
                                 <div class="d-flex justify-content-center align-items-center">
