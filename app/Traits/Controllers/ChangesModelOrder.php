@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Models;
+namespace App\Traits\Controllers;
 
 use App\Http\Requests\Bo\UpdateChangeOrderRequest;
 use Illuminate\Database\Eloquent\Model;

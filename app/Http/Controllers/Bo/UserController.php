@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Users\StoreUserRequest;
 use App\Http\Requests\Bo\Users\UpdateUserRequest;
 use App\Models\User;
-use App\Traits\Models\ChangesModelOrder;
+use App\Traits\Controllers\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

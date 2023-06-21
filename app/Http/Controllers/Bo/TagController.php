@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Tags\StoreTagRequest;
 use App\Http\Requests\Bo\Tags\UpdateTagRequest;
 use App\Models\Tag;
-use App\Traits\Models\ChangesModelOrder;
+use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

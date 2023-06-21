@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Folders\StoreFolderRequest;
 use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
 use App\Models\Folder;
-use App\Traits\Models\ChangesModelOrder;
+use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

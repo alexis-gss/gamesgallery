@@ -7,9 +7,9 @@ use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Models\Game;
 use App\Models\Tag;
+use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
 use App\Traits\Controllers\UpdateModelPublished;
-use App\Traits\Models\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
