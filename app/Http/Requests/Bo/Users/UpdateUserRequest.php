@@ -11,8 +11,12 @@ class UpdateUserRequest extends StoreUserRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255'
         ];
+        return \array_merge(
+            parent::rules(),
+            $rules,
+        );
     }
 }
