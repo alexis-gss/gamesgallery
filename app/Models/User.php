@@ -95,7 +95,6 @@ class User extends Authenticatable
      * Set the slug.
      *
      * @param \App\Models\User $user
-     *
      * @return void
      */
     private static function setSlug(User $user)
@@ -107,7 +106,6 @@ class User extends Authenticatable
      * Set the image.
      *
      * @param \App\Models\User $user
-     *
      * @return void
      */
     private static function setImage(User $user)
@@ -133,12 +131,12 @@ class User extends Authenticatable
     /**
      * Asserts using validation that the fields are unique.
      *
-     * @param mixed        $model
-     * @param integer|null $id
+     * @param \App\Models\User $model
+     * @param integer|null     $id
      * @return void
      * @throws \Illuminate\Validation\ValidationException If field already exists.
      */
-    private static function assertFieldsAreUnique(mixed $model, ?int $id = null)
+    private static function assertFieldsAreUnique(User $model, ?int $id = null)
     {
         $table = (new self())->getTable();
         ToolboxHelper::assertFieldIsUnique($table, 'slug', $model->slug, $id);

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use App\Enums\Role;
+use App\Lib\Helpers\FileStorageHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -74,16 +75,18 @@ class UserCreate extends Command
         $this->role = null;
         $this->addRole();
 
-        $user = new User([
-            'name' => $this->name,
-            'slug' => str_slug($this->name),
-            'email' => $this->email,
-            'password' => $this->password,
-            'picture' => "./../../../database/factories/assets/users/default-user-picture.png",
-            'picture_alt' => "Alt of user picture profile.",
-            'picture_title' => "Title of user picture profile.",
-            'role' => $this->role
-        ]);
+        $user                = new User();
+        $user->name          = $this->name;
+        $user->slug          = str_slug($this->name);
+        $user->email         = $this->email;
+        $user->password      = $this->password;
+        $user->picture       = FileStorageHelper::storeFile(
+            $user,
+            new \SplFileInfo(\resource_path('../database/factories/assets/users/default-user-picture.png'))
+        );
+        $user->picture_alt   = "Default picture of a user profile";
+        $user->picture_title = "User's picture of his profile";
+        $user->role          = $this->role;
         $user->saveOrFail();
 
         $this->info('User created 👌');
