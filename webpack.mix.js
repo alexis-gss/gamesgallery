@@ -103,4 +103,5 @@ mix.js("resources/ts/front.ts", "public/js/front.js", { transpileOnly: true })
     .sourceMaps(true, "inline-source-map");
 
 // * Copy Blade Images Assets
+mix.copyDirectory("resources/favicon/*", "public/");
 mix.copyDirectory("resources/assets", "public/assets");
