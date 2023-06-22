@@ -2,7 +2,6 @@
 
 @section('title', (isset($game) ? $game->name : __('meta.default_title')))
 @section('description', (isset($game) ? __('meta.description',  ['game' =>  $game->name]) :  __('meta.default_description')))
-@section('keywords', __('meta.keywords', ['game' => (isset($game) ? $game->name : __('meta.default_keyword'))]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

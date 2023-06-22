@@ -2,7 +2,6 @@
 
 @section('title', __('meta.users_edition'))
 @section('description', __('meta.users_edition_desc'))
-@section('keywords', 'noindex,nofollow')
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

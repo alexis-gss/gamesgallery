@@ -8,7 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta name="description" content="@yield('description')" />
-<meta name="robots" content="@yield('keywords')" />
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#121416" />
 
 <!-- Open Graph -->
 <meta property="og:title" content="{{ config('app.name') }} - @yield('title')" />

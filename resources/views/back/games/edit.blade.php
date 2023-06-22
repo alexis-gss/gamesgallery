@@ -2,7 +2,6 @@
 
 @section('title', __('meta.games_edition'))
 @section('description', __('meta.games_edition_desc'))
-@section('keywords', 'noindex,nofollow')
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

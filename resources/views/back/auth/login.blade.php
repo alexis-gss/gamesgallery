@@ -1,7 +1,6 @@
 @extends('layouts.backend')
 @section('title', __('meta.back_office_login'))
 @section('description', __('meta.back_office_login_desc'))
-@section('keywords', 'noindex,nofollow')
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">

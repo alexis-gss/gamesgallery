@@ -2,7 +2,6 @@
 
 @section('title', __('meta.folders_edition'))
 @section('description', __('meta.folders_edition_desc'))
-@section('keywords', 'noindex,nofollow')
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

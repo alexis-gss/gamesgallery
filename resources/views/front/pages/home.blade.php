@@ -2,7 +2,6 @@
 
 @section('title', __('meta.default_title'))
 @section('description', __('meta.default_description'))
-@section('keywords', __('meta.default_keyword'))
 
 @section('content')
     <main class="main-home d-flex justify-content-center align-items-center m-0 p-0 mx-md-5 px-md-5">

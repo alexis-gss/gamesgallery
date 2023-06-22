@@ -2,7 +2,6 @@
 
 @section('title', __('meta.back_office'))
 @section('description', __('meta.back_office_desc'))
-@section('keywords', 'noindex,nofollow')
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
