@@ -13,7 +13,6 @@
         "diglactic/laravel-breadcrumbs": "^8.1",
         "erusev/parsedown": "^1.7",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
         "joedixon/laravel-translation": "^1.1",
         "kwaadpepper/enum": "^2.1",
         "kwaadpepper/exception-handler": "^0.0.9",
