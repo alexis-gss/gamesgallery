@@ -43,7 +43,7 @@ class StoreGameRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'folder_id' => 'sometimes|nullable|integer',
+            'folder_id' => 'required|integer|exists:folders,id',
             'name' => 'required|string|min:3|max:255',
             'tags' => 'sometimes|array',
             'tags.*' => 'required|array',
