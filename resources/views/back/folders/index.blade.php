@@ -38,21 +38,11 @@
                     <tr class="list-item border-bottom">
                         <td class="text-center align-middle">{{ $folder->name }}</td>
                         <td class="text-center align-middle">
-                            @php
-                            $data = [
-                                'id' => "colorPicker" . $folder->id,
-                                'name' => 'color',
-                                'value' => old('color', $folder->color ?? ''),
-                                'title' => __('Choisissez la couleur du paramètre'),
-                                'label' => __('Couleur du paramètre'),
-                                'rgbaMode' => false,
-                                'nullable' => false,
-                                'ariaDescribedby' => 'colorPickerHelp',
-                                'simple' => true,
-                                'disabled' => true
-                            ];
-                            @endphp
-                            <div class="color-picker" data-json='@json($data)'></div>
+                            <div class="btn-sm mx-auto"
+                                title="{{ __('list.color_details', ['color' => $folder->color]) }}"
+                                data-bs="tooltip">
+                                <span class="d-block w-100 h-100 rounded-1" style="background-color:{{ $folder->color }}"></span>
+                            </div>
                         </td>
                         <td class="d-none d-lg-table-cell text-center align-middle">
                             @can('isAdmin')

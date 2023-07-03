@@ -23,22 +23,28 @@
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
-                    @php
-                    $data = [
-                        'id' => "colorPicker" ,
-                        'name' => 'color',
-                        'value' => old('color', $folder->color ?? ''),
-                        'title' => __('form.tooltip_color_picker_title'),
-                        'label' => __('form.color'),
-                        'helper' => __('form.color_label'),
-                        'rgbaMode' => false,
-                        'nullable' => false,
-                        'ariaDescribedby' => 'colorPickerHelp',
-                        'simple' => false,
-                        'disabled' => false
-                    ];
-                    @endphp
-                    <div class="color-picker" data-json='@json($data)'></div>
+                    <label for="color" class="col-form-label">
+                        <b>{{ __('Couleur') }}</b>
+                        <span data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('form.tooltip_color_picker') }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </span>
+                    </label>
+                    <input
+                        id="color"
+                        name="color"
+                        type="text"
+                        data-jscolor="{
+                            value: '{{ old('color', $folder->color ?? '#0D6EFD') }}',
+                            borderColor: 'var(--bs-border-color)',
+                            shadow: false,
+                            palette:[
+                                '#FFFFFF', '#808080', '#000000', '#996e36', '#f55525', '#ffe438', '#88dd20', '#22e0cd', '#269aff', '#bb1cd4'
+                            ],
+                        }"
+                        class="form-control"
+                        required>
                     @include('back.modules.input-error', ['inputName' => 'color'])
                 </div>
             </div>

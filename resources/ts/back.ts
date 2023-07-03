@@ -2,6 +2,7 @@
 import "./utilities/axios";
 import "./utilities/bootstrap";
 import "./utilities/fontawesome";
+import "./utilities/jscolor";
 
 // * MODULES
 import "./modules/console";

@@ -30,7 +30,7 @@ final class FolderFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'color' => $this->faker->hexColor(),
+            'color' => strtoupper($this->faker->hexColor()),
             'published' => $published,
             'published_at' => ($published) ? now() : null,
         ];
