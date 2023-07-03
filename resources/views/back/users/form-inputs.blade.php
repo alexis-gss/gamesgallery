@@ -42,29 +42,29 @@
                     @include('back.modules.input-error', ['inputName' => 'email'])
                 </div>
                 @can('isAdmin')
-                    <div class="col-12 col-md-6 form-group">
-                        <label for="folder_id" class="col-form-label">
-                            <b>{{ __('form.access') }}</b>
-                            <span data-bs="tooltip"
-                                data-bs-placement="top"
-                                title="{{ __('form.tooltip_role') }}">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </span>
-                        </label>
-                        <select class="form-select @error('role') is-invalid @enderror"
-                            id="role"
-                            name="role"
-                            role="button">
-                            <option value="{{ App\Enums\Role::admin()->value }}" @if ($user->role == App\Enums\Role::admin()->value) selected @endif>
-                                {{ App\Enums\Role::admin()->label }}
-                            </option>
-                            <option value="{{ App\Enums\Role::visitor()->value }}" @if ($user->role == App\Enums\Role::visitor()->value) selected @endif>
-                                {{ App\Enums\Role::visitor()->label }}
-                            </option>
-                        </select>
-                        <small class="text-muted">{{ __('form.role_label') }}</small>
-                        @include('back.modules.input-error', ['inputName' => 'role'])
-                    </div>
+                <div class="col-12 col-md-6 form-group">
+                    <label for="folder_id" class="col-form-label">
+                        <b>{{ __('form.access') }}</b>
+                        <span data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('form.tooltip_role') }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </span>
+                    </label>
+                    <select class="form-select @error('role') is-invalid @enderror"
+                        id="role"
+                        name="role"
+                        role="button">
+                        <option value="{{ App\Enums\Role::admin()->value }}" @if ($user->role == App\Enums\Role::admin()->value) selected @endif>
+                            {{ App\Enums\Role::admin()->label }}
+                        </option>
+                        <option value="{{ App\Enums\Role::visitor()->value }}" @if ($user->role == App\Enums\Role::visitor()->value) selected @endif>
+                            {{ App\Enums\Role::visitor()->label }}
+                        </option>
+                    </select>
+                    <small class="text-muted">{{ __('form.role_label') }}</small>
+                    @include('back.modules.input-error', ['inputName' => 'role'])
+                </div>
                 @endcan
             </div>
         </fieldset>
@@ -78,14 +78,14 @@
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     @php
-                        $data = [
-                            'id' => 'userPicture',
-                            'name' => 'picture',
-                            'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 100, 'height' => 100]),
-                            'width' => 100,
-                            'height' => 100,
-                            'value' => $user->picture ?? ''
-                        ];
+                    $data = [
+                        'id' => 'userPicture',
+                        'name' => 'picture',
+                        'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 100, 'height' => 100]),
+                        'width' => 100,
+                        'height' => 100,
+                        'value' => $user->picture ?? ''
+                    ];
                     @endphp
                     <div class="image-input" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'picture'])

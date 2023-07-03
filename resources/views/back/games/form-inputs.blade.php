@@ -33,9 +33,9 @@
                     </label>
                     <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button">
                         @foreach ($globalFolders as $folder)
-                            <option value="{{ $folder->id }}" @if ($folder->id == $game->folder_id) selected @endif>
-                                {{ $folder->name }}
-                            </option>
+                        <option value="{{ $folder->id }}" @if ($folder->id == $game->folder_id) selected @endif>
+                            {{ $folder->name }}
+                        </option>
                         @endforeach
                     </select>
                     <small class="text-muted">{{ __('form.folders_label') }}</small>
@@ -61,16 +61,16 @@
                         </span>
                     </label>
                     @php
-                        $data = [
-                            'id' => 'gamePictures',
-                            'name' => 'pictures[]',
-                            'width' => 3840,
-                            'height' => 2160,
-                            'value' => $game->pictures ?? [],
-                            'limit' => [0,100],
-                            'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
-                            'errors' => $errors->getBag('default')->getMessages()
-                        ];
+                    $data = [
+                        'id' => 'gamePictures',
+                        'name' => 'pictures[]',
+                        'width' => 3840,
+                        'height' => 2160,
+                        'value' => $game->pictures ?? [],
+                        'limit' => [0,100],
+                        'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
+                        'errors' => $errors->getBag('default')->getMessages()
+                    ];
                     @endphp
                     <div class="images-input" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'pictures[]'])
@@ -95,11 +95,11 @@
                         </span>
                     </label>
                     @php
-                        $data = [
-                            'name' => 'tags',
-                            'value' => old('tags', $game->tags ?? []),
-                            'tags' => $tags,
-                        ];
+                    $data = [
+                        'name' => 'tags',
+                        'value' => old('tags', $game->tags ?? []),
+                        'tags' => $tags,
+                    ];
                     @endphp
                     <div id="taggable-dropdown" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'tags'])
