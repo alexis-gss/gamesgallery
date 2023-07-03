@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Traits\Controllers\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -24,9 +25,10 @@ class UserController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $users */
-        $users  = User::query();
-        $search = $request->search;
+        $users = User::query();
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $users,
@@ -35,11 +37,15 @@ class UserController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($users);
         $searchFields = trans('Name');
 
-        $users = $users->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($users);
+
+        /** @var integer $pagination Items per page */
+        $pagination = $request->pagination;
+        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
+        $users = $users->paginate(intval(Cache::get('pagination')));
 
         return view('back.users.index', compact('users', 'search', 'searchFields'));
     }

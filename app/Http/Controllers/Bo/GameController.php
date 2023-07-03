@@ -11,6 +11,7 @@ use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
@@ -28,9 +29,10 @@ class GameController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $games */
-        $games  = Game::query();
-        $search = $request->search;
+        $games = Game::query();
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $games,
@@ -39,11 +41,15 @@ class GameController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($games);
         $searchFields = trans('Name');
 
-        $games = $games->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($games);
+
+        /** @var integer $pagination Items per page */
+        $pagination = $request->pagination;
+        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
+        $games = $games->paginate(intval(Cache::get('pagination')));
 
         return view('back.games.index', compact('games', 'search', 'searchFields'));
     }

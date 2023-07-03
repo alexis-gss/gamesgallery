@@ -17,7 +17,7 @@
     @endcan
 </div>
 @include('back.modules.search-bar')
-<table class="table">
+<table class="table table-hover">
     @if (count($folders) > 0)
     <thead>
         @php

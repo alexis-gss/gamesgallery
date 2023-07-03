@@ -34,6 +34,9 @@ import {
     faQuestionCircle,
     faBan,
     faCopy,
+    faListUl,
+    faChevronLeft,
+    faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -75,4 +78,7 @@ library.add(faQuestionCircle);
 library.add(faBan);
 library.add(faGithub);
 library.add(faCopy);
+library.add(faListUl);
+library.add(faChevronLeft);
+library.add(faChevronRight);
 dom.watch();

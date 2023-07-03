@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -26,9 +27,10 @@ class TagController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $tags */
-        $tags   = Tag::query();
-        $search = $request->search;
+        $tags = Tag::query();
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $tags,
@@ -37,11 +39,15 @@ class TagController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($tags);
         $searchFields = trans('Name');
 
-        $tags = $tags->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($tags);
+
+        /** @var integer $pagination Items per page */
+        $pagination = $request->pagination;
+        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
+        $tags = $tags->paginate(intval(Cache::get('pagination')));
 
         return view('back.tags.index', compact('tags', 'search', 'searchFields'));
     }

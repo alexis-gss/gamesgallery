@@ -17,7 +17,7 @@
     @endcan
 </div>
 @include('back.modules.search-bar')
-<table class="table">
+<table class="table table-hover">
     @if (count($games) > 0)
     <thead>
         @php

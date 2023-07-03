@@ -29,7 +29,7 @@ final class TagFactory extends Factory
         $published = $this->faker->boolean(75);
         return [
             'name' => $name,
-            'slug' => $published,
+            'slug' => Str::slug($name),
             'published' => $published,
             'published_at' => ($published) ? now() : null,
         ];
