@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Bo\BackController;
+use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
 use App\Http\Controllers\Bo\TagController;
@@ -86,7 +86,7 @@ Route::prefix('bo')
                                     ])->name('users.duplicate');
                                 }
                             );
-                        Route::get('/', [BackController::class, 'index'])->name('homepage');
+                        Route::get('/', [HomeController::class, 'index'])->name('homepage');
                         Route::resource('games', GameController::class)->except('show');
                         Route::resource('folders', FolderController::class)->except('show');
                         Route::resource('tags', TagController::class)->except('show');

@@ -2,6 +2,5 @@
 
 return [
     "back_office" => "Back office",
-    "logs" => "Logs",
-    "close" => "Close"
+    "changelog" => "Change log",
 ];

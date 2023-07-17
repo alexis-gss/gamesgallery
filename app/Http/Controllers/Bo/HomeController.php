@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Parsedown;
 use Illuminate\Support\Facades\File;
 
-class BackController extends Controller
+class HomeController extends Controller
 {
     /**
      * Show the application dashboard.
@@ -18,6 +18,6 @@ class BackController extends Controller
         $parsedown = new Parsedown();
         $changelog = $parsedown->text(File::get(\app_path('../CHANGELOG.md')));
 
-        return view('back.home', ['changelog' => $changelog]);
+        return view('back.home', compact('changelog'));
     }
 }
