@@ -49,9 +49,8 @@ trait ChangesModelOrder
             $model->order = $newOrder;
             $tmp->saveOrFail();
             $model->saveOrFail();
-            Session::flash('success', trans('changes.order_changed'));
 
-            return back();
+            return redirect()->back()->with('success', trans('changes.order_changed'));
         });
     }
 }

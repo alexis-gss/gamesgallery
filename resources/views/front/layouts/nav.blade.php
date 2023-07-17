@@ -2,12 +2,12 @@
     <!-- List of games -->
     <div class="nav-modal nav-modal-hidden col bg-third rounded-3 w-100 p-0">
         @php
-            $dataGame = [
-                'games' => $games,
-                'gamesCount' => count($games),
-                'allTags' => $globalTags,
-                'allFolders' => $globalFolders
-            ];
+        $dataGame = [
+            'games' => $games,
+            'gamesCount' => count($games),
+            'allTags' => $globalTags,
+            'allFolders' => $globalFolders
+        ];
         @endphp
         <div class="games-list mt-2" data-json='@json($dataGame)'></div>
     </div>

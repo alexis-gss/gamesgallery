@@ -9,8 +9,8 @@
     @include('front.layouts.github')
 
     @if (!Route::is('fo.homepage'))
-        <!-- Navigation -->
-        @include('front.layouts.nav')
+    <!-- Navigation -->
+    @include('front.layouts.nav')
     @endif
 
     <div data-aos="fade">
