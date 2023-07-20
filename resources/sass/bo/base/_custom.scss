@@ -24,10 +24,6 @@ svg {
     vertical-align: sub !important;
 }
 
-.list-item:hover {
-    background-color: rgb(248 249 250) !important;
-}
-
 main {
     min-height: calc(100vh - $bo-header-height - $bo-footer-height);
 }

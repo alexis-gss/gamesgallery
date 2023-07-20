@@ -34,7 +34,7 @@
     </thead>
     <tbody>
         @foreach ($tags as $tag)
-        <tr class="list-item border-bottom">
+        <tr class="border-bottom">
             <td class="text-center align-middle">{{ $tag->name }}</td>
             @include('back.modules.change-published-status', [
                 'routeName' => 'tags',

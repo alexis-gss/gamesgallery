@@ -35,7 +35,7 @@
     </thead>
     <tbody>
         @foreach ($folders as $folder)
-        <tr class="list-item border-bottom">
+        <tr class="border-bottom">
             <td class="text-center align-middle">{{ $folder->name }}</td>
             <td class="text-center align-middle">
                 <div class="btn-sm mx-auto"

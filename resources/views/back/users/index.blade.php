@@ -65,6 +65,7 @@
                     method="POST"
                     class="btn-group confirmDeleteTS"
                     novalidate>
+                    @can('isAdmin')
                     <a class="btn btn-sm btn-secondary"
                         href="{{ route('bo.users.duplicate', ['user' => $user->id]) }}"
                         data-bs="tooltip"
@@ -72,6 +73,7 @@
                         title="{{ __('list.duplicate_user') }}">
                         <i class="fa-solid fa-copy"></i>
                     </a>
+                    @endcan
                     <a class="btn btn-sm btn-primary"
                         href="{{ route('bo.users.edit', ['user' => $user->id]) }}"
                         data-bs="tooltip"

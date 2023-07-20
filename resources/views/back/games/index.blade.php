@@ -37,7 +37,7 @@
     </thead>
     <tbody>
         @foreach ($games as $game)
-        <tr class="list-item border-bottom">
+        <tr class="border-bottom">
             <td class="text-center align-middle">
                 <p class="col-10 text-truncate m-0">{{ $game->name }}</p>
             </td>
@@ -49,9 +49,9 @@
                     title="{{ __('list.show_folder') }}"
                     class="text-decoration-none">
                 @endcan
-                <div class="@can('isAdmin') badge bg-primary d-inline-block text-white rounded-2 @else text-dark @endcan">
+                <span class="@can('isAdmin') badge bg-primary d-inline-block text-white rounded-2 @else text-dark @endcan">
                     {{ $game->folder->name }}
-                </div>
+                </span>
                 @can('isAdmin')
                 </a>
                 @endcan
