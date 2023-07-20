@@ -38,7 +38,7 @@
         <tr class="list_item border-bottom">
             <td class="text-center align-middle">{{ $user->name }}</td>
             <td class="text-center align-middle">
-                @if(Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value)
+                @if(Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Users\RoleEnum::admin()->value)
                 {{ $user->email }}
                 @else
                 <span class="text-danger"
@@ -49,7 +49,7 @@
                 @endif
             </td>
             <td class="text-center align-middle">
-                {{ ($user->role == App\Enums\Role::admin()->value) ? App\Enums\Role::admin()->label : App\Enums\Role::visitor()->label }}
+                {{ ($user->role == App\Enums\Users\RoleEnum::admin()->value) ? App\Enums\Users\RoleEnum::admin()->label : App\Enums\Users\RoleEnum::visitor()->label }}
             </td>
             @php $routeName = request()->route()->getName(); @endphp
             @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
@@ -60,7 +60,7 @@
             ])
             @endif
             <td class="text-end align-middle">
-                @if(Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value)
+                @if(Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Users\RoleEnum::admin()->value)
                 <form action="{{ route('bo.users.destroy', $user->id) }}"
                     method="POST"
                     class="btn-group confirmDeleteTS"

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Role;
+use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
 use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
  * @property string $picture_alt
  * @property string $picture_title
  * @property string $password
- * @property integer $role
+ * @property RoleEnum $role
  * @property integer $order
  */
 class User extends Authenticatable
@@ -34,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $enumCasts = [
-        'role' => Role::class
+        'role' => RoleEnum::class
     ];
 
     /**
@@ -110,7 +110,9 @@ class User extends Authenticatable
      */
     private static function setImage(User $user)
     {
-        $user->picture = FileStorageHelper::storeFile($user, $user->picture, true);
+        $user->picture_alt   = "Default picture of " . $user->name . " account";
+        $user->picture_title = "User's picture of " . $user->name . " account";
+        $user->picture       = FileStorageHelper::storeFile($user, $user->picture, true);
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Bo\Users;
 
+use App\Enums\Users\RoleEnum;
 use App\Traits\Requests\HasPicture;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Kwaadpepper\Enum\Rules\EnumIsValidRule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -41,7 +43,7 @@ class StoreUserRequest extends FormRequest
         $rules = [
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email:rfc,strict,dns,spoof,filter',
-            'role' => 'required|nullable|numeric',
+            'role' => ['required', new EnumIsValidRule(RoleEnum::class)],
             'password' => 'required|required_with:password_confirmation|confirmed|min:8|max:255'
         ];
         return \array_merge(

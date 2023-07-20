@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Bo;
 
+use App\Enums\Users\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Users\StoreUserRequest;
 use App\Http\Requests\Bo\Users\UpdateUserRequest;
@@ -91,7 +92,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value) {
+        if (Auth::user()->id === $user->id || Auth::user()->role === RoleEnum::admin()->value) {
             return view('back.users.edit', compact('user'));
         } else {
             return redirect()->route('bo.users.index')->with('error', trans(__('changes.right')));

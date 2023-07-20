@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Users;
 
 use Kwaadpepper\Enum\BaseEnumRoutable;
 
 /**
- * @method static self visitor()
  * @method static self admin()
+ * @method static self visitor()
  */
-class Role extends BaseEnumRoutable
+class RoleEnum extends BaseEnumRoutable
 {
     /**
      * @return array
@@ -16,8 +16,8 @@ class Role extends BaseEnumRoutable
     protected static function values(): array
     {
         return [
-            'visitor' => 0,
-            'admin' => 1
+            'admin' => 0,
+            'visitor' => 99,
         ];
     }
 
@@ -27,8 +27,8 @@ class Role extends BaseEnumRoutable
     protected static function labels(): array
     {
         return [
+            'admin' => trans('Administrator'),
             'visitor' => trans('Visitor'),
-            'admin' => trans('Administrator')
         ];
     }
 }

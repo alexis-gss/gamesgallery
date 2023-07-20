@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\Role;
+use App\Enums\Users\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -34,7 +34,7 @@ final class UserFactory extends Factory
             'picture_alt' => $this->faker->unique()->word,
             'picture_title' => $this->faker->unique()->word,
             'password' => $this->faker->password(),
-            'role' => \collect(Role::toArray())->random()
+            'role' => \collect(RoleEnum::toArray())->random()
         ];
     }
 }

@@ -55,11 +55,11 @@
                         id="role"
                         name="role"
                         role="button">
-                        <option value="{{ App\Enums\Role::admin()->value }}" @if ($user->role == App\Enums\Role::admin()->value) selected @endif>
-                            {{ App\Enums\Role::admin()->label }}
+                        <option value="{{ App\Enums\Users\RoleEnum::admin()->value }}" @if ($user->role == App\Enums\Users\RoleEnum::admin()->value) selected @endif>
+                            {{ App\Enums\Users\RoleEnum::admin()->label }}
                         </option>
-                        <option value="{{ App\Enums\Role::visitor()->value }}" @if ($user->role == App\Enums\Role::visitor()->value) selected @endif>
-                            {{ App\Enums\Role::visitor()->label }}
+                        <option value="{{ App\Enums\Users\RoleEnum::visitor()->value }}" @if ($user->role == App\Enums\Users\RoleEnum::visitor()->value) selected @endif>
+                            {{ App\Enums\Users\RoleEnum::visitor()->label }}
                         </option>
                     </select>
                     <small class="text-muted">{{ __('form.role_label') }}</small>
