@@ -25,11 +25,10 @@
 #### **10.10.22 ► v2.1**
 - Adding a users administration.
 
-#### **08.02.22**
-- New interface for the back-office.
+#### **12.08.22 ► v2.0**
+- Total redesign of the project under Laravel
+- Separation of the front/back office
+- Addition of an administration interface with authentication
 
-#### **07.20.22**
-- Adding and using SweetAlert2 for all alerts.
-
-#### **07.19.22**
-- Adding changelog.
+#### **17.02.22 ► v1.0**
+- Working project.
