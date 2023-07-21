@@ -29,9 +29,9 @@ class ViewServiceProvider extends ServiceProvider
         $appInfos = Cache::remember('composer', 360, function () {
             return json_decode(File::get(\app_path('../composer.json')));
         });
-        View::share('name', $appInfos->name);
-        View::share('version', $appInfos->version);
-        View::share('license', $appInfos->license);
+        View::share('globalName', $appInfos->name);
+        View::share('globalVersion', $appInfos->version);
+        View::share('globalLicense', $appInfos->license);
 
         // Shares this data with all views.
         if (
