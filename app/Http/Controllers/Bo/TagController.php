@@ -9,7 +9,6 @@ use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -44,10 +43,8 @@ class TagController extends Controller
         /** Sort columns with a query */
         $this->sortQuery($tags);
 
-        /** @var integer $pagination Items per page */
-        $pagination = $request->pagination;
-        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
-        $tags = $tags->paginate(intval(Cache::get('pagination')));
+        /** Custom pagination */
+        $tags = $this->customPaginate($tags, $request->pagination);
 
         return view('back.tags.index', compact('tags', 'search', 'searchFields'));
     }

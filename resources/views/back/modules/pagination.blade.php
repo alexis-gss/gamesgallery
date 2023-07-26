@@ -1,4 +1,3 @@
-@if ($paginator->hasPages())
 <nav class="pagination-custom d-flex justify-content-between align-items-center">
     {{-- SELECT ITEMS PER PAGE --}}
     <div class="dropup-center dropup d-flex justify-content-center align-items-center w-fit input-group">
@@ -9,7 +8,7 @@
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false">
-            {{ intval(Cache::get('pagination')) ?? 12 }}
+            {{ (Cache::get('pagination')) ? intval(Cache::get('pagination')) : config('pagination.default') }}
         </button>
         <ul class="dropdown-menu">
             @foreach (\App\Enums\Pagination\ItemsPerPaginationEnum::toArray() as $itemsPerPaginationEnum)
@@ -22,6 +21,7 @@
             @endforeach
         </ul>
     </div>
+    @if ($paginator->hasPages())
     {{-- PAGINATION --}}
     <div class="d-flex justify-content-end align-items-center">
         <ul class="pagination m-0">
@@ -109,5 +109,5 @@
             </li>
         </ul>
     </div>
+    @endif
 </nav>
-@endif

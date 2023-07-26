@@ -11,7 +11,6 @@ use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
@@ -46,10 +45,8 @@ class GameController extends Controller
         /** Sort columns with a query */
         $this->sortQuery($games);
 
-        /** @var integer $pagination Items per page */
-        $pagination = $request->pagination;
-        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
-        $games = $games->paginate(intval(Cache::get('pagination')));
+        /** Custom pagination */
+        $games = $this->customPaginate($games, $request->pagination);
 
         return view('back.games.index', compact('games', 'search', 'searchFields'));
     }

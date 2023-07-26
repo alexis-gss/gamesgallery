@@ -9,7 +9,6 @@ use App\Models\Folder;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class FolderController extends Controller
@@ -43,10 +42,8 @@ class FolderController extends Controller
         /** Sort columns with a query */
         $this->sortQuery($folders);
 
-        /** @var integer $pagination Items per page */
-        $pagination = $request->pagination;
-        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
-        $folders = $folders->paginate(intval(Cache::get('pagination')));
+        /** Custom pagination */
+        $folders = $this->customPaginate($folders, $request->pagination);
 
         return view('back.folders.index', compact('folders', 'search', 'searchFields'));
     }

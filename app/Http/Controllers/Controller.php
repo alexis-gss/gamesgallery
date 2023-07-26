@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 
@@ -18,7 +20,7 @@ class Controller extends BaseController
 
     /**
      * Build Search query on specified fields
-     * splitting search into words or using whole sentence
+     * splitting search into words or using whole sentence.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query       The eloquent query builder.
      * @param string                                $search      The query string.
@@ -55,7 +57,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Build query search on all fields
+     * Build query search on all fields.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string                                $search
@@ -85,7 +87,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Sort columns with a query
+     * Sort columns with a query.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param array                                 $ignore
@@ -120,6 +122,24 @@ class Controller extends BaseController
             Session::put("$rName.sort_col", 'order');
             Session::put("$rName.sort_way", 'asc');
         }
+        return $query;
+    }
+
+    /**
+     * Customize pagination with cache or config (default).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param integer|null                          $pagination
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    protected function customPaginate(Builder $query, $pagination): LengthAwarePaginator
+    {
+        if ($pagination) {
+            Cache::put('pagination', $pagination);
+        };
+        $query = $query->paginate(
+            (Cache::get('pagination')) ? intval(Cache::get('pagination')) : config('pagination.default')
+        );
         return $query;
     }
 }

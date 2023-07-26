@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Traits\Controllers\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -43,10 +42,8 @@ class UserController extends Controller
         /** Sort columns with a query */
         $this->sortQuery($users);
 
-        /** @var integer $pagination Items per page */
-        $pagination = $request->pagination;
-        Cache::put('pagination', ($pagination) ? ($pagination) : 12);
-        $users = $users->paginate(intval(Cache::get('pagination')));
+        /** Custom pagination */
+        $users = $this->customPaginate($users, $request->pagination);
 
         return view('back.users.index', compact('users', 'search', 'searchFields'));
     }
