@@ -3,6 +3,7 @@
 use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
+use App\Http\Controllers\Bo\StatisticController;
 use App\Http\Controllers\Bo\TagController;
 use App\Http\Controllers\Bo\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,12 @@ Route::prefix('bo')
                         Route::middleware(['can:isAdmin'])
                             ->group(
                                 function () {
+                                    /**
+                                     * * STATS
+                                     */
+                                    Route::get('/stats', [StatisticController::class, 'index'])
+                                        ->name('statistics');
+
                                     /**
                                      * * GAMES
                                      */

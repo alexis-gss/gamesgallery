@@ -1,6 +1,7 @@
 // * UTILITIES
 import "./utilities/axios";
 import "./utilities/bootstrap";
+import "./utilities/echarts";
 import "./utilities/fontawesome";
 import "./utilities/jscolor";
 
@@ -8,5 +9,6 @@ import "./utilities/jscolor";
 import "./modules/console";
 
 // * CUSTOM
-import "./bo/vue-bo";
 import "./bo/common";
+import "./bo/vue-bo";
+

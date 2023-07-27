@@ -8,4 +8,7 @@ return [
         (text, images, colors, folders, etc.).",
     "home_contact" => "If you have any problems or require further information, please contact the
         project administrator.",
+    'stats_latest_game' => 'Latest game added',
+    'stats_latest_folder' => 'Latest folder added',
+    'stats_latest_tag' => 'Latest tag added',
 ];
