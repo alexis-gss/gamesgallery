@@ -43,7 +43,7 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|string|min:3|max:255',
-            'email' => 'required|email:rfc,strict,dns,spoof,filter',
+            'email' => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter',
             'role' => ['required', new EnumIsValidRule(RoleEnum::class)],
             'password' => [
                 'required', 'required_with:password_confirmation', 'confirmed', 'max:255',
