@@ -1,20 +1,27 @@
-<nav class="pagination-custom d-flex justify-content-between align-items-center">
+{{-- GET ACTUAL PAGINATION --}}
+<?php $pagination = (Cache::get('pagination')) ? intval(Cache::get('pagination')) : config('pagination.default');?>
+@if($paginator->items())
+<nav class="pagination-custom d-flex flex-column flex-md-row justify-content-between align-items-center">
     {{-- SELECT ITEMS PER PAGE --}}
-    <div class="dropup-center dropup d-flex justify-content-center align-items-center w-fit input-group">
-        <span class="btn-md input-group-text" title="{{ __('pagination.paginate_list') }}" data-bs="tooltip">
+    <div class="dropup-center dropup d-flex justify-content-center align-items-center w-fit input-group mb-3 m-md-0">
+        <span class="btn-md input-group-text"
+            data-bs="tooltip"
+            data-bs-placement="top"
+            title="{{ __('pagination.paginate_list') }}">
             <i class="fa-solid fa-list-ul"></i>
         </span>
         <button class="btn btn-primary dropdown-toggle"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false">
-            {{ (Cache::get('pagination')) ? intval(Cache::get('pagination')) : config('pagination.default') }}
+            {{ $pagination }}
         </button>
         <ul class="dropdown-menu">
             @foreach (\App\Enums\Pagination\ItemsPerPaginationEnum::toArray() as $itemsPerPaginationEnum)
             <li>
-                <a class="dropdown-item text-center"
-                    href="{{ request()->fullUrlWithQuery(['pagination' => $itemsPerPaginationEnum->value]) }}">
+                <a class="dropdown-item text-center user-select-none @if($pagination === $itemsPerPaginationEnum->value) active @endif"
+                    href="{{ request()->fullUrlWithQuery(['page' => 1, 'pagination' => $itemsPerPaginationEnum->value]) }}"
+                    role="button">
                     {{ $itemsPerPaginationEnum->value }}
                 </a>
             </li>
@@ -31,9 +38,12 @@
                     data-bs="tooltip"
                     data-bs-placement="top"
                     title="{{ __('pagination.previous') }}"
-                    @if (!$paginator->onFirstPage()) href="{{ $paginator->previousPageUrl() }}" @endif rel="prev"
+                    @if (!$paginator->onFirstPage())
+                    href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() - 1]) }}"
+                    @endif
+                    rel="prev"
                     aria-label="@lang('pagination.previous')"
-                    @if ($paginator->onFirstPage()) aria-hidden="true" @endif>
+                    @if ($paginator->onFirstPage()) aria-hidden="true" disabled @endif>
                     <i class="fa-solid fa-chevron-left fa-2xs mt-1"></i>
                 </a>
             </li>
@@ -43,7 +53,7 @@
                 data-bs="tooltip"
                 data-bs-placement="top"
                 title="{{ __('pagination.specific_page', ['id' => 1]) }}">
-                <a class="page-link" href="{{ $paginator->url(1) }}">1</a>
+                <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => 1]) }}">1</a>
             </li>
             @endif
             {{-- HIDE PAGES TOO FAR --}}
@@ -65,7 +75,9 @@
                     <ul class="dropdown-menu">
                         @for ($i = 1; $i <= $paginator->lastPage(); $i++)
                         <li>
-                            <a class="dropdown-item text-center" href="{{ request()->fullUrlWithQuery(['page' => $i]) }}">
+                            <a class="dropdown-item text-center user-select-none @if($paginator->currentPage() === $i) active @endif"
+                                href="{{ request()->fullUrlWithQuery(['page' => $i]) }}"
+                                role="button">
                                 {{ $i }}
                             </a>
                         </li>
@@ -74,11 +86,11 @@
                 </div>
             </li>
             @else
-            <li class="page-item"
+            <li class="page-item d-none d-sm-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
                 title="{{ __('pagination.specific_page', ['id' => $i]) }}">
-                <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => $i]) }}">{{ $i }}</a>
             </li>
             @endif
             @endif
@@ -93,7 +105,7 @@
                 data-bs="tooltip"
                 data-bs-placement="top"
                 title="{{ __('pagination.specific_page', ['id' => $paginator->lastPage()]) }}">
-                <a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a>
+                <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => $paginator->lastPage()]) }}">{{ $paginator->lastPage() }}</a>
             </li>
             @endif
             {{-- NEXT PAGE --}}
@@ -102,12 +114,16 @@
                     data-bs="tooltip"
                     data-bs-placement="top"
                     title="{{ __('pagination.next') }}"
-                    @if ($paginator->hasMorePages()) href="{{ $paginator->nextPageUrl() }}" @endif rel="next"
-                    aria-label="@lang('pagination.next')"
-                    @if (!$paginator->hasMorePages()) aria-hidden="true" @endif>
+                    @if ($paginator->hasMorePages())
+                    href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() + 1]) }}"
+                    @endif
+                    rel="next"
+                    aria-label="{{ __('pagination.next') }}"
+                    @if (!$paginator->hasMorePages()) aria-hidden="true" disabled @endif>
                     <i class="fa-solid fa-chevron-right fa-2xs mt-1"></i></a>
             </li>
         </ul>
     </div>
     @endif
 </nav>
+@endif
