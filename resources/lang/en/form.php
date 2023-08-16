@@ -9,7 +9,7 @@ return [
     'folder' => 'Folder',
     'tag' => 'Tag',
     'user' => 'User',
-    'save' => 'Save informations',
+    'save' => 'Save this game',
 
     // Titles.
     'general_informations' => 'General informations',
