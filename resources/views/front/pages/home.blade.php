@@ -11,15 +11,7 @@
                 {{ config('app.name') }}
                 <span class="angles"></span>
             </h1>
-            @php
-            $dataGame = [
-                'games' => $games,
-                'gamesCount' => count($games),
-                'allTags' => $globalTags,
-                'allFolders' => $globalFolders
-            ];
-            @endphp
-            <div class="games-list bg-secondary rounded-2 p-2" data-json='@json($dataGame)'></div>
+            @include('front.partials.games-list')
         </div>
         <div class="col-12">
             <div class="main-home-latest d-flex justify-content-start align-items-center">

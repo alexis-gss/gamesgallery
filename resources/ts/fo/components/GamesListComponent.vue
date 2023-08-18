@@ -118,7 +118,7 @@
                 </template>
                 <span>{{ game.name }}</span>
               </div>
-              <span>{{ getGamePicturesCount(game.pictures) }}</span>
+              <span>{{ game.countpictures }}</span>
             </a>
           </li>
         </template>
@@ -143,15 +143,8 @@ import trans from "../../modules/trans";
 
 export default defineComponent({
   mixins: [route, trans],
-  inheritAttrs: false,
   components: {
     simplebar,
-  },
-  props: {
-    jsonData: {
-      type: String,
-      default: "[]",
-    },
   },
   data(): {
     games: [
@@ -160,7 +153,7 @@ export default defineComponent({
         folder_id: number;
         slug: string;
         name: string;
-        pictures: string[];
+        countpictures: number;
       }
     ];
     gamesCount: number;
@@ -179,7 +172,7 @@ export default defineComponent({
           folder_id: 0,
           slug: "",
           name: "",
-          pictures: [],
+          countpictures: 0,
         },
       ],
       gamesCount: 0,
@@ -219,8 +212,10 @@ export default defineComponent({
      * Return a list of games which corresponds to the search from input text.
      */
     filterGames() {
-      return this.games.filter((game) => {
-        return game.name.toLowerCase().includes(this.search.toLowerCase());
+      return this.games?.filter((game) => {
+        return (game.name as string)
+          .toLowerCase()
+          .includes(this.search.toLowerCase());
       });
     },
     /**
@@ -266,15 +261,6 @@ export default defineComponent({
         throw new Error("Undefined route games.specific");
       }
       return route;
-    },
-    /**
-     * Return the count of the pictures of the game.
-     *
-     * @param gamePictures Array of pictures of the game.
-     * @return string
-     */
-    getGamePicturesCount(gamePictures: Array<string>): string {
-      return gamePictures != null ? String(gamePictures.length) : "0";
     },
   },
 });

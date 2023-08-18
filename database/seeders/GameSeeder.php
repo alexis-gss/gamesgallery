@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Lib\Helpers\FileStorageHelper;
 use App\Models\Game;
 use App\Models\Tag;
 use Illuminate\Database\Seeder;
@@ -18,17 +17,7 @@ class GameSeeder extends Seeder
     {
         $i = 1;
         Game::factory(30)->make()->each(function (Game $game) use (&$i) {
-            $game->pictures = [
-                FileStorageHelper::storeFile(
-                    $game,
-                    new \SplFileInfo(\resource_path('../database/factories/assets/games/default-game-picture.png'))
-                ),
-                FileStorageHelper::storeFile(
-                    $game,
-                    new \SplFileInfo(\resource_path('../database/factories/assets/games/default-game-picture.png'))
-                ),
-            ];
-            $game->order    = $i;
+            $game->order = $i;
             $game->saveOrFail();
             $i = $i + 1;
         });

@@ -2,18 +2,29 @@
 
 namespace App\Models;
 
-use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 /**
- * @property integer $id
- * @property string $name
- * @property string $slug
- * @property boolean $published
- * @property date $published_at
- * @property integer $order
+ * Folder of games.
+ *
+ * @property integer                         $id           Id.
+ * @property string                          $name         Name
+ * @property string                          $slug         Slug of the name.
+ * @property boolean                         $published    Published status.
+ * @property \Illuminate\Support\Carbon      $published_at Published date update.
+ * @property integer                         $order        Order of the name.
+ * @property-read \Illuminate\Support\Carbon $created_at   Created date.
+ * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
+ *
+ * @method protected static function booted()                Perform any actions required after the model boots.
+ * @method private static function setSlug($folder)          Set model's slug.
+ * @method private static function setPublishedDate($folder) Set model's published date.
+ * @method private static function setOrder($folder)         Set model's order after the last element of the list.
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
+ * Get Games of the Folder (relationship).
  */
 class Folder extends Model
 {
@@ -26,7 +37,6 @@ class Folder extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
         'color',
         'published',
         'published_at'
@@ -43,7 +53,7 @@ class Folder extends Model
     ];
 
     /**
-     * The "booted" method of the model.
+     * Perform any actions required after the model boots.
      *
      * @return void
      */
@@ -51,13 +61,11 @@ class Folder extends Model
     {
         static::creating(function (self $folder) {
             static::setSlug($folder);
-            static::assertFieldIsUnique($folder->slug);
             static::setOrder($folder);
             static::setPublishedDate($folder);
         });
         static::updating(function (self $folder) {
             static::setSlug($folder);
-            static::assertFieldIsUnique($folder->slug, $folder->id);
             static::setPublishedDate($folder);
         });
     }
@@ -65,45 +73,31 @@ class Folder extends Model
     // * METHODS
 
     /**
-     * Set the slug.
+     * Set model's slug.
      *
      * @param \App\Models\Folder $folder
      *
      * @return void
      */
-    private static function setSlug(Folder $folder)
+    private static function setSlug(Folder $folder): void
     {
         $folder->slug = Str::slug($folder->name);
     }
 
     /**
-     * Set the published date.
+     * Set model's published date.
      *
      * @param \App\Models\Folder $folder
      *
      * @return void
      */
-    private static function setPublishedDate(Folder $folder)
+    private static function setPublishedDate(Folder $folder): void
     {
         $folder->published_at = ($folder->published) ? now() : null;
     }
 
     /**
-     * Asserts using validation that the field is unique.
-     *
-     * @param string       $slug
-     * @param integer|null $id
-     * @return void
-     * @throws \Illuminate\Validation\ValidationException If field already exists.
-     */
-    private static function assertFieldIsUnique(string $slug, ?int $id = null)
-    {
-        $table = (new self())->getTable();
-        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $id);
-    }
-
-    /**
-     * Set order after the last element of the list.
+     * Set model's order after the last element of the list.
      *
      * @param \App\Models\Folder $folder
      * @return void
@@ -116,7 +110,7 @@ class Folder extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get Games for the Range.
+     * Get Games of the Folder (relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

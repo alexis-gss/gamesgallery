@@ -2,18 +2,30 @@
 
 namespace App\Models;
 
-use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 /**
- * @property integer $id
- * @property string $name
- * @property string $slug
- * @property boolean $published
- * @property date $published_at
- * @property integer $order
+ * Tag.
+ *
+ * @property integer                         $id           Id.
+ * @property string                          $name         Name
+ * @property string                          $slug         Slug of the name.
+ * @property boolean                         $published    Published status.
+ * @property \Illuminate\Support\Carbon      $published_at Published date update.
+ * @property integer                         $order        Order of the name.
+ * @property-read \Illuminate\Support\Carbon $created_at   Created date.
+ * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
+ *
+ * @method protected static function booted()                Perform any actions required after the model boots.
+ * @method private static function setSlug($folder)          Set model's slug.
+ * @method private static function setPublishedDate($folder) Set model's published date.
+ * @method private static function setOrder($folder)         Set model's order after the last element of the list.
+ * @method private static function removeTagsFromGame($tag)  Remove a specific tag from all games.
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
+ * Get Games of the tag (relationship).
  */
 class Tag extends Model
 {
@@ -33,7 +45,6 @@ class Tag extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
         'published',
         'published_at'
     ];
@@ -57,23 +68,21 @@ class Tag extends Model
     {
         static::creating(function (self $tag) {
             static::setSlug($tag);
-            static::assertFieldIsUnique($tag->slug);
             static::setOrder($tag);
             static::setPublishedDate($tag);
         });
         static::updating(function (self $tag) {
-            static::assertFieldIsUnique($tag->slug, $tag->id);
             static::setPublishedDate($tag);
         });
         static::deleting(function (self $tag) {
-            $tag->games()->detach();
+            static::removeTagsFromGame($tag);
         });
     }
 
     // * METHODS
 
     /**
-     * Set the slug.
+     * Set model's slug.
      *
      * @param \App\Models\Tag $tag
      *
@@ -85,7 +94,7 @@ class Tag extends Model
     }
 
     /**
-     * Set the published date.
+     * Set model's published date.
      *
      * @param \App\Models\Tag $tag
      *
@@ -94,20 +103,6 @@ class Tag extends Model
     private static function setPublishedDate(Tag $tag)
     {
         $tag->published_at = ($tag->published) ? now() : null;
-    }
-
-    /**
-     * Asserts using validation that the field is unique.
-     *
-     * @param string       $slug
-     * @param integer|null $id
-     * @return void
-     * @throws \Illuminate\Validation\ValidationException If field already exists.
-     */
-    private static function assertFieldIsUnique(string $slug, ?int $id = null)
-    {
-        $table = (new self())->getTable();
-        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $id);
     }
 
     /**
@@ -121,10 +116,22 @@ class Tag extends Model
         $tag->order = \intval(self::query()->max('order')) + 1;
     }
 
+    /**
+     * Remove a specific tag from all games.
+     *
+     * @param \App\Models\Tag $tag
+     *
+     * @return void
+     */
+    private static function removeTagsFromGame(Tag $tag)
+    {
+        $tag->games()->detach();
+    }
+
     // * RELATIONSHIPS
 
     /**
-     * MorphToMany games relation.
+     * Get Games of the tag (relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
