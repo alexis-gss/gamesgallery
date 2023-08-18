@@ -12,30 +12,31 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @property integer $id
- * @property string $name
- * @property string $slug
- * @property string $email
- * @property string $picture
- * @property string $picture_alt
- * @property string $picture_title
- * @property string $password
- * @property RoleEnum $role
- * @property integer $order
+ * Folder of games.
+ *
+ * @property integer                         $id            Id.
+ * @property string                          $name          Name
+ * @property string                          $slug          Slug of the name.
+ * @property string                          $email         Email.
+ * @property string                          $picture       Path of the account's picture.
+ * @property string                          $picture_alt   Attribute alt of the picture.
+ * @property string                          $picture_title Attribute title of the picture.
+ * @property string                          $password      Password.
+ * @property \App\Enums\Users\RoleEnum       $role          Role.
+ * @property integer                         $order         Order of the name.
+ * @property-read \Illuminate\Support\Carbon $created_at    Created date.
+ * @property-read \Illuminate\Support\Carbon $updated_at    Updated date.
+ *
+ * @method protected static function booted()              Perform any actions required after the model boots.
+ * @method private static function setSlug($folder)        Set model's slug.
+ * @method private static function setImage($user)         Set model's account's picture.
+ * @method private static function setOrder($folder)       Set model's order after the last element of the list.
+ * @method private static function updatePassword($target) Update model's password.
  */
 class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
-
-    /**
-     * Cast the property to an enum.
-     *
-     * @var array
-     */
-    protected $enumCasts = [
-        'role' => RoleEnum::class
-    ];
 
     /**
      * The attributes that are fillable.
@@ -44,13 +45,21 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'slug',
         'email',
         'picture',
         'picture_alt',
         'picture_title',
         'password',
-        'role'
+        'role',
+    ];
+
+    /**
+     * Cast the property to an enum.
+     *
+     * @var array
+     */
+    protected $enumCasts = [
+        'role' => RoleEnum::class
     ];
 
     /**
@@ -63,7 +72,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The "booted" method of the model.
+     * Perform any actions required after the model boots.
      *
      * @return void
      */
@@ -71,13 +80,11 @@ class User extends Authenticatable
     {
         static::creating(function (self $user) {
             static::setSlug($user);
-            static::assertFieldsAreUnique($user);
             static::updatePassword($user);
             static::setOrder($user);
             static::setImage($user);
         });
         static::updating(function (self $user) {
-            static::assertFieldsAreUnique($user, $user->id);
             static::updatePassword($user);
             static::setImage($user);
         });
@@ -92,7 +99,7 @@ class User extends Authenticatable
     // * METHODS
 
     /**
-     * Set the slug.
+     * Set model's slug.
      *
      * @param \App\Models\User $user
      * @return void
@@ -103,7 +110,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Set the image.
+     * Set model's account's picture.
      *
      * @param \App\Models\User $user
      * @return void
@@ -116,7 +123,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Update password.
+     * Set model's order after the last element of the list.
+     *
+     * @param \App\Models\User $user
+     * @return void
+     */
+    private static function setOrder(User $user): void
+    {
+        $user->order = \intval(self::query()->max('order')) + 1;
+    }
+
+    /**
+     * Update model's password.
      *
      * @param User $target
      * @return void
@@ -128,31 +146,5 @@ class User extends Authenticatable
         } else {
             $target->password = $target->getOriginal('password');
         }
-    }
-
-    /**
-     * Asserts using validation that the fields are unique.
-     *
-     * @param \App\Models\User $model
-     * @param integer|null     $id
-     * @return void
-     * @throws \Illuminate\Validation\ValidationException If field already exists.
-     */
-    private static function assertFieldsAreUnique(User $model, ?int $id = null)
-    {
-        $table = (new self())->getTable();
-        ToolboxHelper::assertFieldIsUnique($table, 'slug', $model->slug, $id);
-        ToolboxHelper::assertFieldIsUnique($table, 'email', $model->email, $id);
-    }
-
-    /**
-     * Set order after the last element of the list.
-     *
-     * @param \App\Models\User $user
-     * @return void
-     */
-    private static function setOrder(User $user): void
-    {
-        $user->order = \intval(self::query()->max('order')) + 1;
     }
 }

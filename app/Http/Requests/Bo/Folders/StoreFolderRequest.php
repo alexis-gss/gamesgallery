@@ -39,6 +39,7 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'slug' => 'required|string|unique:folders,slug|max:255',
             'name' => 'required|string|min:2|max:255',
             'published' => 'required|boolean',
             'color' => 'required|string|min:6|max:8|regex:(^[#]([A-Za-z0-9]{6,8})$)'

@@ -13,12 +13,12 @@
                 {{ $game->name }}
                 <span class="angles"></span>
             </h1>
-            <div class="d-inline-block text-center w-100">
+            <div class="d-inline-block user-select-none text-center w-100">
                 <a href="{{ route('fo.homepage') }}" class="text-decoration-none">
                     <button class="badge bg-primary border-0 text-light rounded-2 px-2"
                         title="{{ __('list.back_home') }}"
                         data-bs="tooltip"
-                        data-bs-placement="bottom">
+                        data-bs-placement="top">
                         <i class="fa fa-arrow-left"></i>
                     </button>
                 </a>
@@ -27,14 +27,15 @@
                 @if (count($game->tags) > 0)
                 <span>-</span>
                 @foreach ($game->tags as $tag)
-                <span class="badge bg-primary text-light rounded-2 px-2 py-1">{{ $tag->name }}</span>
+                <span class="badge bg-primary text-light rounded-2 px-2 py-1 my-1">{{ $tag->name }}</span>
                 @endforeach
                 @endif
             </div>
         </div>
         @php
         $dataGame = [
-            'game' => $game,
+            'gameName' => $game->name,
+            'gameSlug' => $game->slug,
             'gamePictures' => $gamePictures
         ];
         @endphp

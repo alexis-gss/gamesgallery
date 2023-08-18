@@ -42,6 +42,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            'slug' => 'required|string|unique:users,slug|max:255',
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter',
             'role' => ['required', new EnumIsValidRule(RoleEnum::class)],

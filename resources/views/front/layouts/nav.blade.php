@@ -1,15 +1,7 @@
 <nav class="nav position-fixed start-50 translate-middle-x d-flex flex-column justify-content-center align-items-center bg-secondary rounded-3 p-2 pt-0">
     <!-- List of games -->
     <div class="nav-modal nav-modal-hidden col bg-third rounded-3 w-100 p-0">
-        @php
-        $dataGame = [
-            'games' => $games,
-            'gamesCount' => count($games),
-            'allTags' => $globalTags,
-            'allFolders' => $globalFolders
-        ];
-        @endphp
-        <div class="games-list mt-2" data-json='@json($dataGame)'></div>
+        @include('front.partials.games-list')
     </div>
     <!-- Buttons -->
     <button class="btn d-flex flex-row justify-content-start align-items-center bg-primary rounded-2 text-light border-0 w-100 mt-2 p-0">

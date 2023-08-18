@@ -14,6 +14,12 @@ class UpdateUserRequest extends StoreUserRequest
     public function rules(): array
     {
         $rules = [
+            'slug' => [
+                'required',
+                'string',
+                'unique:users,slug,' . request()->user->id,
+                'max:255'
+            ],
             'password' => [
                 'sometimes', 'nullable', 'required_with:password_confirmation', 'confirmed', 'max:255',
                 Password::min(8)

@@ -34,42 +34,46 @@ class FrontController extends Controller
      *
      * @param Request $request
      * @param string  $slug
-     * @return Illuminate\Http\JsonResponse|Illuminate\Contracts\View\View
+     * @return Illuminate\Http\JsonResponse|Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show(Request $request, string $slug)
     {
-        $games = Game::where('published', true)->orderBy('slug', 'ASC')->get();
-        $game  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
-        if (isset($game->pictures)) {
-            $gamePictures = $this->paginate(
-                $game->pictures,
-                (count($game->pictures) <= 12) ? count($game->pictures) : 12,
-                ['path' => Paginator::resolveCurrentPath()]
-            );
+        if (Game::where('published', true)->where('slug', $slug)->first()) {
+            $games = Game::where('published', true)->orderBy('slug', 'ASC')->get();
+            $game  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
+
+            if (count($game->pictures)) {
+                $gamePictures = $this->paginate(
+                    $game->pictures,
+                    (count($game->pictures) <= 12) ? count($game->pictures) : 12,
+                    ['path' => Paginator::resolveCurrentPath()]
+                );
+            } else {
+                $gamePictures = [];
+            }
+
+            if ($request->ajax()) {
+                return response()->json(['data' => $gamePictures]);
+            }
+
+            return view('front.pages.game', compact('games', 'game', 'gamePictures'));
         } else {
-            $gamePictures = [];
-        }
-
-        if ($request->ajax()) {
-            return response()->json(['data' => $gamePictures]);
-        }
-
-        return view('front.pages.game', compact('games', 'game', 'gamePictures'));
+            return redirect()->route('fo.homepage');
+        } //end if
     }
 
     /**
      * The attributes that are mass assignable.
      *
-     * @param array   $items
-     * @param integer $perPage
-     * @param array   $options
-     * @param integer $page
+     * @param \Illuminate\Support\Collection $items
+     * @param integer                        $perPage
+     * @param array                          $options
+     * @param integer                        $page
      * @return App\Http\Controllers\LengthAwarePaginator
      */
-    public function paginate(array $items, int $perPage, array $options, int $page = null)
+    public function paginate(Collection $items, int $perPage, array $options, int $page = null)
     {
         $page   = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items  = $items instanceof Collection ? $items : Collection::make($items);
         $result = new LengthAwarePaginator(
             $items->forPage($page, $perPage),
             $items->count(),

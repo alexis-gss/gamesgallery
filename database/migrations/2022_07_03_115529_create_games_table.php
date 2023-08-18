@@ -19,9 +19,6 @@ class CreateGamesTable extends Migration
             $table->foreignId('folder_id')->references('id')->on('folders');
             $table->string('name')->comment('Name of the game.');
             $table->string('slug')->unique()->comment('Slugify the name of the game.');
-            $table->json('pictures')->nullable()->comment('Json who contains pictures.');
-            $table->string('pictures_alt')->comment('Alt attribute of the images.');
-            $table->string('pictures_title')->comment('Title attribute of the images.');
             $table->boolean('published')->comment('The game is published or not.');
             $table->timestamp('published_at')->nullable()->comment('The date on which the game was published.');
             $table->integer('order')->comment('Order of this game.');

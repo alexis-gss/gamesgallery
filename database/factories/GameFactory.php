@@ -32,8 +32,6 @@ final class GameFactory extends Factory
             'folder_id' => $this->faker->randomElement(Folder::pluck('id')),
             'name' => $name,
             'slug' => Str::slug($name),
-            'pictures_alt' => $this->faker->unique()->word,
-            'pictures_title' => $this->faker->unique()->word,
             'published' => $published,
             'published_at' => ($published) ? now() : null,
         ];

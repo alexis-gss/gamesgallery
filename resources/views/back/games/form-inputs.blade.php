@@ -66,9 +66,11 @@
                         'name' => 'pictures[]',
                         'width' => 3840,
                         'height' => 2160,
+                        'model' => $game,
                         'value' => $game->pictures ?? [],
-                        'limit' => [0,100],
+                        'limit' => [0,75],
                         'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
+                        'csrf' => csrf_token(),
                         'errors' => $errors->getBag('default')->getMessages()
                     ];
                     @endphp
@@ -85,7 +87,7 @@
         <fieldset class="p-3">
             <legend>{{ __('form.general_informations') }}</legend>
             <div class="row mb-3">
-                <div class="col-12 col-md-6 form-group">
+                <div class="col-12 form-group">
                     <label for="name" class="col-form-label">
                         <b>{{ __('form.tags') }}</b>
                         <span data-bs="tooltip"
