@@ -76,11 +76,12 @@ class Game extends Model
             static::setSlug($game);
             static::setOrder($game);
             static::setPublishedDate($game);
+            static::renameFolderSavedPictures($game, "default_folder");
         });
         static::updating(function (self $game) {
             static::setSlug($game);
             static::setPublishedDate($game);
-            static::renameFolderSavedPictures($game);
+            static::renameFolderSavedPictures($game, $game->getOriginal('slug'));
         });
         static::deleting(function (self $game) {
             static::removeTags($game);
@@ -119,7 +120,6 @@ class Game extends Model
      * Set model's published date.
      *
      * @param \App\Models\Game $game
-     *
      * @return void
      */
     private static function setPublishedDate(Game $game)
@@ -180,12 +180,13 @@ class Game extends Model
      * Rename the folder where pictures are saved.
      *
      * @param \App\Models\Game $game
+     * @param string           $slug
      * @return void
      */
-    private static function renameFolderSavedPictures(Game $game)
+    private static function renameFolderSavedPictures(Game $game, string $slug)
     {
-        if ($game->getOriginal('slug') !== $game->slug) {
-            $directory = Storage::disk('public')->path("documents/" . $game->getOriginal('slug'));
+        if ($slug !== $game->slug) {
+            $directory = Storage::disk('public')->path("documents/" . $slug);
             if (is_dir($directory)) {
                 rename($directory, Storage::disk('public')->path("documents/" . $game->slug));
             }

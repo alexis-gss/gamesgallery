@@ -170,7 +170,7 @@ class GameController extends Controller
     public function upload(Request $request)
     {
         $uuid     = (isset($request->uuid)) ? $request->uuid : false;
-        $gameSlug = (isset($request->gameSlug)) ? $request->gameSlug : "default_folder";
+        $gameSlug = (isset($request->gameSlug)) ? $request->gameSlug : false;
         // Create the file receiver.
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
         // Check if the upload is success, throw exception or return response you need.

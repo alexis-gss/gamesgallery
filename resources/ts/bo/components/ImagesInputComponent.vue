@@ -83,7 +83,7 @@
             <HeavyDocumentInputComponent
               :id="intValues[n - 1].uniqueIdentifier"
               :file="intValues[n - 1]"
-              :gameslug="intModel?.slug"
+              :gameslug="intModel?.slug ?? 'default_folder'"
               :csrf="intCsrf"
               :simplecomponent="true"
             />
