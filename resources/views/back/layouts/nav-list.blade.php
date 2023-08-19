@@ -10,6 +10,15 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link @if (request()->routeIs('bo.statistics')) active @endif"
+            href="{{ route('bo.statistics') }}"
+            title="{{ __('nav.title_list_statistics') }}"
+            data-bs="tooltip"
+            data-bs-placement="bottom">
+            {{ __('nav.list_statistics') }}
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link @if (request()->routeIs('bo.games.*')) active @endif"
             href="{{ route('bo.games.index') }}"
             title="{{ __('nav.title_list_games', ['games' => count($globalGames)]) }}"

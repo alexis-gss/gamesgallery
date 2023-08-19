@@ -1,7 +1,8 @@
 export {};
 
-import type VueTagsInput from "@sipec/vue3-tags-input";
 import { AxiosStatic } from "axios";
+import * as echarts from "echarts";
+import type VueTagsInput from "@sipec/vue3-tags-input";
 import type Resumable from "resumablejs";
 
 // * Recursive List<string>
@@ -49,6 +50,7 @@ declare global {
 
     interface Window {
         axios: AxiosStatic;
+        Echarts: typeof echarts;
         Swal: Function;
         __SYSTEM: {
             _locale: string;

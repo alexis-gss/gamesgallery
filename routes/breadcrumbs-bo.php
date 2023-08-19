@@ -18,6 +18,11 @@ Breadcrumbs::for('bo.homepage', function (Generator $trail) {
     $trail->push(trans('Homepage'), route('bo.homepage'));
 });
 
+// * STATISTIQUES
+Breadcrumbs::for('bo.statistics', function (Generator $trail) {
+    $trail->push(trans('Statistics'), route('bo.statistics'));
+});
+
 // * GAMES
 Breadcrumbs::for('bo.games.index', function (Generator $trail) {
     $trail->push(trans('Games'), route('bo.games.index'));
