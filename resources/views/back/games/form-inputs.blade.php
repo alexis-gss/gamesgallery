@@ -68,7 +68,7 @@
                         'height' => 2160,
                         'model' => $game,
                         'value' => $game->pictures ?? [],
-                        'limit' => [0,75],
+                        'limit' => [0,76],
                         'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
                         'csrf' => csrf_token(),
                         'errors' => $errors->getBag('default')->getMessages()

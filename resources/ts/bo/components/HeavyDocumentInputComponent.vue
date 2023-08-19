@@ -268,7 +268,7 @@ export default defineComponent({
     initResumable() {
       this.intR = new Resumable({
         chunkSize: 1024 * 1024, // 1MB
-        simultaneousUploads: 3,
+        simultaneousUploads: 5,
         maxFiles: 75,
         testChunks: false,
         target: this.getUploadDocumentRoute(),

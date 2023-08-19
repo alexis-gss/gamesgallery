@@ -100,6 +100,14 @@
       </div>
       <!-- End content collapse -->
     </div>
+    <Transition name="fade">
+      <p
+        v-if="intMessage"
+        class="m-0 text-danger"
+      >
+        {{ intMessage }}
+      </p>
+    </Transition>
     <small
       :id="`Help${intId}`"
       class="form-text text-muted"
@@ -138,6 +146,7 @@ export default defineComponent({
     intInputImages: HTMLInputElement | null;
     itemLimit: number[];
     intCsrf: string;
+    intMessage: string | null;
     allErrors: Record<string, string[]>;
   } {
     return {
@@ -155,6 +164,7 @@ export default defineComponent({
       intInputImages: null,
       itemLimit: [0, 0],
       intCsrf: "",
+      intMessage: null,
       allErrors: {},
     };
   },
@@ -262,6 +272,8 @@ export default defineComponent({
           setTimeout(() => {
             this.loadImages(files);
           }, 200);
+        } else {
+          this.setErrorMessage("Pictures download limit exceeded");
         }
       } else {
         this.updateBootstrapTooltip();
@@ -275,6 +287,15 @@ export default defineComponent({
       this.intViewerLoadImage = true;
       const imgEditor = this.$refs.imgViewer as HTMLImageElement;
       imgEditor.src = "";
+    },
+    /**
+     * Remove image source in the viewer.
+     */
+    setErrorMessage($message: string) {
+      this.intMessage = $message;
+      setTimeout(() => {
+        this.intMessage = null;
+      }, 5000);
     },
     /**
      * Update Bootstrap tooltips.
