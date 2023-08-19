@@ -11,5 +11,5 @@
 <div class="confirmJS" data-value="{!! nl2br(e($message)) !!}"  data-icon="info"></div>
 @endif
 @if ($errors->any())
-<div class="confirmJS" data-value="<ul class='list-unstyled'> @foreach ($errors->all() as $error) <li>- {{ $error }}</li> @endforeach </ul>"  data-icon="error"></div>
+<div class="confirmJS" data-value="<ul class='list-unstyled m-0'> @foreach ($errors->all() as $error) <li>- {{ $error }}</li> @endforeach </ul>"  data-icon="error"></div>
 @endif
