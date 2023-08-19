@@ -6,7 +6,7 @@
 </head>
 
 <body class="container position-relative text-font-regular bg-first">
-    @include('front.layouts.github')
+    @include('front.partials.github')
 
     @if (!Route::is('fo.homepage'))
     <!-- Navigation -->

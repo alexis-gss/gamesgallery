@@ -14,7 +14,7 @@
         >
           <a
             v-if="gamePictures[n + i]"
-            :href="getLocation() + '/' + gamePictures[n + i]"
+            :href="getPicturePath(n + i)"
             class="glightbox"
             data-gallery="games-pictures"
           >
@@ -23,13 +23,25 @@
               data-aos="fade-up"
             >
               <img
-                :src="gamePictures[n + i]"
-                alt="Image of the game."
+                :src="getPicturePath(n + i)"
+                :alt="'Picture from the game ' + gameName"
+                :title="'Picture from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
               <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-                <div class="w-100 h-100 text-bg-secondary" />
+                <div
+                  class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                >
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                  >
+                    <span class="visually-hidden">
+                      {{ __("nav.text_loading") }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </a>
@@ -43,7 +55,7 @@
         >
           <a
             v-if="gamePictures[n + 4 + i]"
-            :href="getLocation() + '/' + gamePictures[n + 4 + i]"
+            :href="getPicturePath(n + 4 + i)"
             class="glightbox"
             data-gallery="games-pictures"
           >
@@ -52,13 +64,25 @@
               data-aos="fade-up"
             >
               <img
-                :src="gamePictures[n + 4 + i]"
-                alt="Image of the game."
+                :src="getPicturePath(n + 4 + i)"
+                :alt="'Picture from the game ' + gameName"
+                :title="'Picture from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
               <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-                <div class="w-100 h-100 text-bg-secondary" />
+                <div
+                  class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                >
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                  >
+                    <span class="visually-hidden">
+                      {{ __("nav.text_loading") }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </a>
@@ -72,7 +96,7 @@
         >
           <a
             v-if="gamePictures[n + 7 + i]"
-            :href="getLocation() + '/' + gamePictures[n + 7 + i]"
+            :href="getPicturePath(n + 7 + i)"
             class="glightbox"
             data-gallery="games-pictures"
           >
@@ -81,13 +105,25 @@
               data-aos="fade-up"
             >
               <img
-                :src="gamePictures[n + 7 + i]"
-                alt="Image of the game."
+                :src="getPicturePath(n + 7 + i)"
+                :alt="'Picture from the game ' + gameName"
+                :title="'Picture from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
               <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-                <div class="w-100 h-100 text-bg-secondary" />
+                <div
+                  class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                >
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                  >
+                    <span class="visually-hidden">
+                      {{ __("nav.text_loading") }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </a>
@@ -101,7 +137,7 @@
         >
           <a
             v-if="gamePictures[n + 9 + i]"
-            :href="getLocation() + '/' + gamePictures[n + 9 + i]"
+            :href="getPicturePath(n + 9 + i)"
             class="glightbox"
             data-gallery="games-pictures"
           >
@@ -110,13 +146,25 @@
               data-aos="fade-up"
             >
               <img
-                :src="gamePictures[n + 9 + i]"
-                alt="Image of the game."
+                :src="getPicturePath(n + 9 + i)"
+                :alt="'Picture from the game ' + gameName"
+                :title="'Picture from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
               <div class="position-absolute top-0 start-0 w-100 h-100 p-1">
-                <div class="w-100 h-100 text-bg-secondary" />
+                <div
+                  class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                >
+                  <div
+                    class="spinner-border text-light"
+                    role="status"
+                  >
+                    <span class="visually-hidden">
+                      {{ __("nav.text_loading") }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </a>
@@ -126,7 +174,7 @@
     <div class="w-100 text-center mt-5">
       <div
         v-if="gameLoading"
-        class="spinner-border text-secondary"
+        class="spinner-border text-primary"
         role="status"
       >
         <span class="visually-hidden">{{ __("nav.text_loading") }}</span>
@@ -148,22 +196,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
 import GLightbox from "glightbox";
+import { defineComponent } from "vue";
 import trans from "./../../modules/trans";
 
 export default defineComponent({
   mixins: [trans],
-  inheritAttrs: false,
-  props: {
-    jsonData: {
-      type: String,
-      default: "[]",
-    },
-  },
   data(): {
     gameName: string;
-    gamePictures: Array<string>;
+    gameSlug: string;
+    gamePictures: Array<{
+      uuid: string;
+      type: string;
+    }>;
     gamePage: number;
     gameLastPage: number;
     gameItems: number;
@@ -173,10 +218,11 @@ export default defineComponent({
   } {
     return {
       gameName: "",
+      gameSlug: "",
       gamePictures: [],
       gamePage: 1,
       gameLastPage: 1,
-      gameItems: 1,
+      gameItems: 12,
       gameLoading: true,
       gameAllLoaded: false,
       gameViewer: null,
@@ -185,7 +231,8 @@ export default defineComponent({
   mounted() {
     const json = String(this.$attrs.json ?? "{}");
     const data = JSON.parse(json);
-    this.gameName = data.game.name;
+    this.gameName = data.gameName;
+    this.gameSlug = data.gameSlug;
     this.gamePage = data.gamePictures.current_page;
     this.gameLastPage = data.gamePictures.last_page;
     this.gameItems =
@@ -213,17 +260,6 @@ export default defineComponent({
       this.updateGlightbox();
     },
     /**
-     * Update Glightbox elements.
-     */
-    updateGlightbox() {
-      setTimeout(() => {
-        this.gameViewer?.destroy();
-        this.gameViewer = new GLightbox({
-          selector: ".glightbox",
-        });
-      }, 800);
-    },
-    /**
      * Increment the current page number when the
      * user scroll to the bottom.
      */
@@ -245,12 +281,6 @@ export default defineComponent({
       });
     },
     /**
-     * Get the location.
-     */
-    getLocation() {
-      return location.origin;
-    },
-    /**
      * Load the current page.
      */
     getPictures() {
@@ -258,7 +288,10 @@ export default defineComponent({
       window.axios
         .get(url)
         .then((response) => {
-          this.updatePictures(Object.values(response.data.data.data));
+          this.gamePictures = this.gamePictures.concat(
+            Object.values(response.data.data.data)
+          );
+          this.gameLoading = false;
           this.updateGlightbox();
         })
         .catch((error) => {
@@ -273,16 +306,6 @@ export default defineComponent({
         });
     },
     /**
-     * Update game's pictures,
-     * Set the loading to the false.
-     *
-     * @param {Array<string>} data
-     */
-    updatePictures(data: Array<string>) {
-      this.gamePictures = this.gamePictures.concat(data);
-      this.gameLoading = false;
-    },
-    /**
      * Show image when she loaded,
      * Hide the placeholder's image.
      *
@@ -292,6 +315,33 @@ export default defineComponent({
       const nodeTarget = e.target as HTMLImageElement;
       nodeTarget.classList.remove("d-none");
       nodeTarget.classList.add("show-image");
+    },
+    /**
+     * Return the path of the picture.
+     *
+     * @param number n
+     */
+    getPicturePath(n: number) {
+      return (
+        location.origin +
+        "/storage/documents/" +
+        this.gameSlug +
+        "/" +
+        this.gamePictures[n].uuid +
+        "." +
+        this.gamePictures[n].type
+      );
+    },
+    /**
+     * Update Glightbox elements.
+     */
+    updateGlightbox() {
+      setTimeout(() => {
+        this.gameViewer?.destroy();
+        this.gameViewer = new GLightbox({
+          selector: ".glightbox",
+        });
+      }, 800);
     },
   },
 });

@@ -99,3 +99,7 @@ body {
         transform: rotate(45deg);
     }
 }
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: $color-light;
+}

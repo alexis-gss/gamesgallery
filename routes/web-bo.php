@@ -46,6 +46,9 @@ Route::prefix('bo')
                                     Route::get('/games/{game}/duplicate', [
                                         GameController::class, 'duplicate'
                                     ])->name('games.duplicate');
+                                    Route::post('/games/upload', [
+                                        GameController::class, 'upload'
+                                    ])->name('games.upload');
 
                                     /**
                                      * * FOLDERS

@@ -37,6 +37,7 @@ import {
     faListUl,
     faChevronLeft,
     faChevronRight,
+    faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -81,4 +82,5 @@ library.add(faCopy);
 library.add(faListUl);
 library.add(faChevronLeft);
 library.add(faChevronRight);
+library.add(faCheck);
 dom.watch();
