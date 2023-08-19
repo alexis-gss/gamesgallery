@@ -4,3 +4,7 @@
 .gscrollbar-fixer {
     margin: auto !important;
 }
+
+.nav-games .form-control::placeholder {
+    color: $color-light;
+}

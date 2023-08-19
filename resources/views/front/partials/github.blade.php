@@ -3,7 +3,7 @@
         <button class="btn btn-sm bg-transparent border-0"
             title="Access to the Github's repository"
             data-bs="tooltip">
-            <i class="fa-brands fa-github fa-xl text-light"></i>
+            <i class="fa-brands fa-github fa-xl text-white"></i>
         </button>
     </a>
 </div>
