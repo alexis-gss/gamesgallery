@@ -13,7 +13,7 @@
     <main class="container-fluid">
         <!-- Show a message when an action is performed -->
         @auth
-        @include('back.modules.message')
+        @include('back.modules.session-messages')
         @endauth
 
         <div class="row justify-content-center">
@@ -28,6 +28,8 @@
 
     <!-- Other -->
     @include('back.modules.window-system')
+    @vite(['resources/ts/back.ts'])
+    @stack('scripts')
 </body>
 
 </html>

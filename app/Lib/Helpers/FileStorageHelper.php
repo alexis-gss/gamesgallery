@@ -27,49 +27,6 @@ use Illuminate\Support\Str;
 class FileStorageHelper
 {
     /**
-     * Destroy the file associate with the attribute.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string                              $attribute
-     * @return void
-     */
-    public static function removeFile(Model $model, string $attribute): void
-    {
-        $path = \ltrim(\urldecode($model->{$attribute}), '/');
-        if (\strpos($path, 'storage') !== 0) {
-            return;
-        }
-        $path = ToolboxHelper::mbReplace('storage/', '', $path);
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
-        }
-    }
-
-    /**
-     * Destroy the file associate with the attribute old value (before updated to DB).
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string                              $attribute
-     * @param boolean                             $onlyIfUpdated
-     * @return void
-     */
-    public static function removeOldFile(Model $model, string $attribute, bool $onlyIfUpdated = true): void
-    {
-        // * Ignore If removal has to be done only if the field has changed and it actually hasnt.
-        if ($onlyIfUpdated and $model->{$attribute} === $model->getOriginal($attribute)) {
-            return;
-        }
-        $originalPath = \ltrim(\urldecode($model->getOriginal($attribute)), '/');
-        if (\strpos($originalPath, 'storage') !== 0) {
-            return;
-        }
-        $originalPath = ToolboxHelper::mbReplace('storage/', '', $originalPath);
-        if (Storage::disk('public')->exists($originalPath)) {
-            Storage::disk('public')->delete($originalPath);
-        }
-    }
-
-    /**
      * Store a file using optimized storage strategy.
      *
      * You can use filename param to overload file name.
@@ -114,53 +71,46 @@ class FileStorageHelper
     }
 
     /**
-     * Store all files from string attribute html
-     * If oldHtmlString is passed, a diff is done with new and old files
-     * to keep only files that are present in the new html string.
+     * Destroy the file associate with the attribute.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model         The model that will hold the picture.
-     * @param string                              $htmlString    The html string to parse and modify files.
-     * @param string|null                         $oldHtmlString The old html string with alreadyParsed
-     *                                                           files using storeModelFilesFromHtml.
-     * @return string Html with files pathes replaced using storage strategy.
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string                              $attribute
+     * @return void
      */
-    public static function storeModelFilesFromHtml(
-        Model $model,
-        string $htmlString,
-        string $oldHtmlString = null
-    ): string {
-        \collect(self::onlyUploadedFilesWithFileManager(self::findFilesInHtml($htmlString)))
-            ->each(function (string $path) use ($model, &$htmlString) {
-                /** @var \Illuminate\Filesystem\FilesystemAdapter */
-                $disk       = Storage::disk('uploads');
-                $fileInfo   = new \SplFileInfo($disk->path(
-                    ToolboxHelper::mbReplace('/uploads/', '', \urldecode($path))
-                ));
-                $htmlString = ToolboxHelper::mbReplace(
-                    $path,
-                    '/' . self::storeFile($model, $fileInfo, true),
-                    $htmlString
-                );
-            });
-
-        if ($oldHtmlString) {
-            self::removeOldModelFilesFromHtml($htmlString, $oldHtmlString);
+    public static function removeFile(Model $model, string $attribute): void
+    {
+        $path = \ltrim(\urldecode($model->{$attribute}), '/');
+        if (\strpos($path, 'storage') !== 0) {
+            return;
         }
-
-        return $htmlString;
+        $path = ToolboxHelper::mbReplace('storage/', '', $path);
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     /**
-     * Remove all old files from string attribute html that are stored in public that
-     * are nove present anymore on new html string.
+     * Destroy the file associate with the attribute old value (before updated to DB).
      *
-     * @param string $newHtmlString The html string with alreadyParsed files using storeModelFilesFromHtml.
-     * @param string $oldHtmlString The old html string with alreadyParsed files using storeModelFilesFromHtml.
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string                              $attribute
+     * @param boolean                             $onlyIfUpdated
      * @return void
      */
-    public static function removeOldModelFilesFromHtml(string $newHtmlString, string $oldHtmlString): void
+    public static function removeOldFile(Model $model, string $attribute, bool $onlyIfUpdated = true): void
     {
-        self::removeOldFiles(self::findFilesInHtml($oldHtmlString), self::findFilesInHtml($newHtmlString));
+        // * Ignore If removal has to be done only if the field has changed and it actually hasnt.
+        if ($onlyIfUpdated and $model->{$attribute} === $model->getOriginal($attribute)) {
+            return;
+        }
+        $originalPath = \ltrim(\urldecode($model->getOriginal($attribute)), '/');
+        if (\strpos($originalPath, 'storage') !== 0) {
+            return;
+        }
+        $originalPath = ToolboxHelper::mbReplace('storage/', '', $originalPath);
+        if (Storage::disk('public')->exists($originalPath)) {
+            Storage::disk('public')->delete($originalPath);
+        }
     }
 
     /**
@@ -185,37 +135,6 @@ class FileStorageHelper
     }
 
     /**
-     * Remove all files from string attribute html that are stored in public.
-     *
-     * @param string $htmlString The html string with alreadyParsed files using storeModelFilesFromHtml.
-     * @return void
-     */
-    public static function removeModelFilesOfHtml(string $htmlString): void
-    {
-        $filesToRemove = \collect(self::onlyUploadedFilesWithFileStorageHelper(self::findFilesInHtml($htmlString)));
-        $filesToRemove->each(function (string $publicStorageFilePath) {
-            $path = ToolboxHelper::mbReplace('storage/', '', \ltrim(\urldecode($publicStorageFilePath), '/'));
-            if (Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
-            }
-        });
-    }
-
-    /**
-     * Find all occurence of files in html.
-     * @param string $html
-     * @return array
-     */
-    public static function findFilesInHtml(string $html): array
-    {
-        preg_match_all('/href="(?P<href>.*)"|src="(?P<src>.*)"|url="(?P<url>.*)"/Um', $html, $m, PREG_SET_ORDER, 0);
-        return collect($m)->pluck('href')->filter()
-            ->concat(collect($m)->pluck('url')->filter())
-            ->concat(collect($m)->pluck('src')->filter())
-            ->all();
-    }
-
-    /**
      * Filter array to get only uploaded files that exists
      * on disk 'public' (using helper storage strategy).
      *
@@ -233,29 +152,6 @@ class FileStorageHelper
                 $path = \parse_url($url, \PHP_URL_PATH);
                 return Storage::disk('public')
                     ->exists(ToolboxHelper::mbReplace('storage/', '', \ltrim(\urldecode($path), '/')));
-            })->all();
-    }
-
-    /**
-     * Filter array to get only uploaded files that exists
-     * on disk 'uploads'.
-     *
-     * @param array $urls
-     * @return array
-     */
-    private static function onlyUploadedFilesWithFileManager(array $urls): array
-    {
-        return \collect($urls)->unique()
-            // * Filter to get only /uploads and using app url or empty
-            ->filter(function (string $url) {
-                $host = \parse_url($url, \PHP_URL_HOST);
-                $path = \parse_url($url, \PHP_URL_PATH);
-                return ($host === \parse_url(config('app.url'), PHP_URL_HOST) or \is_null($host)) and
-                    \strpos(\ltrim($path, '/'), 'uploads') === 0;
-            })->filter(function (string $url) {
-                $path = \parse_url($url, \PHP_URL_PATH);
-                return Storage::disk('uploads')
-                    ->exists(ToolboxHelper::mbReplace('uploads/', '', \ltrim(\urldecode($path), '/')));
             })->all();
     }
 

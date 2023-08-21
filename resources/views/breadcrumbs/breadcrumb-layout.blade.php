@@ -3,7 +3,7 @@
     @foreach ($breadcrumbs as $breadcrumb)
     @if ($breadcrumb->url && !$loop->last)
     <li class="breadcrumb-item d-flex">
-        <a class="text-decoration-none @if(Request::is('bo/*')) text-secondary h2 ps-2 m-0 fw-bold @else text-white py-3 @endif" href="{{ $breadcrumb->url }}">
+        <a class="text-decoration-none @if(Request::is('bo/*')) h2 ps-2 m-0 fw-bold @else text-white py-3 @endif" href="{{ $breadcrumb->url }}">
             {{ $breadcrumb->title }}
         </a>
     </li>

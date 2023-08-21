@@ -6,11 +6,13 @@ use App\Enums\Users\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Users\StoreUserRequest;
 use App\Http\Requests\Bo\Users\UpdateUserRequest;
+use App\Lib\Helpers\ToolboxHelper;
 use App\Models\User;
 use App\Traits\Controllers\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -43,7 +45,7 @@ class UserController extends Controller
         $this->sortQuery($users);
 
         /** Custom pagination */
-        $users = $this->customPaginate($users, $request->pagination);
+        $users = $users->paginate(ToolboxHelper::getValidationOfItemsPerPage());
 
         return view('back.users.index', compact('users', 'search', 'searchFields'));
     }
@@ -90,7 +92,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user()->id === $user->id || Auth::user()->role === RoleEnum::admin()->value) {
+        if (Auth::user()->id === $user->id || Gate::check('isAdmin')) {
             return view('back.users.edit', compact('user'));
         } else {
             return redirect()->route('bo.users.index')

@@ -34,9 +34,4 @@
 @include('breadcrumbs.breadcrumb-head')
 
 <!-- Styles -->
-<link href="{{ asset('css/front.css') }}" rel="stylesheet" />
-@stack('styles')
-
-<!-- Scripts -->
-<script src="{{ asset('js/front.js') }}" type="text/javascript"></script>
-@stack('scripts')
+@vite(['resources/sass/front.scss'])

@@ -2,33 +2,20 @@
 
 namespace App\Enums\Users;
 
-use Kwaadpepper\Enum\BaseEnumRoutable;
+use App\Traits\Enums\BaseEnum;
 
-/**
- * @method static self admin()
- * @method static self visitor()
- */
-class RoleEnum extends BaseEnumRoutable
+enum RoleEnum: int
 {
-    /**
-     * @return array
-     */
-    protected static function values(): array
-    {
-        return [
-            'admin' => 0,
-            'visitor' => 99,
-        ];
-    }
+    use BaseEnum;
+
+    case admin   = 1;
+    case visitor = 99;
 
     /**
-     * @return array
+     * Optionnal labels definition
      */
-    protected static function labels(): array
-    {
-        return [
-            'admin' => trans('Administrator'),
-            'visitor' => trans('Visitor'),
-        ];
-    }
+    private const LABELS = [
+        self::admin->name => 'Administrator',
+        self::visitor->name => 'Visitor',
+    ];
 }

@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -77,7 +78,7 @@ class UserCreate extends Command
 
         $user                = new User();
         $user->name          = $this->name;
-        $user->slug          = str_slug($this->name);
+        $user->slug          = Str::slug($this->name);
         $user->email         = $this->email;
         $user->password      = $this->password;
         $user->picture       = FileStorageHelper::storeFile(
@@ -171,16 +172,16 @@ class UserCreate extends Command
             try {
                 $tmp                         = $this->choice(
                     'Select his role',
-                    [RoleEnum::admin()->label, RoleEnum::visitor()->label],
-                    RoleEnum::visitor()->label,
+                    [RoleEnum::admin->label(), RoleEnum::visitor->label()],
+                    RoleEnum::visitor->label(),
                     $maxAttempts             = null,
                     $allowMultipleSelections = false
                 );
-                if ($tmp === RoleEnum::admin()->label) {
-                    $tmp = RoleEnum::admin();
+                if ($tmp === RoleEnum::admin->label()) {
+                    $tmp = RoleEnum::admin;
                 }
-                if ($tmp === RoleEnum::visitor()->label) {
-                    $tmp = RoleEnum::visitor();
+                if ($tmp === RoleEnum::visitor->label()) {
+                    $tmp = RoleEnum::visitor;
                 }
                 $validator = Validator::make(['role' => $tmp], [
                     'role' => 'required'

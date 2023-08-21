@@ -5,7 +5,7 @@
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
     <h1 class="h2 m-0 fw-bold">{{ __('other.back_office') }}
-        <small class="text-muted h4">{{ __('auth.login') }}</small>
+        <small class="text-body-secondary h4">{{ __('auth.login') }}</small>
     </h1>
 </div>
 <div class="row justify-content-md-center mt-3">

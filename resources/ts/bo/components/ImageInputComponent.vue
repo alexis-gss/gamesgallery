@@ -82,7 +82,7 @@
         </div>
         <small
           :id="`Help${intId}`"
-          class="form-text text-muted"
+          class="form-text text-body-secondary"
         >
           {{ intHelper }}
         </small>
@@ -110,7 +110,7 @@
         <small
           v-if="intValue"
           :id="`PreviewHelp${intId}`"
-          class="form-text text-muted d-block m-0"
+          class="form-text text-body-secondary d-block m-0"
         >
           <span v-if="intOriginalFile">
             {{ humanFileSize(intOriginalFile.size) }}

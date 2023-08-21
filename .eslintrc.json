@@ -10,16 +10,16 @@
     ],
     "overrides": [
         {
-        "files": ["*.ts", "*.vue"],
-        "rules": {
-            "no-undef": "off"
-        }
+            "files": ["*.ts", "*.vue"],
+            "rules": {
+                "no-undef": "off"
+            }
         },
         {
-        "files": ["*.vue"],
-        "rules": {
-            "indent": "off"
-        }
+            "files": ["*.vue"],
+            "rules": {
+                "indent": "off"
+            }
         }
     ],
     "parser": "vue-eslint-parser",

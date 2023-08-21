@@ -23,6 +23,8 @@
 
     <!-- Other -->
     @include('front.modules.window-system')
+    @vite(['resources/ts/front.ts'])
+    @stack('scripts')
 </body>
 
 </html>

@@ -2,10 +2,11 @@
 
 namespace App\Lib\Helpers;
 
+use App\Http\Requests\Bo\UpdateItemsPerPaginationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -97,13 +98,14 @@ class ToolboxHelper
 
     /**
      * Mutltibyte string replace
+     *
      * @param mixed   $search
      * @param mixed   $replace
      * @param mixed   $subject
      * @param integer $count
      * @return mixed
      */
-    public static function mbReplace($search, $replace, $subject, int &$count = 0)
+    public static function mbReplace(mixed $search, mixed $replace, mixed $subject, int &$count = 0)
     {
         if (!is_array($search) && is_array($replace)) {
             return false;
@@ -135,40 +137,20 @@ class ToolboxHelper
     }
 
     /**
-     * Asserts that the field is unique
+     * Get and validate the number of items per page for the pagination.
      *
-     * @param string        $table
-     * @param string        $field
-     * @param mixed         $value
-     * @param integer|null  $id
-     * @param callable|null $query
-     * @return void
-     * @throws \Illuminate\Validation\ValidationException If the field is not unique.
+     * @param integer $numberOfItems
+     * @return integer
      */
-    public static function assertFieldIsUnique(
-        string $table,
-        string $field,
-        $value,
-        ?int $id = null,
-        ?callable $query = null
-    ) {
-        if (!$query) {
-            Validator::make([$field => $value], [
-                $field => Rule::unique($table, $field)->ignore($id),
-            ], [
-                $field . '.unique' => trans('La valeur :value pour le champ :attribute est déjà utilisé', [
-                    'attribute' => $field,
-                    'value' => $value
-                ])
-            ])->validate();
-            return;
+    public static function getValidationOfItemsPerPage(int $numberOfItems = 12): int
+    {
+        $paginationValidator = UpdateItemsPerPaginationRequest::capture()->setContainer(app())->getValidator();
+        if (isset($paginationValidator->validated()['pagination'])) {
+            $numberOfItems = $paginationValidator->validated()['pagination'];
+        } elseif (Cache::get('pagination-' . Str::slug(request()->route()->getName())) !== null) {
+            $numberOfItems = Cache::get('pagination-' . Str::slug(request()->route()->getName()));
         }
-        Validator::make([$field => $value], [
-            $field => Rule::unique($table)->where($query)->ignore($id),
-        ], [
-            $field . '.unique' => trans('La valeur pour le champ :attribute est déjà utilisé', [
-                'attribute' => $field
-            ])
-        ])->validate();
+        Cache::put('pagination-' . Str::slug(request()->route()->getName()), $numberOfItems);
+        return intval($numberOfItems);
     }
 }

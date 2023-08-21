@@ -122,7 +122,7 @@ trait HasPicture
      * @return void
      * @phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
      */
-    private function validatePicture(string $attribute, $value, callable $fail, object $sizes)
+    private function validatePicture(string $attribute, mixed $value, callable $fail, object $sizes)
     {
         if (!($useStorage = Storage::exists($value)) and !File::exists($value)) {
             $fail(trans(":attribute n'existe pas dans le système de fichier"));

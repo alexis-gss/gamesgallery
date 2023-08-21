@@ -38,9 +38,4 @@
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
 <!-- Styles -->
-<link href="{{ asset('css/back.css') }}" rel="stylesheet">
-@stack('styles')
-
-<!-- Scripts -->
-<script src="{{ asset('js/back.js') }}" type="text/javascript"></script>
-@stack('scripts')
+@vite(['resources/sass/back.scss'])

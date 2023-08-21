@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -17,8 +18,10 @@ use Illuminate\Support\Facades\Storage;
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
- * @method protected static function booted()              Perform any actions required after the model boots.
- * @method private static function removePicture($picture) Delete one specific picture.
+ * @method protected static function booted()                       Perform any actions required after the model boots.
+ * @method public static function renameFolderSavedPictures($model) Rename the folder where there is saved pictures.
+ * @method private static function removePicture($picture)          Delete one specific picture.
+ * @method private static function removePictures($pictures)        Remove all pictures previously associated.
  *
  * @property-read \App\Models\Game $game Get the Game that owns the Picture (relationship).
  */
@@ -52,6 +55,23 @@ class Picture extends Model
     // * METHODS
 
     /**
+     * Rename the folder where pictures are saved.
+     *
+     * @param Model  $model
+     * @param string $slug
+     * @return void
+     */
+    public static function renameFolderSavedPictures(Model $model, string $slug)
+    {
+        if ($slug !== $model->slug) {
+            $directory = Storage::disk('public')->path("documents/" . $slug);
+            if (is_dir($directory)) {
+                rename($directory, Storage::disk('public')->path("documents/" . $model->slug));
+            }
+        }
+    }
+
+    /**
      * Delete one specific picture.
      *
      * @param \App\Models\Picture $picture
@@ -62,6 +82,19 @@ class Picture extends Model
         $pathFile = "documents/" . $picture->game->slug . "/" . $picture->uuid . "." . $picture->type;
         if (Storage::disk('public')->exists($pathFile)) {
             Storage::disk('public')->delete($pathFile);
+        }
+    }
+
+    /**
+     * Remove all pictures previously associated.
+     *
+     * @param Collection $pictures
+     * @return void
+     */
+    public static function removePictures(Collection $pictures): void
+    {
+        foreach ($pictures as $picture) {
+            $picture->delete();
         }
     }
 

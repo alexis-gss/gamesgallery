@@ -6,8 +6,8 @@ use App\Enums\Users\RoleEnum;
 use App\Traits\Requests\HasPicture;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
-use Kwaadpepper\Enum\Rules\EnumIsValidRule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -44,8 +44,8 @@ class StoreUserRequest extends FormRequest
         $rules = [
             'slug' => 'required|string|unique:users,slug|max:255',
             'name' => 'required|string|min:3|max:255',
-            'email' => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter',
-            'role' => ['required', new EnumIsValidRule(RoleEnum::class)],
+            'email' => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter|max:255',
+            'role' => ['required', new Enum(RoleEnum::class)],
             'password' => [
                 'required', 'required_with:password_confirmation', 'confirmed', 'max:255',
                 Password::min(8)

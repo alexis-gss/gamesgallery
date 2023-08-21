@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Folders\StoreFolderRequest;
 use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
+use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Folder;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
@@ -43,7 +44,7 @@ class FolderController extends Controller
         $this->sortQuery($folders);
 
         /** Custom pagination */
-        $folders = $this->customPaginate($folders, $request->pagination);
+        $folders = $folders->paginate(ToolboxHelper::getValidationOfItemsPerPage());
 
         return view('back.folders.index', compact('folders', 'search', 'searchFields'));
     }
@@ -76,7 +77,8 @@ class FolderController extends Controller
                 return redirect()->route('bo.folders.edit', $folder->id)
                     ->with('success', __('changes.creation_saved'));
             }
-            return back()->with('error', __('changes.creation_failed'));
+            return redirect()->back()
+                ->with('error', __('changes.creation_failed'));
         });
     }
 

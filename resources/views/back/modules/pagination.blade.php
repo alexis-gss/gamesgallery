@@ -1,5 +1,5 @@
 {{-- GET ACTUAL PAGINATION --}}
-<?php $pagination = (Cache::get('pagination')) ? intval(Cache::get('pagination')) : config('pagination.default');?>
+<?php $pagination = intval(Cache::get('pagination-' . \Illuminate\Support\Str::slug(request()->route()->getName()))); ?>
 @if($paginator->items())
 <nav class="pagination-custom d-flex flex-column flex-md-row justify-content-between align-items-center">
     {{-- SELECT ITEMS PER PAGE --}}
