@@ -19,7 +19,7 @@
                         class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $folder->name ?? '') }}">
-                    <small class="text-muted">{{ __('form.name_folder_label') }}*</small>
+                    <small class="text-body-secondary">{{ __('form.name_folder_label') }}*</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
@@ -70,7 +70,7 @@
                             <b>{{ __('form.publish') }}</b>
                         </label>
                         <br>
-                        <small class="form-text text-muted">{{ __('form.publish_label') }}</small>
+                        <small class="form-text text-body-secondary">{{ __('form.publish_label') }}</small>
                     </div>
                     @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>

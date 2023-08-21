@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -22,7 +23,9 @@ use Illuminate\Support\Str;
  * @method private static function setSlug($folder)          Set model's slug.
  * @method private static function setPublishedDate($folder) Set model's published date.
  * @method private static function setOrder($folder)         Set model's order after the last element of the list.
+ * @method public static function setTags($model, $tags)     Set model's tags.
  * @method private static function removeTagsFromGame($tag)  Remove a specific tag from all games.
+ * @method public static function removeTags($model)        Remove all tags previously associated.
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
  * Get Games of the tag (relationship).
@@ -117,6 +120,19 @@ class Tag extends Model
     }
 
     /**
+     * Set model's tags.
+     *
+     * @param Model                          $model
+     * @param \Illuminate\Support\Collection $tags
+     *
+     * @return void
+     */
+    public static function setTags(Model $model, Collection $tags)
+    {
+        $model->tags()->sync($tags->pluck('id'));
+    }
+
+    /**
      * Remove a specific tag from all games.
      *
      * @param \App\Models\Tag $tag
@@ -126,6 +142,17 @@ class Tag extends Model
     private static function removeTagsFromGame(Tag $tag)
     {
         $tag->games()->detach();
+    }
+
+    /**
+     * Remove all tags previously associated.
+     *
+     * @param Model $model
+     * @return void
+     */
+    public static function removeTags(Model $model): void
+    {
+        $model->tags()->sync([]);
     }
 
     // * RELATIONSHIPS

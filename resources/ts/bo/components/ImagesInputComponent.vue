@@ -110,7 +110,7 @@
     </Transition>
     <small
       :id="`Help${intId}`"
-      class="form-text text-muted"
+      class="form-text text-body-secondary"
     >
       {{ intHelper }}
     </small>
@@ -259,14 +259,14 @@ export default defineComponent({
     loadImages(files: Array<File>) {
       if (files.length > 0) {
         if (this.intValues.length + files.length <= this.itemLimit[1]) {
-          let actualFile = files.shift() as ChunkFile;
+          let actualFile = files.shift() as unknown as ChunkFile;
           actualFile.published = false;
           actualFile.uniqueIdentifier =
             String(this.intLoopLoadImages) + "-" + Date.now();
           this.intValues.push(actualFile);
           this.intInputImages = this.$refs.actualImages as HTMLInputElement;
           var dt = new DataTransfer();
-          dt.items.add(actualFile);
+          dt.items.add(actualFile as unknown as File);
           this.intInputImages.files = dt.files;
           this.intLoopLoadImages++;
           setTimeout(() => {

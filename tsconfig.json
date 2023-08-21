@@ -12,6 +12,7 @@
             "resources/ts/@types",
             "node_modules/@types"
         ],
+        "types": ["vite/client"],
         "baseUrl": ".",
         "paths": {
             "~/*": [
@@ -19,10 +20,16 @@
                 "node_modules/@types/*",
             ],
             "@/*": ["resources/assets/*"],
-        }
+        },
+        "skipLibCheck": true
     },
     "include": ["resources/**/*.js", "resources/**/*.ts", "resources/**/*.vue"],
-    "exclude": ["node_modules"],
+    "exclude": [
+        "node_modules",
+        "./node_modules",
+        "./node_modules/*",
+        "./node_modules/@types/node/index.d.ts",
+    ],
     "compileOnSave": false,
     "experimentalDecorators": true
 }

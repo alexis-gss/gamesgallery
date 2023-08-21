@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -23,14 +21,10 @@ use Illuminate\Support\Str;
  *
  * @method protected static function booted()                     Perform any actions required after the model boots.
  * @method private static function setSlug($game)                 Set model's slug.
- * @method public static function setTags($game, $tags)           Set model's tags.
  * @method private static function setPublishedDate($game)        Set model's published date.
  * @method private static function setOrder($game)                Set model's order after the last element of the list.
  * @method public static function updatePictures($game, $request) Differentiate between old and new pictures, remove
  * oldests and save news.
- * @method private static function renameFolderSavedPictures($game) Remove all tags previously associated.
- * @method private static function removeTags($game)                Remove all tags previously associated.
- * @method private static function removePictures($pictures)        Remove all pictures previously associated.
  *
  * @property-read \App\Models\Folder $folder
  * Get Folder that owns the Game (relationship).
@@ -76,16 +70,16 @@ class Game extends Model
             static::setSlug($game);
             static::setOrder($game);
             static::setPublishedDate($game);
-            static::renameFolderSavedPictures($game, "default_folder");
+            Picture::renameFolderSavedPictures($game, "default_folder");
         });
         static::updating(function (self $game) {
             static::setSlug($game);
             static::setPublishedDate($game);
-            static::renameFolderSavedPictures($game, $game->getOriginal('slug'));
+            Picture::renameFolderSavedPictures($game, $game->getOriginal('slug'));
         });
         static::deleting(function (self $game) {
-            static::removeTags($game);
-            static::removePictures($game->pictures);
+            Tag::removeTags($game);
+            Picture::removePictures($game->pictures);
         });
     }
 
@@ -101,19 +95,6 @@ class Game extends Model
     private static function setSlug(Game $game)
     {
         $game->slug = Str::slug($game->name);
-    }
-
-    /**
-     * Set model's tags.
-     *
-     * @param \App\Models\Game               $game
-     * @param \Illuminate\Support\Collection $tags
-     *
-     * @return void
-     */
-    public static function setTags(Game $game, Collection $tags)
-    {
-        $game->tags()->sync(collect($tags)->pluck('id'));
     }
 
     /**
@@ -173,48 +154,7 @@ class Game extends Model
                 $newPictures->add($picture);
             } //end foreach
         } //end if
-        static::removePictures($picturesAlreadySaved->diff($newPictures));
-    }
-
-    /**
-     * Rename the folder where pictures are saved.
-     *
-     * @param \App\Models\Game $game
-     * @param string           $slug
-     * @return void
-     */
-    private static function renameFolderSavedPictures(Game $game, string $slug)
-    {
-        if ($slug !== $game->slug) {
-            $directory = Storage::disk('public')->path("documents/" . $slug);
-            if (is_dir($directory)) {
-                rename($directory, Storage::disk('public')->path("documents/" . $game->slug));
-            }
-        }
-    }
-
-    /**
-     * Remove all tags previously associated.
-     *
-     * @param \App\Models\Game $game
-     * @return void
-     */
-    private static function removeTags(Game $game): void
-    {
-        $game->tags()->sync([]);
-    }
-
-    /**
-     * Remove all pictures previously associated.
-     *
-     * @param Collection $pictures
-     * @return void
-     */
-    private static function removePictures(Collection $pictures): void
-    {
-        foreach ($pictures as $picture) {
-            $picture->delete();
-        }
+        Picture::removePictures($picturesAlreadySaved->diff($newPictures));
     }
 
     // * RELATIONSHIPS

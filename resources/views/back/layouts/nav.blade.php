@@ -40,7 +40,7 @@
                     </button>
 
                     <div class="dropdown-menu dropdown-menu-end text-center p-0 m-0" aria-labelledby="navbarDropdown">
-                        <a class="btn btn-link w-100 text-decoration-none text-muted p-2"
+                        <a class="btn btn-link w-100 text-decoration-none text-body-secondary p-2"
                             href="{{ route('bo.users.edit', Auth::user()->id) }}"
                             title="{{ __('nav.to_edit_profile') }}"
                             data-bs="tooltip"
@@ -48,7 +48,7 @@
                         <hr class="dropdown-divider m-0">
                         <form id="logout-form" action="{{ route('bo.logout') }}" method="POST" class="text-center m-0">
                             @csrf
-                            <button class="btn btn-link w-100 text-decoration-none text-muted p-2"
+                            <button class="btn btn-link w-100 text-decoration-none text-body-secondary p-2"
                                 type="submit"
                                 data-bs="tooltip"
                                 data-bs-placement="top"

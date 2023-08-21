@@ -2,28 +2,15 @@
 
 namespace App\Enums\Pagination;
 
-use Kwaadpepper\Enum\BaseEnumRoutable;
+use App\Traits\Enums\BaseEnum;
 
-/**
- * @method static self five()
- * @method static self twelve()
- * @method static self twentytwo()
- * @method static self fifty()
- * @method static self onehundred()
- */
-class ItemsPerPaginationEnum extends BaseEnumRoutable
+enum ItemsPerPaginationEnum: int
 {
-    /**
-     * @return array
-     */
-    protected static function values(): array
-    {
-        return [
-            'five' => 5,
-            'twelve' => 12,
-            'twentytwo' => 25,
-            'fifty' => 50,
-            'onehundred' => 100,
-        ];
-    }
+    use BaseEnum;
+
+    case five       = 5;
+    case twelve     = 12;
+    case twentytwo  = 25;
+    case fifty      = 50;
+    case onehundred = 100;
 }

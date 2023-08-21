@@ -1,4 +1,4 @@
-import { App, createApp } from "vue";
+import { App, Component, createApp } from "vue";
 
 document.addEventListener("DOMContentLoaded", () => {
     const setupApp = (app: App<Element>) => {
@@ -7,11 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Register components
-    const vues = require.context("./components", true, /\.vue$/i);
-    vues.keys().map((key) => {
-        let htmlKey = key.split("/").pop();
+    const vues = import.meta.glob("./../bo/components/*.vue") as Record<
+        string,
+        () => Promise<{ default: Component }>
+    >;
+    for (const vueCptName in vues) {
+        const vueCptPromise = vues[vueCptName];
+        let htmlKey = vueCptName.split("/").pop();
         if (!htmlKey) {
-            throw new Error(`Cannot load ${key}`);
+            throw new Error(`Cannot load ${vueCptName}`);
         }
         htmlKey = htmlKey
             .split(".")[0]
@@ -25,22 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
             elGroup = document.getElementsByClassName(htmlKey);
         // * Init using ID
         if (el) {
-            const app = createApp(vues(key).default, {
-                json: el.dataset.json ?? {},
+            vueCptPromise().then((vueParsedFile) => {
+                const app = createApp(vueParsedFile.default, {
+                    json: el.dataset.json ?? {},
+                });
+                setupApp(app);
+                app.mount(el);
             });
-            setupApp(app);
-            app.mount(el);
         }
         // * Init Using class
         for (const grpEl of elGroup) {
             // * Hack to prevent loop weirdness
-            setTimeout(() => {
-                const app = createApp(vues(key).default, {
-                    json: (grpEl as HTMLElement).dataset.json ?? {},
-                });
-                setupApp(app);
-                app.mount(grpEl);
-            }, 10);
+            vueCptPromise().then((vueParsedFile) => {
+                setTimeout(() => {
+                    const app = createApp(vueParsedFile.default, {
+                        json: (grpEl as HTMLElement).dataset.json ?? {},
+                    });
+                    setupApp(app);
+                    app.mount(grpEl);
+                }, 500);
+            });
         }
-    });
+    }
 });

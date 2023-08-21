@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests;
-    use DispatchesJobs;
     use ValidatesRequests;
 
     /**
@@ -122,24 +118,6 @@ class Controller extends BaseController
             Session::put("$rName.sort_col", 'order');
             Session::put("$rName.sort_way", 'asc');
         }
-        return $query;
-    }
-
-    /**
-     * Customize pagination with cache or config (default).
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param integer|null                          $pagination
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    protected function customPaginate(Builder $query, $pagination): LengthAwarePaginator
-    {
-        if ($pagination) {
-            Cache::put('pagination', $pagination);
-        };
-        $query = $query->paginate(
-            (Cache::get('pagination')) ? intval(Cache::get('pagination')) : config('pagination.default')
-        );
         return $query;
     }
 }

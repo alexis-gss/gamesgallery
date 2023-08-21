@@ -19,7 +19,7 @@
                         class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $user->name ?? '') }}">
-                    <small class="text-muted">{{ __('form.name_label') }}</small>
+                    <small class="text-body-secondary">{{ __('form.name_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
@@ -38,7 +38,7 @@
                         class="form-control @error('email') is-invalid @enderror"
                         placeholder="{{ __('form.email') }}"
                         value="{{ old('email', $user->email ?? '') }}">
-                    <small class="text-muted">{{ __('form.email_label') }}</small>
+                    <small class="text-body-secondary">{{ __('form.email_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'email'])
                 </div>
                 @can('isAdmin')
@@ -55,14 +55,16 @@
                         id="role"
                         name="role"
                         role="button">
-                        <option value="{{ App\Enums\Users\RoleEnum::admin()->value }}" @if ($user->role == App\Enums\Users\RoleEnum::admin()->value) selected @endif>
-                            {{ App\Enums\Users\RoleEnum::admin()->label }}
+                        <option value="{{ \App\Enums\Users\RoleEnum::admin->value }}"
+                            @if(isset($user->role) && $user->role === \App\Enums\Users\RoleEnum::admin) selected @endif>
+                            {{ \App\Enums\Users\RoleEnum::admin->label() }}
                         </option>
-                        <option value="{{ App\Enums\Users\RoleEnum::visitor()->value }}" @if ($user->role == App\Enums\Users\RoleEnum::visitor()->value) selected @endif>
-                            {{ App\Enums\Users\RoleEnum::visitor()->label }}
+                        <option value="{{ \App\Enums\Users\RoleEnum::visitor->value }}"
+                            @if(isset($user->role) && $user->role === \App\Enums\Users\RoleEnum::visitor) selected @endif>
+                            {{ \App\Enums\Users\RoleEnum::visitor->label() }}
                         </option>
                     </select>
-                    <small class="text-muted">{{ __('form.role_label') }}</small>
+                    <small class="text-body-secondary">{{ __('form.role_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'role'])
                 </div>
                 @endcan
@@ -70,7 +72,6 @@
         </fieldset>
     </div>
 </div>
-
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
@@ -94,7 +95,6 @@
         </fieldset>
     </div>
 </div>
-
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
@@ -128,7 +128,7 @@
                             <i class="fa-solid fa-eye-slash d-none"></i>
                         </button>
                     </div>
-                    <small class="text-muted">{{ __('form.password_label') }}</small>
+                    <small class="text-body-secondary">{{ __('form.password_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'password'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
@@ -159,7 +159,7 @@
                             <i class="fa-solid fa-eye-slash d-none"></i>
                         </button>
                     </div>
-                    <small class="text-muted">{{ __('form.confirmation_label') }}</small>
+                    <small class="text-body-secondary">{{ __('form.confirmation_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'passwordConfirm'])
                 </div>
             </div>

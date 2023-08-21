@@ -2,27 +2,33 @@
 
 namespace App\Exceptions;
 
-use Kwaadpepper\ExceptionHandler\Exceptions\ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
     /**
+     * A list of exception types with their corresponding custom log levels.
+     *
+     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
+     */
+    protected $levels = [];
+
+    /**
      * A list of the exception types that are not reported.
      *
-     * @var array
+     * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [];
 
     /**
-     * Report or log an exception.
+     * A list of the inputs that are never flashed to the session on validation exceptions.
      *
-     * @param \Throwable $e
-     * @return void
-     * @ignore phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
+     * @var array<int, string>
      */
-    public function report(Throwable $e): void
-    {
-        parent::report($e);
-    }
+    protected $dontFlash = [
+        'current_password',
+        'password',
+        'password_confirmation',
+    ];
 }

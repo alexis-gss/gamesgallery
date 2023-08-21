@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
-use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -58,7 +57,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $enumCasts = [
+    protected $casts = [
         'role' => RoleEnum::class
     ];
 

@@ -7,6 +7,7 @@ use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Http\Requests\Bo\Pictures\StorePictureRequest;
 use App\Http\Requests\Bo\Pictures\UpdatePictureRequest;
+use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Game;
 use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
@@ -52,7 +53,7 @@ class GameController extends Controller
         $this->sortQuery($games);
 
         /** Custom pagination */
-        $games = $this->customPaginate($games, $request->pagination);
+        $games = $games->paginate(ToolboxHelper::getValidationOfItemsPerPage());
 
         return view('back.games.index', compact('games', 'search', 'searchFields'));
     }
@@ -67,8 +68,7 @@ class GameController extends Controller
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Collection */
-        $tags = Tag::whereNotIn('id', $game->tags()->pluck('id'))
-            ->select(['id', 'name', 'slug'])->get();
+        $tags = Tag::select(['id', 'name', 'slug'])->get();
 
         return view('back.games.create', compact('game', 'tags'));
     }
@@ -88,11 +88,12 @@ class GameController extends Controller
             if ($game->saveOrFail()) {
                 $pictureValidator = Validator::make($request->all(), StorePictureRequest::rules());
                 $game->updatePictures($game, $pictureValidator->validated());
-                $game->setTags($game, collect($request->tags));
+                Tag::setTags($game, collect(request()->tags));
                 return redirect()->route('bo.games.edit', $game->id)
                     ->with('success', __('changes.creation_saved'));
             }
-            return back()->with('error', __('changes.creation_failed'));
+            return redirect()->back()
+                ->with('error', __('changes.creation_failed'));
         });
     }
 
@@ -106,8 +107,7 @@ class GameController extends Controller
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Collection */
-        $tags = Tag::whereNotIn('id', $game->tags()->pluck('id'))
-            ->select(['id', 'name', 'slug'])->get();
+        $tags = Tag::select(['id', 'name', 'slug'])->get();
 
         return view('back.games.edit', compact('game', 'tags'));
     }
@@ -123,9 +123,9 @@ class GameController extends Controller
     {
         return DB::transaction(function () use ($request, $game) {
             $game->fill($request->validated());
-            $game->setTags($game, collect($request->tags));
             $pictureValidator = Validator::make($request->all(), UpdatePictureRequest::rules());
             $game->updatePictures($game, $pictureValidator->validated());
+            Tag::setTags($game, collect(request()->tags));
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game->id)
                     ->with('success', __('changes.modification_saved'));
@@ -201,7 +201,7 @@ class GameController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Contracts\Container\BindingResolutionException Bla.
      */
-    protected function saveFile(UploadedFile $file, $uuid, string $gameSlug)
+    protected function saveFile(UploadedFile $file, mixed $uuid, string $gameSlug)
     {
         if ($uuid === false) {
             $uuid = Str::uuid();

@@ -34,7 +34,7 @@ final class UserFactory extends Factory
             'picture_alt' => $this->faker->unique()->word,
             'picture_title' => $this->faker->unique()->word,
             'password' => $this->faker->password(),
-            'role' => \collect(RoleEnum::toArray())->random()
+            'role' => \collect(RoleEnum::toArray())->random()->value
         ];
     }
 }

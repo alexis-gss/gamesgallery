@@ -117,5 +117,7 @@ return [
             "rule-name" => "custom-message",
         ],
     ],
-    "attributes" => [],
+    "attributes" => [
+        "pagination_items" => "Number of items per page",
+    ],
 ];

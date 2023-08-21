@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Tags\StoreTagRequest;
 use App\Http\Requests\Bo\Tags\UpdateTagRequest;
+use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
@@ -44,7 +45,7 @@ class TagController extends Controller
         $this->sortQuery($tags);
 
         /** Custom pagination */
-        $tags = $this->customPaginate($tags, $request->pagination);
+        $tags = $tags->paginate(ToolboxHelper::getValidationOfItemsPerPage());
 
         return view('back.tags.index', compact('tags', 'search', 'searchFields'));
     }

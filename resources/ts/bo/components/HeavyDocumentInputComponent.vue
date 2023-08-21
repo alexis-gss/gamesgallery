@@ -87,7 +87,7 @@
       </div>
       <small
         v-if="!intSimpleComponent"
-        class="form-text text-muted"
+        class="form-text text-body-secondary"
       >
         {{ intHelper }}
       </small>
@@ -249,7 +249,7 @@ export default defineComponent({
     this.initResumable();
     if (this.file !== null) {
       if (!this.file.published) {
-        this.intR?.addFile(this.file);
+        this.intR?.addFile(this.file as unknown as File);
         this.intR?.upload();
       } else {
         this.intDocument = this.file;
@@ -325,9 +325,9 @@ export default defineComponent({
      * @param file The file stored.
      * @param message Set a new successful message.
      */
-    fileSuccess(file: { file: ChunkFile }, message: string) {
+    fileSuccess(file: { file: File }, message: string) {
       let result = JSON.parse(message);
-      this.intDocument = file.file;
+      this.intDocument = file.file as unknown as ChunkFile;
       this.intDocument.uuid = result.uid;
       this.intDocument.label = file.file.name;
       this.intSuccess = true;
