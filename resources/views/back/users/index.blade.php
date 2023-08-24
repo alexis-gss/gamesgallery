@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
-@section('title', __('meta.all_users'))
-@section('description', __('meta.all_users_desc'))
+@section('title', __('crud.meta.all_models', ['model' => __('models.users')]))
+@section('description', __('crud.meta.all_models_list', ['model' => __('models.users')]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
@@ -11,7 +11,7 @@
         class="btn btn-primary float-right"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('list.create_new_user') }}">
+        title="{{ __('crud.actions_model.create', ['model' => Str::singular(__('models.users'))]) }}">
         <i class="fa-solid fa-plus"></i>
     </a>
     @endcan
@@ -20,17 +20,13 @@
 <table class="table table-hover">
     @if (count($users) > 0)
     <thead>
-        @php
-        $cols = [
-            'name' => __('list.name'),
-            'email' => __('list.email'),
-            'role' => __('list.role'),
-            'order' => __('list.order')
-        ];
-        @endphp
         @include('back.modules.table-col-sorter', [
-            'cols' => $cols,
-            'mobileHide' => [],
+            'cols' => [
+                'name'  => __('validation.attributes.name'),
+                'email' => __('validation.attributes.email'),
+                'role'  => __('validation.attributes.role'),
+                'order' => __('validation.attributes.order')
+            ],
         ])
     </thead>
     <tbody>
@@ -41,11 +37,7 @@
                 @if(Auth::user()->id === $user->id || Gate::check('isAdmin'))
                 {{ $user->email }}
                 @else
-                <span class="text-danger"
-                    title="{{ __('list.right') }}"
-                    data-bs="tooltip">
-                    <i class="fa-solid fa-ban"></i>
-                </span>
+                @include('back.modules.user-right')
                 @endif
             </td>
             <td class="text-center align-middle">
@@ -55,8 +47,8 @@
             @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
             @include('back.modules.change-model-order', [
                 'routeName' => 'users',
-                'models' => $users,
-                'model' => $user
+                'models'    => $users,
+                'model'     => $user
             ])
             @endif
             <td class="text-end align-middle">
@@ -70,7 +62,7 @@
                         href="{{ route('bo.users.duplicate', ['user' => $user->id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.duplicate_user') }}">
+                        title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.users'))]) }}">
                         <i class="fa-solid fa-copy"></i>
                     </a>
                     @endcan
@@ -78,7 +70,7 @@
                         href="{{ route('bo.users.edit', ['user' => $user->id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.edit_user') }}">
+                        title="{{ __('crud.actions_model.edit', ['model' => Str::singular(__('models.users'))]) }}">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
                     @csrf
@@ -87,16 +79,12 @@
                         type="submit"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.delete_user') }}">
+                        title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.users'))]) }}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </form>
                 @else
-                <span class="text-danger"
-                    title="{{ __('list.right') }}"
-                    data-bs="tooltip">
-                    <i class="fa-solid fa-ban"></i>
-                </span>
+                @include('back.modules.user-right')
                 @endcan
             </td>
         </tr>
@@ -104,7 +92,7 @@
     </tbody>
     @else
     <tr>
-        <td class="border-0">{{ __('list.no_users_found') }}</td>
+        <td class="border-0">{{ __('crud.other.no_model_found', ['model' => Str::singular(__('models.users'))]) }}</td>
     </tr>
     @endif
 </table>

@@ -42,10 +42,10 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'slug' => 'required|string|unique:users,slug|max:255',
-            'name' => 'required|string|min:3|max:255',
-            'email' => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter|max:255',
-            'role' => ['required', new Enum(RoleEnum::class)],
+            'slug'     => 'required|string|unique:users,slug|max:255',
+            'name'     => 'required|string|min:3|max:255',
+            'email'    => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter|max:255',
+            'role'     => ['required', new Enum(RoleEnum::class)],
             'password' => [
                 'required', 'required_with:password_confirmation', 'confirmed', 'max:255',
                 Password::min(8)
@@ -70,11 +70,11 @@ class StoreUserRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name of the user'),
-            'slug' => trans('slug of the user'),
-            'email' => trans('email of the user'),
-            'role' => trans('role of the user'),
-            'picture' => trans('picture of the user'),
+            'name'     => trans('name of the user'),
+            'slug'     => trans('slug of the user'),
+            'email'    => trans('email of the user'),
+            'role'     => trans('role of the user'),
+            'picture'  => trans('picture of the user'),
             'password' => trans('password of the user')
         ];
     }

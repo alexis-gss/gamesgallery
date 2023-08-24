@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
-@section('title', __('meta.all_games'))
-@section('description', __('meta.all_games_desc'))
+@section('title', __('crud.meta.all_models', ['model' => __('models.games')]))
+@section('description', __('crud.meta.all_models_list', ['model' => __('models.games')]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
@@ -11,7 +11,7 @@
         class="btn btn-primary float-right"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('list.create_new_game') }}">
+        title="{{ __('crud.actions_model.create', ['model' => Str::singular(__('models.games'))]) }}">
         <i class="fa-solid fa-plus"></i>
     </a>
     @endcan
@@ -20,18 +20,14 @@
 <table class="table table-hover">
     @if (count($games) > 0)
     <thead>
-        @php
-        $cols = [
-            'name' => __('list.name'),
-            'folder_id' => __('list.folder_associated'),
-            'pictures' => __('list.images'),
-            'published' => __('list.publishment'),
-            'order' => __('list.order')
-        ];
-        @endphp
         @include('back.modules.table-col-sorter', [
-            'cols' => $cols,
-            'mobileHide' => [],
+            'cols' => [
+                'name'      => __('validation.attributes.name'),
+                'folder_id' => __('validation.attributes.folder_associated'),
+                'pictures'  => __('validation.attributes.images'),
+                'published' => __('validation.attributes.publishment'),
+                'order'     => __('validation.attributes.order')
+            ],
             'ignore' => ['pictures'],
         ])
     </thead>
@@ -46,7 +42,7 @@
                 <a href="{{ route('bo.folders.edit', ['folder' => $game->folder_id]) }}"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.show_folder') }}"
+                    title="{{ __('texts.bo.tooltip.show_folder') }}"
                     class="text-decoration-none">
                 @endcan
                 <span class="@can('isAdmin') badge bg-primary d-inline-block text-white rounded-2 @else text-dark @endcan">
@@ -65,14 +61,14 @@
             </td>
             @include('back.modules.change-published-status', [
                 'routeName' => 'games',
-                'model' => $game
+                'model'     => $game
             ])
             @php $routeName = request()->route()->getName(); @endphp
             @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
             @include('back.modules.change-model-order', [
                 'routeName' => 'games',
-                'models' => $games,
-                'model' => $game
+                'models'    => $games,
+                'model'     => $game
             ])
             @endif
             <td class="text-end align-middle">
@@ -87,7 +83,7 @@
                         target="_blank"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.show_game') }}">
+                        title="{{ __('crud.actions_model.show', ['model' => Str::singular(__('models.games'))]) }}">
                         <i class="fa-solid fa-eye"></i>
                     </a>
                     @endif
@@ -95,14 +91,14 @@
                         href="{{ route('bo.games.duplicate', ['game' => $game->id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.duplicate_game') }}">
+                        title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.games'))]) }}">
                         <i class="fa-solid fa-copy"></i>
                     </a>
                     <a class="btn btn-sm btn-primary"
                         href="{{ route('bo.games.edit', ['game' => $game->id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.edit_game') }}">
+                        title="{{ __('crud.actions_model.edit', ['model' => Str::singular(__('models.games'))]) }}">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
                     @csrf
@@ -111,16 +107,12 @@
                         type="submit"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.delete_game') }}">
+                        title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.games'))]) }}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </form>
                 @else
-                <span class="text-danger"
-                    title="{{ __('list.right') }}"
-                    data-bs="tooltip">
-                    <i class="fa-solid fa-ban"></i>
-                </span>
+                @include('back.modules.user-right')
                 @endcan
             </td>
         </tr>
@@ -128,7 +120,7 @@
     </tbody>
     @else
     <tr>
-        <td class="border-0">{{ __('list.no_games_found') }}</td>
+        <td class="border-0">{{ __('crud.other.no_model_found', ['model' => Str::singular(__('models.games'))]) }}</td>
     </tr>
     @endif
 </table>

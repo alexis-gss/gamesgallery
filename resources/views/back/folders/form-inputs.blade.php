@@ -1,14 +1,14 @@
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('form.general_informations') }}</legend>
+            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="name" class="col-form-label">
-                        <b>{{ __('form.identification') }}</b>
+                        <b>{{ __('texts.bo.label.identification') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_name_folder') }}">
+                            title="{{ __('texts.bo.tooltip.name_folder') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -17,17 +17,23 @@
                         id="name"
                         name="name"
                         class="form-control @error('name') is-invalid @enderror"
-                        placeholder="{{ __('form.name') }}*"
+                        placeholder="{{ __('validation.attributes.name') }}*"
                         value="{{ old('name', $folder->name ?? '') }}">
-                    <small class="text-body-secondary">{{ __('form.name_folder_label') }}*</small>
+                    <small class="text-body-secondary">
+                        {{ __('validation.between.string', [
+                            'attribute' => __('validation.attributes.name'),
+                            'min' => 3,
+                            'max' => 255
+                        ]) }}
+                    </small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="color" class="col-form-label">
-                        <b>{{ __('Couleur') }}</b>
+                        <b>{{ __('validation.attributes.color') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_color_picker') }}">
+                            title="{{ __('texts.bo.tooltip.color_picker') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -45,6 +51,9 @@
                         }"
                         class="form-control"
                         required>
+                    <small class="text-body-secondary">
+                        {{ __('validation.custom.color_label') }}
+                    </small>
                     @include('back.modules.input-error', ['inputName' => 'color'])
                 </div>
             </div>
@@ -55,7 +64,7 @@
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('form.visibility') }}</legend>
+            <legend>{{ __('texts.bo.title.visibility') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
@@ -67,10 +76,12 @@
                             @if (old('published', $folder->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                            <b>{{ __('form.publish') }}</b>
+                            <b>{{ __('validation.attributes.publishment') }}</b>
                         </label>
                         <br>
-                        <small class="form-text text-body-secondary">{{ __('form.publish_label') }}</small>
+                        <small class="form-text text-body-secondary">
+                            {{ __('validation.boolean', ['attribute' => __('validation.attributes.publishment')]) }}
+                        </small>
                     </div>
                     @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>

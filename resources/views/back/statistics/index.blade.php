@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
-@section('title', __('meta.all_folders'))
-@section('description', __('meta.all_folders_desc'))
+@section('title', __('crud.meta.all_models', ['model' => __('models.stats')]))
+@section('description', __('crud.meta.all_models_list', ['model' => __('models.stats')]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom pb-3">
@@ -12,7 +12,7 @@
         <a href="{{ route('bo.folders.edit', $latestFolder) }}" class="card text-decoration-none p-0">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="card-body text-center">
-                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('other.stats_latest_folder') }}</p>
+                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('texts.bo.other.stats_latest_model', ['model' => Str::singular(__('models.folders'))]) }}</p>
                     <p class="card-title m-0">{{ $latestFolder->name }}</p>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 @endif
                 <div class="flex-fill">
                     <div class="card-body text-center @if (isset($latestGame->picture[0])) text-md-start @endif">
-                        <p class="border-bottom fw-bold m-0 pb-1">{{ __('other.stats_latest_game') }}</p>
+                        <p class="border-bottom fw-bold m-0 pb-1">{{ __('texts.bo.other.stats_latest_model', ['model' => Str::singular(__('models.games'))]) }}</p>
                         <p class="card-title">{{ $latestGame->name }}</p>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
         <a href="{{ route('bo.tags.edit', $latestTag) }}" class="card text-decoration-none p-0">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="card-body text-center">
-                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('other.stats_latest_tag') }}</p>
+                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('texts.bo.other.stats_latest_model', ['model' => Str::singular(__('models.tags'))]) }}</p>
                     <p class="card-title m-0">{{ $latestTag->name }}</p>
                 </div>
             </div>

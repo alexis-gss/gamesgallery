@@ -1,7 +1,7 @@
 @extends('layouts.frontend', ['brParam' => $game])
 
-@section('title', (isset($game) ? $game->name : __('meta.default_title')))
-@section('description', (isset($game) ? __('meta.description',  ['game' =>  $game->name]) :  __('meta.default_description')))
+@section('title', (isset($game) ? $game->name : __('texts.fo.default_title')))
+@section('description', (isset($game) ? __('texts.fo.description',  ['game' =>  $game->name]) :  __('texts.fo.default_description')))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -16,7 +16,7 @@
             <div class="d-inline-block user-select-none text-center w-100">
                 <a href="{{ route('fo.homepage') }}" class="text-decoration-none">
                     <button class="badge bg-primary border-0 text-white rounded-2 px-2"
-                        title="{{ __('list.back_home') }}"
+                        title="{{ __('texts.bo.other.back_home') }}"
                         data-bs="tooltip"
                         data-bs-placement="top">
                         <i class="fa fa-arrow-left"></i>

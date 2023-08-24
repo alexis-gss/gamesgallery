@@ -5,7 +5,7 @@
             class="@if($loop->last and $models->currentPage() === $models->lastPage()) invisible @endif">
             <button type="submit"
                 class="btn btn-sm btn-outline-dark me-1 @if($loop->last and $models->currentPage() === $models->lastPage()) disabled @endif"
-                title="{{ __('list.down') }}"
+                title="{{ __('crud.other.down') }}"
                 data-bs="tooltip">
                 <i class="fas fa-arrow-down"></i>
             </button>
@@ -14,17 +14,13 @@
             class="@if($loop->first and $models->onFirstPage()) invisible @endif">
             <button type="submit"
                 class="btn btn-sm btn-outline-dark @if(($loop->first and $models->onFirstPage())) disabled @endif"
-                title="{{ __('list.up') }}"
+                title="{{ __('crud.other.up') }}"
                 data-bs="tooltip">
                 <i class="fas fa-arrow-up"></i>
             </button>
         </a>
     </div>
     @else
-    <span class="text-danger"
-        title="{{ __('list.right') }}"
-        data-bs="tooltip">
-        <i class="fa-solid fa-ban"></i>
-    </span>
+    @include('back.modules.user-right')
     @endcan
 </td>

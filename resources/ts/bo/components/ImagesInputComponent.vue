@@ -8,7 +8,7 @@
             @click.prevent="chooseFiles"
             class="btn btn-secondary"
             type="button"
-            :title="__('form.tooltip_image_input_modify_sources')"
+            :title="__('texts.bo.tooltip.image_input_modify_sources')"
             data-bs-tooltip="tooltip"
             :disabled="intValues.length >= itemLimit[1]"
           >
@@ -29,12 +29,12 @@
             @click.prevent="chooseFiles"
             type="text"
             :value="
-              __('form.image_input_number_images', {
+              __('texts.bo.other.number_images', {
                 number: intValues.length + '/' + itemLimit[1],
               })
             "
             class="form-control right-aligned"
-            :title="__('form.tooltip_image_input_modify_sources')"
+            :title="__('texts.bo.tooltip.image_input_modify_sources')"
             data-bs-tooltip="tooltip"
             :aria-describedby="`Help${intId}`"
             :disabled="intValues.length >= itemLimit[1]"
@@ -43,7 +43,7 @@
           <button
             class="btn btn-primary btn-collapse collapsed"
             type="button"
-            :title="__('form.tooltip_image_input_show_hide_content')"
+            :title="__('texts.bo.tooltip.image_input_show_hide_content')"
             data-bs-tooltip="tooltip"
             data-bs-toggle="collapse"
             data-bs-target="#multiple-images"
@@ -58,7 +58,7 @@
             @click.prevent="removeFiles"
             class="btn btn-danger"
             type="button"
-            :title="__('form.tooltip_image_input_remove_images')"
+            :title="__('texts.bo.tooltip.image_input_remove_images')"
             data-bs-tooltip="tooltip"
             :disabled="intValues.length <= 0"
           >

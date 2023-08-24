@@ -3,7 +3,7 @@
     <label class="input-group-text" for="searchField">{{ $searchFields }}</label>
     <input class="form-control"
         type="text"
-        placeholder="{{ __('search.search_words') }}"
+        placeholder="{{ __('crud.search.keywords') }}"
         id="searchField"
         name="search"
         value="{{ old('search', $search ?? '') }}">
@@ -11,13 +11,13 @@
         type="submit"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('search.apply_search') }}">
+        title="{{ __('crud.search.apply_search') }}">
         <i class="fa-solid fa-magnifying-glass"></i>
     </button>
     <a class="btn btn-danger"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('search.remove_search') }}"
+        title="{{ __('crud.search.remove_search') }}"
         href="{{ request()->url() }}">
         <i class="fa-solid fa-delete-left"></i>
     </a>

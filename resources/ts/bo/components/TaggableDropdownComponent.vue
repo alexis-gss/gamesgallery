@@ -18,7 +18,7 @@
         @before-adding-tag="beforeTagSave"
         @tags-changed="changedTags"
         :max-tags="6"
-        :placeholder="__('form.taggable_add')"
+        :placeholder="__('texts.bo.other.taggable_add')"
       />
       <div
         class="text-center py-2"
@@ -28,13 +28,13 @@
           class="btn btn-sm btn-primary ms-2"
           @click.prevent="addTags"
         >
-          {{ __("form.taggable_create") }}
+          {{ __("texts.bo.other.taggable_create") }}
         </button>
         <button
           class="btn btn-sm btn-danger ms-2"
           @click.prevent="cancelTags"
         >
-          {{ __("form.taggable_cancel") }}
+          {{ __("texts.bo.other.taggable_cancel") }}
         </button>
       </div>
     </div>
@@ -57,10 +57,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
 import type VueTagsInput from "@sipec/vue3-tags-input";
 import { VueTagsInput as VueTagsInputCls } from "@sipec/vue3-tags-input";
 import slugify from "slugify";
+import { defineComponent } from "vue";
 import route from "../../modules/route";
 import trans from "../../modules/trans";
 

@@ -1,5 +1,6 @@
 import { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
 import sweetalert from "../modules/sweetalert";
+import * as trans from "../modules/trans";
 
 window.addEventListener("DOMContentLoaded", () => {
     /**
@@ -18,8 +19,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 );
             }
             sweetalert.methods.confirm(
-                "Are you sure ?",
-                "All data will be lost.",
+                trans.default.methods.__("crud.sweetalert.are_you_sure"),
+                trans.default.methods.__("crud.sweetalert.data_lost"),
                 el as HTMLFormElement,
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 function (response: SweetAlertResult<any>) {

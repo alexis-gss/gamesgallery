@@ -5,7 +5,7 @@
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="bottom"
-            title="{{ __('nav.access_website') }}">
+            title="{{ __('texts.bo.other.access_website') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
         @auth
@@ -42,9 +42,11 @@
                     <div class="dropdown-menu dropdown-menu-end text-center p-0 m-0" aria-labelledby="navbarDropdown">
                         <a class="btn btn-link w-100 text-decoration-none text-body-secondary p-2"
                             href="{{ route('bo.users.edit', Auth::user()->id) }}"
-                            title="{{ __('nav.to_edit_profile') }}"
+                            title="{{ __('texts.bo.tooltip.to_edit_profile') }}"
                             data-bs="tooltip"
-                            data-bs-placement="bottom">{{ __('nav.edit_profile') }}</a>
+                            data-bs-placement="bottom">
+                            {{ __('texts.bo.other.edit_profile') }}
+                        </a>
                         <hr class="dropdown-divider m-0">
                         <form id="logout-form" action="{{ route('bo.logout') }}" method="POST" class="text-center m-0">
                             @csrf
@@ -52,8 +54,8 @@
                                 type="submit"
                                 data-bs="tooltip"
                                 data-bs-placement="top"
-                                title="{{ __('nav.to_disconnect') }}">
-                                {{ __('nav.disconnect') }}
+                                title="{{ __('texts.bo.tooltip.to_disconnect') }}">
+                                {{ __('texts.bo.other.disconnect') }}
                             </button>
                         </form>
                     </div>

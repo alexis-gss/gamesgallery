@@ -1,7 +1,7 @@
 @extends('layouts.backend', ['brParam' => $folder])
 
-@section('title', __('meta.folders_edition'))
-@section('description', __('meta.folders_edition_desc'))
+@section('title', __('crud.meta.edition_model', ['model' => Str::singular(__('models.folders'))]))
+@section('description', __('crud.meta.edition_model_desc', ['model' => Str::singular(__('models.folders'))]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,7 +11,7 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('form.return_list') }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => __('models.folders')]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $folder])
@@ -27,7 +27,7 @@
                     href="{{ route('bo.folders.duplicate', ['folder' => $folder->id]) }}"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.duplicate_folder') }}">
+                    title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.folders'))]) }}">
                     <i class="fa-solid fa-copy"></i>
                 </a>
                 <button id="formSubmitClone"
@@ -35,14 +35,14 @@
                     class="btn btn-primary"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('form.save') }}">
+                    title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.folders'))]) }}">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </button>
                 <button type="submit"
                     class="btn btn-danger"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.delete_folder') }}">
+                    title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.folders'))]) }}">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
@@ -60,7 +60,7 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('form.save') }}">
+                title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.folders'))]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>

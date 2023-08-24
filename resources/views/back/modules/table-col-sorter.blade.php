@@ -35,7 +35,7 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
                 href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'asc', 'rst' => null])) }}">
                 <button
                     class="btn btn-sm btn-outline-dark"
-                    title="{{ __('list.sort_descending', ['name' => Str::lower($colname)]) }}"
+                    title="{{ __('crud.filter.sort_descending', ['name' => Str::lower($colname)]) }}"
                     data-bs="tooltip">
                     <i class="fas fa-arrow-down 2xs"></i>
                 </button>
@@ -46,7 +46,7 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
                 href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'desc', 'rst' => null])) }}">
                 <button
                     class="btn btn-sm btn-outline-dark"
-                    title="{{ __('list.sort_ascending', ['name' => Str::lower($colname)]) }}"
+                    title="{{ __('crud.filter.sort_ascending', ['name' => Str::lower($colname)]) }}"
                     data-bs="tooltip">
                     <i class="fas fa-arrow-up 2xs"></i>
                 </button>
@@ -61,11 +61,11 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
         <a class="btn btn-sm btn-danger"
             href="{{ request()->fullUrlWithQuery(['sort_col' => null, 'sort_way' => null, 'rst' => true, 'search' => null]) }}"
             data-bs="tooltip"
-            title="{{ __('list.sort_delete') }}">
+            title="{{ __('crud.filter.sort_delete') }}">
             <i class="fa fa-eraser"></i>
         </a>
         @else
-        <span data-bs="tooltip" data-bs-placement="top" title="{{ __('list.sort_arrow') }}">
+        <span data-bs="tooltip" data-bs-placement="top" title="{{ __('crud.filter.sort_arrow') }}">
             <i class="fas fa-question-circle"></i>
         </span>
         @endif

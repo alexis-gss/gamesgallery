@@ -6,7 +6,7 @@
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('nav.access_website') }}">
+            title="{{ __('texts.bo.other.access_website') }}">
             Alexis Gousseau
         </a>
         | All rights reserved

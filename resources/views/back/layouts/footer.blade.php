@@ -5,7 +5,7 @@
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('footer.website') }}"
+            title="{{ __('texts.bo.other.access_portfolio') }}"
             class="text-reset text-decoration-none">
             {{ $globalName }}
         </a>

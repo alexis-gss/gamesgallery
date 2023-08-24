@@ -1,14 +1,14 @@
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3 mb-3">
-            <legend>{{ __('form.general_informations') }}</legend>
+            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="name" class="col-form-label">
-                        <b>{{ __('form.identification') }}</b>
+                        <b>{{ __('texts.bo.label.identification') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_name_tag') }}">
+                            title="{{ __('texts.bo.tooltip.name_tag') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -17,9 +17,15 @@
                         id="name"
                         name="name"
                         class="form-control @error('name') is-invalid @enderror"
-                        placeholder="{{ __('form.name') }}*"
+                        placeholder="{{ __('validation.attributes.name') }}*"
                         value="{{ old('name', $tag->name ?? '') }}">
-                    <small class="text-body-secondary">{{ __('form.tag_label') }}</small>
+                    <small class="text-body-secondary">
+                        {{ __('validation.between.string', [
+                            'attribute' => __('validation.attributes.name'),
+                            'min' => 3,
+                            'max' => 255
+                        ]) }}
+                    </small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
             </div>
@@ -30,7 +36,7 @@
 <div class="row mb-3 border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('form.visibility') }}</legend>
+            <legend>{{ __('texts.bo.title.visibility') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
@@ -42,10 +48,12 @@
                             @if (old('published', $tag->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                            <b>{{ __('form.publish') }}</b>
+                            <b>{{ __('validation.attributes.publishment') }}</b>
                         </label>
                         <br>
-                        <small class="form-text text-body-secondary">{{ __('form.publish_label') }}</small>
+                        <small class="form-text text-body-secondary">
+                            {{ __('validation.boolean', ['attribute' => __('validation.attributes.publishment')]) }}
+                        </small>
                     </div>
                     @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>

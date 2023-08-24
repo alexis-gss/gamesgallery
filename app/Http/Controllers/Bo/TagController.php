@@ -76,10 +76,10 @@ class TagController extends Controller
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag->id)
-                    ->with('success', __('changes.creation_saved'));
+                    ->with('success', __('crud.changes.creation_saved'));
             }
             return redirect()->back()
-                ->with('error', __('changes.creation_failed'));
+                ->with('error', __('crud.changes.creation_failed'));
         });
     }
 
@@ -129,10 +129,10 @@ class TagController extends Controller
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag->id)
-                    ->with('success', __('changes.modification_saved'));
+                    ->with('success', __('crud.changes.modification_saved'));
             }
             return redirect()->route('bo.tags.edit', $tag->id)
-                ->with('error', __('changes.modification_failed'));
+                ->with('error', __('crud.changes.modification_failed'));
         });
     }
 
@@ -146,10 +146,10 @@ class TagController extends Controller
     {
         if ($tag->deleteOrFail()) {
             return redirect()->route('bo.tags.index')
-                ->with('success', __('changes.deletion_successful'));
+                ->with('success', __('crud.changes.deletion_successful'));
         }
         return redirect()->back()
-            ->with('error', __('changes.deletion_failed'));
+            ->with('error', __('crud.changes.deletion_failed'));
     }
 
     /**

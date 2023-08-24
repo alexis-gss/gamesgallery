@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
-@section('title', __('meta.all_tags'))
-@section('description', __('meta.all_tags_desc'))
+@section('title', __('crud.meta.all_models', ['model' => __('models.tags')]))
+@section('description', __('crud.meta.all_models_list', ['model' => __('models.tags')]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
@@ -11,7 +11,7 @@
         class="btn btn-primary float-right"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('list.create_new_tag') }}">
+        title="{{ __('crud.actions_model.create', ['model' => Str::singular(__('models.tags'))]) }}">
         <i class="fa-solid fa-plus"></i>
     </a>
     @endcan
@@ -20,16 +20,12 @@
 <table class="table table-hover">
     @if (count($tags) > 0)
     <thead>
-        @php
-        $cols = [
-            'name' => __('list.name'),
-            'published' => __('list.publishment'),
-            'order' => __('list.order')
-        ];
-        @endphp
         @include('back.modules.table-col-sorter', [
-            'cols' => $cols,
-            'mobileHide' => [],
+            'cols' => [
+                'name'      => __('validation.attributes.name'),
+                'published' => __('validation.attributes.publishment'),
+                'order'     => __('validation.attributes.order')
+            ],
         ])
     </thead>
     <tbody>
@@ -38,14 +34,14 @@
             <td class="text-center align-middle">{{ $tag->name }}</td>
             @include('back.modules.change-published-status', [
                 'routeName' => 'tags',
-                'model' => $tag
+                'model'     => $tag
             ])
             @php $routeName = request()->route()->getName(); @endphp
             @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
             @include('back.modules.change-model-order', [
                 'routeName' => 'tags',
-                'models' => $tags,
-                'model' => $tag
+                'models'    => $tags,
+                'model'     => $tag
             ])
             @endif
             <td class="text-end align-middle">
@@ -58,14 +54,14 @@
                         href="{{ route('bo.tags.duplicate', ['tag' => $tag->id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.duplicate_tag') }}">
+                        title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.tags'))]) }}">
                         <i class="fa-solid fa-copy"></i>
                     </a>
                     <a class="btn btn-sm btn-primary"
                         href="{{ route('bo.tags.edit', ['tag' => $tag->id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.edit_tag') }}">
+                        title="{{ __('crud.actions_model.edit', ['model' => Str::singular(__('models.tags'))]) }}">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
                     @csrf
@@ -74,16 +70,12 @@
                         class="btn btn-sm btn-danger"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('list.delete_tag') }}">
+                        title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.tags'))]) }}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </form>
                 @else
-                <span class="text-danger"
-                    title="{{ __('list.right') }}"
-                    data-bs="tooltip">
-                    <i class="fa-solid fa-ban"></i>
-                </span>
+                @include('back.modules.user-right')
                 @endcan
             </td>
         </tr>
@@ -91,7 +83,7 @@
     </tbody>
     @else
     <tr>
-        <td class="border-0">{{ __('list.no_tags_found') }}</td>
+        <td class="border-0">{{ __('crud.other.no_model_found', ['model' => Str::singular(__('models.tags'))]) }}</td>
     </tr>
     @endif
 </table>

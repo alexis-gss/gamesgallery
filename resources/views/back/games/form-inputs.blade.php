@@ -1,14 +1,14 @@
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('form.general_informations') }}</legend>
+            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('form.identification') }}</b>
+                        <b>{{ __('texts.bo.label.identification') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_name_game') }}">
+                            title="{{ __('texts.bo.tooltip.name_game') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -17,17 +17,23 @@
                         id="name"
                         name="name"
                         class="form-control @error('name') is-invalid @enderror"
-                        placeholder="{{ __('form.name') }}"
+                        placeholder="{{ __('validation.attributes.name') }}"
                         value="{{ old('name', $game->name ?? '') }}">
-                    <small class="text-body-secondary">{{ __('form.name_label') }}</small>
+                    <small class="text-body-secondary">
+                        {{ __('validation.between.string', [
+                            'attribute' => __('validation.attributes.name'),
+                            'min' => 3,
+                            'max' => 255
+                        ]) }}
+                    </small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('form.organization') }}</b>
+                        <b>{{ __('texts.bo.label.organization') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_folders', ['number' => count($globalFolders)]) }}">
+                            title="{{ __('texts.bo.tooltip.folders', ['number' => count($globalFolders)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -38,7 +44,7 @@
                         </option>
                         @endforeach
                     </select>
-                    <small class="text-body-secondary">{{ __('form.folders_label') }}</small>
+                    <small class="text-body-secondary">{{ __('validation.custom.select-single', ['entity' => Str::singular(__('models.folders'))]) }}</small>
                     @include('back.modules.input-error', ['inputName' => 'folder_id'])
                 </div>
             </div>
@@ -49,14 +55,14 @@
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('Visuals') }}</legend>
+            <legend>{{ __('texts.bo.title.visuals') }}</legend>
             <div class="row mb-3">
                 <div class="col-12">
                     <label for="name" class="col-form-label">
-                        <b>{{ __('form.images') }}</b>
+                        <b>{{ __('texts.bo.label.choose_pictures') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_game_images') }}">
+                            title="{{ __('texts.bo.tooltip.game_images') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -69,7 +75,7 @@
                         'model' => $game,
                         'value' => $game->pictures ?? [],
                         'limit' => [0,76],
-                        'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
+                        'helper' => __('validation.custom.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
                         'csrf' => csrf_token(),
                         'errors' => $errors->getBag('default')->getMessages()
                     ];
@@ -85,14 +91,14 @@
 <div class="row border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('form.general_informations') }}</legend>
+            <legend>{{ __('texts.bo.title.organization') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     <label for="name" class="col-form-label">
-                        <b>{{ __('form.tags') }}</b>
+                        <b>{{ __('models.tags') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('form.tooltip_tags', ['number' => count($globalTags)]) }}">
+                            title="{{ __('texts.bo.tooltip.tags', ['number' => count($globalTags)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -104,6 +110,9 @@
                     ];
                     @endphp
                     <div id="taggable-dropdown" data-json='@json($data)'></div>
+                    <small class="text-body-secondary">
+                        {{ __('validation.custom.select-multiple', ['entity' => __('models.tags')]) }}
+                    </small>
                     @include('back.modules.input-error', ['inputName' => 'tags'])
                 </div>
             </div>
@@ -114,7 +123,7 @@
 <div class="row mb-3 border-bottom">
     <div class="col">
         <fieldset class="p-3">
-            <legend>{{ __('form.visibility') }}</legend>
+            <legend>{{ __('texts.bo.title.visibility') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
@@ -126,10 +135,12 @@
                             @if (old('published', $game->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                            <b>{{ __('form.publish') }}</b>
+                            <b>{{ __('validation.attributes.publishment') }}</b>
                         </label>
                         <br>
-                        <small class="form-text text-body-secondary">{{ __('form.publish_label') }}</small>
+                        <small class="form-text text-body-secondary">
+                            {{ __('validation.boolean', ['attribute' => __('validation.attributes.publishment')]) }}
+                        </small>
                     </div>
                     @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>

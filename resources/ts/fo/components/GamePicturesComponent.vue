@@ -38,7 +38,7 @@
                     role="status"
                   >
                     <span class="visually-hidden">
-                      {{ __("nav.text_loading") }}
+                      {{ __("texts.fo.text_loading") }}
                     </span>
                   </div>
                 </div>
@@ -79,7 +79,7 @@
                     role="status"
                   >
                     <span class="visually-hidden">
-                      {{ __("nav.text_loading") }}
+                      {{ __("texts.fo.text_loading") }}
                     </span>
                   </div>
                 </div>
@@ -120,7 +120,7 @@
                     role="status"
                   >
                     <span class="visually-hidden">
-                      {{ __("nav.text_loading") }}
+                      {{ __("texts.fo.text_loading") }}
                     </span>
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                     role="status"
                   >
                     <span class="visually-hidden">
-                      {{ __("nav.text_loading") }}
+                      {{ __("texts.fo.text_loading") }}
                     </span>
                   </div>
                 </div>
@@ -177,13 +177,13 @@
         class="spinner-border text-primary"
         role="status"
       >
-        <span class="visually-hidden">{{ __("nav.text_loading") }}</span>
+        <span class="visually-hidden">{{ __("texts.fo.text_loading") }}</span>
       </div>
       <div
         v-if="gameAllLoaded"
         class="fst-italic text-secondary"
       >
-        {{ __("nav.images_loaded") }}
+        {{ __("texts.fo.images_loaded") }}
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@
     v-else
     class="text-center"
   >
-    {{ __("nav.images_no_one") }}
+    {{ __("texts.fo.images_no_one") }}
   </div>
 </template>
 

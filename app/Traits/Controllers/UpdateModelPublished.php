@@ -21,6 +21,6 @@ trait UpdateModelPublished
     {
         $model->published = !$model->published;
         $model->saveOrFail();
-        return redirect()->back()->with('success', trans(__('changes.publish_status_saved')));
+        return redirect()->back()->with('success', trans(__('crud.changes.publish_status_saved')));
     }
 }
