@@ -26,7 +26,7 @@ class StoreTagRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'slug' => Str::slug($this->name),
+            'slug'      => Str::slug($this->name),
             'published' => $this->published ? true : false
         ]);
     }
@@ -39,8 +39,8 @@ class StoreTagRequest extends FormRequest
     public function rules()
     {
         return [
-            'slug' => 'required|string|unique:tags,slug|max:255',
-            'name' => 'required|string|min:2|max:25',
+            'slug'      => 'required|string|unique:tags,slug|max:255',
+            'name'      => 'required|string|min:2|max:25',
             'published' => 'required|boolean'
         ];
     }
@@ -53,8 +53,8 @@ class StoreTagRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name of the tag'),
-            'slug' => trans('slug of the tag'),
+            'name'      => trans('name of the tag'),
+            'slug'      => trans('slug of the tag'),
             'published' => trans('published status of the tag')
         ];
     }

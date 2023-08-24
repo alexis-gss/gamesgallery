@@ -1,7 +1,7 @@
 @extends('layouts.backend', ['brParam' => $folder])
 
-@section('title', __('meta.folders_creation'))
-@section('description', __('meta.folders_creation_desc'))
+@section('title', __('crud.meta.creation_model', ['model' => Str::singular(__('models.folders'))]))
+@section('description', __('crud.meta.creation_model_desc', ['model' => Str::singular(__('models.folders'))]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,7 +11,7 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('form.return_list') }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => __('models.folders')]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $folder])
@@ -22,7 +22,7 @@
             class="btn btn-primary"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('form.save') }}">
+            title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.folders'))]) }}">
             <i class="fa-solid fa-floppy-disk"></i>
         </button>
     </div>
@@ -37,7 +37,7 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('form.save') }}">
+                title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.folders'))]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>

@@ -4,7 +4,7 @@
         @csrf
         <button type="submit"
             class="btn btn-sm @if($model->published) btn-primary @else btn-danger @endif"
-            title="{{ __($model->published ? __('list.unpublish') : __('list.publish')) }}"
+            title="{{ __($model->published ? __('crud.other.unpublish') : __('crud.other.publish')) }}"
             data-bs="tooltip"
             data-bs-placement="top">
             @if($model->published)
@@ -15,10 +15,6 @@
         </button>
     </form>
     @else
-    <span class="text-danger"
-        title="{{ __('list.right') }}"
-        data-bs="tooltip">
-        <i class="fa-solid fa-ban"></i>
-    </span>
+    @include('back.modules.user-right')
     @endcan
 </td>

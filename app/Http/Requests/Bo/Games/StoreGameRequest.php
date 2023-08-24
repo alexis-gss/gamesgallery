@@ -26,7 +26,7 @@ class StoreGameRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'slug' => Str::slug(strip_tags($this->name)),
+            'slug'      => Str::slug(strip_tags($this->name)),
             'published' => $this->published ? true : false
         ]);
     }
@@ -39,14 +39,14 @@ class StoreGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => 'required|string|unique:games,slug|max:255',
-            'folder_id' => 'required|integer|exists:folders,id',
-            'name' => 'required|string|min:3|max:255',
-            'tags' => 'sometimes|array',
-            'tags.*' => 'required|array',
-            'tags.*.id' => 'required|numeric|exists:tags,id|distinct',
+            'slug'        => 'required|string|unique:games,slug|max:255',
+            'folder_id'   => 'required|integer|exists:folders,id',
+            'name'        => 'required|string|min:3|max:255',
+            'tags'        => 'sometimes|array',
+            'tags.*'      => 'required|array',
+            'tags.*.id'   => 'required|numeric|exists:tags,id|distinct',
             'tags.*.name' => 'required|string|min:1|max:255',
-            'published' => 'required|boolean',
+            'published'   => 'required|boolean',
         ];
     }
 
@@ -58,13 +58,13 @@ class StoreGameRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name of the game'),
-            'slug' => trans('slug of the game'),
-            'tags' => trans('tags of the game'),
-            'tags.*' => trans('tags of the game'),
-            'tags.*.id' => trans('tag\'s id'),
+            'name'        => trans('name of the game'),
+            'slug'        => trans('slug of the game'),
+            'tags'        => trans('tags of the game'),
+            'tags.*'      => trans('tags of the game'),
+            'tags.*.id'   => trans('tag\'s id'),
             'tags.*.name' => trans('tag\'s name'),
-            'published' => trans('published status of the game'),
+            'published'   => trans('published status of the game'),
         ];
     }
 }

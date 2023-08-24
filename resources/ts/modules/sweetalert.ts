@@ -1,6 +1,6 @@
 // SweetAlert
-import Swal, { SweetAlertResult } from "sweetalert2";
-import { SweetAlertOptions } from "sweetalert2";
+import Swal, { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
+import * as trans from "../modules/trans";
 
 export default {
     methods: {
@@ -26,8 +26,8 @@ export default {
                 text: text,
                 icon: icon,
                 showCancelButton: true,
-                confirmButtonText: "Confirm",
-                cancelButtonText: "Cancel",
+                confirmButtonText: trans.default.methods.__("crud.sweetalert.confirm"),
+                cancelButtonText: trans.default.methods.__("crud.sweetalert.cancel"),
                 showCloseButton: true,
                 allowEscapeKey: true,
                 // * Bootstrap Styling

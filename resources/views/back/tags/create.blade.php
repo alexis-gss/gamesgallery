@@ -1,7 +1,7 @@
 @extends('layouts.backend', ['brParam' => $tag])
 
-@section('title', __('meta.tags_creation'))
-@section('description', __('meta.tags_creation_desc'))
+@section('title', __('crud.meta.creation_model', ['model' => Str::singular(__('models.tags'))]))
+@section('description', __('crud.meta.creation_model_desc', ['model' => Str::singular(__('models.tags'))]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,7 +11,7 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('form.return_list') }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => __('models.tags')]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $tag])
@@ -22,7 +22,7 @@
             class="btn btn-primary"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('form.save') }}">
+            title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.tags'))]) }}">
             <i class="fa-solid fa-floppy-disk"></i>
         </button>
     </div>
@@ -37,7 +37,7 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('form.save') }}">
+                title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.tags'))]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>

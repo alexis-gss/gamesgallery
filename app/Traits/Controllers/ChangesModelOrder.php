@@ -32,7 +32,7 @@ trait ChangesModelOrder
         $model = $className::where('id', $model->id)->first();
 
         if (!$model) {
-            return back()->with('error', trans('changes.order_not_changed'));
+            return back()->with('error', trans('crud.changes.order_not_changed'));
         }
 
         return DB::transaction(function () use ($request, $className, $model) {
@@ -41,7 +41,7 @@ trait ChangesModelOrder
                 ->orderBy('order', $request->direction ? 'DESC' : 'ASC')->first();
 
             if (!$tmp) {
-                return back()->with('error', trans('changes.order_not_changed'));
+                return back()->with('error', trans('crud.changes.order_not_changed'));
             }
 
             $newOrder     = $tmp->order;
@@ -50,7 +50,7 @@ trait ChangesModelOrder
             $tmp->saveOrFail();
             $model->saveOrFail();
 
-            return redirect()->back()->with('success', trans('changes.order_changed'));
+            return redirect()->back()->with('success', trans('crud.changes.order_changed'));
         });
     }
 }

@@ -47,7 +47,7 @@
                     label: {
                         color: '#000',
                         formatter: (params) => {
-                            return `${params.name} (${params.percent}%)`;
+                            return `${params.name}`;
                         },
                         fontSize: 14
                     },

@@ -12,7 +12,7 @@
         for="documentInputFile"
         class="col-form-label"
       >
-        <b>{{ __("form.image_input_choose_file") }} *</b>
+        <b>{{ __("texts.bo.label.choose_picture") }} *</b>
       </label>
       <div :class="intIsUploading ? 'd-none' : ''">
         <div class="input-group">
@@ -21,7 +21,7 @@
             class="btn btn-sm btn-secondary"
             type="button"
             data-bs-tooltip="tooltip"
-            :title="__('form.tooltip_image_input_modify_source')"
+            :title="__('texts.bo.tooltip.image_input_modify_source')"
           >
             <FontAwesomeIcon icon="fa-solid fa-folder-open" />
           </button>
@@ -33,17 +33,17 @@
             :value="
               intDocument?.label
                 ? intDocument?.label
-                : __('form.image_input_choose_file')
+                : __('texts.bo.label.choose_picture')
             "
             data-bs-tooltip="tooltip"
-            :title="__('form.tooltip_image_input_modify_source')"
+            :title="__('texts.bo.tooltip.image_input_modify_source')"
             readonly
           >
           <button
             v-if="intDocumentLoaded"
             class="btn btn-sm btn-success"
             type="button"
-            :title="__('form.tooltip_image_input_saved')"
+            :title="__('texts.bo.tooltip.image_input_saved')"
             data-bs-tooltip="tooltip"
           >
             <FontAwesomeIcon icon="fa-solid fa-check" />
@@ -54,7 +54,7 @@
             type="button"
             data-bs-toggle="modal"
             :data-bs-target="`#modalViewer${intId}`"
-            :title="__('form.tooltip_image_input_preview_image')"
+            :title="__('texts.bo.tooltip.image_input_preview_image')"
             data-bs-tooltip="tooltip"
           >
             <FontAwesomeIcon icon="fa-solid fa-eye" />
@@ -118,14 +118,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            {{ __("form.images_result") }}
+            {{ __("texts.bo.label.preview_image") }}
           </h5>
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
-            :aria-label="__('form.tooltip_image_input_close')"
-            :title="__('form.tooltip_image_input_close')"
+            :aria-label="__('texts.bo.tooltip.image_input_close')"
+            :title="__('texts.bo.tooltip.image_input_close')"
             data-bs-tooltip="tooltip"
           />
         </div>
@@ -139,7 +139,7 @@
               role="status"
             >
               <span class="visually-hidden">
-                {{ __("form.image_input_viewer_loading") }}
+                {{ __("texts.bo.tooltip.image_input_viewer_loading") }}
               </span>
             </div>
           </div>

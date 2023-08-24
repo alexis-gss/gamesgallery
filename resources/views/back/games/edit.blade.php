@@ -1,7 +1,7 @@
 @extends('layouts.backend', ['brParam' => $game])
 
-@section('title', __('meta.games_edition'))
-@section('description', __('meta.games_edition_desc'))
+@section('title', __('crud.meta.edition_model', ['model' => Str::singular(__('models.games'))]))
+@section('description', __('crud.meta.edition_model_desc', ['model' => Str::singular(__('models.games'))]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,7 +11,7 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('form.return_list') }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => __('models.games')]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $game])
@@ -28,14 +28,14 @@
                     target="_blank"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.show_game') }}">
+                    title="{{ __('crud.actions_model.show', ['model' => Str::singular(__('models.games'))]) }}">
                     <i class="fa-solid fa-eye"></i>
                 </a>
                 <a class="btn btn-secondary"
                     href="{{ route('bo.games.duplicate', ['game' => $game->id]) }}"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.duplicate_game') }}">
+                    title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.games'))]) }}">
                     <i class="fa-solid fa-copy"></i>
                 </a>
                 <button id="formSubmitClone"
@@ -43,14 +43,14 @@
                     class="btn btn-primary"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('form.save') }}">
+                    title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.games'))]) }}">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </button>
                 <button type="submit"
                     class="btn btn-danger"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.delete_game') }}">
+                    title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.games'))]) }}">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
@@ -68,7 +68,7 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('form.save') }}">
+                title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.games'))]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>

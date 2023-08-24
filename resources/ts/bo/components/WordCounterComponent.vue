@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex flex-row justify-content-around align-items-center w-100">
     <span>
-      {{ __("form.word_counter_words") }}&nbsp;:&nbsp;<b>{{ intWords }}</b>
+      {{ __("texts.bo.other.word_counter_words") }}&nbsp;:&nbsp;<b>{{ intWords }}</b>
     </span>
     <span>
-      {{ __("form.word_counter_characters") }}&nbsp;:&nbsp;<b>{{ intChars }}</b>
+      {{ __("texts.bo.other.word_counter_characters") }}&nbsp;:&nbsp;<b>{{ intChars }}</b>
     </span>
   </div>
 </template>

@@ -26,7 +26,7 @@ class StoreFolderRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'slug' => Str::slug(strip_tags($this->name)),
+            'slug'      => Str::slug(strip_tags($this->name)),
             'published' => $this->published ? true : false
         ]);
     }
@@ -39,10 +39,10 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => 'required|string|unique:folders,slug|max:255',
-            'name' => 'required|string|min:2|max:255',
+            'slug'      => 'required|string|unique:folders,slug|max:255',
+            'name'      => 'required|string|min:2|max:255',
             'published' => 'required|boolean',
-            'color' => 'required|string|min:6|max:8|regex:(^[#]([A-Za-z0-9]{6,8})$)'
+            'color'     => 'required|string|min:6|max:8|regex:(^[#]([A-Za-z0-9]{6,8})$)'
         ];
     }
 
@@ -54,8 +54,8 @@ class StoreFolderRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => trans('name of the folder'),
-            'slug' => trans('slug of the folder'),
+            'name'      => trans('name of the folder'),
+            'slug'      => trans('slug of the folder'),
             'published' => trans('published status of the folder')
         ];
     }
