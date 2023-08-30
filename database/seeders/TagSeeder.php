@@ -14,11 +14,6 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $i = 1;
-        Tag::factory(15)->make()->each(function (Tag $tag) use (&$i) {
-            $tag->order = $i;
-            $tag->saveOrFail();
-            $i = $i + 1;
-        });
+        Tag::factory(15)->create();
     }
 }

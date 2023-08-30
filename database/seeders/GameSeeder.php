@@ -15,12 +15,7 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-        $i = 1;
-        Game::factory(30)->make()->each(function (Game $game) use (&$i) {
-            $game->order = $i;
-            $game->saveOrFail();
-            $i = $i + 1;
-        });
+        Game::factory(30)->create();
 
         // Seeder for taggables table.
         $tags = Tag::query()->get();

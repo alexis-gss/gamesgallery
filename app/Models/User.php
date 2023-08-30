@@ -84,6 +84,7 @@ class User extends Authenticatable
             static::setImage($user);
         });
         static::updating(function (self $user) {
+            static::setSlug($user);
             static::updatePassword($user);
             static::setImage($user);
         });

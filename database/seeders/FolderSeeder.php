@@ -14,11 +14,6 @@ class FolderSeeder extends Seeder
      */
     public function run()
     {
-        $i = 1;
-        Folder::factory(10)->make()->each(function (Folder $folder) use (&$i) {
-            $folder->order = $i;
-            $folder->saveOrFail();
-            $i = $i + 1;
-        });
+        Folder::factory(10)->create();
     }
 }

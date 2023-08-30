@@ -35,13 +35,6 @@ class Tag extends Model
     use HasFactory;
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -75,6 +68,7 @@ class Tag extends Model
             static::setPublishedDate($tag);
         });
         static::updating(function (self $tag) {
+            static::setSlug($tag);
             static::setPublishedDate($tag);
         });
         static::deleting(function (self $tag) {
