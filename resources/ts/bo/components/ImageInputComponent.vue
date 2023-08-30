@@ -214,7 +214,9 @@
                   <div class="btn-group me-4 mt-2">
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_mirror_horizontal')"
+                      :title="
+                        __('texts.bo.tooltip.image_input_mirror_horizontal')
+                      "
                       data-bs-tooltip="tooltip"
                       @click.prevent="scale(true)"
                     >
@@ -222,7 +224,9 @@
                     </a>
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_mirror_vertical')"
+                      :title="
+                        __('texts.bo.tooltip.image_input_mirror_vertical')
+                      "
                       data-bs-tooltip="tooltip"
                       @click.prevent="scale(false)"
                     >
@@ -239,9 +243,7 @@
                         <a
                           class="btn btn-primary"
                           :title="
-                            __(
-                              'texts.bo.tooltip.image_input_counterclockwise'
-                            )
+                            __('texts.bo.tooltip.image_input_counterclockwise')
                           "
                           data-bs-tooltip="tooltip"
                           @click.prevent="rotate(-45)"
@@ -250,9 +252,7 @@
                         </a>
                         <a
                           class="btn btn-primary"
-                          :title="
-                            __('texts.bo.tooltip.image_input_clockwise')
-                          "
+                          :title="__('texts.bo.tooltip.image_input_clockwise')"
                           data-bs-tooltip="tooltip"
                           @click.prevent="rotate(45)"
                         >
@@ -317,7 +317,9 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-              :title="__('texts.bo.tooltip.image_input_modal_close_without_saving')"
+              :title="
+                __('texts.bo.tooltip.image_input_modal_close_without_saving')
+              "
               data-bs-tooltip="tooltip"
             >
               {{ __("texts.bo.other.close") }}
@@ -326,7 +328,9 @@
               @click.prevent="exportToBlob"
               type="button"
               class="btn btn-primary"
-              :title="__('texts.bo.tooltip.image_input_modal_close_with_saving')"
+              :title="
+                __('texts.bo.tooltip.image_input_modal_close_with_saving')
+              "
               data-bs-tooltip="tooltip"
               data-bs-dismiss="modal"
             >

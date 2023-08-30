@@ -1,4 +1,4 @@
-<td class="d-none d-lg-table-cell text-center align-middle">
+<td class="text-center align-middle">
     @can('isAdmin')
     <form action="{{ route('bo.' . $routeName . '.change-published', $model->id) }}" method="POST">
         @csrf

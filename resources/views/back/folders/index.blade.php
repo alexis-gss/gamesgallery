@@ -17,83 +17,89 @@
     @endcan
 </div>
 @include('back.modules.search-bar')
-<table class="table table-hover">
-    @if (count($folders) > 0)
-    <thead>
-        @include('back.modules.table-col-sorter', [
-            'cols' => [
-                'name'      => __('validation.attributes.name'),
-                'color'     => __('validation.attributes.color'),
-                'published' => __('validation.attributes.publishment'),
-                'order'     => __('validation.attributes.order')
-            ],
-        ])
-    </thead>
-    <tbody>
-        @foreach ($folders as $folder)
-        <tr class="border-bottom">
-            <td class="text-center align-middle">{{ $folder->name }}</td>
-            <td class="text-center align-middle">
-                <div class="btn-sm mx-auto"
-                    title="{{ __('texts.bo.tooltip.color_details', ['color' => $folder->color]) }}"
-                    data-bs="tooltip">
-                    <span class="d-block w-100 h-100 rounded-1" style="background-color:{{ $folder->color }}"></span>
-                </div>
-            </td>
-            @include('back.modules.change-published-status', [
-                'routeName' => 'folders',
-                'model'     => $folder
+<div class="table-responsive mb-3">
+    <table class="table table-hover table-fix-action m-0">
+        @if (count($folders) > 0)
+        <thead>
+            @include('back.modules.table-col-sorter', [
+                'cols' => [
+                    'name'       => __('validation.attributes.name'),
+                    'color'      => __('validation.attributes.color'),
+                    'published'  => __('validation.attributes.publishment'),
+                    'updated_at' => __('validation.attributes.updated_at'),
+                    'order'      => __('validation.attributes.order')
+                ],
             ])
-            @php $routeName = request()->route()->getName(); @endphp
-            @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
-            @include('back.modules.change-model-order', [
-                'routeName' => 'folders',
-                'models'    => $folders,
-                'model'     => $folder
-            ])
-            @endif
-            <td class="text-end align-middle">
-                @can('isAdmin')
-                <form action="{{ route('bo.folders.destroy', $folder->id) }}"
-                    method="POST"
-                    class="btn-group confirmDeleteTS"
-                    novalidate>
-                    <a class="btn btn-sm btn-secondary"
-                        href="{{ route('bo.folders.duplicate', ['folder' => $folder->id]) }}"
-                        data-bs="tooltip"
-                        data-bs-placement="top"
-                        title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.folders'))]) }}">
-                        <i class="fa-solid fa-copy"></i>
-                    </a>
-                    <a class="btn btn-sm btn-primary"
-                        href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
-                        data-bs="tooltip"
-                        data-bs-placement="top"
-                        title="{{ __('crud.actions_model.edit', ['model' => Str::singular(__('models.folders'))]) }}">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                        class="btn btn-sm btn-danger"
-                        data-bs="tooltip"
-                        data-bs-placement="top"
-                        title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.folders'))]) }}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </form>
-                @else
-                @include('back.modules.user-right')
-                @endcan
-            </td>
+        </thead>
+        <tbody>
+            @foreach ($folders as $folder)
+            <tr class="border-bottom">
+                <td class="text-center align-middle">{{ $folder->name }}</td>
+                <td class="text-center align-middle">
+                    <div class="btn-sm preview-color mx-auto"
+                        title="{{ __('texts.bo.tooltip.color_details', ['color' => $folder->color]) }}"
+                        data-bs="tooltip">
+                        <span class="d-block w-100 h-100 rounded-1" style="background-color:{{ $folder->color }}"></span>
+                    </div>
+                </td>
+                @include('back.modules.change-published-status', [
+                    'routeName' => 'folders',
+                    'model'     => $folder
+                ])
+                <td class="text-center align-middle">
+                    <span class="badge bg-secondary">{{ $folder->updated_at }}</span>
+                </td>
+                @php $routeName = request()->route()->getName(); @endphp
+                @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
+                @include('back.modules.change-model-order', [
+                    'routeName' => 'folders',
+                    'models'    => $folders,
+                    'model'     => $folder
+                ])
+                @endif
+                <td class="text-end align-middle">
+                    @can('isAdmin')
+                    <form action="{{ route('bo.folders.destroy', $folder->id) }}"
+                        method="POST"
+                        class="btn-group confirmDeleteTS"
+                        novalidate>
+                        <a class="btn btn-sm btn-secondary"
+                            href="{{ route('bo.folders.duplicate', ['folder' => $folder->id]) }}"
+                            data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.folders'))]) }}">
+                            <i class="fa-solid fa-copy"></i>
+                        </a>
+                        <a class="btn btn-sm btn-primary"
+                            href="{{ route('bo.folders.edit', ['folder' => $folder->id]) }}"
+                            data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('crud.actions_model.edit', ['model' => Str::singular(__('models.folders'))]) }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="btn btn-sm btn-danger"
+                            data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.folders'))]) }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                    @else
+                    @include('back.modules.user-right')
+                    @endcan
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+        @else
+        <tr>
+            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => Str::singular(__('models.folders'))]) }}</td>
         </tr>
-        @endforeach
-    </tbody>
-    @else
-    <tr>
-        <td class="border-0">{{ __('crud.other.no_model_found', ['model' => Str::singular(__('models.folders'))]) }}</td>
-    </tr>
-    @endif
-</table>
+        @endif
+    </table>
+</div>
 {!! $folders->links() !!}
 @endsection
