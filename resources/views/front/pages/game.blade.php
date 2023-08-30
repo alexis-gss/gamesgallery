@@ -13,21 +13,24 @@
                 {{ $game->name }}
                 <span class="angles"></span>
             </h1>
-            <div class="d-inline-block user-select-none text-center w-100">
-                <a href="{{ route('fo.homepage') }}" class="text-decoration-none">
-                    <button class="badge bg-primary border-0 text-white rounded-2 px-2"
-                        title="{{ __('texts.bo.other.back_home') }}"
-                        data-bs="tooltip"
-                        data-bs-placement="top">
-                        <i class="fa fa-arrow-left"></i>
-                    </button>
+            <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
+                <a href="{{ route('fo.homepage') }}"
+                    class="bg-primary border-0 text-white rounded-2 px-2 text-decoration-none"
+                    title="{{ __('texts.bo.other.back_home') }}"
+                    data-bs="tooltip"
+                    data-bs-placement="top">
+                    <i class="fa fa-arrow-left"></i>
                 </a>
-                <span>-</span>
-                <span class="badge text-white rounded-2 px-2 py-1" style="background-color:{{ $game->folder->color }}">{{ $game->folder->name }}</span>
+                <span class="mx-1">-</span>
+                <p class="text-white rounded-2 px-2 py-0 m-0" style="background-color:{{ $game->folder->color }}">
+                    {{ $game->folder->name }}
+                </p>
                 @if (count($game->tags) > 0)
-                <span>-</span>
+                <span class="ms-1">-</span>
                 @foreach ($game->tags as $tag)
-                <span class="badge bg-primary text-white rounded-2 px-2 py-1 my-1">{{ $tag->name }}</span>
+                <p class="bg-primary text-white rounded-2 px-2 py-0 ms-1 my-0">
+                    {{ $tag->name }}
+                </p>
                 @endforeach
                 @endif
             </div>
