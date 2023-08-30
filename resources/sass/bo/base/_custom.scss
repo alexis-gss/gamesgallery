@@ -1,25 +1,3 @@
-.ta-end {
-    text-align: end;
-}
-
-.preview {
-    display: block ruby;
-    overflow: hidden;
-
-    .filtre {
-        top: 0;
-        right: 0;
-        width: 5rem;
-        background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
-    }
-}
-
-.pagination {
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-}
-
 svg {
     vertical-align: sub !important;
 }
@@ -41,11 +19,6 @@ main {
     height: 2rem;
 }
 
-.badge {
-    padding: 0.1rem 0.3rem !important;
-    font-size: 0.85em;
-}
-
 .password-btn {
     width: 2.9rem;
 }
@@ -55,8 +28,11 @@ main {
 }
 
 .btn-sm {
-    width: 32px;
     height: 31px;
+}
+
+.preview-color {
+    width: 32px;
 }
 
 .pagination-custom .dropdown-menu {
@@ -65,8 +41,22 @@ main {
     max-height: 178px;
 }
 
-.table-col-sorter {
-    height: 3rem;
+.table {
+    &-fix-action {
+        th:last-child,
+        td:last-child {
+            position: sticky;
+            right: 0;
+            width: 0.1%;
+            background-color: $gray-200;
+            color: $gray-900;
+            white-space: nowrap;
+        }
+    }
+
+    &-col-sorter {
+        height: 3rem;
+    }
 }
 
 .changelog {

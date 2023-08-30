@@ -133,5 +133,6 @@ return [
         'folder_associated' => 'Folder associated',
         'password'          => 'Password',
         'password_confirm'  => 'Confirmation of the password',
+        'updated_at'        => 'Updated at',
     ],
 ];

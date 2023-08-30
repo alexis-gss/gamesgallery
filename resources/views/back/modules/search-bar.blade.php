@@ -1,5 +1,5 @@
 <form action="{{ request()->url() }}" enctype="multipart/form-data" id="search"
-    class="d-flex flex-row input-group pt-3 pb-2">
+    class="d-flex flex-row input-group py-3">
     <label class="input-group-text" for="searchField">{{ $searchFields }}</label>
     <input class="form-control"
         type="text"

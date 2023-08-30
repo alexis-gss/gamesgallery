@@ -25,7 +25,10 @@ Breadcrumbs::for('bo.statistics', function (Generator $trail) {
 
 // * GAMES
 Breadcrumbs::for('bo.games.index', function (Generator $trail) {
-    $trail->push(trans('models.games'), route('bo.games.index'));
+    $trail->push(
+        trans('models.games'),
+        route('bo.games.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc'])
+    );
 });
 Breadcrumbs::for('bo.games.create', function (Generator $trail) {
     $trail->parent('bo.games.index');
@@ -42,7 +45,10 @@ Breadcrumbs::for('bo.games.duplicate', function (Generator $trail, Game $game) {
 
 // * FOLDERS
 Breadcrumbs::for('bo.folders.index', function (Generator $trail) {
-    $trail->push(trans('models.folders'), route('bo.folders.index'));
+    $trail->push(
+        trans('models.folders'),
+        route('bo.folders.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc'])
+    );
 });
 Breadcrumbs::for('bo.folders.create', function (Generator $trail) {
     $trail->parent('bo.folders.index');
@@ -59,7 +65,10 @@ Breadcrumbs::for('bo.folders.duplicate', function (Generator $trail, Folder $fol
 
 // * TAGS
 Breadcrumbs::for('bo.tags.index', function (Generator $trail) {
-    $trail->push(trans('models.tags'), route('bo.tags.index'));
+    $trail->push(
+        trans('models.tags'),
+        route('bo.tags.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc'])
+    );
 });
 Breadcrumbs::for('bo.tags.create', function (Generator $trail) {
     $trail->parent('bo.tags.index');
@@ -76,7 +85,10 @@ Breadcrumbs::for('bo.tags.duplicate', function (Generator $trail, Tag $tag) {
 
 // * USERS
 Breadcrumbs::for('bo.users.index', function (Generator $trail) {
-    $trail->push(trans('models.users'), route('bo.users.index'));
+    $trail->push(
+        trans('models.users'),
+        route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc'])
+    );
 });
 Breadcrumbs::for('bo.users.create', function (Generator $trail) {
     $trail->parent('bo.users.index');
