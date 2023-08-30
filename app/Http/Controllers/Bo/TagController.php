@@ -45,7 +45,7 @@ class TagController extends Controller
         $this->sortQuery($tags);
 
         /** Custom pagination */
-        $tags = $tags->paginate(ToolboxHelper::getValidationOfItemsPerPage());
+        $tags = $this->paginate($tags);
 
         return view('back.tags.index', compact('tags', 'search', 'searchFields'));
     }

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Pagination\ItemsPerPaginationEnum;
+use App\Lib\Helpers\ToolboxHelper;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -118,6 +123,26 @@ class Controller extends BaseController
             Session::put("$rName.sort_col", 'order');
             Session::put("$rName.sort_way", 'asc');
         }
+        return $query;
+    }
+
+    /**
+     * Customize pagination with cache or config (default).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder             $query
+     * @param \App\Enums\Pagination\ItemsPerPaginationEnum|null $pagination
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    protected function paginate(Builder $query, ItemsPerPaginationEnum $pagination = null): LengthAwarePaginator
+    {
+        $currentRoutePath = Str::slug(request()->route()->getName());
+        $cacheKey         = "pagination.{$currentRoutePath}";
+        $pagination       = $pagination ?? ItemsPerPaginationEnum::twelve;
+        $pagination       = ToolboxHelper::getValidatedPaginate(Cache::get($cacheKey, $pagination->value));
+        if (Cache::get($cacheKey) !== $pagination) {
+            Cache::put($cacheKey, $pagination);
+        }
+        $query = $query->paginate($pagination);
         return $query;
     }
 }

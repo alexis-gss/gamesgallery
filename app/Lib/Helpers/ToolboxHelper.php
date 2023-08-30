@@ -2,11 +2,11 @@
 
 namespace App\Lib\Helpers;
 
-use App\Http\Requests\Bo\UpdateItemsPerPaginationRequest;
+use App\Enums\Pagination\ItemsPerPaginationEnum;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -137,20 +137,20 @@ class ToolboxHelper
     }
 
     /**
-     * Get and validate the number of items per page for the pagination.
+     * Get validated pagination from request.
      *
-     * @param integer $numberOfItems
+     * @param integer $default
      * @return integer
      */
-    public static function getValidationOfItemsPerPage(int $numberOfItems = 12): int
+    public static function getValidatedPaginate(int $default): int
     {
-        $paginationValidator = UpdateItemsPerPaginationRequest::capture()->setContainer(app())->getValidator();
-        if (isset($paginationValidator->validated()['pagination'])) {
-            $numberOfItems = $paginationValidator->validated()['pagination'];
-        } elseif (Cache::get('pagination-' . Str::slug(request()->route()->getName())) !== null) {
-            $numberOfItems = Cache::get('pagination-' . Str::slug(request()->route()->getName()));
+        try {
+            return \intval(Validator::make(
+                ['pagination' => \request()->get('pagination')],
+                ['pagination' => new Enum(ItemsPerPaginationEnum::class)]
+            )->validated()['pagination']);
+        } catch (ValidationException $e) {
+            return $default;
         }
-        Cache::put('pagination-' . Str::slug(request()->route()->getName()), $numberOfItems);
-        return intval($numberOfItems);
     }
 }

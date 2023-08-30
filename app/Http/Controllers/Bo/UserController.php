@@ -45,7 +45,7 @@ class UserController extends Controller
         $this->sortQuery($users);
 
         /** Custom pagination */
-        $users = $users->paginate(ToolboxHelper::getValidationOfItemsPerPage());
+        $users = $this->paginate($users);
 
         return view('back.users.index', compact('users', 'search', 'searchFields'));
     }

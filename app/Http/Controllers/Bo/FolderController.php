@@ -44,7 +44,7 @@ class FolderController extends Controller
         $this->sortQuery($folders);
 
         /** Custom pagination */
-        $folders = $folders->paginate(ToolboxHelper::getValidationOfItemsPerPage());
+        $folders = $this->paginate($folders);
 
         return view('back.folders.index', compact('folders', 'search', 'searchFields'));
     }
