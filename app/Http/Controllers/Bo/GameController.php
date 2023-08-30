@@ -53,7 +53,7 @@ class GameController extends Controller
         $this->sortQuery($games);
 
         /** Custom pagination */
-        $games = $games->paginate(ToolboxHelper::getValidationOfItemsPerPage());
+        $games = $this->paginate($games);
 
         return view('back.games.index', compact('games', 'search', 'searchFields'));
     }

@@ -43,7 +43,7 @@ class FrontController extends Controller
             $game  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
 
             if (count($game->pictures)) {
-                $gamePictures = $this->paginate(
+                $gamePictures = $this->customPaginate(
                     $game->pictures,
                     (count($game->pictures) <= 12) ? count($game->pictures) : 12,
                     ['path' => Paginator::resolveCurrentPath()]
@@ -71,7 +71,7 @@ class FrontController extends Controller
      * @param integer                        $page
      * @return App\Http\Controllers\LengthAwarePaginator
      */
-    public function paginate(Collection $items, int $perPage, array $options, int $page = null)
+    public function customPaginate(Collection $items, int $perPage, array $options, int $page = null)
     {
         $page   = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $result = new LengthAwarePaginator(

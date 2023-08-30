@@ -1,9 +1,9 @@
 {{-- GET ACTUAL PAGINATION --}}
-<?php $pagination = intval(Cache::get('pagination-' . \Illuminate\Support\Str::slug(request()->route()->getName()))); ?>
+<?php $pagination = intval(Cache::get('pagination.' . \Illuminate\Support\Str::slug(request()->route()->getName()))); ?>
 @if($paginator->items())
-<nav class="pagination-custom d-flex flex-column flex-md-row justify-content-between align-items-center">
+<nav class="pagination-custom d-flex justify-content-between align-items-center">
     {{-- SELECT ITEMS PER PAGE --}}
-    <div class="dropup-center dropup d-flex justify-content-center align-items-center w-fit input-group mb-3 m-md-0">
+    <div class="dropup-center dropup d-flex justify-content-center align-items-center w-fit input-group">
         <span class="btn-md input-group-text"
             data-bs="tooltip"
             data-bs-placement="top"
@@ -49,7 +49,7 @@
             </li>
             {{-- FIRST PAGE --}}
             @if($paginator->currentPage() > 3)
-            <li class="page-item"
+            <li class="page-item d-none d-sm-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
                 title="{{ __('crud.pagination.specific_page', ['id' => 1]) }}">
@@ -58,7 +58,7 @@
             @endif
             {{-- HIDE PAGES TOO FAR --}}
             @if($paginator->currentPage() > 4)
-            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item d-none d-sm-block disabled"><span class="page-link">...</span></li>
             @endif
             {{-- SHOW ACTUAL PAGES + N-2/N+2 --}}
             @foreach(range(1, $paginator->lastPage()) as $i)
@@ -86,7 +86,7 @@
                 </div>
             </li>
             @else
-            <li class="page-item d-none d-sm-block"
+            <li class="page-item d-none d-md-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
                 title="{{ __('crud.pagination.specific_page', ['id' => $i]) }}">
@@ -97,11 +97,11 @@
             @endforeach
             {{-- HIDE PAGES TOO FAR --}}
             @if($paginator->currentPage() < $paginator->lastPage() - 3)
-            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item d-none d-sm-block disabled"><span class="page-link">...</span></li>
             @endif
             {{-- LAST PAGE --}}
             @if($paginator->currentPage() < $paginator->lastPage() - 2)
-            <li class="page-item"
+            <li class="page-item  d-none d-sm-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
                 title="{{ __('crud.pagination.specific_page', ['id' => $paginator->lastPage()]) }}">
