@@ -44,7 +44,7 @@ Route::prefix('bo')
                                     /**
                                      * * GAMES
                                      */
-                                    Route::get('/games/change-order/{game}/{direction}', [
+                                    Route::post('/games/change-order/{game}/{direction}', [
                                         GameController::class, 'changeOrder'
                                     ])->where('direction', 'up|down')->name('games.change-order');
                                     Route::post('/games/{game}/change-published', [
@@ -60,7 +60,7 @@ Route::prefix('bo')
                                     /**
                                      * * FOLDERS
                                      */
-                                    Route::get('/folders/change-order/{folder}/{direction}', [
+                                    Route::post('/folders/change-order/{folder}/{direction}', [
                                         FolderController::class, 'changeOrder'
                                     ])->where('direction', 'up|down')->name('folders.change-order');
                                     Route::post('/folders/{folder}/change-published', [
@@ -73,7 +73,7 @@ Route::prefix('bo')
                                     /**
                                      * * TAGS
                                      */
-                                    Route::get('/tags/change-order/{tag}/{direction}', [
+                                    Route::post('/tags/change-order/{tag}/{direction}', [
                                         TagController::class, 'changeOrder'
                                     ])->where('direction', 'up|down')->name('tags.change-order');
                                     Route::post('/tags/{tag}/change-published', [
@@ -88,7 +88,7 @@ Route::prefix('bo')
                                     /**
                                      * * USERS
                                      */
-                                    Route::get('/users/change-order/{user}/{direction}', [
+                                    Route::post('/users/change-order/{user}/{direction}', [
                                         UserController::class, 'changeOrder'
                                     ])->where('direction', 'up|down')->name('users.change-order');
                                     Route::get('/users/{user}/duplicate', [
