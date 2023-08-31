@@ -11,13 +11,10 @@
 
     <!-- Main content -->
     <main class="container-fluid">
-        <!-- Show a message when an action is performed -->
-        @auth
-        @include('back.modules.session-messages')
-        @endauth
-
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 py-4">
+                <!-- Show a message when an action is performed -->
+                @include('back.modules.flash-messages')
                 @yield('content')
             </div>
         </div>

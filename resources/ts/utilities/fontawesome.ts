@@ -38,6 +38,7 @@ import {
     faChevronLeft,
     faChevronRight,
     faCheck,
+    faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -83,4 +84,5 @@ library.add(faListUl);
 library.add(faChevronLeft);
 library.add(faChevronRight);
 library.add(faCheck);
+library.add(faCircleExclamation);
 dom.watch();

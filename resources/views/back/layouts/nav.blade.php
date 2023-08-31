@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm position-fixed fixed-top">
+<nav id="navbar" class="navbar navbar-expand-md navbar-light bg-white shadow-sm position-fixed fixed-top">
     <div class="container">
         <a class="navbar-brand"
             href="{{ route('fo.homepage') }}"

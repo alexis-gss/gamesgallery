@@ -105,6 +105,7 @@ return [
             'taggable_cancel'           => 'Cancel',
             'taggable_create'           => 'Create and add to the tags list',
             'taggable_add'              => 'Add a tag',
+            'errors_list'               => 'Errors list :',
         ],
     ],
     'fo' => [
