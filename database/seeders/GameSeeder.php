@@ -15,7 +15,7 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-        Game::factory(30)->create();
+        Game::factory(24)->create();
 
         // Seeder for taggables table.
         $tags = Tag::query()->get();
