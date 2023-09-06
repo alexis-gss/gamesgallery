@@ -21,7 +21,7 @@
                 },
                 formatter: (params) => {
                     return `<strong>${params.name}</strong><br/>
-                        <span class="badge rounded-0" style="background-color:${params.color}"></span>&nbsp;
+                        <span class="px-2" style="background-color:${params.color}"></span>&nbsp;
                         ${params.seriesName}&nbsp;:&nbsp;<strong>${params.data.value}</strong>&nbsp;(${params.percent}%)`;
                 },
             },

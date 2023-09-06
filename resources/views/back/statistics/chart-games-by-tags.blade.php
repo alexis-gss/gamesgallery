@@ -21,7 +21,7 @@
                 },
                 formatter: (params) => {
                     return `<strong>${params[0].name}</strong><br/>
-                        <span class="badge" style="background-color:${params[0].color}"></span>&nbsp;
+                        <span class="px-2" style="background-color:${params[0].color}"></span>&nbsp;
                         ${params[0].seriesName}&nbsp;:&nbsp;<strong>${params[0].value}</strong>&nbsp;(${Math.round((params[0].value/@json(count($globalGames))*100) * 100) / 100}%)`;
                 },
             },

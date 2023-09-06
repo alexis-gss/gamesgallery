@@ -65,11 +65,13 @@ main {
 }
 
 .changelog {
-    height: 50vh;
+    height: 48vh;
 }
 
 .card {
-    height: 10rem;
+    &-stats {
+        height: 10rem;
+    }
 
     .flex-fill {
         min-width: 50%;

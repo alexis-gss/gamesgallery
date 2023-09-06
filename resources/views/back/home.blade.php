@@ -9,7 +9,7 @@
 </div>
 <div class="row mt-3">
     <div class="col">
-        <div class="text-center">
+        <div class="card text-center p-5">
             <h5>{{ __('texts.bo.other.home_hello', ['name' => Auth::user()->name]) }}</h5>
             <p class="m-0">
                 {{ __('texts.bo.other.home_welcome') }}
@@ -24,8 +24,10 @@
     <h2 class="h2 m-0 fw-bold">{{ __('texts.bo.other.changelog') }}</h2>
 </div>
 <div class="row mt-3">
-    <div class="col-12 changelog overflow-y-scroll">
-        {!! $changelog !!}
+    <div class="col-12">
+        <div class="card changelog overflow-y-scroll p-5">
+            {!! $changelog !!}
+        </div>
     </div>
 </div>
 @endsection
