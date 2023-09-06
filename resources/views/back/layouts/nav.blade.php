@@ -33,18 +33,20 @@
                         type="button"
                         id="navbarDropdown"
                         data-bs-toggle="dropdown">
-                        <div class="profile-picture me-2">
+                        <div class="d-flex flex-column align-items-end lh-1">
+                            <span class="text-dark">{{ Auth::user()->name }}</span>
+                            <small class="text-secondary-body">{{ Auth::user()->role->label() }}</small>
+                        </div>
+                        <div class="profile-picture ms-2 me-1">
                             <img class="w-100 h-100 rounded-circle" src="{{ asset(Auth::user()->picture) }}" alt="{{ Auth::user()->picture_alt }}">
                         </div>
-                        <span>{{ Auth::user()->name }}</span>
                     </button>
-
                     <div class="dropdown-menu dropdown-menu-end text-center p-0 m-0" aria-labelledby="navbarDropdown">
                         <a class="btn btn-link w-100 text-decoration-none text-body-secondary p-2"
                             href="{{ route('bo.users.edit', Auth::user()->id) }}"
                             title="{{ __('texts.bo.tooltip.to_edit_profile') }}"
                             data-bs="tooltip"
-                            data-bs-placement="bottom">
+                            data-bs-placement="left">
                             {{ __('texts.bo.other.edit_profile') }}
                         </a>
                         <hr class="dropdown-divider m-0">
@@ -53,7 +55,7 @@
                             <button class="btn btn-link w-100 text-decoration-none text-body-secondary p-2"
                                 type="submit"
                                 data-bs="tooltip"
-                                data-bs-placement="top"
+                                data-bs-placement="left"
                                 title="{{ __('texts.bo.tooltip.to_disconnect') }}">
                                 {{ __('texts.bo.other.disconnect') }}
                             </button>
