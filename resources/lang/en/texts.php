@@ -84,13 +84,12 @@ return [
             'back_office_desc'          => 'Homepage of the back end.',
             'back_office_login'         => 'Login',
             'back_office_login_desc'    => 'Authenticate form of the back office.',
-            "changelog"                 => "Change log",
-            "home_hello"                => "Hi :name !",
-            "home_welcome"              => "Welcome to the back office, where you can manage your entire web application
-                (text, images, colors, folders, etc...).",
-            "home_contact"              => "If you have any problems or require further information, please contact the
-                project administrator.",
-            "access_portfolio"          => "Access to the Alexis Gousseau portfolio",
+            'changelog'                 => 'Change log',
+            'home_hello'                => 'Hi :name !',
+            'home_welcome'              => 'Welcome to the back office, where you can manage your entire web application
+                (text, images, colors, folders, etc...).',
+            'home_contact'              => 'If you have any problems or require further information, please contact the
+                project administrator.',
             'stats_latest_model'        => 'Latest :model added',
             'access_website'            => 'Access to the website',
             'homepage'                  => 'Homepage',
@@ -112,13 +111,16 @@ return [
         'default_title'       => 'Home',
         'default_description' => 'Web application made with Laravel, listing all screenshots taken in video games.',
         'description'         => 'Listing all screenshots i take from the game :game.',
-        "no_result"           => "No results matching your search",
+        'no_result'           => 'No results matching your search',
         'images_loaded'       => 'All images are loaded',
         'images_no_one'       => 'No images ',
         'text_loading'        => 'Loading...',
-        "search"              => "Search among :games games...",
+        'search'              => 'Search among :games games...',
         'search_tag'          => 'All tags',
         'search_folder'       => 'All folders',
         'last_games_added'    => 'Last games added :',
+    ],
+    'global' => [
+        'acces_github' => 'Access to the Github\'s repository'
     ],
 ];

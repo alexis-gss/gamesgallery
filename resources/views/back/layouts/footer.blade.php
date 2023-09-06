@@ -5,7 +5,7 @@
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('texts.bo.other.access_portfolio') }}"
+            title="{{ __('texts.global.acces_github') }}"
             class="text-reset text-decoration-none">
             {{ $globalName }}
         </a>
