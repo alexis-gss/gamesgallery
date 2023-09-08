@@ -1,10 +1,11 @@
 <?php
 
 return [
-    'stats'    => 'Statistics',
-    'games'    => 'Games',
-    'pictures' => 'Pictures',
-    'folders'  => 'Folders',
-    'tags'     => 'Tags',
-    'users'    => 'Users',
+    'activities' => 'Activity|Activities',
+    'folders'    => 'Folders',
+    'games'      => 'Games',
+    'pictures'   => 'Pictures',
+    'stats'      => 'Statistics',
+    'tags'       => 'Tags',
+    'users'      => 'Users',
 ];

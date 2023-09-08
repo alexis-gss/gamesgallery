@@ -74,12 +74,7 @@ export default defineConfig({
             chokidar: true,
             quiet: false,
             include: ["**/resources/**/*.scss", "**/resources/**/*.css"],
-            exclude: [
-                "**/node_modules/**/*.scss",
-                "**/node_modules/**/*.css",
-                "**/vendor/**/*.scss",
-                "**/vendor/**/*.css",
-            ],
+            exclude: ["node_modules", "vendor"],
             lintOnStart: false,
             emitError: true,
             emitWarning: true,
@@ -89,6 +84,7 @@ export default defineConfig({
         eslint({
             cache: false,
             extensions: ["js", "ts"],
+            exclude: ["node_modules", "vendor"],
             include: "**/*.ts",
             lintOnStart: false,
             emitWarning: true,
@@ -97,7 +93,8 @@ export default defineConfig({
             failOnError: false,
         }),
         vue({
-            isProduction: process.env.NODE_ENV !== "development" ? true : false,
+            isProduction: process.env.NODE_ENV !== "local" ? true : false,
+            exclude: ["node_modules", "vendor"],
         }),
         legacy({
             targets: "last 3 version, not dead, >0.3%",

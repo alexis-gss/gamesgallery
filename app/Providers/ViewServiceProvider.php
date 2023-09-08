@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\ActivityLog;
 use App\Models\Game;
 use App\Models\Folder;
 use App\Models\Tag;
@@ -38,16 +39,19 @@ class ViewServiceProvider extends ServiceProvider
             Schema::hasTable('games') and
             Schema::hasTable('folders') and
             Schema::hasTable('tags') and
-            Schema::hasTable('users')
+            Schema::hasTable('users') and
+            Schema::hasTable('activity_logs')
         ) {
-            $globalGames   = Game::orderBy('name', 'ASC')->get();
-            $globalFolders = Folder::orderBy('name', 'ASC')->get();
-            $globalTags    = Tag::orderBy('name', 'ASC')->get();
-            $globalUsers   = User::orderBy('name', 'ASC')->get();
+            $globalGames      = Game::orderBy('name', 'ASC')->get();
+            $globalFolders    = Folder::orderBy('name', 'ASC')->get();
+            $globalTags       = Tag::orderBy('name', 'ASC')->get();
+            $globalUsers      = User::orderBy('name', 'ASC')->get();
+            $globalActivities = ActivityLog::get();
             View::share('globalGames', $globalGames);
             View::share('globalFolders', $globalFolders);
             View::share('globalTags', $globalTags);
             View::share('globalUsers', $globalUsers);
+            View::share('globalActivities', $globalActivities);
         }
     }
 }

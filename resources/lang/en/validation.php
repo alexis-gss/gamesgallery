@@ -134,5 +134,8 @@ return [
         'password'          => 'Password',
         'password_confirm'  => 'Confirmation of the password',
         'updated_at'        => 'Updated at',
+        'created_at'        => 'Created at',
+        'model'             => 'Target element',
+        'event'             => 'Event',
     ],
 ];

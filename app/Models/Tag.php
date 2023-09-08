@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -32,6 +33,7 @@ use Illuminate\Support\Str;
  */
 class Tag extends Model
 {
+    use ActivityLog;
     use HasFactory;
 
     /**

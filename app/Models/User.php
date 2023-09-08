@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
+use App\Traits\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,9 +32,12 @@ use Illuminate\Support\Str;
  * @method private static function setImage($user)         Set model's account's picture.
  * @method private static function setOrder($folder)       Set model's order after the last element of the list.
  * @method private static function updatePassword($target) Update model's password.
+ *
+ * @property-read \App\Models\ActivityLog $activityLogs Activities logs One-to-many relationship.
  */
 class User extends Authenticatable
 {
+    use ActivityLog;
     use HasFactory;
     use Notifiable;
 
@@ -88,11 +92,11 @@ class User extends Authenticatable
             static::updatePassword($user);
             static::setImage($user);
         });
-        static::updated(function (self $model) {
-            FileStorageHelper::removeOldFile($model, 'picture');
+        static::updated(function (self $user) {
+            FileStorageHelper::removeOldFile($user, 'picture');
         });
-        static::deleted(function (self $model) {
-            FileStorageHelper::removeFile($model, 'picture');
+        static::deleted(function (self $user) {
+            FileStorageHelper::removeFile($user, 'picture');
         });
     }
 
@@ -146,5 +150,17 @@ class User extends Authenticatable
         } else {
             $target->password = $target->getOriginal('password');
         }
+    }
+
+    // * RELATIONS
+
+    /**
+     * Activities logs One-to-many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
     }
 }

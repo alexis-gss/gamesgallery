@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Bo\ActivityLogsController;
 use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
@@ -101,6 +102,7 @@ Route::prefix('bo')
                         Route::resource('folders', FolderController::class)->except('show');
                         Route::resource('tags', TagController::class)->except('show');
                         Route::resource('users', UserController::class)->except('show');
+                        Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
                     }
                 );
         }

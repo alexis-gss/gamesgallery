@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
 use App\Models\Tag;
@@ -101,4 +102,16 @@ Breadcrumbs::for('bo.users.edit', function (Generator $trail, User $user) {
 Breadcrumbs::for('bo.users.duplicate', function (Generator $trail, User $user) {
     $trail->parent('bo.users.index');
     $trail->push(trans('crud.actions.duplicate'), route('bo.users.duplicate', $user->slug));
+});
+
+// * ACTIVITY_LOGS
+Breadcrumbs::for('bo.activity_logs.index', function (Generator $trail) {
+    $trail->push(
+        trans_choice('models.activities', 2),
+        route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc'])
+    );
+});
+Breadcrumbs::for('bo.activity_logs.show', function (Generator $trail, ActivityLog $activity_log) {
+    $trail->parent('bo.activity_logs.index');
+    $trail->push(trans('crud.actions.show'), route('bo.activity_logs.show', $activity_log->id));
 });

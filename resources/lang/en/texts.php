@@ -8,6 +8,7 @@ return [
             'visuals'                  => 'Visuals',
             'security'                 => 'Security',
             'visibility'               => 'Visibility',
+            'changes_made'             => 'Changes made',
             'edit_image_before_import' => 'Modification of the image before import',
         ],
 
@@ -105,6 +106,11 @@ return [
             'taggable_create'           => 'Create and add to the tags list',
             'taggable_add'              => 'Add a tag',
             'errors_list'               => 'Errors list :',
+            'advanced'                  => 'Advanced',
+            'user_anonym'               => 'User anonym',
+            'user_deleted'              => 'User deleted',
+            'before'                    => 'Before',
+            'after'                     => 'After',
         ],
     ],
     'fo' => [
