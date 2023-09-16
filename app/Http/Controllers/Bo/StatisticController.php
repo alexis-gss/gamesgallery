@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Folder;
 use App\Models\Game;
 use App\Models\Tag;
+use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class StatisticController extends Controller
 {
@@ -16,10 +19,31 @@ class StatisticController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $latestGame   = Game::where('published', true)->orderBy('published_at', 'DESC')->firstOrFail();
-        $latestFolder = Folder::where('published', true)->orderBy('published_at', 'DESC')->firstOrFail();
-        $latestTag    = Tag::where('published', true)->orderBy('published_at', 'DESC')->firstOrFail();
+        $modelLatest     = [];
+        $modelActivities = [];
+        $activitiesClass = [
+            Game::class,
+            Folder::class,
+            Tag::class,
+            User::class,
+        ];
 
-        return view('back.statistics.index', compact('latestGame', 'latestFolder', 'latestTag'));
+        $latestDays           = collect(CarbonPeriod::create(Carbon::now()->subDays(29), Carbon::now()));
+        $dateLastDaysFormated = $latestDays->map(function ($date) {
+            return $date->format('d/m');
+        })->toArray();
+
+        collect($activitiesClass)->map(function ($class) use (&$modelActivities, &$modelLatest, $latestDays) {
+            collect($latestDays->toArray())->map(function ($date) use (&$modelActivities, $class) {
+                $modelActivities[$class][] = count($class::query()->whereDate('updated_at', $date)->get());
+            });
+            $modelLatest[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
+        });
+
+        return view('back.statistics.index', compact(
+            'modelLatest',
+            'modelActivities',
+            'dateLastDaysFormated',
+        ));
     }
 }

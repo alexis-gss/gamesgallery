@@ -1,4 +1,4 @@
-<div class="charts w-100" id="chart-games-by-folders"></div>
+<div class="charts-md w-100" id="chart-games-by-folders"></div>
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-games-by-folders */
@@ -20,15 +20,17 @@
                     color: '#FFF',
                 },
                 formatter: (params) => {
-                    return `<strong>${params.name}</strong><br/>
-                        <span class="px-2" style="background-color:${params.color}"></span>&nbsp;
-                        ${params.seriesName}&nbsp;:&nbsp;<strong>${params.data.value}</strong>&nbsp;(${params.percent}%)`;
+                    return `<p class="fw-bold m-0">${params.name}</p>
+                        <div class="d-flex justify-content-start align-items-center">
+                            <span class="card-pellet rounded-5" style="background-color:${params.color}"></span>&nbsp;&nbsp;
+                            <p class="m-0">${params.seriesName}&nbsp;:&nbsp;<span class="fw-bold">${params.value}</span>&nbsp;
+                            (${Math.round((params.value/@json(count($globalGames))*100) * 100) / 100}%)</p>
+                        </div>`;
                 },
             },
             toolbox: {
                 show : true,
                 feature : {
-                    dataView : {show: true, readOnly: false},
                     restore : {show: true},
                     saveAsImage : {show: true},
                 }
@@ -39,9 +41,17 @@
                 left: 'left',
                 icon: 'rect',
             },
+            calculable : true,
+            grid: {
+                top: '30%',
+                left: '0%',
+                right: '0%',
+                bottom: '0%',
+                containLabel: true
+            },
             series: [
                 {
-                    name: 'Game',
+                    name: 'Games',
                     type: 'pie',
                     radius: '70%',
                     label: {

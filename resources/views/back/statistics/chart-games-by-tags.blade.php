@@ -1,4 +1,4 @@
-<div class="charts w-100" id="chart-games-by-tags"></div>
+<div class="charts-sm w-100" id="chart-games-by-tags"></div>
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-games-by-tags */
@@ -20,9 +20,12 @@
                     color: '#FFF',
                 },
                 formatter: (params) => {
-                    return `<strong>${params[0].name}</strong><br/>
-                        <span class="px-2" style="background-color:${params[0].color}"></span>&nbsp;
-                        ${params[0].seriesName}&nbsp;:&nbsp;<strong>${params[0].value}</strong>&nbsp;(${Math.round((params[0].value/@json(count($globalGames))*100) * 100) / 100}%)`;
+                    return `<p class="fw-bold m-0">${params[0].name}</p>
+                        <div class="d-flex justify-content-start align-items-center">
+                            <span class="card-pellet rounded-5" style="background-color:${params[0].color}"></span>&nbsp;&nbsp;
+                            <p class="m-0">${params[0].seriesName}&nbsp;:&nbsp;<span class="fw-bold">${params[0].value}</span>&nbsp;
+                            (${Math.round((params[0].value/@json(count($globalGames))*100) * 100) / 100}%)</p>
+                        </div>`;
                 },
             },
             dataZoom: [
@@ -33,12 +36,18 @@
             toolbox: {
                 show : true,
                 feature : {
-                    dataView : {show: true, readOnly: false},
                     restore : {show: true},
                     saveAsImage : {show: true},
                 }
             },
             calculable : true,
+            grid: {
+                top: '25%',
+                left: '0%',
+                right: '1%',
+                bottom: '18%',
+                containLabel: true
+            },
             xAxis : [
                 {
                     type : 'category',
@@ -52,7 +61,7 @@
             ],
             series : [
                 {
-                    name: 'Game',
+                    name: 'Games',
                     type: 'bar',
                     data: @json($globalTags->map(function ($tag) { return count($tag->games); })),
                     color: '#0D6EFD',
