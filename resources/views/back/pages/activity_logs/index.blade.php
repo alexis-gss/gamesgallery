@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('back.layout')
 
 @section('title', __('crud.meta.all_models', ['model' => trans_choice('models.activities', 2)]))
 @section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.activities', 2)]))

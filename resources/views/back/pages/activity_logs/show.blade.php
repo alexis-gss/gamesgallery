@@ -1,4 +1,4 @@
-@extends('layouts.backend', ['brParam' => $activitylogModel])
+@extends('back.layout', ['brParam' => $activitylogModel])
 
 @section('title', __('Édition d\'un :model', ['model' => Str::singular(__('models.classes.activity_logs'))]))
 @section('description', __('Édition d\'un :model déjà existant', ['model' => Str::singular(__('models.classes.activity_logs'))]))

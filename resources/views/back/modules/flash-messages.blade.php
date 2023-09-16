@@ -31,7 +31,7 @@
 </div>
 @endif
 
-@if ($errors->any())
+@if (isset($errors) && $errors->any())
 <div class="alert alert-danger alert-dismissible fade show m-0 mb-3" role="alert">
     <p class="fw-bold m-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;{{ __('texts.bo.other.errors_list') }}</p>
     @if ($errors->any())

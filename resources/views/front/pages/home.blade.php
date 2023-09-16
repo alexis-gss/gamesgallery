@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('front.layout')
 
 @section('title', __('texts.fo.default_title'))
 @section('description', __('texts.fo.default_description'))

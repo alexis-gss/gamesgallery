@@ -1,0 +1,15 @@
+// * OTHERS VARIABLES
+.w-fit {
+    width: fit-content;
+}
+
+// * RESPONSIVE VARIABLES
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        .w#{$infix}-fit {
+            width: fit-content !important;
+        }
+    }
+}

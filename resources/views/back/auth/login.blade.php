@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('back.layout')
 
 @section('title', __('texts.bo.other.back_office_login'))
 @section('description', __('texts.bo.other.back_office_login_desc'))

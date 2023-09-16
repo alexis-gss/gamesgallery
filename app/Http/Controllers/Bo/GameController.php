@@ -55,7 +55,7 @@ class GameController extends Controller
         /** Custom pagination */
         $games = $this->paginate($games);
 
-        return view('back.games.index', compact('games', 'search', 'searchFields'));
+        return view('back.pages.games.index', compact('games', 'search', 'searchFields'));
     }
 
     /**
@@ -70,7 +70,7 @@ class GameController extends Controller
         /** @var \Illuminate\Database\Eloquent\Collection */
         $tags = Tag::select(['id', 'name', 'slug'])->get();
 
-        return view('back.games.create', compact('game', 'tags'));
+        return view('back.pages.games.create', compact('game', 'tags'));
     }
 
     /**
@@ -109,7 +109,7 @@ class GameController extends Controller
         /** @var \Illuminate\Database\Eloquent\Collection */
         $tags = Tag::select(['id', 'name', 'slug'])->get();
 
-        return view('back.games.edit', compact('game', 'tags'));
+        return view('back.pages.games.edit', compact('game', 'tags'));
     }
 
     /**

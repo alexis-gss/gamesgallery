@@ -1,4 +1,4 @@
-@extends('layouts.frontend', ['brParam' => $game])
+@extends('front.layout', ['brParam' => $game])
 
 @section('title', (isset($game) ? $game->name : __('texts.fo.default_title')))
 @section('description', (isset($game) ? __('texts.fo.description',  ['game' =>  $game->name]) :  __('texts.fo.default_description')))

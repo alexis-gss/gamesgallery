@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+// * UTILITIES
+@import "./utilities/variables";
+
+// * LIBS.
+@import "./libs/aos";
+@import "./libs/bootstrap";
+@import "./libs/glightbox";
+@import "./libs/simplebar";
+
+// * BASE.
+@import "./base/custom";
+@import "./base/component";
+@import "./base/common";
+@import "./base/fonts";
+
+// * PARTIALS.
+@import "./partials/nav";
+@import "./partials/footer";

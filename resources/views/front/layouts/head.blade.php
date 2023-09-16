@@ -34,4 +34,4 @@
 @include('breadcrumbs.breadcrumb-head')
 
 <!-- Styles -->
-@vite(['resources/sass/front.scss'])
+@vite(['resources/sass/fo/front.scss'])

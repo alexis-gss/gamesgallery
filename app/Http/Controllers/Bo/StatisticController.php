@@ -40,7 +40,7 @@ class StatisticController extends Controller
             $modelLatest[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
         });
 
-        return view('back.statistics.index', compact(
+        return view('back.pages.statistics.index', compact(
             'modelLatest',
             'modelActivities',
             'dateLastDaysFormated',

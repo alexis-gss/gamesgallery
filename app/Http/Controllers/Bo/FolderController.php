@@ -46,7 +46,7 @@ class FolderController extends Controller
         /** Custom pagination */
         $folders = $this->paginate($folders);
 
-        return view('back.folders.index', compact('folders', 'search', 'searchFields'));
+        return view('back.pages.folders.index', compact('folders', 'search', 'searchFields'));
     }
 
     /**
@@ -58,7 +58,7 @@ class FolderController extends Controller
      */
     public function create(Folder $folder): \Illuminate\Contracts\View\View
     {
-        return view('back.folders.create', compact('folder'));
+        return view('back.pages.folders.create', compact('folder'));
     }
 
     /**
@@ -91,7 +91,7 @@ class FolderController extends Controller
      */
     public function edit(Folder $folder): \Illuminate\Contracts\View\View
     {
-        return view('back.folders.edit', compact('folder'));
+        return view('back.pages.folders.edit', compact('folder'));
     }
 
     /**

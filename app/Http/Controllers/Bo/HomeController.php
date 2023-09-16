@@ -18,6 +18,6 @@ class HomeController extends Controller
         $parsedown = new Parsedown();
         $changelog = $parsedown->text(File::get(\app_path('../CHANGELOG.md')));
 
-        return view('back.home', compact('changelog'));
+        return view('back.pages.home', compact('changelog'));
     }
 }

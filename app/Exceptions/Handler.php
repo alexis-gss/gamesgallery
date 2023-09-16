@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -31,4 +32,23 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    /**
+     * Change the path of the render an exception into an HTTP response.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable               $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Throwable If errors.
+     * @phpcs:disable Squiz.Commenting.FunctionComment.TypeHintMissing
+     */
+    public function render($request, Throwable $exception)
+    {
+        //phpcs:enable
+        if ($this->isHttpException($exception)) {
+            $statusCode = $exception->getStatusCode();
+            return response()->make(view("errors.pages.{$statusCode}", ['exception' => $exception]), $statusCode);
+        }
+        return parent::render($request, $exception);
+    }
 }

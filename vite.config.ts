@@ -61,10 +61,10 @@ export default defineConfig({
         }),
         laravel({
             input: [
-                "resources/sass/back.scss",
-                "resources/ts/back.ts",
-                "resources/sass/front.scss",
-                "resources/ts/front.ts",
+                "resources/sass/bo/back.scss",
+                "resources/ts/bo/back.ts",
+                "resources/sass/fo/front.scss",
+                "resources/ts/fo/front.ts",
             ],
         }),
         stylelint({

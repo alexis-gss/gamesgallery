@@ -38,4 +38,4 @@
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
 <!-- Styles -->
-@vite(['resources/sass/back.scss'])
+@vite(['resources/sass/bo/back.scss'])

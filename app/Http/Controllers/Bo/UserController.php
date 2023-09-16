@@ -47,7 +47,7 @@ class UserController extends Controller
         /** Custom pagination */
         $users = $this->paginate($users);
 
-        return view('back.users.index', compact('users', 'search', 'searchFields'));
+        return view('back.pages.users.index', compact('users', 'search', 'searchFields'));
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function create(User $user): \Illuminate\Contracts\View\View
     {
-        return view('back.users.create', compact('user'));
+        return view('back.pages.users.create', compact('user'));
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         if (Auth::user()->id === $user->id || Gate::check('isAdmin')) {
-            return view('back.users.edit', compact('user'));
+            return view('back.pages.users.edit', compact('user'));
         } else {
             return redirect()->route('bo.users.index')
                 ->with('error', __('crud.changes.right'));

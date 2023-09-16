@@ -47,7 +47,7 @@ class TagController extends Controller
         /** Custom pagination */
         $tags = $this->paginate($tags);
 
-        return view('back.tags.index', compact('tags', 'search', 'searchFields'));
+        return view('back.pages.tags.index', compact('tags', 'search', 'searchFields'));
     }
 
     /**
@@ -59,7 +59,7 @@ class TagController extends Controller
      */
     public function create(Tag $tag): \Illuminate\Contracts\View\View
     {
-        return view('back.tags.create', compact('tag'));
+        return view('back.pages.tags.create', compact('tag'));
     }
 
     /**
@@ -112,7 +112,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag): \Illuminate\Contracts\View\View
     {
-        return view('back.tags.edit', compact('tag'));
+        return view('back.pages.tags.edit', compact('tag'));
     }
 
     /**
