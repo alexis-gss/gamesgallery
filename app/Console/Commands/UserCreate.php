@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Creates a new user
+ * Creates a new user.
  */
 class UserCreate extends Command
 {
