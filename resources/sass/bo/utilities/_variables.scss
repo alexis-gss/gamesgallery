@@ -2,12 +2,16 @@
 $color-light: #f8f9fa;
 $color-dark: #212529;
 $color-success: #198754;
-$color-danger: #dc3545;
-$color-info: #0dcaf0;
+$color-danger: #d32e3e;
+$color-info: #0bb2d3;
 $color-warning: #ffc107;
-$color-primary: #0d6efd;
+$color-primary: #006fa7;
 $color-secondary: #6c757d;
+$color-tertiary: #121416;
 
 // * DIMENSIONS
 $bo-header-height: 56px;
 $bo-footer-height: 40px;
+
+// * FONTS
+$font-default-title: rubik-regular, sans-serif;
