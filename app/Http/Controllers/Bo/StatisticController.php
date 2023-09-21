@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
 use App\Models\Tag;
@@ -35,7 +36,12 @@ class StatisticController extends Controller
 
         collect($activitiesClass)->map(function ($class) use (&$modelActivities, &$modelLatest, $latestDays) {
             collect($latestDays->toArray())->map(function ($date) use (&$modelActivities, $class) {
-                $modelActivities[$class][] = count($class::query()->whereDate('updated_at', $date)->get());
+                $modelActivities[$class][] = count(
+                    ActivityLog::query()
+                        ->where('model', $class)
+                        ->whereDate('created_at', $date)
+                        ->get()
+                );
             });
             $modelLatest[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
         });
