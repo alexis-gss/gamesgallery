@@ -7,6 +7,7 @@ use App\Http\Controllers\Bo\FolderController;
 use App\Http\Controllers\Bo\StatisticController;
 use App\Http\Controllers\Bo\TagController;
 use App\Http\Controllers\Bo\UserController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -103,6 +104,7 @@ Route::prefix('bo')
                         Route::resource('tags', TagController::class)->except('show');
                         Route::resource('users', UserController::class)->except('show');
                         Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
+                        Route::post('theme/set', [Controller::class, 'setTheme'])->name('theme.set');
                     }
                 );
         }

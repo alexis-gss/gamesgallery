@@ -47,7 +47,7 @@
                         title="{{ __('texts.bo.tooltip.show_folder') }}"
                         class="text-decoration-none">
                     @endcan
-                    <span class="@can('isAdmin') badge bg-primary @else text-dark @endcan">
+                    <span class="@can('isAdmin') badge bg-primary @endcan">
                         {{ $game->folder->name }}
                     </span>
                     @can('isAdmin')

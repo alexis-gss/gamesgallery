@@ -52,8 +52,8 @@ main {
         td:last-child {
             position: sticky;
             right: 0;
-            width: 0.1%;
-            background-color: $gray-200;
+            width: 0;
+            background-color: rgb(var(--bs-light-rgb));
             color: $gray-900;
             white-space: nowrap;
         }

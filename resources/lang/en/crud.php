@@ -31,7 +31,8 @@ return [
         'publish_status_saved' => 'Publishment of status changes !',
         'order_changed'        => 'The order has been changed !',
         'order_not_changed'    => 'The order could not be changed !',
-        'right'                => 'You do not have the rights to access this page !'
+        'right'                => 'You do not have the rights to access this page !',
+        'theme_updated'        => 'The theme has been updated !',
     ],
 
     'pagination' => [

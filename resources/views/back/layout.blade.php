@@ -5,7 +5,7 @@
     @include('back.layouts.head')
 </head>
 
-<body id="app">
+<body data-bs-theme="{{ \App\Enums\Theme\BootstrapThemeEnum::make(intval(Cache::get('theme')))->name() }}">
     @auth
     <!-- Header -->
     @include('back.layouts.nav')

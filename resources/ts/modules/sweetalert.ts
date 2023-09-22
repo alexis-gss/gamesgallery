@@ -24,6 +24,7 @@ export default {
             Swal.fire({
                 title: title,
                 text: text,
+                color: getComputedStyle(document.body).getPropertyValue("--bs-body-color"),
                 icon: icon,
                 showCancelButton: true,
                 confirmButtonText: trans.default.methods.__("crud.sweetalert.confirm"),
@@ -36,6 +37,7 @@ export default {
                     cancelButton: "btn btn-danger mx-1",
                 },
                 buttonsStyling: false,
+                background: getComputedStyle(document.body).getPropertyValue("--bs-body-bg"),
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (after) {
@@ -52,12 +54,14 @@ export default {
             const icon = options.icon ?? "warning";
             Swal.fire({
                 title: title,
+                color: getComputedStyle(document.body).getPropertyValue("--bs-body-color"),
                 icon: icon,
                 toast: true,
                 width: "fit-content",
                 position: "bottom-start",
                 showConfirmButton: false,
                 showCloseButton: true,
+                background: getComputedStyle(document.body).getPropertyValue("--bs-body-bg"),
                 timer: 8000,
                 timerProgressBar: true,
                 didOpen: (toast) => {

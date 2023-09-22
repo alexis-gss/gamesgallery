@@ -1,4 +1,4 @@
-<footer id="footer" class="text-center text-secondary px-0">
+<footer id="footer" class="bg-light px-0 text-center">
     <div class="text-center p-2">
         {{ $globalLicense }} -
         <a href="https://github.com/alexis-gss/gamesgallery"

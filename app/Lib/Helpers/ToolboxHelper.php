@@ -2,7 +2,6 @@
 
 namespace App\Lib\Helpers;
 
-use App\Enums\Pagination\ItemsPerPaginationEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -140,15 +139,17 @@ class ToolboxHelper
      * Get validated pagination from request.
      *
      * @param integer $default
+     * @param string  $field
+     * @param string  $enumPath
      * @return integer
      */
-    public static function getValidatedPaginate(int $default): int
+    public static function getValidatedEnum(int $default, string $field, string $enumPath): int
     {
         try {
             return \intval(Validator::make(
-                ['pagination' => \request()->get('pagination')],
-                ['pagination' => new Enum(ItemsPerPaginationEnum::class)]
-            )->validated()['pagination']);
+                [$field => \request()->get($field)],
+                [$field => new Enum($enumPath)]
+            )->validated()[$field]);
         } catch (ValidationException $e) {
             return $default;
         }

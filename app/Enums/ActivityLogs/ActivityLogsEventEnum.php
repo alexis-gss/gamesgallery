@@ -23,7 +23,6 @@ enum ActivityLogsEventEnum: int
         self::deleted->name    => 'crud.actions.delete',
     ];
 
-
     /**
      * Custom added classes definition
      */

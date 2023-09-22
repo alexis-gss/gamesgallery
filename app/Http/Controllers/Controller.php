@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Pagination\ItemsPerPaginationEnum;
+use App\Enums\Theme\BootstrapThemeEnum;
 use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
@@ -133,16 +135,41 @@ class Controller extends BaseController
      * @param \App\Enums\Pagination\ItemsPerPaginationEnum|null $pagination
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    protected function paginate(Builder $query, ItemsPerPaginationEnum $pagination = null): LengthAwarePaginator
-    {
+    protected function paginate(
+        Builder $query,
+        ItemsPerPaginationEnum $pagination = null
+    ): \Illuminate\Contracts\Pagination\LengthAwarePaginator {
         $currentRoutePath = Str::slug(request()->route()->getName());
         $cacheKey         = "pagination.{$currentRoutePath}";
         $pagination       = $pagination ?? ItemsPerPaginationEnum::twelve;
-        $pagination       = ToolboxHelper::getValidatedPaginate(Cache::get($cacheKey, $pagination->value));
+        $pagination       = ToolboxHelper::getValidatedEnum(
+            Cache::get($cacheKey, $pagination->value()),
+            'pagination',
+            '\App\Enums\Pagination\ItemsPerPaginationEnum',
+        );
         if (Cache::get($cacheKey) !== $pagination) {
             Cache::put($cacheKey, $pagination);
         }
         $query = $query->paginate($pagination);
         return $query;
+    }
+
+    /**
+     * Set the bootstrap theme or light (default).
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function setTheme(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $theme = ToolboxHelper::getValidatedEnum(
+            $request->theme ?: Cache::get('theme', BootstrapThemeEnum::light->value()),
+            'theme',
+            '\App\Http\Controllers\BootstrapThemeEnum',
+        );
+        if (Cache::get("theme") !== $theme) {
+            Cache::put("theme", $theme);
+        }
+        return redirect()->back()->with('success', __('crud.changes.theme_updated'));
     }
 }

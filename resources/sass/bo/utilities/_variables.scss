@@ -1,4 +1,5 @@
 // * COLORS
+$color-white: #fff;
 $color-light: #f8f9fa;
 $color-dark: #212529;
 $color-success: #198754;
@@ -15,3 +16,8 @@ $bo-footer-height: 40px;
 
 // * FONTS
 $font-default-title: rubik-regular, sans-serif;
+
+// * BOOTSTRAP THEME CUSTOM
+[data-bs-theme="dark"] {
+    --bs-light-rgb: #{46, 51, 56};
+}
