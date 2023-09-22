@@ -4,20 +4,22 @@
 @section('description', __('texts.bo.other.back_office_login_desc'))
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3 border-bottom">
-    <h1 class="h2 m-0 fw-bold">{{ __('texts.bo.other.back_office') }}
-        <small class="text-body-secondary h4">{{ __('auth.login') }}</small>
-    </h1>
-</div>
-<div class="row justify-content-md-center mt-3">
-    <div class="col col-xl-8 col-xxl-4">
-        <form method="POST" action="{{ route('bo.login') }}">
+<h1 class="title-font-regular text-center position-relative w-fit mx-auto mb-3 p-0 px-sm-5 py-1">
+    {{ config('app.name') }}
+    <span class="d-none d-sm-block angles"></span>
+</h1>
+<div class="card-auth row w-100 justify-content-center pb-5">
+    <div class="col-12">
+        <form method="POST" action="{{ route('bo.login') }}" class="card p-3 p-sm-4">
             @csrf
             <div class="row mb-3">
-                <label for="email" class="col-form-label">
-                    <b>{{ __('auth.login_mail') }}</b>
-                </label>
-                <div>
+                <h2 class="h2 text-center m-0 fw-bold">{{ __('auth.login') }}</h2>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-8 mx-auto">
+                    <label for="email" class="col-form-label">
+                        <b>{{ __('auth.login_mail') }}</b>
+                    </label>
                     <input id="email"
                         type="email"
                         placeholder="{{ __('auth.placeholder_email') }}"
@@ -30,10 +32,10 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="password" class="col-form-label">
-                    <b>{{ __('auth.login_password') }}</b>
-                </label>
-                <div>
+                <div class="col-sm-8 mx-auto">
+                    <label for="password" class="col-form-label">
+                        <b>{{ __('auth.login_password') }}</b>
+                    </label>
                     <input id="password"
                         type="password"
                         placeholder="{{ __('auth.placeholder_password') }}"

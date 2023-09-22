@@ -6,17 +6,23 @@
 </head>
 
 <body id="app">
+    @auth
     <!-- Header -->
     @include('back.layouts.nav')
+    @endauth
 
     <!-- Main content -->
-    <main class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 py-4">
+    <main class="container-fluid row mx-auto">
+        <div class="col-12 col-md-10 col-lg-8 px-0 py-3 mx-auto">
+            @if (!Auth::check())
+            <div class="d-flex flex-column align-items-center justify-content-center h-100 pb-5">
+                @endauth
                 <!-- Show a message when an action is performed -->
                 @include('back.modules.flash-messages')
                 @yield('content')
+                @if (!Auth::check())
             </div>
+            @endauth
         </div>
     </main>
 
