@@ -18,6 +18,7 @@
 /public/mstile-310x310.png
 /public/safari-pinned-tab.svg
 /public/site.webmanifest
+/bootstrap
 /storage/*.key
 /storage/inco/*.*
 /storage/eleveur/*.*
