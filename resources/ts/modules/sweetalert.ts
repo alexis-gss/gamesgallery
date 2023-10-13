@@ -1,5 +1,6 @@
 // SweetAlert
-import Swal, { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
+import type { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
+import Swal from "sweetalert2";
 import * as trans from "../modules/trans";
 
 export default {

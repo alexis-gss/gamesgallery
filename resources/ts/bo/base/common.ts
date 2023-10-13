@@ -1,4 +1,4 @@
-import { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
+import type { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
 import sweetalert from "../../modules/sweetalert";
 import * as trans from "../../modules/trans";
 

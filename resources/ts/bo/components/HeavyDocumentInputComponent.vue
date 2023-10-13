@@ -159,7 +159,8 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { Tooltip } from "bootstrap";
 import Resumable from "resumablejs";
-import { defineComponent, PropType } from "vue";
+import type { PropType } from "vue";
+import { defineComponent } from "vue";
 import route from "./../../modules/route";
 import trans from "./../../modules/trans";
 
