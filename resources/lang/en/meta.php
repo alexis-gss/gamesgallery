@@ -3,7 +3,6 @@
 return [
     'default_title' => 'Home',
     'default_description' => 'Web application made with Laravel, listing all screenshots taken in video games.',
-    'default_keyword' => 'game, games, gallery, screenshot, screenshots, laravel, alexis, gousseau',
     'back_office' => 'Back end',
     'back_office_desc' => 'Homepage of the back end.',
     'back_office_login' => 'Login',

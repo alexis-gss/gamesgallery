@@ -6,15 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Folders\StoreFolderRequest;
 use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
 use App\Models\Folder;
-use App\Traits\Models\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelStatus;
+use App\Traits\Controllers\ChangesModelOrder;
+use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FolderController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelStatus;
+    use UpdateModelPublished;
 
     /**
      * Display a listing of the resource.
@@ -26,8 +26,9 @@ class FolderController extends Controller
     {
         /** @var \Illuminate\Database\Eloquent\Builder $folders */
         $folders = Folder::query();
-        $search  = $request->search;
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $folders,
@@ -36,11 +37,13 @@ class FolderController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($folders);
         $searchFields = trans('Name');
 
-        $folders = $folders->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($folders);
+
+        /** Custom pagination */
+        $folders = $this->customPaginate($folders, $request->pagination);
 
         return view('back.folders.index', compact('folders', 'search', 'searchFields'));
     }
@@ -129,5 +132,16 @@ class FolderController extends Controller
             return redirect()->back()
                 ->with('error', trans('changes.deletion_associated'));
         }
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\Folder $folder
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(Folder $folder): \Illuminate\Contracts\View\View
+    {
+        return $this->create($folder->replicate());
     }
 }

@@ -2,7 +2,6 @@
 
 @section('title', __('meta.games_edition'))
 @section('description', __('meta.games_edition_desc'))
-@section('keywords', 'noindex,nofollow')
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -24,13 +23,21 @@
             @csrf
             @method('DELETE')
             <div class="btn-group" role="group">
-                <button type="submit"
-                    class="btn btn-danger"
+                <a href="{{ route('fo.games.specific', $game->slug) }}"
+                    class="btn btn-warning"
+                    target="_blank"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.delete_game') }}">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                    title="{{ __('list.show_game') }}">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+                <a class="btn btn-secondary"
+                    href="{{ route('bo.games.duplicate', ['game' => $game->id]) }}"
+                    data-bs="tooltip"
+                    data-bs-placement="top"
+                    title="{{ __('list.duplicate_game') }}">
+                    <i class="fa-solid fa-copy"></i>
+                </a>
                 <button id="formSubmitClone"
                     type="submit"
                     class="btn btn-primary"
@@ -38,6 +45,13 @@
                     data-bs-placement="top"
                     title="{{ __('form.save') }}">
                     <i class="fa-solid fa-floppy-disk"></i>
+                </button>
+                <button type="submit"
+                    class="btn btn-danger"
+                    data-bs="tooltip"
+                    data-bs-placement="top"
+                    title="{{ __('list.delete_game') }}">
+                    <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
         </form>

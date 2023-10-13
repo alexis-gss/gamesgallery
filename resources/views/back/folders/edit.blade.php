@@ -2,7 +2,6 @@
 
 @section('title', __('meta.folders_edition'))
 @section('description', __('meta.folders_edition_desc'))
-@section('keywords', 'noindex,nofollow')
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -24,13 +23,13 @@
             @csrf
             @method('DELETE')
             <div class="btn-group" role="group">
-                <button type="submit"
-                    class="btn btn-danger"
+                <a class="btn btn-secondary"
+                    href="{{ route('bo.folders.duplicate', ['folder' => $folder->id]) }}"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('list.delete_folder') }}">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                    title="{{ __('list.duplicate_folder') }}">
+                    <i class="fa-solid fa-copy"></i>
+                </a>
                 <button id="formSubmitClone"
                     type="submit"
                     class="btn btn-primary"
@@ -38,6 +37,13 @@
                     data-bs-placement="top"
                     title="{{ __('form.save') }}">
                     <i class="fa-solid fa-floppy-disk"></i>
+                </button>
+                <button type="submit"
+                    class="btn btn-danger"
+                    data-bs="tooltip"
+                    data-bs-placement="top"
+                    title="{{ __('list.delete_folder') }}">
+                    <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
         </form>

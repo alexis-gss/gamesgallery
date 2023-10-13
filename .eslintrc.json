@@ -10,16 +10,16 @@
     ],
     "overrides": [
         {
-            "files": ["*.ts", "*.vue"],
-            "rules": {
-                "no-undef": "off"
-            }
+        "files": ["*.ts", "*.vue"],
+        "rules": {
+            "no-undef": "off"
+        }
         },
         {
-            "files": ["*.vue"],
-            "rules": {
-                "indent": "off"
-            }
+        "files": ["*.vue"],
+        "rules": {
+            "indent": "off"
+        }
         }
     ],
     "parser": "vue-eslint-parser",
@@ -37,5 +37,19 @@
         "semi": ["error", "always"],
         "vue/script-indent": ["error", 2, { "baseIndent": 0, "switchCase": 1 }],
         "vue/one-component-per-file": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".vue", ".ts", ".d.ts"]
+            },
+            "alias": {
+                "extensions": [".vue", ".js", ".ts", ".scss", ".d.ts"],
+                "map": [
+                    ["~", "./resources/assets"],
+                    ["@", "./node_modules"]
+                ]
+            }
+        }
     }
 }

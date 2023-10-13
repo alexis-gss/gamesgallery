@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Bo;
 
+use App\Enums\Users\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Users\StoreUserRequest;
 use App\Http\Requests\Bo\Users\UpdateUserRequest;
 use App\Models\User;
-use App\Traits\Models\ChangesModelOrder;
+use App\Traits\Controllers\ChangesModelOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,9 +25,10 @@ class UserController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $users */
-        $users  = User::query();
-        $search = $request->search;
+        $users = User::query();
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $users,
@@ -35,11 +37,13 @@ class UserController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($users);
         $searchFields = trans('Name');
 
-        $users = $users->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($users);
+
+        /** Custom pagination */
+        $users = $this->customPaginate($users, $request->pagination);
 
         return view('back.users.index', compact('users', 'search', 'searchFields'));
     }
@@ -85,7 +89,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user()->id === $user->id || Auth::user()->role === \App\Enums\Role::admin()->value) {
+        if (Auth::user()->id === $user->id || Auth::user()->role === RoleEnum::admin()->value) {
             return view('back.users.edit', compact('user'));
         } else {
             return redirect()->route('bo.users.index')->with('error', trans(__('changes.right')));
@@ -127,5 +131,16 @@ class UserController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\User $user
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(User $user): \Illuminate\Contracts\View\View
+    {
+        return $this->create($user->replicate());
     }
 }

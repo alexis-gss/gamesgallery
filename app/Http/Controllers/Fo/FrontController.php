@@ -19,9 +19,14 @@ class FrontController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $games = Game::where('status', 1)->orderBy('slug', 'ASC')->get();
+        $games             = Game::where('published', true)->orderBy('slug', 'ASC')->get();
+        $gamesLatest       = Game::where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
+        $gamesLatestString = "";
+        foreach ($gamesLatest as $lastGame) {
+            $gamesLatestString = $gamesLatestString . $lastGame->name . " / ";
+        }
 
-        return view('front.pages.home', compact('games'));
+        return view('front.pages.home', compact('games', 'gamesLatestString'));
     }
 
     /**
@@ -33,8 +38,8 @@ class FrontController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $games = Game::where('status', true)->orderBy('slug', 'ASC')->get();
-        $game  = Game::where('status', true)->where('slug', $slug)->firstOrFail();
+        $games = Game::where('published', true)->orderBy('slug', 'ASC')->get();
+        $game  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
         if (isset($game->pictures)) {
             $gamePictures = $this->paginate(
                 $game->pictures,
@@ -86,7 +91,7 @@ class FrontController extends Controller
         $selectedTagId    = intval($request->FILTERSID[0] ?? 0);
         $selectedFolderId = intval($request->FILTERSID[1] ?? 0);
         /** @var HTMLCollection<\App\Models\Game> */
-        $gamesFiltered = Game::where('status', true)
+        $gamesFiltered = Game::where('published', true)
             ->when($selectedTagId, function ($query) use ($selectedTagId) {
                 $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
                     $query->where('id', $selectedTagId);

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Role;
+use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
 use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property integer $id
@@ -21,12 +20,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $picture_alt
  * @property string $picture_title
  * @property string $password
- * @property integer $role
+ * @property RoleEnum $role
  * @property integer $order
  */
 class User extends Authenticatable
 {
-    use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
@@ -36,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $enumCasts = [
-        'role' => Role::class
+        'role' => RoleEnum::class
     ];
 
     /**
@@ -97,7 +95,6 @@ class User extends Authenticatable
      * Set the slug.
      *
      * @param \App\Models\User $user
-     *
      * @return void
      */
     private static function setSlug(User $user)
@@ -109,12 +106,13 @@ class User extends Authenticatable
      * Set the image.
      *
      * @param \App\Models\User $user
-     *
      * @return void
      */
     private static function setImage(User $user)
     {
-        $user->picture = FileStorageHelper::storeFile($user, $user->picture, true);
+        $user->picture_alt   = "Default picture of " . $user->name . " account";
+        $user->picture_title = "User's picture of " . $user->name . " account";
+        $user->picture       = FileStorageHelper::storeFile($user, $user->picture, true);
     }
 
     /**
@@ -135,12 +133,12 @@ class User extends Authenticatable
     /**
      * Asserts using validation that the fields are unique.
      *
-     * @param mixed        $model
-     * @param integer|null $id
+     * @param \App\Models\User $model
+     * @param integer|null     $id
      * @return void
      * @throws \Illuminate\Validation\ValidationException If field already exists.
      */
-    private static function assertFieldsAreUnique($model, ?int $id = null)
+    private static function assertFieldsAreUnique(User $model, ?int $id = null)
     {
         $table = (new self())->getTable();
         ToolboxHelper::assertFieldIsUnique($table, 'slug', $model->slug, $id);

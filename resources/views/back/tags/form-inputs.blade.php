@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter @error('name') is-invalid @enderror"
+                        class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $tag->name ?? '') }}">
                     <small class="text-muted">{{ __('form.tag_label') }}</small>
@@ -34,12 +34,12 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
-                        <input class="form-check-input @error('status') is-invalid @enderror"
-                            name="status"
+                        <input class="form-check-input @error('published') is-invalid @enderror"
+                            name="published"
                             type="checkbox"
                             value="1"
                             id="flexSwitchCheckDefault"
-                            @if (old('status', $tag->status ?? '')) checked @endif
+                            @if (old('published', $tag->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ __('form.publish') }}</b>
@@ -47,7 +47,7 @@
                         <br>
                         <small class="form-text text-muted">{{ __('form.publish_label') }}</small>
                     </div>
-                    @include('back.modules.input-error', ['inputName' => 'status'])
+                    @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>
             </div>
         </fieldset>

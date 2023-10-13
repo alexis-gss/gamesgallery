@@ -1,8 +1,8 @@
-@extends('layouts.backend')
+@extends('layouts.backend', ['brParam' => $game])
 
 @section('title', __('meta.games_creation'))
 @section('description', __('meta.games_creation_desc'))
-@section('keywords', 'noindex,nofollow')
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
@@ -14,7 +14,7 @@
             title="{{ __('form.return_list') }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        @include('breadcrumbs.breadcrumb-body')
+        @include('breadcrumbs.breadcrumb-body', ['brParam' => $game])
     </div>
     <div class="btn-toolbar mb-2 mb-md-0">
         <button id="formSubmitClone"

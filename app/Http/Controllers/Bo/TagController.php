@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Tags\StoreTagRequest;
 use App\Http\Requests\Bo\Tags\UpdateTagRequest;
 use App\Models\Tag;
-use App\Traits\Models\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelStatus;
+use App\Traits\Controllers\ChangesModelOrder;
+use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class TagController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelStatus;
+    use UpdateModelPublished;
 
     /**
      * Display a listing of the resource.
@@ -26,9 +26,10 @@ class TagController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $tags */
-        $tags   = Tag::query();
-        $search = $request->search;
+        $tags = Tag::query();
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $tags,
@@ -37,11 +38,13 @@ class TagController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($tags);
         $searchFields = trans('Name');
 
-        $tags = $tags->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($tags);
+
+        /** Custom pagination */
+        $tags = $this->customPaginate($tags, $request->pagination);
 
         return view('back.tags.index', compact('tags', 'search', 'searchFields'));
     }
@@ -145,5 +148,16 @@ class TagController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\Tag $tag
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(Tag $tag): \Illuminate\Contracts\View\View
+    {
+        return $this->create($tag->replicate());
     }
 }

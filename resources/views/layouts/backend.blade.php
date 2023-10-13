@@ -13,7 +13,7 @@
     <main class="container-fluid">
         <!-- Show a message when an action is performed -->
         @auth
-            @include('back.modules.message')
+        @include('back.modules.message')
         @endauth
 
         <div class="row justify-content-center">

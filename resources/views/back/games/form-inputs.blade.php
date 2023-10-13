@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter @error('name') is-invalid @enderror"
+                        class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $game->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}</small>
@@ -33,9 +33,9 @@
                     </label>
                     <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button">
                         @foreach ($globalFolders as $folder)
-                            <option value="{{ $folder->id }}" @if ($folder->id == $game->folder_id) selected @endif>
-                                {{ $folder->name }}
-                            </option>
+                        <option value="{{ $folder->id }}" @if ($folder->id == $game->folder_id) selected @endif>
+                            {{ $folder->name }}
+                        </option>
                         @endforeach
                     </select>
                     <small class="text-muted">{{ __('form.folders_label') }}</small>
@@ -61,16 +61,16 @@
                         </span>
                     </label>
                     @php
-                        $data = [
-                            'id' => 'gamePictures',
-                            'name' => 'pictures[]',
-                            'width' => 3840,
-                            'height' => 2160,
-                            'value' => $game->pictures ?? [],
-                            'limit' => [0,100],
-                            'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
-                            'errors' => $errors->getBag('default')->getMessages()
-                        ];
+                    $data = [
+                        'id' => 'gamePictures',
+                        'name' => 'pictures[]',
+                        'width' => 3840,
+                        'height' => 2160,
+                        'value' => $game->pictures ?? [],
+                        'limit' => [0,100],
+                        'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
+                        'errors' => $errors->getBag('default')->getMessages()
+                    ];
                     @endphp
                     <div class="images-input" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'pictures[]'])
@@ -95,11 +95,11 @@
                         </span>
                     </label>
                     @php
-                        $data = [
-                            'name' => 'tags',
-                            'value' => old('tags', $game->tags ?? []),
-                            'tags' => $tags,
-                        ];
+                    $data = [
+                        'name' => 'tags',
+                        'value' => old('tags', $game->tags ?? []),
+                        'tags' => $tags,
+                    ];
                     @endphp
                     <div id="taggable-dropdown" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'tags'])
@@ -116,12 +116,12 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
-                        <input class="form-check-input @error('status') is-invalid @enderror"
-                            name="status"
+                        <input class="form-check-input @error('published') is-invalid @enderror"
+                            name="published"
                             type="checkbox"
                             value="1"
                             id="flexSwitchCheckDefault"
-                            @if (old('status', $game->status ?? '')) checked @endif
+                            @if (old('published', $game->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ __('form.publish') }}</b>
@@ -129,7 +129,7 @@
                         <br>
                         <small class="form-text text-muted">{{ __('form.publish_label') }}</small>
                     </div>
-                    @include('back.modules.input-error', ['inputName' => 'status'])
+                    @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>
             </div>
         </fieldset>

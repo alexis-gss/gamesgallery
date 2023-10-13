@@ -30,7 +30,7 @@ class StoreGameRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug(strip_tags($this->name)),
-            'status' => $this->status ? true : false
+            'published' => $this->published ? true : false
         ]);
         $this->mergePictures('pictures');
     }
@@ -43,13 +43,13 @@ class StoreGameRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'folder_id' => 'sometimes|nullable|integer',
+            'folder_id' => 'required|integer|exists:folders,id',
             'name' => 'required|string|min:3|max:255',
             'tags' => 'sometimes|array',
             'tags.*' => 'required|array',
             'tags.*.id' => 'required|numeric|exists:tags,id|distinct',
             'tags.*.name' => 'required|string|min:1|max:255',
-            'status' => 'required|boolean'
+            'published' => 'required|boolean'
         ];
         return \array_merge(
             $rules,
@@ -73,7 +73,7 @@ class StoreGameRequest extends FormRequest
             'tags.*' => trans('tags of the game'),
             'tags.*.id' => trans('tag\'s id'),
             'tags.*.name' => trans('tag\'s name'),
-            'status' => trans('the game is published ?')
+            'published' => trans('published status of the game')
         ];
     }
 }

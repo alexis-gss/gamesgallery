@@ -18,7 +18,8 @@ class CreateFoldersTable extends Migration
             $table->string('name')->comment('Name of the folder.');
             $table->string('slug')->unique()->comment('Slugify the name of the folder.');
             $table->string('color')->comment('Color of the folder.');
-            $table->boolean('status')->comment('The folder is published or not');
+            $table->boolean('published')->comment('The folder is published or not.');
+            $table->timestamp('published_at')->nullable()->comment('The date on which the folder was published.');
             $table->integer('order')->comment('Order of this folder.');
             $table->timestamps();
         });

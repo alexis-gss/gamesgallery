@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Bo\Users;
 
+use Illuminate\Validation\Rules\Password;
+
 class UpdateUserRequest extends StoreUserRequest
 {
     /**
@@ -11,8 +13,17 @@ class UpdateUserRequest extends StoreUserRequest
      */
     public function rules(): array
     {
-        return [
-            'password' => 'sometimes|nullable|required_with:password_confirmation|confirmed|min:8|max:255'
+        $rules = [
+            'password' => [
+                'sometimes', 'nullable', 'required_with:password_confirmation', 'confirmed', 'max:255',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
         ];
+        return \array_merge(parent::rules(), $rules);
     }
 }

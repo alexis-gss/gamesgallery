@@ -29,9 +29,9 @@ class ViewServiceProvider extends ServiceProvider
         $appInfos = Cache::remember('composer', 360, function () {
             return json_decode(File::get(\app_path('../composer.json')));
         });
-        View::share('name', $appInfos->name);
-        View::share('version', $appInfos->version);
-        View::share('license', $appInfos->license);
+        View::share('globalName', $appInfos->name);
+        View::share('globalVersion', $appInfos->version);
+        View::share('globalLicense', $appInfos->license);
 
         // Shares this data with all views.
         if (
@@ -40,9 +40,9 @@ class ViewServiceProvider extends ServiceProvider
             Schema::hasTable('tags') and
             Schema::hasTable('users')
         ) {
-            $globalGames   = Game::orderBy('name', 'ASC')->where('status', true)->get();
-            $globalFolders = Folder::orderBy('name', 'ASC')->where('status', true)->get();
-            $globalTags    = Tag::orderBy('name', 'ASC')->where('status', true)->get();
+            $globalGames   = Game::orderBy('name', 'ASC')->where('published', true)->get();
+            $globalFolders = Folder::orderBy('name', 'ASC')->where('published', true)->get();
+            $globalTags    = Tag::orderBy('name', 'ASC')->where('published', true)->get();
             $globalUsers   = User::orderBy('name', 'ASC')->get();
             View::share('globalGames', $globalGames);
             View::share('globalFolders', $globalFolders);

@@ -7,16 +7,16 @@ use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Models\Game;
 use App\Models\Tag;
+use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\HasPicture;
-use App\Traits\Controllers\UpdateModelStatus;
-use App\Traits\Models\ChangesModelOrder;
+use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelStatus;
+    use UpdateModelPublished;
     use HasPicture;
 
     /**
@@ -28,9 +28,10 @@ class GameController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $games */
-        $games  = Game::query();
-        $search = $request->search;
+        $games = Game::query();
 
+        /** @var string $search Search field */
+        $search = $request->search;
         if ($search) {
             $this->searchQuery(
                 $games,
@@ -39,11 +40,13 @@ class GameController extends Controller
                 'name',
             );
         }
-
-        $this->sortQuery($games);
         $searchFields = trans('Name');
 
-        $games = $games->paginate(12);
+        /** Sort columns with a query */
+        $this->sortQuery($games);
+
+        /** Custom pagination */
+        $games = $this->customPaginate($games, $request->pagination);
 
         return view('back.games.index', compact('games', 'search', 'searchFields'));
     }
@@ -58,7 +61,8 @@ class GameController extends Controller
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Collection */
-        $tags = Tag::query()->select(['id', 'name', 'slug'])->get();
+        $tags = Tag::whereNotIn('id', $game->tags()->pluck('id'))
+            ->select(['id', 'name', 'slug'])->get();
 
         return view('back.games.create', compact('game', 'tags'));
     }
@@ -138,5 +142,16 @@ class GameController extends Controller
         }
         return redirect()->back()
             ->with('error', trans('changes.deletion_failed'));
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param \App\Models\Game $game
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function duplicate(Game $game): \Illuminate\Contracts\View\View
+    {
+        return $this->create($game->replicate());
     }
 }

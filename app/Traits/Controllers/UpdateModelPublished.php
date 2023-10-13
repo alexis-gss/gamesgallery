@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * to resolve the model and the DB row
  * It does not work with binder Service
  */
-trait UpdateModelStatus
+trait UpdateModelPublished
 {
     /**
      * Change model published.
@@ -19,8 +19,8 @@ trait UpdateModelStatus
      */
     public function changePublished(Model $model)
     {
-        $model->status = !$model->status;
+        $model->published = !$model->published;
         $model->saveOrFail();
-        return redirect()->back();
+        return redirect()->back()->with('success', trans(__('changes.publish_status_saved')));
     }
 }

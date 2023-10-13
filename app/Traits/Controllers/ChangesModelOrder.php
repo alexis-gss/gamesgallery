@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Models;
+namespace App\Traits\Controllers;
 
 use App\Http\Requests\Bo\UpdateChangeOrderRequest;
 use Illuminate\Database\Eloquent\Model;
@@ -49,9 +49,8 @@ trait ChangesModelOrder
             $model->order = $newOrder;
             $tmp->saveOrFail();
             $model->saveOrFail();
-            Session::flash('success', trans('changes.order_changed'));
 
-            return back();
+            return redirect()->back()->with('success', trans('changes.order_changed'));
         });
     }
 }

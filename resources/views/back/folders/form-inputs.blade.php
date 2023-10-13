@@ -16,29 +16,35 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter @error('name') is-invalid @enderror"
+                        class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}*"
                         value="{{ old('name', $folder->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_folder_label') }}*</small>
                     @include('back.modules.input-error', ['inputName' => 'name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
-                    @php
-                    $data = [
-                        'id' => "colorPicker" ,
-                        'name' => 'color',
-                        'value' => old('color', $folder->color ?? ''),
-                        'title' => __('form.tooltip_color_picker_title'),
-                        'label' => __('form.color'),
-                        'helper' => __('form.color_label'),
-                        'rgbaMode' => false,
-                        'nullable' => false,
-                        'ariaDescribedby' => 'colorPickerHelp',
-                        'simple' => false,
-                        'disabled' => false
-                    ];
-                    @endphp
-                    <div class="color-picker" data-json='@json($data)'></div>
+                    <label for="color" class="col-form-label">
+                        <b>{{ __('Couleur') }}</b>
+                        <span data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('form.tooltip_color_picker') }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </span>
+                    </label>
+                    <input
+                        id="color"
+                        name="color"
+                        type="text"
+                        data-jscolor="{
+                            value: '{{ old('color', $folder->color ?? '#0D6EFD') }}',
+                            borderColor: 'var(--bs-border-color)',
+                            shadow: false,
+                            palette:[
+                                '#FFFFFF', '#808080', '#000000', '#996e36', '#f55525', '#ffe438', '#88dd20', '#22e0cd', '#269aff', '#bb1cd4'
+                            ],
+                        }"
+                        class="form-control"
+                        required>
                     @include('back.modules.input-error', ['inputName' => 'color'])
                 </div>
             </div>
@@ -53,12 +59,12 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
-                        <input class="form-check-input @error('status') is-invalid @enderror"
-                            name="status"
+                        <input class="form-check-input @error('published') is-invalid @enderror"
+                            name="published"
                             type="checkbox"
                             value="1"
                             id="flexSwitchCheckDefault"
-                            @if (old('status', $folder->status ?? '')) checked @endif
+                            @if (old('published', $folder->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ __('form.publish') }}</b>
@@ -66,7 +72,7 @@
                         <br>
                         <small class="form-text text-muted">{{ __('form.publish_label') }}</small>
                     </div>
-                    @include('back.modules.input-error', ['inputName' => 'status'])
+                    @include('back.modules.input-error', ['inputName' => 'published'])
                 </div>
             </div>
         </fieldset>

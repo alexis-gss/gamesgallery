@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Bo\BackController;
+use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
 use App\Http\Controllers\Bo\TagController;
@@ -43,6 +43,9 @@ Route::prefix('bo')
                                     Route::post('/games/{game}/change-published', [
                                         GameController::class, 'changePublished'
                                     ])->name('games.change-published');
+                                    Route::get('/games/{game}/duplicate', [
+                                        GameController::class, 'duplicate'
+                                    ])->name('games.duplicate');
 
                                     /**
                                      * * FOLDERS
@@ -53,6 +56,9 @@ Route::prefix('bo')
                                     Route::post('/folders/{folder}/change-published', [
                                         FolderController::class, 'changePublished'
                                     ])->name('folders.change-published');
+                                    Route::get('/folders/{folder}/duplicate', [
+                                        FolderController::class, 'duplicate'
+                                    ])->name('folders.duplicate');
 
                                     /**
                                      * * TAGS
@@ -65,6 +71,9 @@ Route::prefix('bo')
                                     ])->name('tags.change-published');
                                     Route::post('/tags/store', [TagController::class, 'jsonStore'])
                                         ->name('tags.jsonStore');
+                                    Route::get('/tags/{tag}/duplicate', [
+                                        TagController::class, 'duplicate'
+                                    ])->name('tags.duplicate');
 
                                     /**
                                      * * USERS
@@ -72,9 +81,12 @@ Route::prefix('bo')
                                     Route::get('/users/change-order/{user}/{direction}', [
                                         UserController::class, 'changeOrder'
                                     ])->where('direction', 'up|down')->name('users.change-order');
+                                    Route::get('/users/{user}/duplicate', [
+                                        UserController::class, 'duplicate'
+                                    ])->name('users.duplicate');
                                 }
                             );
-                        Route::get('/', [BackController::class, 'index'])->name('homepage');
+                        Route::get('/', [HomeController::class, 'index'])->name('homepage');
                         Route::resource('games', GameController::class)->except('show');
                         Route::resource('folders', FolderController::class)->except('show');
                         Route::resource('tags', TagController::class)->except('show');

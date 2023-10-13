@@ -22,7 +22,8 @@ class CreateGamesTable extends Migration
             $table->json('pictures')->nullable()->comment('Json who contains pictures.');
             $table->string('pictures_alt')->comment('Alt attribute of the images.');
             $table->string('pictures_title')->comment('Title attribute of the images.');
-            $table->boolean('status')->comment('The game is published or not');
+            $table->boolean('published')->comment('The game is published or not.');
+            $table->timestamp('published_at')->nullable()->comment('The date on which the game was published.');
             $table->integer('order')->comment('Order of this game.');
             $table->timestamps();
         });

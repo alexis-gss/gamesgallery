@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
  * @property integer $id
  * @property string $name
  * @property string $slug
- * @property boolean $status
+ * @property boolean $published
+ * @property date $published_at
  * @property integer $order
  */
 class Tag extends Model
@@ -33,7 +34,8 @@ class Tag extends Model
     protected $fillable = [
         'name',
         'slug',
-        'status'
+        'published',
+        'published_at'
     ];
 
     /**
@@ -42,7 +44,8 @@ class Tag extends Model
      * @var array
      */
     protected $casts = [
-        'status' => 'bool'
+        'published' => 'bool',
+        'published_at' => 'datetime'
     ];
 
     /**
@@ -56,9 +59,11 @@ class Tag extends Model
             static::setSlug($tag);
             static::assertFieldIsUnique($tag->slug);
             static::setOrder($tag);
+            static::setPublishedDate($tag);
         });
         static::updating(function (self $tag) {
             static::assertFieldIsUnique($tag->slug, $tag->id);
+            static::setPublishedDate($tag);
         });
         static::deleting(function (self $tag) {
             $tag->games()->detach();
@@ -77,6 +82,18 @@ class Tag extends Model
     private static function setSlug(Tag $tag)
     {
         $tag->slug = Str::slug($tag->name);
+    }
+
+    /**
+     * Set the published date.
+     *
+     * @param \App\Models\Tag $tag
+     *
+     * @return void
+     */
+    private static function setPublishedDate(Tag $tag)
+    {
+        $tag->published_at = ($tag->published) ? now() : null;
     }
 
     /**

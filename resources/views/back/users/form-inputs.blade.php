@@ -16,7 +16,7 @@
                     <input type="text"
                         id="name"
                         name="name"
-                        class="form-control need-word-counter @error('name') is-invalid @enderror"
+                        class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('form.name') }}"
                         value="{{ old('name', $user->name ?? '') }}">
                     <small class="text-muted">{{ __('form.name_label') }}</small>
@@ -35,36 +35,36 @@
                     <input type="text"
                         id="email"
                         name="email"
-                        class="form-control need-word-counter @error('email') is-invalid @enderror"
+                        class="form-control @error('email') is-invalid @enderror"
                         placeholder="{{ __('form.email') }}"
                         value="{{ old('email', $user->email ?? '') }}">
                     <small class="text-muted">{{ __('form.email_label') }}</small>
                     @include('back.modules.input-error', ['inputName' => 'email'])
                 </div>
                 @can('isAdmin')
-                    <div class="col-12 col-md-6 form-group">
-                        <label for="folder_id" class="col-form-label">
-                            <b>{{ __('form.access') }}</b>
-                            <span data-bs="tooltip"
-                                data-bs-placement="top"
-                                title="{{ __('form.tooltip_role') }}">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </span>
-                        </label>
-                        <select class="form-select @error('role') is-invalid @enderror"
-                            id="role"
-                            name="role"
-                            role="button">
-                            <option value="{{ App\Enums\Role::admin()->value }}" @if ($user->role == App\Enums\Role::admin()->value) selected @endif>
-                                {{ App\Enums\Role::admin()->label }}
-                            </option>
-                            <option value="{{ App\Enums\Role::visitor()->value }}" @if ($user->role == App\Enums\Role::visitor()->value) selected @endif>
-                                {{ App\Enums\Role::visitor()->label }}
-                            </option>
-                        </select>
-                        <small class="text-muted">{{ __('form.role_label') }}</small>
-                        @include('back.modules.input-error', ['inputName' => 'role'])
-                    </div>
+                <div class="col-12 col-md-6 form-group">
+                    <label for="folder_id" class="col-form-label">
+                        <b>{{ __('form.access') }}</b>
+                        <span data-bs="tooltip"
+                            data-bs-placement="top"
+                            title="{{ __('form.tooltip_role') }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </span>
+                    </label>
+                    <select class="form-select @error('role') is-invalid @enderror"
+                        id="role"
+                        name="role"
+                        role="button">
+                        <option value="{{ App\Enums\Users\RoleEnum::admin()->value }}" @if ($user->role == App\Enums\Users\RoleEnum::admin()->value) selected @endif>
+                            {{ App\Enums\Users\RoleEnum::admin()->label }}
+                        </option>
+                        <option value="{{ App\Enums\Users\RoleEnum::visitor()->value }}" @if ($user->role == App\Enums\Users\RoleEnum::visitor()->value) selected @endif>
+                            {{ App\Enums\Users\RoleEnum::visitor()->label }}
+                        </option>
+                    </select>
+                    <small class="text-muted">{{ __('form.role_label') }}</small>
+                    @include('back.modules.input-error', ['inputName' => 'role'])
+                </div>
                 @endcan
             </div>
         </fieldset>
@@ -78,14 +78,14 @@
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     @php
-                        $data = [
-                            'id' => 'userPicture',
-                            'name' => 'picture',
-                            'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 100, 'height' => 100]),
-                            'width' => 100,
-                            'height' => 100,
-                            'value' => $user->picture ?? ''
-                        ];
+                    $data = [
+                        'id' => 'userPicture',
+                        'name' => 'picture',
+                        'helper' => __('form.images_label', ['format' => 'JPG/PNG', 'width' => 100, 'height' => 100]),
+                        'width' => 100,
+                        'height' => 100,
+                        'value' => $user->picture ?? ''
+                    ];
                     @endphp
                     <div class="image-input" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'picture'])
@@ -114,12 +114,12 @@
                         <input type="password"
                             id="password"
                             name="password"
-                            class="form-control need-word-counter-password password-input @error('password') is-invalid @enderror"
+                            class="form-control password-input @error('password') is-invalid @enderror"
                             placeholder="{{ __('form.password') }}"
                             value="{{ old('password') }}"
                             aria-describedby="btn-password"
                             autocomplete="new-password">
-                        <button class="btn btn-primary need-word-counter-password-btn password-btn"
+                        <button class="btn btn-primary password-btn"
                             title="{{ __('form.tooltip_password_show_hide') }}"
                             data-bs="tooltip"
                             type="button"
@@ -145,12 +145,12 @@
                         <input type="password"
                             id="password_confirmation"
                             name="password_confirmation"
-                            class="form-control need-word-counter-password password-input @error('password_confirmation') is-invalid @enderror"
+                            class="form-control password-input @error('password_confirmation') is-invalid @enderror"
                             placeholder="{{ __('form.confirm') }}"
                             value="{{ old('password_confirmation', $user->password_confirmation ?? '') }}"
                             aria-describedby="btn-password-confirm"
                             autocomplete="new-password">
-                        <button class="btn btn-primary need-word-counter-password-btn password-btn"
+                        <button class="btn btn-primary password-btn"
                             title="{{ __('form.tooltip_password_show_hide') }}"
                             data-bs="tooltip"
                             type="button"

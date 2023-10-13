@@ -9,7 +9,7 @@ return [
     'folder' => 'Folder',
     'tag' => 'Tag',
     'user' => 'User',
-    'save' => 'Save informations',
+    'save' => 'Save this game',
 
     // Titles.
     'general_informations' => 'General informations',
@@ -91,7 +91,7 @@ return [
     'tooltip_image_input_close_without_saving' => 'Close the modal without saving the content',
     'tooltip_image_input_modal_close_without_saving' => 'Close the modal without saving',
     'tooltip_image_input_modal_close_with_saving' => 'Save and close the modal',
-    'tooltip_color_picker_title' => 'Select the color in the picker color',
+    'tooltip_color_picker' => 'Select a color in the color picker',
 
     // Placeholder.
     'name' => 'Name',
