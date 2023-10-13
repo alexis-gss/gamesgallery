@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Finder\SplFileInfo;
 
 class TranslationServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,7 @@ class TranslationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         foreach ($this->collectLocalesStrings() as $locale) {
             // * Suported locales
@@ -31,12 +32,12 @@ class TranslationServiceProvider extends ServiceProvider
     /**
      * Gather provided langs checking from files
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection<string, string>
      */
     private function collectLocalesStrings(): Collection
     {
-        return collect(File::allFiles(resource_path('lang/')))->flatMap(function ($file) {
-            if ($file->getRelativePath()) {
+        return collect(File::allFiles(resource_path('lang/')))->flatMap(function (SplFileInfo $file) {
+            if ($file->getRelativePath() and \strpos($file->getRelativePath(), 'vendor') !== 0) {
                 return [$file->getRelativePath() => ''];
             }
         })->keys();
@@ -46,7 +47,7 @@ class TranslationServiceProvider extends ServiceProvider
      * Gather all php translations
      *
      * @param string $locale
-     * @return array
+     * @return array<string, string>
      */
     private function phpTranslations(string $locale): array
     {
@@ -62,7 +63,7 @@ class TranslationServiceProvider extends ServiceProvider
      * Gather json translations
      *
      * @param string $locale
-     * @return array
+     * @return array<string, string>
      */
     private function jsonTranslations(string $locale): array
     {

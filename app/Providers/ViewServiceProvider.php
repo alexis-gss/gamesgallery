@@ -23,35 +23,43 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Set default view of the paginator.
-        Paginator::defaultView('back.modules.pagination');
-
         // Get data from composer.json.
         $appInfos = Cache::remember('composer', 360, function () {
             return json_decode(File::get(\app_path('../composer.json')));
         });
+        // Share composer.json infos.
         View::share('globalName', $appInfos->name);
         View::share('globalVersion', $appInfos->version);
         View::share('globalLicense', $appInfos->license);
 
-        // Shares this data with all views.
-        if (
-            Schema::hasTable('games') and
-            Schema::hasTable('folders') and
-            Schema::hasTable('tags') and
-            Schema::hasTable('users') and
-            Schema::hasTable('activity_logs')
-        ) {
-            $globalGames      = Game::orderBy('name', 'ASC')->get();
-            $globalFolders    = Folder::orderBy('name', 'ASC')->get();
-            $globalTags       = Tag::orderBy('name', 'ASC')->get();
-            $globalUsers      = User::orderBy('name', 'ASC')->get();
-            $globalActivities = ActivityLog::get();
-            View::share('globalGames', $globalGames);
-            View::share('globalFolders', $globalFolders);
-            View::share('globalTags', $globalTags);
-            View::share('globalUsers', $globalUsers);
-            View::share('globalActivities', $globalActivities);
-        }
+        if (!app()->runningInConsole()) {
+            // Shares this data with all views.
+            if (
+                Schema::hasTable('games') and
+                Schema::hasTable('folders') and
+                Schema::hasTable('tags') and
+                Schema::hasTable('users') and
+                Schema::hasTable('activity_logs')
+            ) {
+                $globalGames      = Game::with('pictures')->orderBy('name', 'ASC')->get();
+                $globalFolders    = Folder::with('games')->orderBy('name', 'ASC')->get();
+                $globalTags       = Tag::with('games')->orderBy('name', 'ASC')->get();
+                $globalUsers      = User::orderBy('last_name', 'ASC')->get();
+                $globalActivities = ActivityLog::with('user')->get();
+                View::share('globalGames', $globalGames);
+                View::share('globalFolders', $globalFolders);
+                View::share('globalTags', $globalTags);
+                View::share('globalUsers', $globalUsers);
+                View::share('globalActivities', $globalActivities);
+            }
+
+            // * FORCE BOOTSTRAP PAGINATOR (or custom if in front)
+            // Early boot, request wont be filled as expected.
+            if (collect(explode('/', \request()->getPathInfo()))->get(1) === 'bo') {
+                Paginator::defaultView('back.modules.pagination');
+            } else {
+                Paginator::useBootstrapFive();
+            }
+        } //end if
     }
 }
