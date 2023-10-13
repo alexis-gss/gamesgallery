@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
  * Folder of games.
  *
  * @property integer                         $id           Id.
- * @property string                          $name         Name
+ * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon      $published_at Published date update.
@@ -38,10 +38,12 @@ class Folder extends Model
      * @var array
      */
     protected $fillable = [
+        'slug',
         'name',
         'color',
         'published',
-        'published_at'
+        'published_at',
+        'order',
     ];
 
     /**
@@ -50,7 +52,7 @@ class Folder extends Model
      * @var array
      */
     protected $casts = [
-        'published' => 'bool',
+        'published'    => 'bool',
         'published_at' => 'datetime'
     ];
 
@@ -62,29 +64,15 @@ class Folder extends Model
     protected static function booted(): void
     {
         static::creating(function (self $folder) {
-            static::setSlug($folder);
             static::setOrder($folder);
             static::setPublishedDate($folder);
         });
         static::updating(function (self $folder) {
-            static::setSlug($folder);
             static::setPublishedDate($folder);
         });
     }
 
     // * METHODS
-
-    /**
-     * Set model's slug.
-     *
-     * @param \App\Models\Folder $folder
-     *
-     * @return void
-     */
-    private static function setSlug(Folder $folder): void
-    {
-        $folder->slug = Str::slug($folder->name);
-    }
 
     /**
      * Set model's published date.

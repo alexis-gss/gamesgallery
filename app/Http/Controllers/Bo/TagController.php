@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Tags\StoreTagRequest;
 use App\Http\Requests\Bo\Tags\UpdateTagRequest;
-use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
@@ -19,6 +18,14 @@ class TagController extends Controller
     use UpdateModelPublished;
 
     /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Tag::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
@@ -26,28 +33,30 @@ class TagController extends Controller
      */
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Builder $tags */
-        $tags = Tag::query();
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = Tag::query();
 
         /** @var string $search Search field */
         $search = $request->search;
         if ($search) {
             $this->searchQuery(
-                $tags,
+                $query,
                 $search,
                 null,
                 'name',
             );
         }
-        $searchFields = trans('Name');
+        $searchFields = \implode(', ', [
+            trans('validation.attributes.name'),
+        ]);
 
         /** Sort columns with a query */
-        $this->sortQuery($tags);
+        $this->sortQuery($query);
 
         /** Custom pagination */
-        $tags = $this->paginate($tags);
+        $tagModels = $this->paginate($query);
 
-        return view('back.pages.tags.index', compact('tags', 'search', 'searchFields'));
+        return view('back.pages.tags.index', compact('tagModels', 'search', 'searchFields'));
     }
 
     /**
@@ -55,11 +64,10 @@ class TagController extends Controller
      *
      * @param \App\Models\Tag $tag
      * @return \Illuminate\Contracts\View\View
-     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function create(Tag $tag): \Illuminate\Contracts\View\View
     {
-        return view('back.pages.tags.create', compact('tag'));
+        return view('back.pages.tags.create', ['tagModel' => $tag]);
     }
 
     /**
@@ -75,11 +83,15 @@ class TagController extends Controller
             $tag->fill($request->validated());
 
             if ($tag->saveOrFail()) {
-                return redirect()->route('bo.tags.edit', $tag->id)
-                    ->with('success', __('crud.changes.creation_saved'));
+                return redirect()->route('bo.tags.edit', $tag)
+                    ->with('success', __('crud.messages.has_been_created', [
+                        'model' => Str::of(__('models.tag'))->ucfirst()
+                    ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.changes.creation_failed'));
+                ->with('error', __('crud.messages.cannot_be_created', [
+                    'model' => Str::of(__('models.tag'))->ucfirst()
+                ]));
         });
     }
 
@@ -93,7 +105,7 @@ class TagController extends Controller
     {
         return DB::transaction(function () use ($request) {
             /** @var \App\Models\Tag */
-            $tag = Tag::where('slug', Str::slug($request->name))->firstOrNew();
+            $tag = Tag::where('slug', Str::of($request->name)->slug())->firstOrNew();
             $tag->fill($request->validated());
 
             if ($tag->saveOrFail()) {
@@ -108,11 +120,10 @@ class TagController extends Controller
      *
      * @param \App\Models\Tag $tag
      * @return \Illuminate\Contracts\View\View
-     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function edit(Tag $tag): \Illuminate\Contracts\View\View
     {
-        return view('back.pages.tags.edit', compact('tag'));
+        return view('back.pages.tags.edit', ['tagModel' => $tag]);
     }
 
     /**
@@ -128,11 +139,15 @@ class TagController extends Controller
             $tag->fill($request->validated());
 
             if ($tag->saveOrFail()) {
-                return redirect()->route('bo.tags.edit', $tag->id)
-                    ->with('success', __('crud.changes.modification_saved'));
+                return redirect()->route('bo.tags.edit', $tag)
+                    ->with('success', __('crud.messages.has_been_updated', [
+                        'model' => Str::of(__('models.tag'))->ucfirst()
+                    ]));
             }
-            return redirect()->route('bo.tags.edit', $tag->id)
-                ->with('error', __('crud.changes.modification_failed'));
+            return redirect()->route('bo.tags.edit', $tag)
+                ->with('error', __('crud.messages.cannot_be_updated', [
+                    'model' => Str::of(__('models.tag'))->ucfirst()
+                ]));
         });
     }
 
@@ -146,10 +161,14 @@ class TagController extends Controller
     {
         if ($tag->deleteOrFail()) {
             return redirect()->route('bo.tags.index')
-                ->with('success', __('crud.changes.deletion_successful'));
+                ->with('success', __('crud.messages.has_been_deleted', [
+                    'model' => Str::of(__('models.tag'))->ucfirst()
+                ]));
         }
         return redirect()->back()
-            ->with('error', __('crud.changes.deletion_failed'));
+            ->with('error', __('crud.messages.cannot_be_deleted', [
+                'model' => Str::of(__('models.tag'))->ucfirst()
+            ]));
     }
 
     /**

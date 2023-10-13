@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'actions' => [
-        'show'      => 'Show',
-        'edit'      => 'Edit',
-        'save'      => 'Save',
-        'delete'    => 'Delete',
-        'create'    => 'Create',
-        'duplicate' => 'Duplicate',
+        'show'      => 'show',
+        'edit'      => 'edit',
+        'save'      => 'save',
+        'delete'    => 'delete',
+        'create'    => 'create',
+        'duplicate' => 'duplicate',
     ],
 
     'actions_model' => [
@@ -20,26 +22,18 @@ return [
         'list_all'  => 'List all :model',
     ],
 
-    'changes' => [
-        'creation_saved'       => 'Creation saved !',
-        'creation_failed'      => 'Creation failed !',
-        'modification_saved'   => 'Registered changes !',
-        'modification_failed'  => 'Changes failed !',
-        'deletion_failed'      => 'Failed deletion !',
-        'deletion_successful'  => 'Successful deletion !',
-        'deletion_associated'  => 'Game(s) are still associated with this folder !',
-        'publish_status_saved' => 'Publishment of status changes !',
-        'order_changed'        => 'The order has been changed !',
-        'order_not_changed'    => 'The order could not be changed !',
-        'right'                => 'You do not have the rights to access this page !',
-        'theme_updated'        => 'The theme has been updated !',
-    ],
-
-    'pagination' => [
-        "previous"      => "Previous page",
-        "next"          => "Next page",
-        "specific_page" => "Access to page :id",
-        'paginate_list' => 'Number of items per page',
+    'messages'   => [
+        'has_been_created'                => ':model has been created',
+        'cannot_be_created'               => ':model cannot be created',
+        'has_been_updated'                => ':model has been updated',
+        'cannot_be_updated'               => ':model cannot be updated',
+        'has_been_deleted'                => ':model has been deleted',
+        'cannot_be_deleted_with_children' => ':model cannot be deleted with children',
+        'order_changed'                   => 'The order has been changed !',
+        'order_not_changed'               => 'The order hasn\'t been changed !',
+        'publish_status_saved'            => 'Change of publication status successful !',
+        'right'                           => 'You don\'t have the rights to access this part !',
+        'theme_updated'                   => 'The theme has been updated !',
     ],
 
     'search' => [
@@ -72,11 +66,12 @@ return [
     ],
 
     'other' => [
-        'no_model_found' => 'No :model found',
-        'up'             => 'Change the order of appearance upwards',
-        'down'           => 'Change the order of appearance downwards',
-        'user-right'     => 'You do not have the rights',
-        'publish'        => 'Publish',
-        'unpublish'      => 'Unpublish',
+        'no_model_found'  => 'No :model found',
+        'up'              => 'Change the order of appearance upwards',
+        'down'            => 'Change the order of appearance downwards',
+        'user-right'      => 'You do not have the rights',
+        'publish'         => 'Publish',
+        'unpublish'       => 'Unpublish',
+        'required_fields' => '* Required fields',
     ],
 ];

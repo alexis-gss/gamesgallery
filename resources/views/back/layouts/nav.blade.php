@@ -1,4 +1,4 @@
-<nav id="navbar" class="navbar navbar-expand-md navbar-light position-fixed fixed-top bg-light shadow-sm">
+<nav id="navbar" class="navbar navbar-expand-md position-fixed fixed-top bg-body-tertiary shadow-sm">
     <div class="container">
         <a class="navbar-brand"
             href="{{ route('fo.homepage') }}"
@@ -26,18 +26,30 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
-                <!-- Authentication Links -->
-                <li class="nav-item dropdown border-end">
-                    <button class="btn nav-link dropdown-toggle border-0 d-flex flex-row align-items-center h-100 pe-3"
+                <!-- Bootstrap themes -->
+                <li class="nav-item dropdown @auth border-end @endauth">
+                    <button class="btn nav-link dropdown-toggle border-0 d-flex flex-row align-items-center h-100 @auth pe-3 @endauth"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="fa-solid fa-paint-roller"></i>
                     </button>
-                    <form class="dropdown-menu dropdown-menu-end text-center"
+                    <form class="dropdown-menu dropdown-menu-color dropdown-menu-end text-center"
+                        id="theme-selector"
                         action="{{ route('bo.theme.set') }}"
-                        method="POST"
-                        onchange="this.submit()">
+                        method="POST">
+                        @push('scripts')
+                            <script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const themeSelector = document.getElementById('theme-selector');
+                                    if (themeSelector) {
+                                        themeSelector.addEventListener('change', function() {
+                                            this.submit();
+                                        });
+                                    }
+                                });
+                            </script>
+                        @endpush
                         @csrf
                         @php $theme = intval(Cache::get('theme')); @endphp
                         @foreach (\App\Enums\Theme\BootstrapThemeEnum::toArray() as $key => $bootstrapTheme)
@@ -53,22 +65,23 @@
                     </form>
                 </li>
                 @auth
+                <!-- Authentication Links -->
                 <li class="nav-item dropdown">
                     <button class="btn nav-link dropdown-toggle border-0 d-flex flex-row align-items-center h-100 ps-3"
                         type="button"
                         id="navbarDropdown"
                         data-bs-toggle="dropdown">
                         <div class="d-flex flex-column align-items-end lh-1">
-                            <span class="fw-bold">{{ Auth::user()->name }}</span>
-                            <small class="text-secondary-body">{{ Auth::user()->role->label() }}</small>
+                            <span class="fw-bold">{{ auth('backend')->user()->first_name }}&nbsp;{{ auth('backend')->user()->last_name }}</span>
+                            <small class="text-secondary-body">{{ auth('backend')->user()->role->label() }}</small>
                         </div>
                         <div class="profile-picture ms-2 me-1">
-                            <img class="w-100 h-100 rounded-circle" src="{{ asset(Auth::user()->picture) }}" alt="{{ Auth::user()->picture_alt }}">
+                            <img class="w-100 h-100 rounded-circle" src="{{ asset(auth('backend')->user()->picture) }}" alt="{{ auth('backend')->user()->picture_alt }}">
                         </div>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end text-center m-0" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item w-100 text-decoration-none p-2"
-                            href="{{ route('bo.users.edit', Auth::user()->id) }}"
+                            href="{{ route('bo.users.edit', auth('backend')->user()->getKey()) }}"
                             title="{{ __('texts.bo.tooltip.to_edit_profile') }}"
                             data-bs="tooltip"
                             data-bs-placement="left">

@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
  * Tag.
  *
  * @property integer                         $id           Id.
- * @property string                          $name         Name
+ * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon      $published_at Published date update.
@@ -44,7 +44,8 @@ class Tag extends Model
     protected $fillable = [
         'name',
         'published',
-        'published_at'
+        'published_at',
+        'order',
     ];
 
     /**
@@ -53,7 +54,7 @@ class Tag extends Model
      * @var array
      */
     protected $casts = [
-        'published' => 'bool',
+        'published'    => 'bool',
         'published_at' => 'datetime'
     ];
 
@@ -65,12 +66,10 @@ class Tag extends Model
     protected static function booted(): void
     {
         static::creating(function (self $tag) {
-            static::setSlug($tag);
             static::setOrder($tag);
             static::setPublishedDate($tag);
         });
         static::updating(function (self $tag) {
-            static::setSlug($tag);
             static::setPublishedDate($tag);
         });
         static::deleting(function (self $tag) {
@@ -79,18 +78,6 @@ class Tag extends Model
     }
 
     // * METHODS
-
-    /**
-     * Set model's slug.
-     *
-     * @param \App\Models\Tag $tag
-     *
-     * @return void
-     */
-    private static function setSlug(Tag $tag)
-    {
-        $tag->slug = Str::slug($tag->name);
-    }
 
     /**
      * Set model's published date.

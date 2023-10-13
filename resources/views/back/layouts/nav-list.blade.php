@@ -12,56 +12,62 @@
     <li class="nav-item">
         <a class="nav-link @if (request()->routeIs('bo.statistics')) fw-bold @endif"
             href="{{ route('bo.statistics') }}"
-            title="{{ __('texts.bo.tooltip.statistics') }}"
+            title="{{ __('texts.bo.tooltip.statistics', ['model' => Str::of(__('models.statistic'))->plural()]) }}"
             data-bs="tooltip"
             data-bs-placement="bottom">
-            {{ __('models.stats') }}
+            {{ Str::of(__('models.statistic'))->plural()->ucfirst() }}
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link @if(request()->routeIs('bo.activity_logs.*')) fw-bold @endif"
-            href="{{ route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
-            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalActivities), 'model' => trans_choice('models.activities', 2)]) }}"
+            href="{{ route('bo.activity_logs.index') }}"
+            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalActivities), 'model' => Str::of(trans_choice('models.activity_log', 2))]) }}"
             data-bs="tooltip"
             data-bs-placement="bottom">
-            {{ trans_choice('models.activities', 2) }}
+            {{ Str::of(trans_choice('models.activity_log', 2))->ucfirst() }}
         </a>
     </li>
+    @can('viewAny', \App\Models\Game::class)
     <li class="nav-item">
         <a class="nav-link @if (request()->routeIs('bo.games.*')) fw-bold @endif"
-            href="{{ route('bo.games.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalGames), 'model' => __('models.games')]) }}"
+            href="{{ route('bo.games.index') }}"
+            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalGames), 'model' => Str::of(__('models.game'))->plural()]) }}"
             data-bs="tooltip"
             data-bs-placement="bottom">
-            {{ __('models.games') }}
+            {{ Str::of(__('models.game'))->plural()->ucfirst() }}
         </a>
     </li>
+    @endcan
+    @can('viewAny', \App\Models\Folder::class)
     <li class="nav-item">
         <a class="nav-link @if (request()->routeIs('bo.folders.*')) fw-bold @endif"
-            href="{{ route('bo.folders.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalFolders), 'model' => __('models.folders')]) }}"
+            href="{{ route('bo.folders.index') }}"
+            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalFolders), 'model' => Str::of(__('models.folder'))->plural()]) }}"
             data-bs="tooltip"
             data-bs-placement="bottom">
-            {{ __('models.folders') }}
+            {{ Str::of(__('models.folder'))->plural()->ucfirst() }}
         </a>
     </li>
+    @endcan
+    @can('viewAny', \App\Models\Tag::class)
     <li class="nav-item">
         <a class="nav-link @if (request()->routeIs('bo.tags.*')) fw-bold @endif"
-            href="{{ route('bo.tags.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalTags), 'model' => __('models.tags')]) }}"
+            href="{{ route('bo.tags.index') }}"
+            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalTags), 'model' => Str::of(__('models.tag'))->plural()]) }}"
             data-bs="tooltip"
             data-bs-placement="bottom">
-            {{ __('models.tags') }}
+            {{ Str::of(__('models.tag'))->plural()->ucfirst() }}
         </a>
     </li>
-    @can('isAdmin')
+    @endcan
+    @canAny(['isConceptor', 'viewAny'], \App\Models\User::class)
     <li class="nav-item">
         <a class="nav-link @if(request()->routeIs('bo.users.*')) fw-bold @endif"
-            href="{{ route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalUsers), 'model' => __('models.users')]) }}"
+            href="{{ route('bo.users.index') }}"
+            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalUsers), 'model' => Str::of(__('models.user'))->plural()]) }}"
             data-bs="tooltip"
             data-bs-placement="bottom">
-            {{ __('models.users') }}
+            {{ Str::of(__('models.user'))->plural()->ucfirst() }}
         </a>
     </li>
     @endcan

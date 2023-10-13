@@ -10,6 +10,7 @@ enum BootstrapThemeEnum: int
 
     case light = 1;
     case dark  = 2;
+    case blue  = 3;
 
     /**
      * Optionnal labels definition
@@ -17,5 +18,6 @@ enum BootstrapThemeEnum: int
     private const LABELS = [
         self::light->name => 'Light',
         self::dark->name  => 'Dark',
+        self::blue->name  => 'Blue',
     ];
 }

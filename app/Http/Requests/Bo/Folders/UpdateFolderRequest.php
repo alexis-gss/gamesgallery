@@ -15,7 +15,7 @@ class UpdateFolderRequest extends StoreFolderRequest
             'slug' => [
                 'required',
                 'string',
-                'unique:folders,slug,' . request()->folder->id,
+                'unique:folders,slug,' . request()->folder->getKey(),
                 'max:255'
             ],
         ];

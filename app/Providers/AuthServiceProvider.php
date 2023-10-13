@@ -16,10 +16,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerPolicies();
-
-        Gate::define('isAdmin', function (User $user) {
-            return $user->role === RoleEnum::admin;
+        Gate::define('isConceptor', function (User $user) {
+            return $user->role === RoleEnum::conceptor;
         });
     }
 }

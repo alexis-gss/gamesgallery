@@ -1,17 +1,17 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => __('models.users')]))
-@section('description', __('crud.meta.all_models_list', ['model' => __('models.users')]))
+@section('title', __('crud.meta.all_models', ['model' => Str::of(__('models.user'))->plural()]))
+@section('description', __('crud.meta.all_models_list', ['model' => Str::of(__('models.user'))->plural()]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
     @include('breadcrumbs.breadcrumb-body')
-    @can('isAdmin')
+    @can('create', \App\Models\User::class)
     <a href="{{ route('bo.users.create') }}"
         class="btn btn-primary float-right"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('crud.actions_model.create', ['model' => Str::singular(__('models.users'))]) }}">
+        title="{{ __('crud.actions_model.create', ['model' => __('models.user')]) }}">
         <i class="fa-solid fa-plus"></i>
     </a>
     @endcan
@@ -19,74 +19,85 @@
 @include('back.modules.search-bar')
 <div class="table-responsive mb-3">
     <table class="table table-hover table-fix-action m-0">
-        @if (count($users) > 0)
+        @if (count($userModels) > 0)
         <thead>
             @include('back.modules.table-col-sorter', [
                 'cols' => [
-                    'name'       => __('validation.attributes.name'),
-                    'email'      => __('validation.attributes.email'),
-                    'role'       => __('validation.attributes.role'),
-                    'updated_at' => __('validation.attributes.updated_at'),
-                    'order'      => __('validation.attributes.order'),
+                    'first_name' => Str::of(__('validation.attributes.first_name'))->ucfirst(),
+                    'last_name'  => Str::of(__('validation.attributes.last_name'))->ucfirst(),
+                    'email'      => Str::of(__('validation.attributes.email'))->ucfirst(),
+                    'role'       => Str::of(__('validation.attributes.role'))->ucfirst(),
+                    'published'  => Str::of(__('validation.custom.publishment'))->ucfirst(),
+                    'updated_at' => Str::of(__('validation.attributes.updated_at'))->ucfirst(),
+                    'order'      => Str::of(__('validation.custom.order'))->ucfirst(),
                 ],
             ])
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($userModels as $userModel)
             <tr class="border-bottom">
-                <td class="text-center align-middle">{{ $user->name }}</td>
+                <td class="text-center align-middle">{{ $userModel->first_name }}</td>
+                <td class="text-center align-middle">{{ $userModel->last_name }}</td>
                 <td class="text-center align-middle">
-                    @if(Auth::user()->id === $user->id || Gate::check('isAdmin'))
-                    {{ $user->email }}
+                    @if(auth('backend')->user()->id === $userModel->id || Gate::check('isConceptor'))
+                    {{ $userModel->email }}
                     @else
                     @include('back.modules.user-right')
                     @endif
                 </td>
                 <td class="text-center align-middle">
-                    {{ $user->role->label() }}
+                    {{ $userModel->role->label() }}
                 </td>
+                @include('back.modules.change-published-status', [
+                    'routeName' => 'users',
+                    'model'     => $userModel,
+                ])
                 <td class="text-center align-middle">
-                    <span class="badge bg-secondary">{{ $user->updated_at }}</span>
+                    <span class="badge bg-secondary">{{ $userModel->updated_at->isoFormat('LLLL') }}</span>
                 </td>
                 @php $routeName = request()->route()->getName(); @endphp
                 @if(empty(request()->search) && Session::get("$routeName.sort_col") === "order")
                 @include('back.modules.change-model-order', [
                     'routeName' => 'users',
-                    'models'    => $users,
-                    'model'     => $user
+                    'models'    => $userModels,
+                    'model'     => $userModel
                 ])
                 @endif
                 <td class="text-end align-middle">
-                    @if(Auth::user()->id === $user->id || Gate::check('isAdmin'))
-                    <form action="{{ route('bo.users.destroy', $user->id) }}"
+                    @canAny(['delete', 'duplicate', 'update'], $userModel)
+                    <form action="{{ route('bo.users.destroy', $userModel->id) }}"
                         method="POST"
                         class="btn-group confirmDeleteTS"
                         novalidate>
-                        @can('isAdmin')
+                        @can('duplicate', $userModel)
                         <a class="btn btn-sm btn-secondary"
-                            href="{{ route('bo.users.duplicate', ['user' => $user->id]) }}"
+                            href="{{ route('bo.users.duplicate', $userModel) }}"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.duplicate', ['model' => Str::singular(__('models.users'))]) }}">
+                            title="{{ __('crud.actions_model.duplicate', ['model' => __('models.user')]) }}">
                             <i class="fa-solid fa-copy"></i>
                         </a>
                         @endcan
+                        @can('update', $userModel)
                         <a class="btn btn-sm btn-primary"
-                            href="{{ route('bo.users.edit', ['user' => $user->id]) }}"
+                            href="{{ route('bo.users.edit', $userModel) }}"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.edit', ['model' => Str::singular(__('models.users'))]) }}">
+                            title="{{ __('crud.actions_model.edit', ['model' => __('models.user')]) }}">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
+                        @endcan
+                        @can('delete', $userModel)
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-sm btn-danger"
                             type="submit"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.delete', ['model' => Str::singular(__('models.users'))]) }}">
+                            title="{{ __('crud.actions_model.delete', ['model' => __('models.user')]) }}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
+                        @endcan
                     </form>
                     @else
                     @include('back.modules.user-right')
@@ -97,10 +108,10 @@
         </tbody>
         @else
         <tr>
-            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => Str::singular(__('models.users'))]) }}</td>
+            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => __('models.user')]) }}</td>
         </tr>
         @endif
     </table>
 </div>
-{!! $users->links() !!}
+{{ $userModels->links() }}
 @endsection

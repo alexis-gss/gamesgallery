@@ -1,10 +1,10 @@
 @php
 $dataGame = [
-    'games' => $games->map(function($game) {
+    'games' => $gameModels->map(function($game) {
         $game['countpictures'] = count($game->pictures);
         return $game;
     }),
-    'gamesCount' => count($games),
+    'gamesCount' => count($gameModels),
     'allTags' => $globalTags,
     'allFolders' => $globalFolders
 ];

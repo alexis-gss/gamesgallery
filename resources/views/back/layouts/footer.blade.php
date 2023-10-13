@@ -1,6 +1,10 @@
-<footer id="footer" class="bg-light px-0 text-center">
+<footer id="footer" class="bg-body-tertiary px-0 text-center">
     <div class="text-center p-2">
-        {{ $globalLicense }} -
+        @if (isset($globalLicense))
+        <span>{{ $globalLicense }}</span>
+        <span>-</span>
+        @endif
+        @if (isset($globalName))
         <a href="https://github.com/alexis-gss/gamesgallery"
             target="_blank"
             data-bs="tooltip"
@@ -9,10 +13,12 @@
             class="text-reset text-decoration-none">
             {{ $globalName }}
         </a>
-        - v{{ $globalVersion }} -
-        <span class="text-reset">
-            {{ config('app.name') }}
-        </span>
-        © {{ date('Y') }}
+        <span>-</span>
+        @endif
+        @if (isset($globalVersion))
+        v{{ $globalVersion }}&nbsp;<span>-</span>
+        @endif
+        <span class="text-reset">{{ config('app.name') }}</span>
+        <span>©&nbsp;{{ date('Y') }}</span>
     </div>
 </footer>

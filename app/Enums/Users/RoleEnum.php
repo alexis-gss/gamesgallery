@@ -8,14 +8,16 @@ enum RoleEnum: int
 {
     use BaseEnum;
 
-    case admin   = 1;
-    case visitor = 99;
+    case conceptor = 1;
+    case admin     = 2;
+    case visitor   = 99;
 
     /**
      * Optionnal labels definition
      */
     private const LABELS = [
-        self::admin->name => 'Administrator',
-        self::visitor->name => 'Visitor',
+        self::conceptor->name => 'Conceptor',
+        self::admin->name     => 'Administrator',
+        self::visitor->name   => 'Visitor',
     ];
 }

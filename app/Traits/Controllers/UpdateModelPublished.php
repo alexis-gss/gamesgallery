@@ -17,10 +17,10 @@ trait UpdateModelPublished
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changePublished(Model $model)
+    public function changePublished(Model $model): \Illuminate\Http\RedirectResponse
     {
         $model->published = !$model->published;
         $model->saveOrFail();
-        return redirect()->back()->with('success', trans(__('crud.changes.publish_status_saved')));
+        return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
     }
 }

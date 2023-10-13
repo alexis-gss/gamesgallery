@@ -15,7 +15,7 @@ class UpdateGameRequest extends StoreGameRequest
             'slug' => [
                 'required',
                 'string',
-                'unique:games,slug,' . request()->game->id,
+                'unique:games,slug,' . request()->game->getKey(),
                 'max:255'
             ],
         ];

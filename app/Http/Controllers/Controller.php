@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\Pagination\ItemsPerPaginationEnum;
 use App\Enums\Theme\BootstrapThemeEnum;
 use App\Lib\Helpers\ToolboxHelper;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -23,7 +22,7 @@ class Controller extends BaseController
 
     /**
      * Build Search query on specified fields
-     * splitting search into words or using whole sentence.
+     * splitting search into words or using whole sentence
      *
      * @param \Illuminate\Database\Eloquent\Builder $query       The eloquent query builder.
      * @param string                                $search      The query string.
@@ -38,7 +37,7 @@ class Controller extends BaseController
         string $search,
         callable $searchQuery = null,
         string ...$fields
-    ): Builder {
+    ): \Illuminate\Database\Eloquent\Builder {
         if (count($fields)) {
             // Search using words.
             $words = explode(' ', $search);
@@ -60,33 +59,82 @@ class Controller extends BaseController
     }
 
     /**
-     * Build query search on all fields.
+     * Build query search on all fields
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string                                $search
      * @param array                                 $fields
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    private function searchOnFields(Builder $query, string $search, array $fields): Builder
-    {
+    private function searchOnFields(
+        Builder $query,
+        string $search,
+        array $fields
+    ): \Illuminate\Database\Eloquent\Builder {
         $table = $query->getModel()->getTable();
-        foreach ($fields as $f) {
-            $f = str_replace('?', '\?', $f);
-            if (is_array($f)) {
+        foreach ($fields as $field) {
+            $field = str_replace('?', '\?', $field);
+            if (is_array($field)) {
                 $query->orWhereRaw(
-                    sprintf("UPPER(CONCAT(%s)) LIKE UPPER(?)", collect($f)->map(function ($q) use ($table) {
+                    sprintf("UPPER(CONCAT(%s)) LIKE UPPER(?)", collect($field)->map(function ($q) use ($table) {
                         return "`$table`.`$q`";
                     })->implode(', \' \', ')),
-                    ['%' . filter_var($search, FILTER_SANITIZE_STRING) . '%']
+                    ['%' . htmlspecialchars($search) . '%']
                 );
-            } else {
-                $query->orWhereRaw(
-                    "UPPER(`$table`.`$f`) LIKE UPPER(?)",
-                    ['%' . filter_var($search, FILTER_SANITIZE_STRING) . '%']
-                );
+                return $query;
             }
-        }
+            // Get models woth enum's label.
+            if (is_array($this->getSearchValue($query, $search, $field))) {
+                foreach ($this->getSearchValue($query, $search, $field) as $array) {
+                    $query->orWhereRaw(
+                        "UPPER(`$table`.`$field`) LIKE UPPER(?)",
+                        ['%' . htmlspecialchars($array->value) . '%']
+                    );
+                }
+                return $query;
+            }
+            // Get models with relation's name/label.
+            if (Str::endsWith($field, '_id') && $query->getModel()->has(Str::remove('_id', $field))) {
+                $query->orWhereHas(Str::remove('_id', $field), function ($queryRelation) use ($field, $search) {
+                    if (Schema::hasColumn(Str::remove('_id', $field) . 's', 'name')) {
+                        $queryRelation->where('name', 'like', '%' . $search . '%');
+                    } elseif (Schema::hasColumn(Str::remove('_id', $field) . 's', 'label')) {
+                        $queryRelation->where('label', 'like', '%' . $search . '%');
+                    }
+                });
+                return $query;
+            }
+            $query->orWhereRaw(
+                "UPPER(`$table`.`$field`) LIKE UPPER(?)",
+                ['%' . htmlspecialchars($this->getSearchValue($query, $search, $field)) . '%']
+            );
+        } //end foreach
         return $query;
+    }
+
+    /**
+     * Get the search value (on string or Enum).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string                                $search
+     * @param string                                $field
+     * @return string|array
+     */
+    protected function getSearchValue(Builder $query, string $search, string $field): string|array
+    {
+        if (
+            count($query->getModel()->getCasts()) and // Check if the model has casts.
+            isset($query->getModel()->getCasts()[$field]) and // Check if there is cast about specific field.
+            enum_exists($query->getModel()->getCasts()[$field]) // Check if the cast is an enum.
+        ) {
+            $cases = collect($query->getModel()->getCasts()[$field]::toArray());
+            $enum  = $cases->filter(function ($item) use ($search) {
+                return preg_match('/' . Str::of($search)->lower() . '/', Str::of($item->label)->lower());
+            });
+            return $enum->toArray();
+        } else {
+            return $search;
+        }
     }
 
     /**
@@ -96,7 +144,7 @@ class Controller extends BaseController
      * @param array                                 $ignore
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function sortQuery(Builder $query, array $ignore = []): Builder
+    protected function sortQuery(Builder $query, array $ignore = []): \Illuminate\Database\Eloquent\Builder
     {
         $rName = request()->route()->getName();
         $table = $query->getModel()->getTable();
@@ -124,6 +172,14 @@ class Controller extends BaseController
             $query = $query->orderBy('order', 'ASC');
             Session::put("$rName.sort_col", 'order');
             Session::put("$rName.sort_way", 'asc');
+        } elseif (Schema::hasColumn($table, 'updated_at')) {
+            $query = $query->orderBy('updated_at', 'DESC');
+            Session::put("$rName.sort_col", 'updated_at');
+            Session::put("$rName.sort_way", 'desc');
+        } elseif (Schema::hasColumn($table, 'created_at')) {
+            $query = $query->orderBy('created_at', 'DESC');
+            Session::put("$rName.sort_col", 'created_at');
+            Session::put("$rName.sort_way", 'desc');
         }
         return $query;
     }
@@ -139,7 +195,7 @@ class Controller extends BaseController
         Builder $query,
         ItemsPerPaginationEnum $pagination = null
     ): \Illuminate\Contracts\Pagination\LengthAwarePaginator {
-        $currentRoutePath = Str::slug(request()->route()->getName());
+        $currentRoutePath = Str::of(request()->route()->getName())->slug();
         $cacheKey         = "pagination.{$currentRoutePath}";
         $pagination       = $pagination ?? ItemsPerPaginationEnum::twelve;
         $pagination       = ToolboxHelper::getValidatedEnum(
@@ -170,6 +226,6 @@ class Controller extends BaseController
         if (Cache::get("theme") !== $theme) {
             Cache::put("theme", $theme);
         }
-        return redirect()->back()->with('success', __('crud.changes.theme_updated'));
+        return redirect()->back()->with('success', __('crud.messages.theme_updated'));
     }
 }

@@ -12,5 +12,5 @@ Breadcrumbs::for('fo.homepage', function (Generator $trail) {
 // * SPECIFIC GAME
 Breadcrumbs::for('fo.games.specific', function (Generator $trail, Game $game) {
     $trail->parent('fo.homepage');
-    $trail->push($game->name, route('fo.games.specific', ['slug' => $game->slug]));
+    $trail->push($game->name, route('fo.games.specific', $game));
 });

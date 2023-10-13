@@ -302,7 +302,7 @@
                 </div>
                 <div
                   ref="previewBox"
-                  class="col-12 col-md-6 p-0 bg-light preview-image"
+                  class="col-12 col-md-6 p-0 bg-body-tertiary preview-image"
                 >
                   <div
                     :id="`Preview${intId}`"

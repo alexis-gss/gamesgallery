@@ -9,23 +9,24 @@
                 left: 'center',
                 textStyle: {
                     fontSize: '16px',
-                    color: '#000',
+                    color: getComputedStyle(document.body).getPropertyValue('--bs-body-color'),
                 },
             },
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgba(15,15,15,0.90)',
+                backgroundColor: 'rgb(' + getComputedStyle(document.body).getPropertyValue('--bs-emphasis-color-rgb') + ', .9)',
                 borderColor: 'rgba(0,0,0,0)',
+                borderRadius: 6,
                 textStyle: {
-                    color: '#FFF',
+                    color: getComputedStyle(document.body).getPropertyValue('--bs-body-bg'),
                 },
                 formatter: (params) => {
-                    listValue = "";
+                    listValue = '';
                     params.forEach(element => {
-                        listValue += `<li class="list-group-item bg-transparent text-white border-0 p-0">
+                        listValue += `<li class="list-group-item bg-transparent border-0 p-0">
                                         <div class="d-flex justify-content-start align-items-center">
                                             <span class="card-pellet rounded-5" style="background-color:${element.color}"></span>&nbsp;&nbsp;
-                                            <span>${element.seriesName}&nbsp;:&nbsp;<strong>${element.value}</strong></span>
+                                            <span style="color:${getComputedStyle(document.body).getPropertyValue('--bs-body-bg')}">${element.seriesName}&nbsp;:&nbsp;<strong>${element.value}</strong></span>
                                         </div>
                                     </li>`;
                     });
@@ -35,15 +36,17 @@
                         </ul>`;
                 },
             },
-            dataZoom: [
-                {
-                    xAxisIndex: 0,
-                }
-            ],
+            dataZoom: [{
+                xAxisIndex: 0,
+            }],
             toolbox: {
                 feature: {
-                    restore : {show: true},
-                    saveAsImage : {show: true},
+                    restore: {
+                        show: true
+                    },
+                    saveAsImage: {
+                        show: true
+                    },
                 }
             },
             grid: {
@@ -61,33 +64,32 @@
             yAxis: {
                 type: 'value'
             },
-            series: [
-                {
+            series: [{
                     name: 'Games',
                     type: 'line',
                     smooth: true,
-                    data: @json($modelActivities["App\Models\Game"]),
+                    data: @json($activityModels['App\Models\Game']),
                     color: '#0D6EFD',
                 },
                 {
                     name: 'Folders',
                     type: 'line',
                     smooth: true,
-                    data: @json($modelActivities["App\Models\Folder"]),
+                    data: @json($activityModels['App\Models\Folder']),
                     color: '#dc3545',
                 },
                 {
                     name: 'Tags',
                     type: 'line',
                     smooth: true,
-                    data: @json($modelActivities["App\Models\Tag"]),
+                    data: @json($activityModels['App\Models\Tag']),
                     color: '#0dcaf0',
                 },
                 {
                     name: 'Users',
                     type: 'line',
                     smooth: true,
-                    data: @json($modelActivities["App\Models\User"]),
+                    data: @json($activityModels['App\Models\User']),
                     color: '#ffc107',
                 },
             ]

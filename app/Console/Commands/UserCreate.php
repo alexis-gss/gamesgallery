@@ -4,10 +4,11 @@ namespace App\Console\Commands;
 
 use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
+use App\Lib\Helpers\ToolboxHelper;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -30,11 +31,18 @@ class UserCreate extends Command
     protected $description = 'Create user (Visitor or Admin)';
 
     /**
-     * The name of the new user.
+     * The first name of the new user.
      *
      * @var string
      */
-    protected $name;
+    protected $first_name;
+
+    /**
+     * The last name of the new user.
+     *
+     * @var string
+     */
+    protected $last_name;
 
     /**
      * The email of the new user.
@@ -53,7 +61,7 @@ class UserCreate extends Command
     /**
      * The role of the new user.
      *
-     * @var string
+     * @var integer
      */
     protected $role;
 
@@ -64,8 +72,11 @@ class UserCreate extends Command
      */
     public function handle()
     {
-        $this->name = null;
-        $this->addName();
+        $this->first_name = null;
+        $this->addFirstname();
+
+        $this->last_name = null;
+        $this->addLastname();
 
         $this->email = null;
         $this->addEmail();
@@ -77,8 +88,8 @@ class UserCreate extends Command
         $this->addRole();
 
         $user                = new User();
-        $user->name          = $this->name;
-        $user->slug          = Str::slug($this->name);
+        $user->first_name    = $this->first_name;
+        $user->last_name     = $this->last_name;
         $user->email         = $this->email;
         $user->password      = $this->password;
         $user->picture       = FileStorageHelper::storeFile(
@@ -87,6 +98,8 @@ class UserCreate extends Command
         );
         $user->picture_alt   = "Default picture of a user profile";
         $user->picture_title = "User's picture of his profile";
+        $user->published     = true;
+        $user->published_at  = Carbon::now();
         $user->role          = $this->role;
         $user->saveOrFail();
 
@@ -96,23 +109,48 @@ class UserCreate extends Command
     }
 
     /**
-     * Add a name to the user.
+     * Add a first name to the user.
      *
      * @return void
      */
-    private function addName(): void
+    private function addFirstname(): void
     {
-        while (is_null($this->name)) {
+        while (is_null($this->first_name)) {
             try {
-                $tmp       = $this->ask('Type the wanted user name', 'Visitor');
-                $validator = Validator::make(['name' => $tmp], [
-                    'name' => 'required|min:3|max:255'
+                $tmp       = $this->ask('Type the wanted user first name', 'John');
+                $validator = Validator::make(['first_name' => $tmp], [
+                    'first_name' => 'required|min:3|max:255'
                 ]);
                 $validator->validate();
-                $this->name = $tmp;
+                $this->first_name = $tmp;
             } catch (ValidationException $e) {
                 $this->error(sprintf(
-                    'Please provide a valid name %s',
+                    'Please provide a valid first name %s',
+                    \implode(',', collect($e->errors())->flatten()->all())
+                ));
+                continue;
+            } //end try
+        }; //end while
+    }
+
+    /**
+     * Add a last name to the user.
+     *
+     * @return void
+     */
+    private function addLastname(): void
+    {
+        while (is_null($this->last_name)) {
+            try {
+                $tmp       = $this->ask('Type the wanted user last name', 'Doe');
+                $validator = Validator::make(['last_name' => $tmp], [
+                    'last_name' => 'required|min:3|max:255'
+                ]);
+                $validator->validate();
+                $this->last_name = $tmp;
+            } catch (ValidationException $e) {
+                $this->error(sprintf(
+                    'Please provide a valid last name %s',
                     \implode(',', collect($e->errors())->flatten()->all())
                 ));
                 continue;
@@ -129,7 +167,7 @@ class UserCreate extends Command
     {
         while (is_null($this->email)) {
             try {
-                $tmp       = $this->ask('Type the wanted user email', 'visitor@gmail.com');
+                $tmp       = $this->ask('Type the wanted user email', 'john.doe@gmail.com');
                 $validator = Validator::make(['email' => $tmp], [
                     'email' => 'required|unique:users,email|email:rfc,dns'
                 ]);
@@ -172,22 +210,23 @@ class UserCreate extends Command
             try {
                 $tmp                         = $this->choice(
                     'Select his role',
-                    [RoleEnum::admin->label(), RoleEnum::visitor->label()],
+                    [RoleEnum::conceptor->label(), RoleEnum::admin->label(), RoleEnum::visitor->label()],
                     RoleEnum::visitor->label(),
                     $maxAttempts             = null,
                     $allowMultipleSelections = false
                 );
-                if ($tmp === RoleEnum::admin->label()) {
-                    $tmp = RoleEnum::admin;
+                if ($tmp === RoleEnum::conceptor->label()) {
+                    $tmp = RoleEnum::conceptor->value();
+                } elseif ($tmp === RoleEnum::admin->label()) {
+                    $tmp = RoleEnum::admin->value();
+                } elseif ($tmp === RoleEnum::visitor->label()) {
+                    $tmp = RoleEnum::visitor->value();
                 }
-                if ($tmp === RoleEnum::visitor->label()) {
-                    $tmp = RoleEnum::visitor;
-                }
-                $validator = Validator::make(['role' => $tmp], [
-                    'role' => 'required'
-                ]);
-                $validator->validate();
-                $this->role = $tmp;
+                $this->role = ToolboxHelper::getValidatedEnum(
+                    $tmp,
+                    'role',
+                    '\App\Enums\Users\RoleEnum',
+                );
             } catch (ValidationException $e) {
                 $this->error(sprintf(
                     'Please choose from the selection',

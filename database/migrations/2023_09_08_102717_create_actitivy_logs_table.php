@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')
                 ->comment('Id of the user associated, or nullable for a deleted user.');
             $table->boolean('is_anonymous')->comment('If there is no user connected when action was realised.');
-            $table->string('model')->comment('Target model.');
+            $table->boolean('is_console')->comment('If the action was realised in console.');
+            $table->string('model_class')->comment('Target model.');
             $table->integer('model_id')->comment('Id of the target model.');
             $table->integer('event')->comment('Event of this activity (ActivityLogsEventEnum).');
             $table->json('data')->nullable()->comment('List of changes (old and new values).');

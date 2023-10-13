@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'bo' => [
         'title' => [
@@ -14,8 +16,7 @@ return [
 
         'label' => [
             'identification'           => 'Identification',
-            'authentification_name'    => 'Authentification (name)',
-            'authentification_email'   => 'Authentification (e-mail)',
+            'authentification'         => 'Authentification (:field)',
             'organization'             => 'Organization',
             'user_rights'              => 'Access rights',
             'password'                 => 'New password',
@@ -27,7 +28,7 @@ return [
 
         'tooltip' => [
             'homepage'                               => 'Back-office home page',
-            'statistics'                             => 'Show statistics about this project',
+            'statistics'                             => 'Show :model about this project',
             'list_models'                            => 'List all :count :model created',
             'name_folder'                            => 'Type the name of the folder',
             'name_game'                              => 'Type the name of the game',
@@ -86,7 +87,7 @@ return [
             'back_office_login'         => 'Login',
             'back_office_login_desc'    => 'Authenticate form of the back office.',
             'changelog'                 => 'Change log',
-            'home_hello'                => 'Hi :name !',
+            'home_hello'                => 'Hi :first_name :last_name !',
             'home_welcome'              => 'Welcome to the back office, where you can manage your entire web application
                 (text, images, colors, folders, etc...).',
             'home_contact'              => 'If you have any problems or require further information, please contact the
@@ -109,8 +110,8 @@ return [
             'advanced'                  => 'Advanced',
             'user_anonym'               => 'User anonym',
             'user_deleted'              => 'User deleted',
-            'before'                    => 'Before',
-            'after'                     => 'After',
+            'column'                    => 'Column',
+            'type'                      => 'Type',
         ],
     ],
     'fo' => [

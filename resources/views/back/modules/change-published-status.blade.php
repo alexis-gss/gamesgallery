@@ -1,6 +1,6 @@
 <td class="text-center align-middle">
-    @can('isAdmin')
-    <form action="{{ route('bo.' . $routeName . '.change-published', $model->id) }}" method="POST">
+    @can('changePublished', $model)
+    <form action="{{ route('bo.' . $routeName . '.change-published', $model->getRouteKey()) }}" method="POST">
         @csrf
         <button type="submit"
             class="btn btn-sm @if($model->published) btn-primary @else btn-danger @endif"

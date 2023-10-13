@@ -14,7 +14,7 @@ class UpdateChangeOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && Gate::allowIf('isAdmin');
+        return auth('backend')->check();
     }
 
     /**

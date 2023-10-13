@@ -20,8 +20,8 @@ class StatisticController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $modelLatest     = [];
-        $modelActivities = [];
+        $latestModels    = [];
+        $activityModels  = [];
         $activitiesClass = [
             Game::class,
             Folder::class,
@@ -34,21 +34,21 @@ class StatisticController extends Controller
             return $date->format('d/m');
         })->toArray();
 
-        collect($activitiesClass)->map(function ($class) use (&$modelActivities, &$modelLatest, $latestDays) {
-            collect($latestDays->toArray())->map(function ($date) use (&$modelActivities, $class) {
-                $modelActivities[$class][] = count(
+        collect($activitiesClass)->map(function ($class) use (&$activityModels, &$latestModels, $latestDays) {
+            collect($latestDays->toArray())->map(function ($date) use (&$activityModels, $class) {
+                $activityModels[$class][] = count(
                     ActivityLog::query()
-                        ->where('model', $class)
+                        ->where('model_class', $class)
                         ->whereDate('created_at', $date)
                         ->get()
                 );
             });
-            $modelLatest[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
+            $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
         });
 
         return view('back.pages.statistics.index', compact(
-            'modelLatest',
-            'modelActivities',
+            'latestModels',
+            'activityModels',
             'dateLastDaysFormated',
         ));
     }

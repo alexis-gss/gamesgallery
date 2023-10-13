@@ -8,6 +8,7 @@ use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 
 class ActivityLogsController extends Controller
 {
@@ -22,27 +23,31 @@ class ActivityLogsController extends Controller
      */
     public function index(Request $request): View
     {
-        /** @var \Illuminate\Database\Eloquent\Builder $activitylogModels */
-        $activitylogModels = ActivityLog::query();
+        /** Authorize action */
+        $this->authorize('isConceptor');
+
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = ActivityLog::query()->with('user');
 
         /** @var string $search Search field */
         $search = $request->search;
         if ($search) {
             $this->searchQuery(
-                $activitylogModels,
+                $query,
                 $search,
                 null,
-                'model',
-                'data',
+                'model_class',
             );
         }
-        $searchFields = trans('Cible, Contenu');
+        $searchFields = \implode(', ', [
+            Str::of(__('validation.custom.model'))->ucFirst(),
+        ]);
 
         /** Sort columns with a query */
-        $this->sortQuery($activitylogModels);
+        $this->sortQuery($query);
 
         /** Custom pagination */
-        $activitylogModels = $this->paginate($activitylogModels);
+        $activitylogModels = $this->paginate($query);
 
         return view('back.pages.activity_logs.index', compact('activitylogModels', 'search', 'searchFields'));
     }
@@ -55,7 +60,14 @@ class ActivityLogsController extends Controller
      */
     public function show(ActivityLog $activity_log): \Illuminate\Contracts\View\View
     {
-        $targetModel = $activity_log->model::where('id', $activity_log->model_id)->first();
+        /** Authorize action */
+        $this->authorize('isConceptor');
+
+        $targetModelClass = $activity_log->model_class;
+        $targetModel      = $activity_log->model_class::where(
+            (new $targetModelClass())->getRouteKeyName(),
+            $activity_log->model_id
+        )->first();
 
         return view('back.pages.activity_logs.show', [
             'activitylogModel' => $activity_log,

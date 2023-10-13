@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-    'activities' => 'Activity|Activities',
-    'folders'    => 'Folders',
-    'games'      => 'Games',
-    'pictures'   => 'Pictures',
-    'stats'      => 'Statistics',
-    'tags'       => 'Tags',
-    'users'      => 'Users',
+    'activity_log' => 'activity log|activity logs',
+    'folder'       => 'folder',
+    'game'         => 'game',
+    'picture'      => 'picture',
+    'statistic'    => 'statistic',
+    'tag'          => 'tag',
+    'user'         => 'user',
 ];

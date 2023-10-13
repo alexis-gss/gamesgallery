@@ -26,15 +26,19 @@ final class UserFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique()->word;
+        $published = fake()->boolean(75);
         return [
-            'name' => $name,
-            'slug' => Str::slug($name),
-            'email' => $this->faker->unique()->email(),
-            'picture_alt' => $this->faker->unique()->word,
-            'picture_title' => $this->faker->unique()->word,
-            'password' => $this->faker->password(),
-            'role' => \collect(RoleEnum::toArray())->random()->value
+            'first_name'        => fake()->firstname(),
+            'last_name'         => fake()->lastname(),
+            'email'             => fake()->unique()->email(),
+            'email_verified_at' => now(),
+            'picture_alt'       => fake()->unique()->word,
+            'picture_title'     => fake()->unique()->word,
+            'password'          => fake()->password(),
+            'remember_token'    => Str::random(10),
+            'role'              => \collect(RoleEnum::toArray())->random()->value,
+            'published'         => $published,
+            'published_at'      => ($published) ? now() : null,
         ];
     }
 }

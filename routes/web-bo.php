@@ -15,97 +15,78 @@ Route::prefix('bo')
     ->name('bo.')
     ->group(
         function () {
+            // * AUTHENTICABLE ROUTES
             Route::middleware([])
                 ->namespace('\App\Http\Controllers\Bo')
-                ->group(
-                    function () {
-                        Auth::routes(
-                            [
-                                'login'    => true,
-                                'logout'   => true,
-                                'register' => false,
-                                'reset'    => false,
-                                'confirm'  => false,
-                                'verify'   => false,
-                            ]
-                        );
-                    }
-                );
-            Route::middleware(['auth:web'])
-                ->group(
-                    function () {
-                        Route::middleware(['can:isAdmin'])
-                            ->group(
-                                function () {
-                                    /**
-                                     * * STATS
-                                     */
-                                    Route::get('/stats', [StatisticController::class, 'index'])
-                                        ->name('statistics');
+                ->group(function () {
+                    Auth::routes(
+                        [
+                            'login'    => true,
+                            'logout'   => true,
+                            'register' => false,
+                            'reset'    => false,
+                            'confirm'  => false,
+                            'verify'   => false,
+                        ]
+                    );
+                });
+            Route::middleware(['auth:backend'])
+                ->group(function () {
+                    // * HOMEPAGE
+                    Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
-                                    /**
-                                     * * GAMES
-                                     */
-                                    Route::post('/games/change-order/{game}/{direction}', [
-                                        GameController::class, 'changeOrder'
-                                    ])->where('direction', 'up|down')->name('games.change-order');
-                                    Route::post('/games/{game}/change-published', [
-                                        GameController::class, 'changePublished'
-                                    ])->name('games.change-published');
-                                    Route::get('/games/{game}/duplicate', [
-                                        GameController::class, 'duplicate'
-                                    ])->name('games.duplicate');
-                                    Route::post('/games/upload', [
-                                        GameController::class, 'upload'
-                                    ])->name('games.upload');
+                    // * STATS
+                    Route::get('/stats', [StatisticController::class, 'index'])
+                        ->name('statistics');
 
-                                    /**
-                                     * * FOLDERS
-                                     */
-                                    Route::post('/folders/change-order/{folder}/{direction}', [
-                                        FolderController::class, 'changeOrder'
-                                    ])->where('direction', 'up|down')->name('folders.change-order');
-                                    Route::post('/folders/{folder}/change-published', [
-                                        FolderController::class, 'changePublished'
-                                    ])->name('folders.change-published');
-                                    Route::get('/folders/{folder}/duplicate', [
-                                        FolderController::class, 'duplicate'
-                                    ])->name('folders.duplicate');
+                    // * GAMES
+                    Route::resource('games', GameController::class)->except('show');
+                    Route::post('/games/{game}/change-order/{direction}', [GameController::class, 'changeOrder'])
+                        ->where('direction', 'up|down')->name('games.change-order');
+                    Route::post('/games/{game}/change-published', [GameController::class, 'changePublished'])
+                        ->name('games.change-published');
+                    Route::get('/games/{game}/duplicate', [GameController::class, 'duplicate'])
+                        ->name('games.duplicate');
+                    Route::post('/games/upload', [GameController::class, 'upload'])
+                        ->name('games.upload');
 
-                                    /**
-                                     * * TAGS
-                                     */
-                                    Route::post('/tags/change-order/{tag}/{direction}', [
-                                        TagController::class, 'changeOrder'
-                                    ])->where('direction', 'up|down')->name('tags.change-order');
-                                    Route::post('/tags/{tag}/change-published', [
-                                        TagController::class, 'changePublished'
-                                    ])->name('tags.change-published');
-                                    Route::post('/tags/store', [TagController::class, 'jsonStore'])
-                                        ->name('tags.jsonStore');
-                                    Route::get('/tags/{tag}/duplicate', [
-                                        TagController::class, 'duplicate'
-                                    ])->name('tags.duplicate');
+                    // * FOLDERS
+                    Route::resource('folders', FolderController::class)->except('show');
+                    Route::post('/folders/{folder}/change-order/{direction}', [FolderController::class, 'changeOrder'])
+                        ->where('direction', 'up|down')
+                        ->name('folders.change-order');
+                    Route::post('/folders/{folder}/change-published', [FolderController::class, 'changePublished'])
+                        ->name('folders.change-published');
+                    Route::get('/folders/{folder}/duplicate', [FolderController::class, 'duplicate'])
+                        ->name('folders.duplicate');
 
-                                    /**
-                                     * * USERS
-                                     */
-                                    Route::post('/users/change-order/{user}/{direction}', [
-                                        UserController::class, 'changeOrder'
-                                    ])->where('direction', 'up|down')->name('users.change-order');
-                                    Route::get('/users/{user}/duplicate', [
-                                        UserController::class, 'duplicate'
-                                    ])->name('users.duplicate');
-                                }
-                            );
-                        Route::get('/', [HomeController::class, 'index'])->name('homepage');
-                        Route::resource('games', GameController::class)->except('show');
-                        Route::resource('folders', FolderController::class)->except('show');
-                        Route::resource('tags', TagController::class)->except('show');
-                        Route::resource('users', UserController::class)->except('show');
+                    // * TAGS
+                    Route::resource('tags', TagController::class)->except('show');
+                    Route::post('/tags/{tag}/change-order/{direction}', [TagController::class, 'changeOrder'])
+                        ->where('direction', 'up|down')
+                        ->name('tags.change-order');
+                    Route::post('/tags/{tag}/change-published', [TagController::class, 'changePublished'])
+                        ->name('tags.change-published');
+                    Route::post('/tags/store', [TagController::class, 'jsonStore'])
+                        ->name('tags.jsonStore');
+                    Route::get('/tags/{tag}/duplicate', [TagController::class, 'duplicate'])
+                        ->name('tags.duplicate');
+
+                    // * USERS
+                    Route::resource('users', UserController::class)->except('show');
+                    Route::post('/users/{user}/change-order/{direction}', [UserController::class, 'changeOrder'])
+                        ->where('direction', 'up|down')->name('users.change-order');
+                    Route::get('/users/{user}/duplicate', [UserController::class, 'duplicate'])
+                        ->name('users.duplicate');
+                    Route::post('/users/{user}/change-published', [UserController::class, 'changePublished'])
+                        ->name('users.change-published');
+
+                    Route::middleware('can:isConceptor')->group(function () {
+                        // * ACTIVITY LOGS.
                         Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
-                        Route::post('theme/set', [Controller::class, 'setTheme'])->name('theme.set');
-                    }
-                );
+                    });
+                });
+            // * BOOTSTRAP THEMES.
+            Route::post('theme/set', [Controller::class, 'setTheme'])->name('theme.set');
         }
     );

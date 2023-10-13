@@ -19,14 +19,14 @@ class FrontController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $games             = Game::where('published', true)->orderBy('slug', 'ASC')->get();
-        $gamesLatest       = Game::where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
+        $gameModels        = Game::where('published', true)->orderBy('slug', 'ASC')->with('pictures')->get();
+        $gameLatestModels  = Game::where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
         $gamesLatestString = "";
-        foreach ($gamesLatest as $lastGame) {
-            $gamesLatestString = $gamesLatestString . $lastGame->name . " / ";
+        foreach ($gameLatestModels as $gameModel) {
+            $gamesLatestString = $gamesLatestString . $gameModel->name . " / ";
         }
 
-        return view('front.pages.home', compact('games', 'gamesLatestString'));
+        return view('front.pages.home', compact('gameModels', 'gamesLatestString'));
     }
 
     /**
@@ -34,18 +34,20 @@ class FrontController extends Controller
      *
      * @param Request $request
      * @param string  $slug
-     * @return Illuminate\Http\JsonResponse|Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function show(Request $request, string $slug)
-    {
+    public function show(
+        Request $request,
+        string $slug
+    ): \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse {
         if (Game::where('published', true)->where('slug', $slug)->first()) {
-            $games = Game::where('published', true)->orderBy('slug', 'ASC')->get();
-            $game  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
+            $gameModels = Game::where('published', true)->orderBy('slug', 'ASC')->with('pictures')->get();
+            $gameModel  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
 
-            if (count($game->pictures)) {
+            if (count($gameModel->pictures)) {
                 $gamePictures = $this->customPaginate(
-                    $game->pictures,
-                    (count($game->pictures) <= 12) ? count($game->pictures) : 12,
+                    $gameModel->pictures,
+                    (count($gameModel->pictures) <= 12) ? count($gameModel->pictures) : 12,
                     ['path' => Paginator::resolveCurrentPath()]
                 );
             } else {
@@ -56,7 +58,7 @@ class FrontController extends Controller
                 return response()->json(['data' => $gamePictures]);
             }
 
-            return view('front.pages.game', compact('games', 'game', 'gamePictures'));
+            return view('front.pages.game', compact('gameModels', 'gameModel', 'gamePictures'));
         } else {
             return redirect()->route('fo.homepage');
         } //end if
@@ -69,10 +71,14 @@ class FrontController extends Controller
      * @param integer                        $perPage
      * @param array                          $options
      * @param integer                        $page
-     * @return App\Http\Controllers\LengthAwarePaginator
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function customPaginate(Collection $items, int $perPage, array $options, int $page = null)
-    {
+    public function customPaginate(
+        Collection $items,
+        int $perPage,
+        array $options,
+        int $page = null
+    ): \Illuminate\Pagination\LengthAwarePaginator {
         $page   = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $result = new LengthAwarePaginator(
             $items->forPage($page, $perPage),
@@ -88,9 +94,9 @@ class FrontController extends Controller
      * Return a list of games filtered.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function getGamesFiltered(Request $request)
+    public function getGamesFiltered(Request $request): \Illuminate\Http\JsonResponse
     {
         $selectedTagId    = intval($request->FILTERSID[0] ?? 0);
         $selectedFolderId = intval($request->FILTERSID[1] ?? 0);

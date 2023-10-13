@@ -1,26 +1,25 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html dir="ltr" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     @include('back.layouts.head')
 </head>
 
-<body data-bs-theme="{{ \App\Enums\Theme\BootstrapThemeEnum::make(intval(Cache::get('theme')))->name() }}">
-    @auth
+<body data-bs-theme="{{ (\App\Enums\Theme\BootstrapThemeEnum::make(intval(Cache::get('theme'))) ?? \App\Enums\Theme\BootstrapThemeEnum::light)->name() }}">
     <!-- Header -->
     @include('back.layouts.nav')
-    @endauth
 
     <!-- Main content -->
     <main class="container-fluid row mx-auto">
         <div class="col-12 col-md-10 col-lg-8 px-0 py-3 mx-auto">
-            @if (!Auth::check())
+            @if (!auth('backend')->user())
             <div class="d-flex flex-column align-items-center justify-content-center h-100 pb-5">
-                @endauth
+                @else
                 <!-- Show a message when an action is performed -->
                 @include('back.modules.flash-messages')
+                @endauth
                 @yield('content')
-                @if (!Auth::check())
+                @if (!auth('backend')->user())
             </div>
             @endauth
         </div>

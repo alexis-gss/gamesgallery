@@ -5,28 +5,11 @@ namespace App\Http\Controllers\Bo\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
-
-    /*
-     *--------------------------------------------------------------------------
-     * Login Controller
-     *--------------------------------------------------------------------------
-     *
-     * This controller handles authenticating users for the application and
-     * redirecting them to your home screen. The controller uses a trait
-     * to conveniently provide its functionality to your applications.
-     *
-     */
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/bo';
 
     /**
      * Create a new controller instance.
@@ -35,7 +18,17 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:backend')->except('logout');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard(): \Illuminate\Contracts\Auth\StatefulGuard
+    {
+        return Auth::guard('backend');
     }
 
     /**
@@ -49,14 +42,29 @@ class LoginController extends Controller
     }
 
     /**
-     * Logout trait.
+     * Where to redirect users after login.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    protected function logout(): \Illuminate\Http\RedirectResponse
+    protected function redirectTo(): string
     {
-        Auth::logout();
+        return response()->redirectToIntended()->getTargetUrl();
+    }
 
-        return redirect('bo/login');
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return boolean
+     */
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+        // * Attempt login only using published users.
+        $credentials['published'] = true;
+        return $this->guard()->attempt(
+            $credentials,
+            $request->boolean('remember')
+        );
     }
 }

@@ -2,32 +2,41 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
     /**
      * Handle an incoming request.
      *
-     * @param Request                                        $request
-     * @param \Closure(Request): (Response|RedirectResponse) $next
-     * @param string|null                                    ...$guards
-     * @return Response|RedirectResponse
+     * @param  \Illuminate\Http\Request                                                         $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
+     * @param  string|null                                                                      ...$guards
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \RuntimeException If guard is unhandled.
+     * @phpcs:disable Squiz.Commenting.FunctionComment.IncorrectTypeHint
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, \Closure $next, ...$guards): Response
     {
+        // phpcs:enable phpcs:disable
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect('/bo');
+            if (auth($guard)->check()) {
+                switch ($guard) {
+                    case 'frontend':
+                        return \redirect()->route('fo.homepage');
+                    case 'backend':
+                        if (!$request->routeIs('bo.*')) {
+                            continue;
+                        }
+                        return \redirect()->route('bo.dashboard');
+                    default:
+                        throw new \RuntimeException("Unhandled guard `{$guard}` .");
+                }
             }
         }
-
         return $next($request);
     }
 }

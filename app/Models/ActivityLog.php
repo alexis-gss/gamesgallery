@@ -6,17 +6,15 @@ use App\Enums\ActivityLogs\ActivityLogsEventEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * @property string                          $model      Target model.
- * @property string                          $model_id   Id of the target model.
- * @property string                          $event      Event of this activity (ActivityLogsEventEnum).
- * @property string                          $data       Data.
- * @property-read \Illuminate\Support\Carbon $created_at Created date.
+ * @property string                          $model_class Target model.
+ * @property string                          $model_id    Id of the target model.
+ * @property string                          $event       Event of this activity (ActivityLogsEventEnum).
+ * @property string                          $data        Changes.
+ * @property-read \Illuminate\Support\Carbon $created_at  Created date.
  *
  * @method public static function addActivity($model, $eventEnum) Add new activity to the activity logs list.
  * @method public static function getValuesChanged($activity, $model, $eventEnum)
@@ -24,7 +22,7 @@ use Illuminate\Support\Facades\Schema;
  *
  * @property-read \App\Models\User $user User BelongsTo relation.
  */
-class ActivityLog extends Authenticatable
+class ActivityLog extends Model
 {
     use HasFactory;
     use Notifiable;
@@ -43,7 +41,7 @@ class ActivityLog extends Authenticatable
      */
     protected $fillable = [
         'is_anonymous',
-        'model',
+        'model_class',
         'model_id',
         'event',
         'data',
@@ -73,29 +71,41 @@ class ActivityLog extends Authenticatable
      */
     public static function addActivity(Model $model, ActivityLogsEventEnum $eventEnum): void
     {
+        $isAnonymous = true;
+        /** @var \Illuminate\Database\Eloquent\Model|null */
+        $userModel = auth('backend')->user();
+        if (is_object($userModel)) {
+            $userModel   = $userModel->getKeyForSelectQuery();
+            $isAnonymous = false;
+        }
         $activity               = new self();
-        $activity->user_id      = (Auth::user() != null) ? Auth::user()->id : null;
-        $activity->is_anonymous = (Auth::user() != null) ? false : true;
-        $activity->model        = \get_class($model);
-        $activity->model_id     = $model->id;
+        $activity->user_id      = $userModel;
+        $activity->is_console   = app()->runningInConsole();
+        $activity->is_anonymous = $isAnonymous;
+        $activity->model_class  = \get_class($model);
+        $activity->model_id     = $model->getKey();
         $activity->event        = $eventEnum;
-        $activity->data         = static::getValuesChanged($activity, $model, $eventEnum);
+        $activity->data         = static::getChangedColumns($activity, $model, $eventEnum);
         $activity->created_at   = Carbon::now();
         $activity->saveOrFail();
     }
 
     /**
-     * Get old, new and type of values changed.
+     * Get old, new columns that has changed.
      *
      * @param \self                                         $activity
      * @param \Illuminate\Database\Eloquent\Model           $model
      * @param \App\Enums\ActivityLogs\ActivityLogsEventEnum $eventEnum
      * @return array|null
      */
-    public static function getValuesChanged(self $activity, Model $model, ActivityLogsEventEnum $eventEnum): array|null
+    public static function getChangedColumns(self $activity, Model $model, ActivityLogsEventEnum $eventEnum): array|null
     {
+        $modelClassName = $activity->model_class;
         /** Get type of each fields of the target model */
-        $targetModel = $activity->model::where('id', $activity->model_id)->first();
+        $targetModel = $activity->model_class::where(
+            (new $modelClassName())->getRouteKeyName(),
+            $activity->model_id
+        )->first();
         if ($targetModel != null) {
             // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
             $targetModelTypes = collect($targetModel->toArray())
@@ -105,11 +115,8 @@ class ActivityLog extends Authenticatable
             // phpcs:enable
         }
         /** Return old, new and type of values changed */
-        return ($eventEnum === ActivityLogsEventEnum::updated) ? [
-            'old'  => array_intersect_key($model->getRawOriginal(), $model->getChanges()),
-            'new'  => $model->getChanges(),
-            'type' => array_intersect_key($targetModelTypes, $model->getChanges()),
-        ] : null;
+        return ($eventEnum === ActivityLogsEventEnum::updated) ?
+            array_intersect_key($targetModelTypes, $model->getChanges()) : null;
     }
 
     // * RELATIONS

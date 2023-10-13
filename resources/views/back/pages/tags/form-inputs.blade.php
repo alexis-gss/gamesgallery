@@ -1,5 +1,5 @@
-<div class="row border-bottom">
-    <div class="col">
+<div class="row">
+    <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3 mb-3">
             <legend>{{ __('texts.bo.title.general_informations') }}</legend>
             <div class="row mb-3">
@@ -18,7 +18,7 @@
                         name="name"
                         class="form-control @error('name') is-invalid @enderror"
                         placeholder="{{ __('validation.attributes.name') }}*"
-                        value="{{ old('name', $tag->name ?? '') }}">
+                        value="{{ old('name', $tagModel->name ?? '') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.name'),
@@ -31,10 +31,7 @@
             </div>
         </fieldset>
     </div>
-</div>
-
-<div class="row mb-3 border-bottom">
-    <div class="col">
+    <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
             <legend>{{ __('texts.bo.title.visibility') }}</legend>
             <div class="row mb-3">
@@ -48,11 +45,11 @@
                             @if (old('published', $tag->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                            <b>{{ __('validation.attributes.publishment') }}</b>
+                            <b>{{ Str::of(__('validation.custom.publishment'))->ucfirst() }}</b>
                         </label>
                         <br>
                         <small class="form-text text-body-secondary">
-                            {{ __('validation.boolean', ['attribute' => __('validation.attributes.publishment')]) }}
+                            {{ __('validation.boolean', ['attribute' => __('validation.custom.publishment')]) }}
                         </small>
                     </div>
                     @include('back.modules.input-error', ['inputName' => 'published'])
@@ -60,8 +57,12 @@
             </div>
         </fieldset>
     </div>
+    <div class="col-12 text-center">
+        <p class="fw-bold p-0 m-0">{{ __('crud.other.required_fields') }}</p>
+    </div>
 </div>
 
+@can('update', $tagModel)
 @push('scripts')
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -75,3 +76,4 @@
     });
 </script>
 @endpush
+@endcan

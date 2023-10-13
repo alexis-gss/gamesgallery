@@ -15,7 +15,7 @@ class StoreTagRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check() && Gate::allowIf('isAdmin');
+        return auth('backend')->check();
     }
 
     /**
@@ -26,7 +26,7 @@ class StoreTagRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'slug'      => Str::slug($this->name),
+            'slug'      => Str::of($this->name)->slug()->value(),
             'published' => $this->published ? true : false
         ]);
     }

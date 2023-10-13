@@ -13,13 +13,14 @@ Each element (name, image, folder, color, etc.) can be managed in the back-offic
 
 # Table of contents
 
+- [Games Gallery](#games-gallery)
 - [Table of contents](#table-of-contents)
 - [Frameworks, Platforms and Libraries](#frameworks-platforms-and-libraries)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
-  - [Introduction](#introduction)
-  - [Fixing a Bug](#fixing-a-bug)
-  - [Proposing a Change](#proposing-a-change)
+    - [Introduction](#introduction)
+    - [Fixing a Bug](#fixing-a-bug)
+    - [Proposing a Change](#proposing-a-change)
 - [Changelog](#changelog)
 - [Copyright and License](#copyright-and-license)
 

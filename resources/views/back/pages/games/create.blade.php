@@ -1,7 +1,7 @@
-@extends('back.layout', ['brParam' => $game])
+@extends('back.layout', ['brParam' => $gameModel])
 
-@section('title', __('crud.meta.creation_model', ['model' => Str::singular(__('models.games'))]))
-@section('description', __('crud.meta.creation_model_desc', ['model' => Str::singular(__('models.games'))]))
+@section('title', __('crud.meta.creation_model', ['model' => __('models.game')]))
+@section('description', __('crud.meta.creation_model_desc', ['model' => __('models.game')]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,25 +11,30 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.list_all', ['model' => __('models.games')]) }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => Str::of(__('models.game'))->plural()]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        @include('breadcrumbs.breadcrumb-body', ['brParam' => $game])
+        @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
     </div>
     <div class="btn-toolbar mb-2 mb-md-0">
+        @can('create', $gameModel)
         <button id="formSubmitClone"
             type="submit"
             class="btn btn-primary"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.games'))]) }}">
+            title="{{ __('crud.actions_model.save', ['model' => __('models.game')]) }}">
             <i class="fa-solid fa-floppy-disk"></i>
         </button>
+        @endcan
     </div>
 </div>
+@can('create', $gameModel)
 <form action="{{ route('bo.games.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @endcan
     @include('back.pages.games.form-inputs')
+    @can('create', $gameModel)
     <div class="row mt-3">
         <div class="col text-center">
             <button id="formSubmit"
@@ -37,10 +42,11 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.games'))]) }}">
+                title="{{ __('crud.actions_model.save', ['model' => __('models.game')]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>
     </div>
 </form>
+@endcan
 @endsection

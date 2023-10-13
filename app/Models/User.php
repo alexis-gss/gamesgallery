@@ -9,14 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * Folder of games.
  *
  * @property integer                         $id            Id.
- * @property string                          $name          Name
- * @property string                          $slug          Slug of the name.
+ * @property string                          $first_name    Firstname.
+ * @property string                          $last_name     Lastname.
  * @property string                          $email         Email.
  * @property string                          $picture       Path of the account's picture.
  * @property string                          $picture_alt   Attribute alt of the picture.
@@ -27,11 +26,12 @@ use Illuminate\Support\Str;
  * @property-read \Illuminate\Support\Carbon $created_at    Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at    Updated date.
  *
- * @method protected static function booted()              Perform any actions required after the model boots.
- * @method private static function setSlug($folder)        Set model's slug.
- * @method private static function setImage($user)         Set model's account's picture.
- * @method private static function setOrder($folder)       Set model's order after the last element of the list.
- * @method private static function updatePassword($target) Update model's password.
+ * @method protected static function booted()                    Perform any actions required after the model boots.
+ * @method private static function updatePublishedStatus($model) Check if the authenticable user can update the
+ * published status.
+ * @method private static function setImage($user)               Set model's account's picture.
+ * @method private static function setOrder($folder)             Set model's order after the last element of the list.
+ * @method private static function updatePassword($target)       Update model's password.
  *
  * @property-read \App\Models\ActivityLog $activityLogs Activities logs One-to-many relationship.
  */
@@ -47,13 +47,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'picture',
         'picture_alt',
         'picture_title',
         'password',
         'role',
+        'published',
+        'published_at',
+        'order',
     ];
 
     /**
@@ -62,7 +66,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'role' => RoleEnum::class
+        'role'              => RoleEnum::class,
+        'email_verified_at' => 'datetime',
+        'published'         => 'boolean',
     ];
 
     /**
@@ -72,6 +78,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     /**
@@ -81,74 +88,95 @@ class User extends Authenticatable
      */
     protected static function booted(): void
     {
-        static::creating(function (self $user) {
-            static::setSlug($user);
-            static::updatePassword($user);
-            static::setOrder($user);
-            static::setImage($user);
+        static::creating(function (self $model) {
+            static::updatePassword($model);
+            static::setOrder($model);
+            static::setImage($model);
+            static::checkElevationPrivileges($model);
         });
-        static::updating(function (self $user) {
-            static::setSlug($user);
-            static::updatePassword($user);
-            static::setImage($user);
+        static::updating(function (self $model) {
+            static::updatePassword($model);
+            static::setImage($model);
+            static::updatePublishedStatus($model);
+            static::checkElevationPrivileges($model);
         });
-        static::updated(function (self $user) {
-            FileStorageHelper::removeOldFile($user, 'picture');
+        static::updated(function (self $model) {
+            FileStorageHelper::removeOldFile($model, 'picture');
         });
-        static::deleted(function (self $user) {
-            FileStorageHelper::removeFile($user, 'picture');
+        static::deleted(function (self $model) {
+            FileStorageHelper::removeFile($model, 'picture');
         });
     }
 
     // * METHODS
 
     /**
-     * Set model's slug.
+     * Check if the authenticable user can update the published status.
      *
-     * @param \App\Models\User $user
+     * @param self $model
      * @return void
      */
-    private static function setSlug(User $user)
+    private static function updatePublishedStatus(self $model)
     {
-        $user->slug = Str::slug($user->name);
+        if (optional(auth('backend')->user())->getKey() === $model->getKey()) {
+            \validator(
+                ['published' => $model->published],
+                ['published' => 'required|boolean|accepted'],
+                ['published.accepted' => trans('Vous ne pouvez pas déactiver votre propre compte')],
+            )->validate();
+        }
+    }
+
+    /**
+     * Prevent user elevation privileges.
+     *
+     * @param self $model
+     * @return void
+     */
+    private static function checkElevationPrivileges(self $model)
+    {
+        throw_if(
+            auth('backend')->user() and auth('backend')->user()->role->value() > $model->role->value(),
+            AuthorizationException::class
+        );
     }
 
     /**
      * Set model's account's picture.
      *
-     * @param \App\Models\User $user
+     * @param self $model
      * @return void
      */
-    private static function setImage(User $user)
+    private static function setImage(self $model)
     {
-        $user->picture_alt   = "Default picture of " . $user->name . " account";
-        $user->picture_title = "User's picture of " . $user->name . " account";
-        $user->picture       = FileStorageHelper::storeFile($user, $user->picture, true);
+        $model->picture_alt   = "Default picture of " . $model->first_name . " " . $model->last_name . " account";
+        $model->picture_title = "User's picture of " . $model->first_name . " " . $model->last_name . " account";
+        $model->picture       = FileStorageHelper::storeFile($model, $model->picture, true);
     }
 
     /**
      * Set model's order after the last element of the list.
      *
-     * @param \App\Models\User $user
+     * @param self $model
      * @return void
      */
-    private static function setOrder(User $user): void
+    private static function setOrder(self $model): void
     {
-        $user->order = \intval(self::query()->max('order')) + 1;
+        $model->order = \intval(self::query()->max('order')) + 1;
     }
 
     /**
      * Update model's password.
      *
-     * @param User $target
+     * @param self $model
      * @return void
      */
-    private static function updatePassword(User $target): void
+    private static function updatePassword(self $model): void
     {
-        if ($target->password != null and Hash::needsRehash($target->password)) {
-            $target->password = Hash::make($target->password);
+        if ($model->password != null and Hash::needsRehash($model->password)) {
+            $model->password = Hash::make($model->password);
         } else {
-            $target->password = $target->getOriginal('password');
+            $model->password = $model->getOriginal('password');
         }
     }
 

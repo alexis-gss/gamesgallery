@@ -1,7 +1,7 @@
-@extends('back.layout', ['brParam' => $folder])
+@extends('back.layout', ['brParam' => $folderModel])
 
-@section('title', __('crud.meta.creation_model', ['model' => Str::singular(__('models.folders'))]))
-@section('description', __('crud.meta.creation_model_desc', ['model' => Str::singular(__('models.folders'))]))
+@section('title', __('crud.meta.creation_model', ['model' => __('models.folder')]))
+@section('description', __('crud.meta.creation_model_desc', ['model' => __('models.folder')]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,25 +11,30 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.list_all', ['model' => __('models.folders')]) }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => Str::of(__('models.folder'))->plural()]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        @include('breadcrumbs.breadcrumb-body', ['brParam' => $folder])
+        @include('breadcrumbs.breadcrumb-body', ['brParam' => $folderModel])
     </div>
     <div class="btn-toolbar mb-2 mb-md-0">
+        @can('create', $folderModel)
         <button id="formSubmitClone"
             type="submit"
             class="btn btn-primary"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.folders'))]) }}">
+            title="{{ __('crud.actions_model.save', ['model' => __('models.folder')]) }}">
             <i class="fa-solid fa-floppy-disk"></i>
         </button>
+        @endcan
     </div>
 </div>
+@can('create', $folderModel)
 <form action="{{ route('bo.folders.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @endcan
     @include('back.pages.folders.form-inputs')
+    @can('create', $folderModel)
     <div class="row mt-3">
         <div class="col text-center">
             <button id="formSubmit"
@@ -37,10 +42,11 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.actions_model.save', ['model' => Str::singular(__('models.folders'))]) }}">
+                title="{{ __('crud.actions_model.save', ['model' => __('models.folder')]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>
     </div>
+    @endcan
 </form>
 @endsection

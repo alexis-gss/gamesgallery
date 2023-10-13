@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  *  * The storage strategy will be using date.
  * The file name may contain sufix timestamp highresolution time (hrtime or microtime) if is duplicate.
- * (function() { return time() . ' ' . Str::slug(microtime(true)) . ' ' . hrtime(true); })();
+ * (function() { return time() . ' ' . Str::of(microtime(true))->slug() . ' ' . hrtime(true); })();
  *
  * posts/                                                 - The model table name
  *   10/                                                  - Year
@@ -171,7 +171,7 @@ class FileStorageHelper
         $filename = \filter_var($filename, \FILTER_SANITIZE_STRING);
         // * Slugify filename
         $ext      = \pathinfo($filename, \PATHINFO_EXTENSION);
-        $filename = Str::slug(\pathinfo($filename, \PATHINFO_FILENAME)) .
+        $filename = Str::of(\pathinfo($filename, \PATHINFO_FILENAME))->slug() .
             (\strlen($ext) ? ".{$ext}" : '');
 
         $folderPath = self::getStoragePath($tableName, $filename);
@@ -236,7 +236,9 @@ class FileStorageHelper
      */
     public static function slugifyFileName(string $filename): string
     {
-        return Str::slug(pathinfo($filename, \PATHINFO_FILENAME)) . '.' . pathinfo($filename, \PATHINFO_EXTENSION);
+        return Str::of(pathinfo($filename, \PATHINFO_FILENAME))->slug() .
+            '.' .
+            pathinfo($filename, \PATHINFO_EXTENSION);
     }
 
     /**

@@ -25,12 +25,12 @@ final class TagFactory extends Factory
      */
     public function definition()
     {
-        $name      = $this->faker->unique()->word;
-        $published = $this->faker->boolean(75);
+        $name      = fake()->unique()->word;
+        $published = fake()->boolean(75);
         return [
-            'name' => $name,
-            'slug' => Str::slug($name),
-            'published' => $published,
+            'name'         => $name,
+            'slug'         => Str::of($name)->slug(),
+            'published'    => $published,
             'published_at' => ($published) ? now() : null,
         ];
     }

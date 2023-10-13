@@ -14,16 +14,10 @@ class UpdateUserRequest extends StoreUserRequest
     public function rules(): array
     {
         $rules = [
-            'slug'     => [
-                'required',
-                'string',
-                'unique:users,slug,' . request()->user->id,
-                'max:255'
-            ],
             'email'    => [
                 'required',
                 'string',
-                'unique:users,email,' . request()->user->id,
+                'unique:users,email,' . request()->user->getKey(),
                 'email:rfc,strict,dns,spoof,filter',
                 'max:255'
             ],

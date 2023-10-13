@@ -7,13 +7,13 @@ use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Http\Requests\Bo\Pictures\StorePictureRequest;
 use App\Http\Requests\Bo\Pictures\UpdatePictureRequest;
-use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Game;
 use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -27,6 +27,14 @@ class GameController extends Controller
     use UpdateModelPublished;
 
     /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Game::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request
@@ -34,28 +42,32 @@ class GameController extends Controller
      */
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Builder $games */
-        $games = Game::query();
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = Game::query()->with('folder')->with('pictures');
 
         /** @var string $search Search field */
         $search = $request->search;
         if ($search) {
             $this->searchQuery(
-                $games,
+                $query,
                 $search,
                 null,
                 'name',
+                'folder_id',
             );
         }
-        $searchFields = trans('Name');
+        $searchFields = \implode(', ', [
+            trans('validation.attributes.name'),
+            trans('models.folder'),
+        ]);
 
         /** Sort columns with a query */
-        $this->sortQuery($games);
+        $this->sortQuery($query);
 
         /** Custom pagination */
-        $games = $this->paginate($games);
+        $gameModels = $this->paginate($query);
 
-        return view('back.pages.games.index', compact('games', 'search', 'searchFields'));
+        return view('back.pages.games.index', compact('gameModels', 'search', 'searchFields'));
     }
 
     /**
@@ -67,10 +79,10 @@ class GameController extends Controller
      */
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection */
-        $tags = Tag::select(['id', 'name', 'slug'])->get();
+        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
+        $tagModels = Tag::select(['id', 'name', 'slug'])->get();
 
-        return view('back.pages.games.create', compact('game', 'tags'));
+        return view('back.pages.games.create', ['gameModel' => $game, 'tagModels' => $tagModels]);
     }
 
     /**
@@ -83,17 +95,21 @@ class GameController extends Controller
     {
         return DB::transaction(function () use ($request) {
             $game = new Game();
-            $game->fill($request->validated());
+            $game->fill(Arr::except($request->validated(), ['tags']));
 
             if ($game->saveOrFail()) {
                 $pictureValidator = Validator::make($request->all(), StorePictureRequest::rules());
                 $game->updatePictures($game, $pictureValidator->validated());
                 Tag::setTags($game, collect(request()->tags));
-                return redirect()->route('bo.games.edit', $game->id)
-                    ->with('success', __('crud.changes.creation_saved'));
+                return redirect()->route('bo.games.edit', $game)
+                    ->with('success', __('crud.messages.has_been_created', [
+                        'model' => Str::of(__('models.game'))->ucfirst()
+                    ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.changes.creation_failed'));
+                ->with('error', __('crud.messages.cannot_be_created', [
+                    'model' => Str::of(__('models.game'))->ucfirst()
+                ]));
         });
     }
 
@@ -106,10 +122,10 @@ class GameController extends Controller
      */
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection */
-        $tags = Tag::select(['id', 'name', 'slug'])->get();
+        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
+        $tagModels = Tag::select(['id', 'name', 'slug'])->get();
 
-        return view('back.pages.games.edit', compact('game', 'tags'));
+        return view('back.pages.games.edit', ['gameModel' => $game, 'tagModels' => $tagModels]);
     }
 
     /**
@@ -122,16 +138,19 @@ class GameController extends Controller
     public function update(UpdateGameRequest $request, Game $game): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request, $game) {
-            $game->fill($request->validated());
-            $pictureValidator = Validator::make($request->all(), UpdatePictureRequest::rules());
-            $game->updatePictures($game, $pictureValidator->validated());
-            Tag::setTags($game, collect(request()->tags));
+            $game->fill(Arr::except($request->validated(), ['tags']));
+            $game->updatePictures($game, Validator::make($request->all(), UpdatePictureRequest::rules())->validated());
+            Tag::setTags($game, collect($request->tags));
             if ($game->saveOrFail()) {
-                return redirect()->route('bo.games.edit', $game->id)
-                    ->with('success', __('crud.changes.modification_saved'));
+                return redirect()->route('bo.games.edit', $game)
+                    ->with('success', __('crud.messages.has_been_updated', [
+                        'model' => Str::of(__('models.game'))->ucfirst()
+                    ]));
             }
-            return redirect()->route('bo.games.edit', $game->id)
-                ->with('error', __('crud.changes.modification_failed'));
+            return redirect()->route('bo.games.edit', $game)
+                ->with('error', __('crud.messages.cannot_be_updated', [
+                    'model' => Str::of(__('models.game'))->ucfirst()
+                ]));
         });
     }
 
@@ -145,10 +164,14 @@ class GameController extends Controller
     {
         if ($game->deleteOrFail()) {
             return redirect()->route('bo.games.index')
-                ->with('success', __('crud.changes.deletion_successful'));
+                ->with('success', __('crud.messages.has_been_deleted', [
+                    'model' => Str::of(__('models.game'))->ucfirst()
+                ]));
         }
         return redirect()->back()
-            ->with('error', __('crud.changes.deletion_failed'));
+            ->with('error', __('crud.messages.cannot_be_deleted', [
+                'model' => Str::of(__('models.game'))->ucfirst()
+            ]));
     }
 
     /**

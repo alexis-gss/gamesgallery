@@ -1,25 +1,25 @@
 @extends('back.layout', ['brParam' => $activitylogModel])
 
-@section('title', __('Édition d\'un :model', ['model' => Str::singular(__('models.classes.activity_logs'))]))
-@section('description', __('Édition d\'un :model déjà existant', ['model' => Str::singular(__('models.classes.activity_logs'))]))
+@section('title', __('Édition d\'un :model', ['model' => __('models.activity_logs')]))
+@section('description', __('Édition d\'un :model déjà existant', ['model' => __('models.activity_logs')]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
     <div class="d-flex flex-row align-items-start">
         <a href="{{ route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
             class="btn btn-primary text-decoration-none m-0"
-            data-bs-toggle="tooltip"
+            data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.helpers.list_all', ['model' => __('models.classes.activity_logs')]) }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => trans_choice(__('models.activity_log'), 2)]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $activitylogModel])
     </div>
 </div>
 <div class="row">
-    <div class="col-12 mb-3">
-        <fieldset class="border h-100 bg-white p-3">
+    <div class="col-12 mb-3 @if (isset($activitylogModel->data)) border-bottom @endif">
+        <fieldset class="p-3">
             <legend>{{ __('texts.bo.title.general_informations') }}</legend>
             <div class="row">
                 <div class="col-12">
@@ -27,14 +27,14 @@
                         <table class="table table-hover m-0">
                             <tbody>
                                 <tr class="border-bottom">
-                                    <td class="text-center align-middle w-50 fw-bold">{{ Str::singular(__('models.users')) }}</td>
+                                    <td class="text-center align-middle w-50 fw-bold">{{ Str::of(__('models.user'))->ucFirst() }}</td>
                                     <td class="text-center align-middle w-50">
                                         @if (isset($activitylogModel->user))
                                         <a class="btn btn-sm btn-primary"
                                             href="{{ route('bo.users.edit', $activitylogModel->user) }}"
-                                            title="{{ __('crud.actions_model.show', ['model' => Str::singular(__('models.users'))]) }}"
+                                            title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}"
                                             data-bs="tooltip">
-                                            {{ $activitylogModel->user->name }}
+                                            {{ $activitylogModel->user->last_name }}&nbsp;{{ $activitylogModel->user->first_name }}
                                         </a>
                                         @elseif($activitylogModel->is_anonymous)
                                         {{ __('texts.bo.other.user_anonym') }}
@@ -44,32 +44,32 @@
                                     </td>
                                 </tr>
                                 <tr class="border-bottom">
-                                    <td class="text-center align-middle w-50 fw-bold">{{ __('validation.attributes.event') }}</td>
+                                    <td class="text-center align-middle w-50 fw-bold">{{ Str::of(__('validation.custom.event'))->ucFirst() }}</td>
                                     <td class="text-center align-middle w-50">
                                         <span class="text-{{ $activitylogModel->event->bootstrapClass() }}-emphasis bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle border border-{{ $activitylogModel->event->bootstrapClass() }}-subtle rounded-3 p-1">
-                                            {{ $activitylogModel->event->label() }}
+                                            {{ Str::of($activitylogModel->event->label())->ucFirst() }}
                                         </span>
                                     </td>
                                 </tr>
                                 <tr class="border-bottom">
-                                    <td class="text-center align-middle w-50 fw-bold">{{ __('validation.attributes.model') }}</td>
+                                    <td class="text-center align-middle w-50 fw-bold">{{ Str::of(__('validation.custom.model'))->ucFirst() }}</td>
                                     <td class="text-center align-middle w-50">
                                         @if(isset($targetModel))
                                         <a class="btn btn-sm btn-primary"
-                                            href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel->id) }}"
-                                            title="{{ __('crud.actions_model.show', ['model' => Str::singular(__('models.' . $targetModel->getTable()))]) }}"
+                                            href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel) }}"
+                                            title="{{ __('crud.actions_model.show', ['model' => __('models.' . Str::of($targetModel->getTable())->singular())]) }}"
                                             data-bs="tooltip">
                                         @endif
-                                        {{ $activitylogModel->model }}
+                                        {{ $activitylogModel->model_class }}
                                         @if(isset($targetModel))
                                         </a>
                                         @endif
                                     </td>
                                 </tr>
                                 <tr class="border-bottom">
-                                    <td class="text-center align-middle w-50 fw-bold">{{ __('validation.attributes.created_at') }}</td>
+                                    <td class="text-center align-middle w-50 fw-bold">{{ Str::of(__('validation.attributes.created_at'))->ucFirst() }}</td>
                                     <td class="text-center align-middle w-50">
-                                        <span class="badge bg-secondary">{{ $activitylogModel->created_at }}</span>
+                                        <span class="badge bg-secondary">{{ $activitylogModel->created_at->isoFormat('LLLL') }}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -81,40 +81,30 @@
     </div>
     @if (isset($activitylogModel->data))
     <div class="col-12 mb-3">
-        <fieldset class="border h-100 bg-white p-3">
+        <fieldset class="p-3">
             <legend>{{ __('texts.bo.title.changes_made') }}</legend>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive mb-3">
-                        <table class="table table-hover m-0">
+                        <table class="table-hover m-0 table">
                             <thead>
-                                <tr class="table-col-sorter border border-2 border-start-0 border-end-0 border-top-0 border-dark">
-                                    <td>{{-- keep empty --}}</td>
-                                    <td class="text-center align-middle w-50 fw-bold">{{ __('texts.bo.other.before') }}</td>
-                                    <td class="text-center align-middle fw-bold">
+                                <tr class="table-col-sorter border border-2 border-start-0 border-end-0 border-top-0 border-secondary">
+                                    <td class="w-50 fw-bold text-center align-middle">{{ __('texts.bo.other.column') }}</td>
+                                    <td class="fw-bold text-center align-middle">
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </td>
-                                    <td class="text-center align-middle w-50 fw-bold">{{ __('texts.bo.other.after') }}</td>
+                                    <td class="w-50 fw-bold text-center align-middle">{{ __('texts.bo.other.type') }}</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($activitylogModel->data["type"] as $key => $dataType)
+                                @foreach ($activitylogModel->data as $key => $dataType)
                                 <tr class="border-bottom">
-                                    <td class="text-center align-middle fw-bold">{{ $key }}</td>
-                                    <td class="text-center align-middle w-25">
-                                        @include('back.pages.activity_logs.show-changes', [
-                                            'data' => $activitylogModel->data['old'][$key],
-                                            'type' => $dataType,
-                                        ])
-                                    </td>
-                                    <td class="text-center align-middle fw-bold">
+                                    <td class="fw-bold text-center align-middle">{{ $key }}</td>
+                                    <td class="fw-bold text-center align-middle">
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </td>
-                                    <td class="text-center align-middle w-25">
-                                        @include('back.pages.activity_logs.show-changes', [
-                                            'data' => $activitylogModel->data['new'][$key],
-                                            'type' => $dataType,
-                                        ])
+                                    <td class="w-25 text-center align-middle">
+                                        {{ $dataType }}
                                     </td>
                                 </tr>
                                 @endforeach

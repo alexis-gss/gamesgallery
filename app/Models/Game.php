@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
  *
  * @property integer                         $id           Id.
  * @property \App\Models\Folder              $folder_id    Folder associated.
- * @property string                          $name         Name
+ * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon      $published_at Published date update.
@@ -45,10 +45,12 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
+        'slug',
         'folder_id',
         'name',
         'published',
-        'published_at'
+        'published_at',
+        'order',
     ];
 
     /**
@@ -57,7 +59,7 @@ class Game extends Model
      * @var array
      */
     protected $casts = [
-        'published' => 'bool',
+        'published'    => 'bool',
         'published_at' => 'datetime'
     ];
 
@@ -69,13 +71,11 @@ class Game extends Model
     protected static function booted(): void
     {
         static::creating(function (self $game) {
-            static::setSlug($game);
             static::setOrder($game);
             static::setPublishedDate($game);
             Picture::renameFolderSavedPictures($game, "default_folder");
         });
         static::updating(function (self $game) {
-            static::setSlug($game);
             static::setPublishedDate($game);
             Picture::renameFolderSavedPictures($game, $game->getOriginal('slug'));
         });
@@ -86,18 +86,6 @@ class Game extends Model
     }
 
     // * METHODS
-
-    /**
-     * Set model's slug.
-     *
-     * @param \App\Models\Game $game
-     *
-     * @return void
-     */
-    private static function setSlug(Game $game)
-    {
-        $game->slug = Str::slug($game->name);
-    }
 
     /**
      * Set model's published date.
@@ -139,12 +127,12 @@ class Game extends Model
         $newPictures          = collect();
         if (isset($request['uuid'])) {
             foreach ($request['uuid'] as $key => $value) {
-                $getPicture = Picture::where('game_id', $game->id)
+                $getPicture = Picture::where('game_id', $game->getKey())
                     ->where('uuid', $request['uuid'][$key])
                     ->first();
                 if (is_null($getPicture)) {
                     $picture            = new Picture();
-                    $picture->game_id   = $game->id;
+                    $picture->game_id   = $game->getKey();
                     $picture->uuid      = $request['uuid'][$key];
                     $picture->published = true;
                 } else {

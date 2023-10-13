@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => trans_choice('models.activities', 2)]))
-@section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.activities', 2)]))
+@section('title', __('crud.meta.all_models', ['model' => trans_choice('models.activity_log', 2)]))
+@section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.activity_log', 2)]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
@@ -14,10 +14,10 @@
         <thead>
             @include('back.modules.table-col-sorter', [
                 'cols' => [
-                    'event'      => __('validation.attributes.event'),
-                    'user'       => Str::singular(__('models.users')),
-                    'model'      => __('validation.attributes.model'),
-                    'created_at' => __('validation.attributes.created_at'),
+                    'event'      => Str::of(__('validation.custom.event'))->ucfirst(),
+                    'user'       => Str::of(__('models.user'))->ucfirst(),
+                    'model'      => Str::of(__('validation.custom.model'))->ucfirst(),
+                    'created_at' => Str::of(__('validation.attributes.created_at'))->ucfirst(),
                 ],
             ])
         </thead>
@@ -25,45 +25,52 @@
             @foreach ($activitylogModels as $activitylogModel)
             <tr class="border-bottom">
                 <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-{{ $activitylogModel->event->bootstrapClass() }}-emphasis text-center align-middle">
-                    {{ $activitylogModel->event->label() }}
+                    {{ Str::of($activitylogModel->event->label())->ucFirst() }}
                 </td>
                 <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
                     @if (isset($activitylogModel->user))
                     <a class="btn btn-sm btn-primary text-decoration-none"
                         href="{{ route('bo.users.edit', $activitylogModel->user) }}"
-                        title="{{ __('crud.actions_model.show', ['model' => Str::singular(__('models.users'))]) }}"
+                        title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}"
                         data-bs="tooltip">
-                        {{ $activitylogModel->user->name }}
+                        {{ $activitylogModel->user->last_name }}&nbsp;{{ $activitylogModel->user->first_name }}
                     </a>
+                    @elseif($activitylogModel->is_console)
+                        {{ __('Utilisateur dans la console') }}
                     @elseif($activitylogModel->is_anonymous)
                     {{ __('texts.bo.other.user_anonym') }}
                     @else
                     {{ __('texts.bo.other.user_deleted') }}
                     @endif
                 </td>
-                @php $targetModel = $activitylogModel->model::where('id', $activitylogModel->model_id)->first(); @endphp
+                @php
+                    $targetModel = $activitylogModel->model_class::where((new $activitylogModel->model_class())->getRouteKeyName(), $activitylogModel->model_id)->first();
+                    $editRouteName = 'bo.' . optional($targetModel)->getTable() . '.edit';
+                @endphp
                 <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
+                    @if (!empty($targetModel) and Route::has($editRouteName))
                     <a class="btn btn-sm btn-primary text-decoration-none @if(!isset($targetModel)) disabled @endif"
-                        @if(isset($targetModel))
-                        href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel->id) }}"
-                        title="{{ __('crud.actions_model.show', ['model' => Str::singular(__('models.' . $targetModel->getTable()))]) }}"
-                        data-bs="tooltip"
-                        @endif>
-                    {{ $activitylogModel->model }}
+                        href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel) }}"
+                        title="{{ __('crud.actions_model.show', ['model' => __('models.' . Str::of($targetModel->getTable())->singular())]) }}"
+                        data-bs="tooltip">
+                        @endif
+                        {{ $activitylogModel->model_class }}
+                    @if (!empty($targetModel) and Route::has($editRouteName))
                     </a>
+                    @endif
                 </td>
                 <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
                     <span class="badge bg-secondary">
-                        {{ $activitylogModel->created_at }}
+                        {{ $activitylogModel->created_at->isoFormat('LLLL') }}
                     </span>
                 </td>
                 <td class="text-end align-middle">
-                    @can('isAdmin')
+                    @can('isConceptor')
                     <a class="btn btn-sm btn-warning"
-                        href="{{ route('bo.activity_logs.show', ['activity_log' => $activitylogModel->id]) }}"
+                        href="{{ route('bo.activity_logs.show', ['activity_log' => $activitylogModel]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.activities', 1)]) }}">
+                        title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.activity_log', 1)]) }}">
                         <i class="fa-solid fa-eye"></i>
                     </a>
                     @endcan
@@ -73,7 +80,7 @@
         </tbody>
         @else
         <tr>
-            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => trans_choice('models.activities', 1)]) }}</td>
+            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => trans_choice('models.activity_log', 1)]) }}</td>
         </tr>
         @endif
     </table>

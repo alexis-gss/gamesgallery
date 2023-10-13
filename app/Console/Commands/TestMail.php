@@ -22,7 +22,7 @@ class TestMail extends Command
      *
      * @var string
      */
-    protected $description = 'Send test email to visitor@gmail.com';
+    protected $description = 'Send test email to john.doe@gmail.com';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ class TestMail extends Command
     public function handle()
     {
         Mail::raw(sprintf('Mail-test from %s %s', \config('app.name'), \config('app.url')), function ($msg) {
-            $msg->to('visitor@gmail.com')->subject('Test Email');
+            $msg->to('john.doe@gmail.com')->subject('Test Email');
         });
     }
 }

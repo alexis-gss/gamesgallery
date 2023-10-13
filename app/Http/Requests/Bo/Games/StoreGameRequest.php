@@ -15,7 +15,7 @@ class StoreGameRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && Gate::allowIf('isAdmin');
+        return auth('backend')->check();
     }
 
     /**
@@ -26,7 +26,7 @@ class StoreGameRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'slug'      => Str::slug(strip_tags($this->name)),
+            'slug'      => Str::of(strip_tags($this->name))->slug()->value(),
             'published' => $this->published ? true : false
         ]);
     }

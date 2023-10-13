@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     "error_code"    => "error code :",
     "error_text"    => "Let's go back to the homepage !",

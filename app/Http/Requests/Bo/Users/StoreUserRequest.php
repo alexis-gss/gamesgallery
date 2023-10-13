@@ -20,7 +20,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return auth('backend')->check();
     }
 
     /**
@@ -30,7 +30,6 @@ class StoreUserRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge(['slug' => Str::slug(strip_tags($this->name))]);
         $this->mergePicture('picture');
     }
 
@@ -42,11 +41,11 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'slug'     => 'required|string|unique:users,slug|max:255',
-            'name'     => 'required|string|min:3|max:255',
-            'email'    => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter|max:255',
-            'role'     => ['required', new Enum(RoleEnum::class)],
-            'password' => [
+            'first_name' => 'required|string|min:3|max:255',
+            'last_name'  => 'required|string|min:3|max:255',
+            'email'      => 'required|unique:users,email|email:rfc,strict,dns,spoof,filter|max:255',
+            'role'       => ['required', new Enum(RoleEnum::class)],
+            'password'   => [
                 'required', 'required_with:password_confirmation', 'confirmed', 'max:255',
                 Password::min(8)
                     ->letters()
@@ -70,12 +69,12 @@ class StoreUserRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'     => trans('name of the user'),
-            'slug'     => trans('slug of the user'),
-            'email'    => trans('email of the user'),
-            'role'     => trans('role of the user'),
-            'picture'  => trans('picture of the user'),
-            'password' => trans('password of the user')
+            'first_name' => trans('first name of the user'),
+            'last_name'  => trans('first name of the user'),
+            'email'      => trans('email of the user'),
+            'role'       => trans('role of the user'),
+            'picture'    => trans('picture of the user'),
+            'password'   => trans('password of the user')
         ];
     }
 }

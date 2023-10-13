@@ -7,7 +7,7 @@ $noOrder = $noOrder || (Session::get("$routeName.sort_col") !== 'order' and (Ses
 $noOrder = $noOrder || !empty(request()->search);
 $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
 @endphp
-<tr class="table-col-sorter border border-2 border-start-0 border-end-0 border-top-0 border-dark">
+<tr class="table-col-sorter border border-2 border-start-0 border-end-0 border-top-0 border-secondary">
     @foreach($cols as $col => $colname)
     @php
     $iArgs = ['sort_col' => $col];
@@ -34,8 +34,8 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
             <a class="text-decoration-none ms-1"
                 href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'asc', 'rst' => null])) }}">
                 <button
-                    class="btn btn-sm btn-outline-dark"
-                    title="{{ __('crud.filter.sort_descending', ['name' => Str::lower($colname)]) }}"
+                    class="btn btn-sm btn-outline-secondary"
+                    title="{{ __('crud.filter.sort_descending', ['name' => Str::of($colname)->lower()]) }}"
                     data-bs="tooltip">
                     <i class="fas fa-arrow-down 2xs"></i>
                 </button>
@@ -45,8 +45,8 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
             <a class="text-decoration-none ms-1"
                 href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'desc', 'rst' => null])) }}">
                 <button
-                    class="btn btn-sm btn-outline-dark"
-                    title="{{ __('crud.filter.sort_ascending', ['name' => Str::lower($colname)]) }}"
+                    class="btn btn-sm btn-outline-secondary"
+                    title="{{ __('crud.filter.sort_ascending', ['name' => Str::of($colname)->lower()]) }}"
                     data-bs="tooltip">
                     <i class="fas fa-arrow-up 2xs"></i>
                 </button>

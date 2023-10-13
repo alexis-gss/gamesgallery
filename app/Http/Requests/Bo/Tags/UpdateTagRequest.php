@@ -15,7 +15,7 @@ class UpdateTagRequest extends StoreTagRequest
             'slug' => [
                 'required',
                 'string',
-                'unique:tags,slug,' . request()->tag->id,
+                'unique:tags,slug,' . request()->tag->getKey(),
                 'max:255'
             ],
         ];

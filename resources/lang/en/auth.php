@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     "login"                => "Login",
     "login_btn"            => "To login",

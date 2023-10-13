@@ -19,7 +19,7 @@ enum ActivityLogsEventEnum: int
     private const LABELS = [
         self::created->name    => 'crud.actions.create',
         self::updated->name    => 'crud.actions.edit',
-        self::duplicated->name => 'crud.actions.duplication',
+        self::duplicated->name => 'crud.actions.duplicate',
         self::deleted->name    => 'crud.actions.delete',
     ];
 

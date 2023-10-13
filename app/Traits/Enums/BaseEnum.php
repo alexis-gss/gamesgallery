@@ -7,8 +7,9 @@ use Illuminate\Support\Str;
 trait BaseEnum
 {
     // * GENERIC METHODS
+
     /**
-     * Get enum value
+     * Get enum value.
      *
      * @return string|integer
      */
@@ -18,7 +19,7 @@ trait BaseEnum
     }
 
     /**
-     * Get enum label
+     * Get enum label.
      *
      * @return string
      */
@@ -28,7 +29,7 @@ trait BaseEnum
     }
 
     /**
-     * Get enum name
+     * Get enum name.
      *
      * @return string
      */
@@ -40,7 +41,7 @@ trait BaseEnum
     // * STATIC FETCH METHODS
 
     /**
-     * Get enum labels
+     * Get enum labels.
      *
      * @return array<string>
      */
@@ -54,7 +55,7 @@ trait BaseEnum
                         throw new \Error('Missing definition label ' . self::class . " for {$enum->name}");
                     }
                     return [$enum->name => \trans(
-                        !\is_null($labels) ? $labels[$enum->name] : Str::ucfirst($enum->name)
+                        !\is_null($labels) ? $labels[$enum->name] : Str::of($enum->name)->ucfirst()->value()
                     )];
                 })->all());
         }
@@ -62,7 +63,7 @@ trait BaseEnum
     }
 
     /**
-     * Get enum values
+     * Get enum values.
      *
      * @return array<integer|string>
      */
@@ -76,7 +77,7 @@ trait BaseEnum
     }
 
     /**
-     * Get enums
+     * Get enums.
      *
      * @return array
      */
@@ -86,7 +87,7 @@ trait BaseEnum
     }
 
     /**
-     * Get enums
+     * Get enums.
      *
      * @return array
      */
@@ -102,7 +103,7 @@ trait BaseEnum
                         'value' => $enum->value,
                     ];
                     foreach ($definitions as $index => $elements) {
-                        $index = Str::lower(Str::singular($index));
+                        $index = Str::of($index)->singular()->lower();
                         if (!isset($elements[$enum->name])) {
                             throw new \Error("Missing definition {$index} " . self::class . " for {$enum->name}");
                         }
@@ -115,23 +116,29 @@ trait BaseEnum
     }
 
     /**
-     * Fetch enum using value
+     * Fetch enum using value.
      *
-     * @param \App\Traits\Enums\BaseEnum|integer|string $value
-     * @return \App\Traits\Enums\BaseEnum|null
+     * @param self|integer|string $value
+     * @param string              $field
+     * @return self|null
      */
-    public static function make(self|int|string $value): self|null
+    public static function make(self|int|string $value, string $field = 'value'): self|null
     {
+        if ($field === "label") {
+            $enumLabels = array_change_key_case(array_flip(self::toLabels()), CASE_LOWER);
+            $value      = (isset($enumLabels[strtolower($value)])) ? $enumLabels[strtolower($value)] : false;
+            $field      = 'name';
+        }
         return !\is_object($value) ?
-            \collect(self::cases())->keyBy('value')->get($value) : $value;
+            \collect(self::cases())->keyBy($field)->get($value) : $value;
     }
 
     /**
-     * Test if 2 enum are equals
+     * Test if 2 enum are equals.
      *
      * @param object ...$others
      * @return boolean
-     * @throws \Error If provided element are not enums taht extends BaseEnum.
+     * @throws \Error If provided element are not enums that extends BaseEnum.
      */
     public function equals(object ...$others): bool
     {
@@ -151,7 +158,7 @@ trait BaseEnum
     }
 
     /**
-     * Serialize to json
+     * Serialize to json.
      *
      * @return mixed
      */
@@ -164,7 +171,7 @@ trait BaseEnum
     // * CACHE
 
     /**
-     * Get cache array
+     * Get cache array.
      *
      * @param string $index
      * @return array
@@ -179,7 +186,7 @@ trait BaseEnum
     }
 
     /**
-     * Set cache array
+     * Set cache array.
      *
      * @param string $index
      * @param array  $items
@@ -195,7 +202,7 @@ trait BaseEnum
     }
 
     /**
-     * Init cache if needed
+     * Init cache if needed.
      *
      * @return void
      */
@@ -216,7 +223,7 @@ trait BaseEnum
     // * PRIVATE
 
     /**
-     * Fetch the LABELS constant if exists
+     * Fetch the LABELS constant if exists.
      *
      * @return array|null
      */
@@ -232,7 +239,7 @@ trait BaseEnum
     }
 
     /**
-     * Get custom constants
+     * Get custom constants.
      *
      * @return array
      */

@@ -5,17 +5,25 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Folders\StoreFolderRequest;
 use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
-use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Folder;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class FolderController extends Controller
 {
     use ChangesModelOrder;
     use UpdateModelPublished;
+
+    /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Folder::class);
+    }
 
     /**
      * Display a listing of the resource.
@@ -25,28 +33,32 @@ class FolderController extends Controller
      */
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Builder $folders */
-        $folders = Folder::query();
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = Folder::query();
 
         /** @var string $search Search field */
         $search = $request->search;
         if ($search) {
             $this->searchQuery(
-                $folders,
+                $query,
                 $search,
                 null,
                 'name',
+                'color',
             );
         }
-        $searchFields = trans('Name');
+        $searchFields = \implode(', ', [
+            trans('validation.attributes.name'),
+            trans('validation.custom.color'),
+        ]);
 
         /** Sort columns with a query */
-        $this->sortQuery($folders);
+        $this->sortQuery($query);
 
         /** Custom pagination */
-        $folders = $this->paginate($folders);
+        $folderModels = $this->paginate($query);
 
-        return view('back.pages.folders.index', compact('folders', 'search', 'searchFields'));
+        return view('back.pages.folders.index', compact('folderModels', 'search', 'searchFields'));
     }
 
     /**
@@ -54,11 +66,10 @@ class FolderController extends Controller
      *
      * @param \App\Models\Folder $folder
      * @return \Illuminate\Contracts\View\View
-     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function create(Folder $folder): \Illuminate\Contracts\View\View
     {
-        return view('back.pages.folders.create', compact('folder'));
+        return view('back.pages.folders.create', ['folderModel' => $folder]);
     }
 
     /**
@@ -74,11 +85,15 @@ class FolderController extends Controller
             $folder->fill($request->validated());
 
             if ($folder->saveOrFail()) {
-                return redirect()->route('bo.folders.edit', $folder->id)
-                    ->with('success', __('crud.changes.creation_saved'));
+                return redirect()->route('bo.folders.edit', $folder)
+                    ->with('success', __('crud.messages.has_been_created', [
+                        'model' => Str::of(__('models.folder'))->ucfirst()
+                    ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.changes.creation_failed'));
+                ->with('error', __('crud.messages.cannot_be_created', [
+                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ]));
         });
     }
 
@@ -87,11 +102,10 @@ class FolderController extends Controller
      *
      * @param \App\Models\Folder $folder
      * @return \Illuminate\Contracts\View\View
-     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function edit(Folder $folder): \Illuminate\Contracts\View\View
     {
-        return view('back.pages.folders.edit', compact('folder'));
+        return view('back.pages.folders.edit', ['folderModel' => $folder]);
     }
 
     /**
@@ -107,11 +121,15 @@ class FolderController extends Controller
             $folder->fill($request->validated());
 
             if ($folder->saveOrFail()) {
-                return redirect()->route('bo.folders.edit', $folder->id)
-                    ->with('success', __('crud.changes.modification_saved'));
+                return redirect()->route('bo.folders.edit', $folder)
+                    ->with('success', __('crud.messages.has_been_updated', [
+                        'model' => Str::of(__('models.folder'))->ucfirst()
+                    ]));
             }
-            return redirect()->route('bo.folders.edit', $folder->id)
-                ->with('error', __('crud.changes.modification_failed'));
+            return redirect()->route('bo.folders.edit', $folder)
+                ->with('error', __('crud.messages.cannot_be_updated', [
+                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ]));
         });
     }
 
@@ -126,13 +144,19 @@ class FolderController extends Controller
         if (count($folder->games) === 0) {
             if ($folder->deleteOrFail()) {
                 return redirect()->route('bo.folders.index')
-                    ->with('success', __('crud.changes.deletion_successful'));
+                    ->with('success', __('crud.messages.has_been_deleted', [
+                        'model' => Str::of(__('models.folder'))->ucfirst()
+                    ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.changes.deletion_failed'));
+                ->with('error', __('crud.messages.cannot_be_deleted', [
+                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ]));
         } else {
             return redirect()->back()
-                ->with('error', __('crud.changes.deletion_associated'));
+                ->with('error', __('crud.messages.cannot_be_deleted_with_children', [
+                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ]));
         }
     }
 

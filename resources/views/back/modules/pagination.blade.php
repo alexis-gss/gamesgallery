@@ -1,5 +1,5 @@
 {{-- GET ACTUAL PAGINATION --}}
-@php $pagination = intval(Cache::get('pagination.' . \Illuminate\Support\Str::slug(request()->route()->getName()))); @endphp
+@php $pagination = intval(Cache::get('pagination.' . Str::of(request()->route()->getName())->slug())); @endphp
 @if($paginator->items())
 <nav class="pagination-custom d-flex justify-content-between align-items-center">
     {{-- SELECT ITEMS PER PAGE --}}
@@ -7,7 +7,7 @@
         <span class="btn-md input-group-text"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.pagination.paginate_list') }}">
+            title="{{ __('pagination.paginate_list') }}">
             <i class="fa-solid fa-list-ul"></i>
         </span>
         <button class="btn btn-primary dropdown-toggle"
@@ -37,12 +37,12 @@
                 <a class="page-link d-flex align-items-center h-100"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('crud.pagination.previous') }}"
+                    title="{{ __('pagination.previous') }}"
                     @if (!$paginator->onFirstPage())
                     href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() - 1]) }}"
                     @endif
                     rel="prev"
-                    aria-label="@lang('crud.pagination.previous')"
+                    aria-label="{{ __('pagination.previous') }}"
                     @if ($paginator->onFirstPage()) aria-hidden="true" disabled @endif>
                     <i class="fa-solid fa-chevron-left fa-2xs mt-1"></i>
                 </a>
@@ -52,7 +52,7 @@
             <li class="page-item d-none d-sm-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.pagination.specific_page', ['id' => 1]) }}">
+                title="{{ __('pagination.specific_page', ['id' => 1]) }}">
                 <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => 1]) }}">1</a>
             </li>
             @endif
@@ -89,7 +89,7 @@
             <li class="page-item d-none d-md-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.pagination.specific_page', ['id' => $i]) }}">
+                title="{{ __('pagination.specific_page', ['id' => $i]) }}">
                 <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => $i]) }}">{{ $i }}</a>
             </li>
             @endif
@@ -104,7 +104,7 @@
             <li class="page-item  d-none d-sm-block"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.pagination.specific_page', ['id' => $paginator->lastPage()]) }}">
+                title="{{ __('pagination.specific_page', ['id' => $paginator->lastPage()]) }}">
                 <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => $paginator->lastPage()]) }}">{{ $paginator->lastPage() }}</a>
             </li>
             @endif
@@ -113,12 +113,12 @@
                 <a class="page-link d-flex align-items-center h-100"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('crud.pagination.next') }}"
+                    title="{{ __('pagination.next') }}"
                     @if ($paginator->hasMorePages())
                     href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() + 1]) }}"
                     @endif
                     rel="next"
-                    aria-label="{{ __('crud.pagination.next') }}"
+                    aria-label="{{ __('pagination.next') }}"
                     @if (!$paginator->hasMorePages()) aria-hidden="true" disabled @endif>
                     <i class="fa-solid fa-chevron-right fa-2xs mt-1"></i></a>
             </li>

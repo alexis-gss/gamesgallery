@@ -5,7 +5,6 @@ namespace App\Traits\Controllers;
 use App\Http\Requests\Bo\UpdateChangeOrderRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 trait ChangesModelOrder
@@ -14,43 +13,41 @@ trait ChangesModelOrder
      * Change order.
      *
      * @param \App\Http\Requests\Bo\UpdateChangeOrderRequest $request
-     * @param \Illuminate\Database\Eloquent\Model            $model
+     * @param \Illuminate\Database\Eloquent\Model            $currentModel
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \RuntimeException Si le nom du parametre de la route ne correspond pas au model utilisé.
+     * @throws \RuntimeException If the route parameter name does not match the model used.
      */
-    public function changeOrder(UpdateChangeOrderRequest $request, Model $model): \Illuminate\Http\RedirectResponse
-    {
+    public function changeOrder(
+        UpdateChangeOrderRequest $request,
+        Model $currentModel
+    ): \Illuminate\Http\RedirectResponse {
         $params    = collect(request()->route()->parameterNames);
-        $className = Str::ucfirst(Str::lower($params->get($params->count() - 2)));
+        $className = Str::of($params->get($params->count() - 2))->lower()->ucfirst();
         $className = "\\App\\Models\\$className";
-
         if (!class_exists($className)) {
             throw new \RuntimeException("The $className class doesn't exist.");
         }
 
         /** @var \Illuminate\Database\Eloquent\Model|null */
-        $model = $className::where('id', $model->id)->first();
+        $currentModel = $className::where($currentModel->getRouteKeyName(), $currentModel->getRouteKey())->first();
 
-        if (!$model) {
-            return back()->with('error', trans('crud.changes.order_not_changed'));
+        if (!$currentModel) {
+            return redirect()->back()->with('error', trans('crud.messages.order_not_changed'));
         }
 
-        return DB::transaction(function () use ($request, $className, $model) {
+        return DB::transaction(function () use ($request, $className, $currentModel) {
             /** @var \Illuminate\Database\Eloquent\Model|null */
-            $tmp = $className::where('order', $request->direction ? '<' : '>', $model->order)
+            $targetModel = $className::where('order', $request->direction ? '<' : '>', $currentModel->order)
                 ->orderBy('order', $request->direction ? 'DESC' : 'ASC')->first();
 
-            if (!$tmp) {
-                return back()->with('error', trans('crud.changes.order_not_changed'));
+            if (!$targetModel) {
+                return redirect()->back()->with('error', trans('crud.messages.order_not_changed'));
             }
+            $newOrder = $currentModel->order;
+            $currentModel->update(['order' => $targetModel->order]);
+            $targetModel->update(['order'  => $newOrder]);
 
-            $newOrder     = $tmp->order;
-            $tmp->order   = $model->order;
-            $model->order = $newOrder;
-            $tmp->saveOrFail();
-            $model->saveOrFail();
-
-            return redirect()->back()->with('success', trans('crud.changes.order_changed'));
+            return redirect()->back()->with('success', trans('crud.messages.order_changed'));
         });
     }
 }
