@@ -3,15 +3,25 @@
 namespace App\Http\Controllers\Fo;
 
 use App\Http\Controllers\Controller;
+use App\Lib\Helpers\ToolboxHelper;
+use App\Models\Folder;
 use App\Models\Game;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class FrontController extends Controller
 {
+    /** @var \Illuminate\Support\Collection $gameModels */
+    protected $gameModels;
+
+    /** @var \Illuminate\Support\Collection $folderModels */
+    protected $folderModels;
+
+    /** @var \Illuminate\Support\Collection $tagModels */
+    protected $tagModels;
+
     /**
      * Show the application homepage.
      *
@@ -19,14 +29,23 @@ class FrontController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $gameModels        = Game::where('published', true)->orderBy('slug', 'ASC')->with('pictures')->get();
-        $gameLatestModels  = Game::where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
+        $this->getModelsPublished();
+
+        /** @var \Illuminate\Support\Collection $gameLatestModels */
+        $gameLatestModels = Game::query()->where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
+
+        /** @var string $gamesLatestString */
         $gamesLatestString = "";
         foreach ($gameLatestModels as $gameModel) {
             $gamesLatestString = $gamesLatestString . $gameModel->name . " / ";
         }
 
-        return view('front.pages.home', compact('gameModels', 'gamesLatestString'));
+        return view('front.pages.home', [
+            'gameModels'        => $this->gameModels,
+            'gamesLatestString' => $gamesLatestString,
+            'folderModels'      => $this->folderModels,
+            'tagModels'         => $this->tagModels,
+        ]);
     }
 
     /**
@@ -40,54 +59,49 @@ class FrontController extends Controller
         Request $request,
         string $slug
     ): \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse {
-        if (Game::where('published', true)->where('slug', $slug)->first()) {
-            $gameModels = Game::where('published', true)->orderBy('slug', 'ASC')->with('pictures')->get();
-            $gameModel  = Game::where('published', true)->where('slug', $slug)->firstOrFail();
+        if ($gameModel = Game::query()->where('published', true)->where('slug', $slug)->first()) {
+            $this->getModelsPublished();
 
+            /** @var array $gamePictures */
+            $gamePictures = [];
             if (count($gameModel->pictures)) {
-                $gamePictures = $this->customPaginate(
+                $gamePictures = ToolboxHelper::customPaginate(
                     $gameModel->pictures,
                     (count($gameModel->pictures) <= 12) ? count($gameModel->pictures) : 12,
                     ['path' => Paginator::resolveCurrentPath()]
                 );
-            } else {
-                $gamePictures = [];
             }
 
             if ($request->ajax()) {
                 return response()->json(['data' => $gamePictures]);
             }
 
-            return view('front.pages.game', compact('gameModels', 'gameModel', 'gamePictures'));
+            return view('front.pages.game', [
+                'gameModels'   => $this->gameModels,
+                'gameModel'    => $gameModel,
+                'gamePictures' => $gamePictures,
+                'folderModels' => $this->folderModels,
+                'tagModels'    => $this->tagModels,
+            ]);
         } else {
             return redirect()->route('fo.homepage');
         } //end if
     }
 
     /**
-     * The attributes that are mass assignable.
+     * Get game/folder/tag models where are published.
      *
-     * @param \Illuminate\Support\Collection $items
-     * @param integer                        $perPage
-     * @param array                          $options
-     * @param integer                        $page
-     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * @return void
      */
-    public function customPaginate(
-        Collection $items,
-        int $perPage,
-        array $options,
-        int $page = null
-    ): \Illuminate\Pagination\LengthAwarePaginator {
-        $page   = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $result = new LengthAwarePaginator(
-            $items->forPage($page, $perPage),
-            $items->count(),
-            $perPage,
-            $page,
-            $options
-        );
-        return $result;
+    public function getModelsPublished(): void
+    {
+        $this->gameModels   = Game::query()->where('published', true)
+            ->orderBy('slug', 'ASC')
+            ->whereHas('folder', function ($q) {
+                $q->where('published', true);
+            })->with('pictures')->get();
+        $this->folderModels = Folder::query()->where('published', true)->orderBy('slug', 'ASC')->get();
+        $this->tagModels    = Tag::query()->where('published', true)->orderBy('slug', 'ASC')->get();
     }
 
     /**
@@ -101,7 +115,7 @@ class FrontController extends Controller
         $selectedTagId    = intval($request->FILTERSID[0] ?? 0);
         $selectedFolderId = intval($request->FILTERSID[1] ?? 0);
         /** @var HTMLCollection<\App\Models\Game> */
-        $gamesFiltered = Game::where('published', true)
+        $gamesFiltered = Game::query()->where('published', true)
             ->when($selectedTagId, function ($query) use ($selectedTagId) {
                 $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
                     $query->where('id', $selectedTagId);

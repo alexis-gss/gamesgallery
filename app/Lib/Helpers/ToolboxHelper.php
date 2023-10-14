@@ -3,6 +3,9 @@
 namespace App\Lib\Helpers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
@@ -153,5 +156,31 @@ class ToolboxHelper
         } catch (ValidationException $e) {
             return $default;
         }
+    }
+
+    /**
+     * Create a custom pagination from collection.
+     *
+     * @param \Illuminate\Support\Collection $items
+     * @param integer                        $perPage
+     * @param array                          $options
+     * @param integer                        $page
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public static function customPaginate(
+        Collection $items,
+        int $perPage,
+        array $options,
+        int $page = null
+    ): \Illuminate\Pagination\LengthAwarePaginator {
+        $page   = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $result = new LengthAwarePaginator(
+            $items->forPage($page, $perPage),
+            $items->count(),
+            $perPage,
+            $page,
+            $options
+        );
+        return $result;
     }
 }

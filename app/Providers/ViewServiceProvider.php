@@ -41,11 +41,11 @@ class ViewServiceProvider extends ServiceProvider
                 Schema::hasTable('users') and
                 Schema::hasTable('activity_logs')
             ) {
-                $globalGames      = Game::with('pictures')->orderBy('name', 'ASC')->get();
-                $globalFolders    = Folder::with('games')->orderBy('name', 'ASC')->get();
-                $globalTags       = Tag::with('games')->orderBy('name', 'ASC')->get();
-                $globalUsers      = User::orderBy('last_name', 'ASC')->get();
-                $globalActivities = ActivityLog::with('user')->get();
+                $globalGames      = Game::query()->with('pictures')->orderBy('name', 'ASC')->get();
+                $globalFolders    = Folder::query()->with('games')->orderBy('name', 'ASC')->get();
+                $globalTags       = Tag::query()->with('games')->orderBy('name', 'ASC')->get();
+                $globalUsers      = User::query()->orderBy('last_name', 'ASC')->get();
+                $globalActivities = ActivityLog::query()->with('user')->get();
                 View::share('globalGames', $globalGames);
                 View::share('globalFolders', $globalFolders);
                 View::share('globalTags', $globalTags);
