@@ -125,7 +125,7 @@ return [
         'search'              => 'Search among :games games...',
         'search_tag'          => 'All tags',
         'search_folder'       => 'All folders',
-        'last_games_added'    => 'Last games added :',
+        'last_games_added'    => 'Latest games added :',
     ],
     'global' => [
         'acces_github' => 'Access to the Github\'s repository'

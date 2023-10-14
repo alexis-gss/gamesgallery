@@ -32,7 +32,7 @@ class FrontController extends Controller
         $this->getModelsPublished();
 
         /** @var \Illuminate\Support\Collection $gameLatestModels */
-        $gameLatestModels = Game::query()->where('published', true)->orderBy('published_at', 'DESC')->take(10)->get();
+        $gameLatestModels = Game::query()->where('published', true)->orderBy('published_at', 'DESC')->take(20)->get();
 
         /** @var string $gamesLatestString */
         $gamesLatestString = "";
