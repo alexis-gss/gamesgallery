@@ -2,6 +2,7 @@
     @can('changePublished', $model)
     <form action="{{ route('bo.' . $routeName . '.change-published', $model->getRouteKey()) }}" method="POST">
         @csrf
+        @method('PATCH')
         <button type="submit"
             class="btn btn-sm @if($model->published) btn-primary @else btn-danger @endif"
             title="{{ __($model->published ? __('crud.other.unpublish') : __('crud.other.publish')) }}"

@@ -5,6 +5,7 @@
             method="POST"
             class="@if($loop->last and $models->currentPage() === $models->lastPage()) invisible @endif">
             @csrf
+            @method('PATCH')
             <button type="submit"
                 class="btn btn-sm btn-outline-secondary me-1 @if($loop->last and $models->currentPage() === $models->lastPage()) disabled @endif"
                 title="{{ __('crud.other.down') }}"
@@ -16,6 +17,7 @@
             method="POST"
             class="@if($loop->first and $models->onFirstPage()) invisible @endif">
             @csrf
+            @method('PATCH')
             <button type="submit"
                 class="btn btn-sm btn-outline-secondary @if(($loop->first and $models->onFirstPage())) disabled @endif"
                 title="{{ __('crud.other.up') }}"
