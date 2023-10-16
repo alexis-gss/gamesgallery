@@ -106,6 +106,7 @@ return [
             'taggable_cancel'           => 'Cancel',
             'taggable_create'           => 'Create and add to the tags list',
             'taggable_add'              => 'Add a tag',
+            'rank_add'                  => 'Add a game to the ranking',
             'errors_list'               => 'Errors list :',
             'advanced'                  => 'Advanced',
             'user_anonym'               => 'User anonym',
@@ -126,6 +127,8 @@ return [
         'search_tag'          => 'All tags',
         'search_folder'       => 'All folders',
         'last_games_added'    => 'Latest games added :',
+        'ranking_personnal'   => 'Personnal ranking',
+        'ranking_details'     => 'Top :number favorite video games',
     ],
     'global' => [
         'acces_github' => 'Access to the Github\'s repository'

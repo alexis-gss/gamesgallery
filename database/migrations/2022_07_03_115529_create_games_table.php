@@ -11,10 +11,10 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('games', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Id of the game.');
             $table->index('folder_id')->unsigned();
             $table->foreignId('folder_id')->references('id')->on('folders');
             $table->string('name')->comment('Name of the game.');
@@ -31,7 +31,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('games');
     }

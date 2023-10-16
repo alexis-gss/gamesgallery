@@ -98,12 +98,14 @@
                     </label>
                     @php
                     $data = [
-                        'name'  => 'tags',
-                        'value' => old('tags', $gameModel->tags ?? []),
-                        'tags'  => $tagModels,
+                        'id'          => 'tags',
+                        'name'        => 'tags',
+                        'value'       => old('tags', $gameModel->tags ?? []),
+                        'items'       => $tagModels,
+                        'placeholder' => __('texts.bo.other.taggable_add'),
                     ];
                     @endphp
-                    <div id="taggable-dropdown" data-json='@json($data)'></div>
+                    <div id="belongs-to-many-dropdown" data-json='@json($data)'></div>
                     <small class="text-body-secondary">
                         {{ __('validation.rule.select-multiple', ['entity' => Str::of(__('models.tag'))->plural()->value()]) }}
                     </small>

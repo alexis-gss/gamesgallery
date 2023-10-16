@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\ActivityLog;
 use App\Models\Game;
 use App\Models\Folder;
+use App\Models\Rank;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
@@ -39,18 +40,21 @@ class ViewServiceProvider extends ServiceProvider
                 Schema::hasTable('folders') and
                 Schema::hasTable('tags') and
                 Schema::hasTable('users') and
-                Schema::hasTable('activity_logs')
+                Schema::hasTable('activity_logs') and
+                Schema::hasTable('ranks')
             ) {
                 $globalGames      = Game::query()->with('pictures')->orderBy('name', 'ASC')->get();
                 $globalFolders    = Folder::query()->with('games')->orderBy('name', 'ASC')->get();
                 $globalTags       = Tag::query()->with('games')->orderBy('name', 'ASC')->get();
                 $globalUsers      = User::query()->orderBy('last_name', 'ASC')->get();
                 $globalActivities = ActivityLog::query()->with('user')->get();
+                $globalRanks      = Rank::query()->orderBy('rank', 'ASC')->get();
                 View::share('globalGames', $globalGames);
                 View::share('globalFolders', $globalFolders);
                 View::share('globalTags', $globalTags);
                 View::share('globalUsers', $globalUsers);
                 View::share('globalActivities', $globalActivities);
+                View::share('globalRanks', $globalRanks);
             }
 
             // * FORCE BOOTSTRAP PAGINATOR (or custom if in front)

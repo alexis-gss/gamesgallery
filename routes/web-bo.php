@@ -4,6 +4,7 @@ use App\Http\Controllers\Bo\ActivityLogsController;
 use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
+use App\Http\Controllers\Bo\RankController;
 use App\Http\Controllers\Bo\StatisticController;
 use App\Http\Controllers\Bo\TagController;
 use App\Http\Controllers\Bo\UserController;
@@ -72,6 +73,13 @@ Route::prefix('bo')
                     Route::get('/tags/{tag}/duplicate', [TagController::class, 'duplicate'])
                         ->name('tags.duplicate');
 
+                    // * RANKS
+                    Route::resource('ranks', RankController::class)->except(['show', 'edit']);
+                    Route::post('/ranks/save-order/{ranks}', [RankController::class, 'saveOrder'])
+                        ->name('ranks.save-order');
+                    Route::get('/ranks/games', [RankController::class, 'getPublishedGamesInNotRanking'])
+                        ->name('ranks.games');
+
                     // * USERS
                     Route::resource('users', UserController::class)->except('show');
                     Route::patch('/users/{user}/change-order/{direction}', [UserController::class, 'changeOrder'])
@@ -81,10 +89,8 @@ Route::prefix('bo')
                     Route::get('/users/{user}/duplicate', [UserController::class, 'duplicate'])
                         ->name('users.duplicate');
 
-                    Route::middleware('can:isConceptor')->group(function () {
-                        // * ACTIVITY LOGS.
-                        Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
-                    });
+                    // * ACTIVITY LOGS.
+                    Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
                 });
             // * BOOTSTRAP THEMES.
             Route::post('theme/set', [Controller::class, 'setTheme'])->name('theme.set');

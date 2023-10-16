@@ -70,7 +70,7 @@
         </Transition>
       </div>
       <div
-        class="progress w-100"
+        class="progress w-100 my-1"
         :class="!intIsUploading ? 'd-none' : ''"
       >
         <div
@@ -165,7 +165,7 @@ import route from "./../../modules/route";
 import trans from "./../../modules/trans";
 
 export default defineComponent({
-  name: "AddDocumentComponent",
+  name: "HeavyDocumentInputComponent",
   mixins: [route, trans],
   components: {
     FontAwesomeIcon,

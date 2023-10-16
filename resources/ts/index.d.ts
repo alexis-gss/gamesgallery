@@ -1,8 +1,8 @@
-export {};
+export { };
 
+import type VueTagsInput from "@sipec/vue3-tags-input";
 import { AxiosStatic } from "axios";
 import * as echarts from "echarts";
-import type VueTagsInput from "@sipec/vue3-tags-input";
 import type Resumable from "resumablejs";
 
 // * Recursive List<string>
@@ -26,7 +26,17 @@ type Model = Record<
     | NestedNumberList
     | NestedModelInterface
 >;
-interface NestedModelInterface extends Model {}
+interface NestedModelInterface extends Model { }
+
+type RankObj = {
+    id: number;
+    rank: number;
+    game_id: number;
+    name: string,
+    slug: string,
+    created_at: Date;
+    updated_at: Date;
+};
 
 type NestedStringList = NestedStringListInterface | StringList | string;
 type NestedNumberList = NestedNumberListInterface | NumberList | number;
@@ -47,11 +57,13 @@ declare global {
     type LaravelModelList = ModelList;
     type ResumableJS = Resumable;
     type ChunkFile = UploadFile;
+    type RankObject = RankObj;
 
     interface Window {
         axios: AxiosStatic;
         Echarts: typeof echarts;
         Swal: Function;
+        vueDebug: boolean | undefined;
         __SYSTEM: {
             _locale: string;
             _routes: Record<string, string>;

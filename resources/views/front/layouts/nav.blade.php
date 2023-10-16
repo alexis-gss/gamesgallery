@@ -13,10 +13,3 @@
 </nav>
 
 <div class="nav-filter nav-filter-hidden position-fixed top-0 start-0 w-100 h-100 bg-primary"></div>
-
-<!-- Button to scroll to the top -->
-<div class="btn-scroll btn-scroll-hidden d-none d-lg-block position-fixed bg-secondary rounded-2 p-2">
-    <button class="btn text-light bg-primary border-0 p-3">
-        <i class="fa-solid fa-arrow-up"></i>
-    </button>
-</div>

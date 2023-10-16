@@ -11,13 +11,14 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('pictures', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id()->comment('Id of the picture.');
             $table->index('game_id')->unsigned();
             $table->foreignId('game_id')->references('id')->on('games');
-            $table->char('uuid', 36)->nullable()->unique();
+            $table->char('uuid', 36)->nullable()->unique()
+                ->comment('Universally Unique Identifier (UUID) of the image.');
             $table->string('label')->comment('Label of the image.');
             $table->string('type', 20)->comment('Type of the image (jpeg, jpg, png).');
             $table->boolean('published')->comment('The image is already published.');
@@ -30,7 +31,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('pictures');
     }

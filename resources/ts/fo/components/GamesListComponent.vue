@@ -234,9 +234,9 @@ export default defineComponent({
      */
     ajaxGamesFiltered(filters: string[]): void {
       this.gameLoading = true;
-      const storeTagRoute = route.methods.route("games.filtered");
+      const storeTagRoute = route.methods.route("fo.games.filtered");
       if (!storeTagRoute) {
-        throw new Error("Undefined route games.filtered");
+        throw new Error("Undefined route fo.games.filtered");
       }
       window.axios
         .post(storeTagRoute, {
@@ -254,11 +254,11 @@ export default defineComponent({
      * @return string
      */
     getGameRoute(slug: string): string {
-      const route = this.route("games.specific", {
+      const route = this.route("fo.games.show", {
         SLUG: slug,
       });
       if (!route) {
-        throw new Error("Undefined route games.specific");
+        throw new Error("Undefined route fo.games.show");
       }
       return route;
     },

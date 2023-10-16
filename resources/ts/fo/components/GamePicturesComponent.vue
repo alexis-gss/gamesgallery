@@ -24,8 +24,8 @@
             >
               <img
                 :src="getPicturePath(n + i)"
-                :alt="'Picture from the game ' + gameName"
-                :title="'Picture from the game ' + gameName"
+                :alt="'Picture n°' + (n + 1 + i) + ' from the game ' + gameName"
+                :title="'Picture n°' + (n + 1 + i) + ' from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
@@ -65,8 +65,8 @@
             >
               <img
                 :src="getPicturePath(n + 4 + i)"
-                :alt="'Picture from the game ' + gameName"
-                :title="'Picture from the game ' + gameName"
+                :alt="'Picture n°' + (n + 5 + i) + ' from the game ' + gameName"
+                :title="'Picture n°' + (n + 5 + i) + ' from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
@@ -106,8 +106,8 @@
             >
               <img
                 :src="getPicturePath(n + 7 + i)"
-                :alt="'Picture from the game ' + gameName"
-                :title="'Picture from the game ' + gameName"
+                :alt="'Picture n°' + (n + 8 + i) + ' from the game ' + gameName"
+                :title="'Picture n°' + (n + 8 + i) + ' from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >
@@ -147,8 +147,8 @@
             >
               <img
                 :src="getPicturePath(n + 9 + i)"
-                :alt="'Picture from the game ' + gameName"
-                :title="'Picture from the game ' + gameName"
+                :alt="'Picture n°' + (n + 10 + i) + ' from the game ' + gameName"
+                :title="'Picture n°' + (n + 10 + i) + ' from the game ' + gameName"
                 class="d-none w-100 p-1"
                 @load="gameImageLazyLoad"
               >

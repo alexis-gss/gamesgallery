@@ -116,3 +116,11 @@ Breadcrumbs::for('bo.activity_logs.show', function (Generator $trail, ActivityLo
     $trail->parent('bo.activity_logs.index');
     $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.activity_logs.show', $activity_log));
 });
+
+// * RANKS
+Breadcrumbs::for('bo.ranks.index', function (Generator $trail) {
+    $trail->push(
+        Str::of(trans('models.rank'))->plural()->ucfirst(),
+        route('bo.ranks.index')
+    );
+});

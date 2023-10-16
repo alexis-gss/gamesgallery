@@ -25,7 +25,7 @@
             @method('DELETE')
             <div class="btn-group" role="group">
                 @can('view', $gameModel)
-                <a href="{{ route('fo.games.specific', $gameModel->slug) }}"
+                <a href="{{ route('fo.games.show', $gameModel->slug) }}"
                     class="btn btn-warning"
                     target="_blank"
                     data-bs="tooltip"

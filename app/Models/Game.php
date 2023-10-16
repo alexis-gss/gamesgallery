@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 /**
  * Game.
@@ -177,5 +176,15 @@ class Game extends Model
     public function pictures(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Picture::class);
+    }
+
+    /**
+     * Get Rank that of the Game (relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+     */
+    public function rank(): \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+    {
+        return $this->belongsTo(Folder::class);
     }
 }

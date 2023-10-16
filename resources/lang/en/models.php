@@ -9,5 +9,6 @@ return [
     'picture'      => 'picture',
     'statistic'    => 'statistic',
     'tag'          => 'tag',
+    'rank'         => 'rank',
     'user'         => 'user',
 ];

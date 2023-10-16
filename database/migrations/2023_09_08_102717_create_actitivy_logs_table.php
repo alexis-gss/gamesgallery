@@ -14,13 +14,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activity_logs', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')
-                ->comment('Id of the user associated, or nullable for a deleted user.');
+            $table->id()->comment('Id of the activity logs.');
+            $table->index('user_id')->unsigned();
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->boolean('is_anonymous')->comment('If there is no user connected when action was realised.');
             $table->boolean('is_console')->comment('If the action was realised in console.');
             $table->string('model_class')->comment('Target model.');
-            $table->integer('model_id')->comment('Id of the target model.');
+            $table->integer('model_id')->comment('Id of the associated target model.');
             $table->integer('event')->comment('Event of this activity (ActivityLogsEventEnum).');
             $table->json('data')->nullable()->comment('List of changes (old and new values).');
             $table->timestamp('created_at')->comment('The date on which the user was published.');

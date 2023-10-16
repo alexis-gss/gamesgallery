@@ -18,6 +18,7 @@
             {{ Str::of(__('models.statistic'))->plural()->ucfirst() }}
         </a>
     </li>
+    @can('viewAny', \App\Models\ActivityLog::class)
     <li class="nav-item">
         <a class="nav-link @if(request()->routeIs('bo.activity_logs.*')) fw-bold @endif"
             href="{{ route('bo.activity_logs.index') }}"
@@ -27,6 +28,7 @@
             {{ Str::of(trans_choice('models.activity_log', 2))->ucfirst() }}
         </a>
     </li>
+    @endcan
     @can('viewAny', \App\Models\Game::class)
     <li class="nav-item">
         <a class="nav-link @if (request()->routeIs('bo.games.*')) fw-bold @endif"
@@ -57,6 +59,17 @@
             data-bs="tooltip"
             data-bs-placement="bottom">
             {{ Str::of(__('models.tag'))->plural()->ucfirst() }}
+        </a>
+    </li>
+    @endcan
+    @can('viewAny', \App\Models\Rank::class)
+    <li class="nav-item">
+        <a class="nav-link @if (request()->routeIs('bo.ranks.*')) fw-bold @endif"
+            href="{{ route('bo.ranks.index') }}"
+            title="{{ __('texts.bo.tooltip.list_models', ['count' => count($globalRanks), 'model' => Str::of(__('models.rank'))->plural()]) }}"
+            data-bs="tooltip"
+            data-bs-placement="bottom">
+            {{ Str::of(__('models.rank'))->plural()->ucfirst() }}
         </a>
     </li>
     @endcan

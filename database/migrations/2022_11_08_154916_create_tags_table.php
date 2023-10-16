@@ -11,10 +11,10 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Id of the tag.');
             $table->string('name')->comment('Nom du tag qui sera unique.');
             $table->string('slug')->unique()->comment('Slugify the name of the tag.');
             $table->boolean('published')->comment('The tag is published or not');
@@ -29,7 +29,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('tags');
     }

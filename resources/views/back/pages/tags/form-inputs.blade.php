@@ -42,7 +42,7 @@
                             type="checkbox"
                             value="1"
                             id="flexSwitchCheckDefault"
-                            @if (old('published', $tag->published ?? '')) checked @endif
+                            @if (old('published', $tagModel->published ?? '')) checked @endif
                             role="button">
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ Str::of(__('validation.custom.publishment'))->ucfirst() }}</b>

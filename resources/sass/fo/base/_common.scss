@@ -37,16 +37,72 @@ body {
   inset: 0;
 }
 
-.btn-scroll {
-  z-index: #{$zindex-fixed};
-  right: 4.5rem;
-  bottom: 1rem;
-  transition: 0.3s;
+.github-icon {
+    z-index: #{$zindex-fixed};
+    width: 10rem;
+    height: 2rem;
+    transform: translate(-3rem, 1rem) rotate(-45deg);
 
-  &-hidden {
-    opacity: 0;
-    visibility: hidden;
-  }
+    svg {
+        transform: rotate(45deg);
+    }
+}
+
+.btn {
+    &-ranking {
+        top: 10vh;
+
+        p {
+            overflow: hidden;
+            width: 0;
+            transition: 0.3s ease-in-out;
+            white-space: nowrap;
+        }
+
+        svg {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20% {
+                transform: translateY(0%) scale(1, 1);
+            }
+
+            5% {
+                transform: translateY(-10%) scale(0.8, 1.2);
+            }
+
+            10% {
+                transform: translateY(0%) scale(1.2, 0.8);
+            }
+
+            15% {
+                transform: translateY(-5%) scale(0.95, 1.05);
+            }
+        }
+
+        &:hover {
+            p {
+                width: 8.5rem !important;
+            }
+
+            svg {
+                animation-play-state: paused;
+            }
+        }
+    }
+
+    &-scroll {
+        z-index: #{$zindex-fixed};
+        right: 4.5rem;
+        bottom: 1rem;
+        transition: 0.3s;
+
+        &-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
 }
 
 .list-group-item {
@@ -76,17 +132,6 @@ body {
 
 .ratio img {
   transform: scale(1.1);
-}
-
-.github-icon {
-  z-index: #{$zindex-fixed};
-  width: 10rem;
-  height: 2rem;
-  transform: translate(-3rem, 1rem) rotate(-45deg);
-
-  svg {
-    transform: rotate(45deg);
-  }
 }
 
 .breadcrumb-item + .breadcrumb-item::before {

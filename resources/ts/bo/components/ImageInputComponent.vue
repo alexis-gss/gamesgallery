@@ -360,6 +360,7 @@ const UNITS = [
 const BYTES_PER_KB = 1024;
 
 export default defineComponent({
+  name: "ImageInputComponent",
   mixins: [trans],
   emits: ["browseFile"],
   props: {

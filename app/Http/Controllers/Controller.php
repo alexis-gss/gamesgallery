@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Enums\Pagination\ItemsPerPaginationEnum;
 use App\Enums\Theme\BootstrapThemeEnum;
 use App\Lib\Helpers\ToolboxHelper;
+use App\Models\Folder;
+use App\Models\Game;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -19,6 +22,31 @@ class Controller extends BaseController
 {
     use AuthorizesRequests;
     use ValidatesRequests;
+
+    /** @var \Illuminate\Support\Collection $gameModels */
+    protected $gameModels;
+
+    /** @var \Illuminate\Support\Collection $folderModels */
+    protected $folderModels;
+
+    /** @var \Illuminate\Support\Collection $tagModels */
+    protected $tagModels;
+
+    /**
+     * Get game/folder/tag models where are published.
+     *
+     * @return void
+     */
+    public function getModelsPublished(): void
+    {
+        $this->gameModels   = Game::query()->where('published', true)
+            ->orderBy('slug', 'ASC')
+            ->whereHas('folder', function ($q) {
+                $q->where('published', true);
+            })->with('pictures')->get();
+        $this->folderModels = Folder::query()->where('published', true)->orderBy('slug', 'ASC')->get();
+        $this->tagModels    = Tag::query()->where('published', true)->orderBy('slug', 'ASC')->get();
+    }
 
     /**
      * Build Search query on specified fields

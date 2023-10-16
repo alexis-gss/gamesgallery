@@ -11,10 +11,10 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Id of the user.');
             $table->string('first_name')->comment('First name of the user.');
             $table->string('last_name')->comment('Last name of the user.');
             $table->string('email')->unique()->comment('Email of the user that is unique.');
@@ -37,7 +37,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('users');
     }

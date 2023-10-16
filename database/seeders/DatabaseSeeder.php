@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             FolderSeeder::class,
             GameSeeder::class,
+            RankSeeder::class,
             UserSeeder::class,
         ]);
     }

@@ -14,6 +14,7 @@ import { defineComponent } from "vue";
 import trans from "../../modules/trans";
 
 export default defineComponent({
+  name: "WordCounterComponent",
   mixins: [trans],
   mounted() {
     const json = String(this.$attrs.json ?? "{}");

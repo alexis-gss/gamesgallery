@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Bo\Folders;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 

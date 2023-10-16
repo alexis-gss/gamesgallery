@@ -16,6 +16,14 @@ class ActivityLogsController extends Controller
     use UpdateModelPublished;
 
     /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(ActivityLog::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param \Illuminate\Http\Request $request

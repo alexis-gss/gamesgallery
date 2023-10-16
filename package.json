@@ -52,6 +52,7 @@
         "vite-plugin-eslint": "latest",
         "vite-plugin-stylelint": "latest",
         "vue": "latest",
-        "vue-tsc": "1.6.0"
+        "vue-tsc": "1.6.0",
+        "vue3-nestable": "^3.0.3"
     }
 }

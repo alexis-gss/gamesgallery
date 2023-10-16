@@ -39,3 +39,7 @@
 
 <!-- Styles -->
 @vite(['resources/sass/bo/back.scss'])
+
+@if(config('app.debug'))
+<script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>window.vueDebug = true;</script>
+@endif

@@ -13,15 +13,6 @@ use Illuminate\Pagination\Paginator;
 
 class FrontController extends Controller
 {
-    /** @var \Illuminate\Support\Collection $gameModels */
-    protected $gameModels;
-
-    /** @var \Illuminate\Support\Collection $folderModels */
-    protected $folderModels;
-
-    /** @var \Illuminate\Support\Collection $tagModels */
-    protected $tagModels;
-
     /**
      * Show the application homepage.
      *
@@ -86,22 +77,6 @@ class FrontController extends Controller
         } else {
             return redirect()->route('fo.homepage');
         } //end if
-    }
-
-    /**
-     * Get game/folder/tag models where are published.
-     *
-     * @return void
-     */
-    public function getModelsPublished(): void
-    {
-        $this->gameModels   = Game::query()->where('published', true)
-            ->orderBy('slug', 'ASC')
-            ->whereHas('folder', function ($q) {
-                $q->where('published', true);
-            })->with('pictures')->get();
-        $this->folderModels = Folder::query()->where('published', true)->orderBy('slug', 'ASC')->get();
-        $this->tagModels    = Tag::query()->where('published', true)->orderBy('slug', 'ASC')->get();
     }
 
     /**

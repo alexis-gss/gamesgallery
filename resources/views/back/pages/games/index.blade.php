@@ -80,7 +80,7 @@
                         novalidate>
                         @if ($gameModel->published)
                         @can('view', $gameModel)
-                        <a href="{{ route('fo.games.specific', $gameModel->slug) }}"
+                        <a href="{{ route('fo.games.show', $gameModel->slug) }}"
                             class="btn btn-sm btn-warning"
                             target="_blank"
                             data-bs="tooltip"

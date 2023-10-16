@@ -19,7 +19,7 @@ class GameSeeder extends Seeder
 
         // Seeder for taggables table.
         $tags = Tag::query()->get();
-        Game::each(function (Game $model) use ($tags) {
+        Game::query()->each(function (Game $model) use ($tags) {
             $offset = rand(0, 15);
             $length = rand(1, 2);
             $model->tags()->saveMany($tags->slice($offset, $length));

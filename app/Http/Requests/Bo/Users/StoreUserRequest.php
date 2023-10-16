@@ -5,7 +5,6 @@ namespace App\Http\Requests\Bo\Users;
 use App\Enums\Users\RoleEnum;
 use App\Traits\Requests\HasPicture;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 

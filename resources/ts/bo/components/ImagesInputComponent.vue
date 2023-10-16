@@ -126,6 +126,7 @@ import trans from "../../modules/trans";
 import HeavyDocumentInputComponent from "./HeavyDocumentInputComponent.vue";
 
 export default defineComponent({
+  name: "ImagesInputComponent",
   mixins: [error, trans],
   components: {
     FontAwesomeIcon,

@@ -42,6 +42,7 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
+        'slug',
         'name',
         'published',
         'published_at',

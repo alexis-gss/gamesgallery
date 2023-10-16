@@ -11,10 +11,10 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('folders', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Id of the folder.');
             $table->string('name')->comment('Name of the folder.');
             $table->string('slug')->unique()->comment('Slugify the name of the folder.');
             $table->string('color')->comment('Color of the folder.');
@@ -30,7 +30,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('folders');
     }

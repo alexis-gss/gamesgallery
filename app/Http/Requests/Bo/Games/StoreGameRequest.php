@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Bo\Games;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
