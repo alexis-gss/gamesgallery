@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 /**
  * Test if mail is sending.
  */
-class TestMail extends Command
+class MailTest extends Command
 {
     /**
      * The name and signature of the console command.
@@ -34,5 +34,7 @@ class TestMail extends Command
         Mail::raw(sprintf('Mail-test from %s %s', \config('app.name'), \config('app.url')), function ($msg) {
             $msg->to('john.doe@gmail.com')->subject('Test Email');
         });
+
+        $this->info('Mail sent 📝');
     }
 }

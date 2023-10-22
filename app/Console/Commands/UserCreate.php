@@ -28,7 +28,7 @@ class UserCreate extends Command
      *
      * @var string
      */
-    protected $description = 'Create user (Visitor or Admin)';
+    protected $description = 'Create user (Conceptor, Administrator or Visitor)';
 
     /**
      * The first name of the new user.

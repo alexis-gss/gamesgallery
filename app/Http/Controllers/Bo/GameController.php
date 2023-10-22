@@ -192,8 +192,6 @@ class GameController extends Controller
      */
     public function upload(Request $request)
     {
-        $uuid     = (isset($request->uuid)) ? $request->uuid : false;
-        $gameSlug = (isset($request->gameSlug)) ? $request->gameSlug : false;
         // Create the file receiver.
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
         // Check if the upload is success, throw exception or return response you need.
@@ -206,7 +204,11 @@ class GameController extends Controller
         if ($save->isFinished()) {
             // Save the file and return any response you need, current example uses `move` function.
             // If you are not using move, you need to manually delete the file: unlink($save->getFile()->getPathname()).
-            return $this->saveFile($save->getFile(), $uuid, $gameSlug);
+            return $this->saveFile(
+                $save->getFile(),
+                (isset($request->uuid)) ? $request->uuid : false,
+                (isset($request->gameSlug)) ? $request->gameSlug : false
+            );
         }
         // We are in chunk mode, lets send the current progress.
         /** @var AbstractHandler $handler */
@@ -229,7 +231,7 @@ class GameController extends Controller
         if ($uuid === false) {
             $uuid = Str::uuid();
         }
-        $finalPath = storage_path('app/public/documents/' . $gameSlug . '/');
+        $finalPath = storage_path('app/public/pictures/' . $gameSlug . '/');
         // Move the file name.
         $file->move($finalPath, $uuid . '.' . $file->getClientOriginalExtension());
         return response()->json([

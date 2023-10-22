@@ -357,7 +357,7 @@ export default defineComponent({
       this.intViewerLoadImage = true;
       setTimeout(() => {
         imgEditor.src =
-          "/storage/documents/" +
+          "/storage/pictures/" +
           this.intGameSlug +
           "/" +
           this.intDocument?.uuid +

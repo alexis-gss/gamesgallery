@@ -64,9 +64,9 @@ class Picture extends Model
     public static function renameFolderSavedPictures(Model $model, string $slug)
     {
         if ($slug !== $model->slug) {
-            $directory = Storage::disk('public')->path("documents/" . $slug);
+            $directory = Storage::disk('public')->path("pictures/" . $slug);
             if (is_dir($directory)) {
-                rename($directory, Storage::disk('public')->path("documents/" . $model->slug));
+                rename($directory, Storage::disk('public')->path("pictures/" . $model->slug));
             }
         }
     }
@@ -79,7 +79,7 @@ class Picture extends Model
      */
     private static function removePicture(Picture $picture): void
     {
-        $pathFile = "documents/" . $picture->game->slug . "/" . $picture->uuid . "." . $picture->type;
+        $pathFile = "pictures/" . $picture->game->slug . "/" . $picture->uuid . "." . $picture->type;
         if (Storage::disk('public')->exists($pathFile)) {
             Storage::disk('public')->delete($pathFile);
         }
@@ -88,7 +88,7 @@ class Picture extends Model
     /**
      * Remove all pictures previously associated.
      *
-     * @param Collection $pictures
+     * @param \Illuminate\Database\Eloquent\Collection $pictures
      * @return void
      */
     public static function removePictures(Collection $pictures): void

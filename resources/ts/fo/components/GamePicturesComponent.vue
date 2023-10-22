@@ -324,7 +324,7 @@ export default defineComponent({
     getPicturePath(n: number) {
       return (
         location.origin +
-        "/storage/documents/" +
+        "/storage/pictures/" +
         this.gameSlug +
         "/" +
         this.gamePictures[n].uuid +

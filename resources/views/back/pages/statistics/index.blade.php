@@ -24,7 +24,7 @@
                 @if (isset($latestModels['App\Models\Game']->pictures[0]))
                 <div class="d-none d-md-block position-relative overflow-hidden w-fit h-100">
                     <img class="w-auto h-100"
-                        src="{{ request()->root() . "/storage/documents/" . $latestModels['App\Models\Game']->slug . "/" . $latestModels['App\Models\Game']->pictures[0]->uuid . "." . $latestModels['App\Models\Game']->pictures[0]->type }}"
+                        src="{{ request()->root() . "/storage/pictures/" . $latestModels['App\Models\Game']->slug . "/" . $latestModels['App\Models\Game']->pictures[0]->uuid . "." . $latestModels['App\Models\Game']->pictures[0]->type }}"
                         alt="{{ __('alt') }}">
                     <span class="card-filter position-absolute top-0 end-0 h-100"></span>
                 </div>
