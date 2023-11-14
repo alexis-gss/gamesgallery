@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\Fo\FrontController;
+use App\Http\Controllers\Fo\GameController;
 use App\Http\Controllers\Fo\RankController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('fo.')
     ->group(function () {
-        Route::get('/', [FrontController::class, 'index'])
+        // * GAMES
+        Route::get('/', [GameController::class, 'index'])
             ->name('homepage');
-        Route::get('/game/{slug}', [FrontController::class, 'show'])
+        Route::get('/game/{slug}', [GameController::class, 'show'])
             ->where('slug', '^[a-zA-Z0-9-]*$')
             ->name('games.show');
-        Route::post('/game/search/{filtersId}', [FrontController::class, 'getGamesFiltered'])
+        Route::post('/game/search/{filtersId}', [GameController::class, 'getGamesFiltered'])
             ->name('games.filtered');
 
         // * RANKS

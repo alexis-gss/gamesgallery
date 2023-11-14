@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Fo;
 
 use App\Http\Controllers\Controller;
 use App\Lib\Helpers\ToolboxHelper;
-use App\Models\Folder;
 use App\Models\Game;
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
-class FrontController extends Controller
+class GameController extends Controller
 {
     /**
      * Show the application homepage.

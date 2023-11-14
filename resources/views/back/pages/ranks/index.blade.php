@@ -11,7 +11,7 @@
     @can('update', \App\Models\Rank::class)
     <div class="col-12 form-group">
         <form action="{{ route('bo.ranks.store') }}" method="POST" class="d-flex flex-row justify-content-center align-items-center border-bottom pb-3">
-            <span class="input-group-text rounded-0 rounded-start border border-end-0">{{ Str::of(__('validation.attributes.name'))->ucFirst() }}</span>
+            <span class="input-group-text rounded-0 rounded-start border border-end-0">{{ Str::of(__('validation.attributes.name'))->value() }}</span>
             @csrf
             @php
             $data = [
