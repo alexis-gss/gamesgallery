@@ -28,7 +28,7 @@ Breadcrumbs::for('bo.statistics', function (Generator $trail) {
 // * GAMES
 Breadcrumbs::for('bo.games.index', function (Generator $trail) {
     $trail->push(
-        Str::of(trans('models.game'))->plural()->ucfirst(),
+        Str::of(trans_choice('models.game', 2))->ucfirst(),
         route('bo.games.index')
     );
 });

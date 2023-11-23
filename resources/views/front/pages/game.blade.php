@@ -1,7 +1,7 @@
 @extends('front.layout', ['brParam' => $gameModel])
 
-@section('title', (isset($gameModel) ? $gameModel->name : __('texts.fo.default_title')))
-@section('description', (isset($gameModel) ? __('texts.fo.description',  ['game' =>  $gameModel->name]) :  __('texts.fo.default_description')))
+@section('title', (isset($gameModel) ? $gameModel->name : __('fo_default_title')))
+@section('description', (isset($gameModel) ? __('fo_description',  ['game' =>  $gameModel->name]) :  __('fo_default_description')))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -16,7 +16,7 @@
             <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
                 <a href="{{ route('fo.homepage') }}"
                     class="bg-primary border-0 text-white rounded-2 px-2 text-decoration-none"
-                    title="{{ __('texts.bo.other.back_home') }}"
+                    title="{{ __('bo_other_back_home') }}"
                     data-bs="tooltip"
                     data-bs-placement="top">
                     <i class="fa fa-arrow-left"></i>

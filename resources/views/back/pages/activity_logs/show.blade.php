@@ -20,7 +20,7 @@
 <div class="row">
     <div class="col-12 mb-3 @if (isset($activitylogModel->data)) border-bottom @endif">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
+            <legend>{{ __('bo_title_general_informations') }}</legend>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive mb-3">
@@ -37,9 +37,9 @@
                                             {{ $activitylogModel->user->last_name }}&nbsp;{{ $activitylogModel->user->first_name }}
                                         </a>
                                         @elseif($activitylogModel->is_anonymous)
-                                        {{ __('texts.bo.other.user_anonym') }}
+                                        {{ __('bo_other_user_anonym') }}
                                         @else
-                                        {{ __('texts.bo.other.user_deleted') }}
+                                        {{ __('bo_other_user_deleted') }}
                                         @endif
                                     </td>
                                 </tr>
@@ -82,18 +82,18 @@
     @if (isset($activitylogModel->data))
     <div class="col-12 mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.changes_made') }}</legend>
+            <legend>{{ __('bo_title_changes_made') }}</legend>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive mb-3">
                         <table class="table-hover m-0 table">
                             <thead>
                                 <tr class="table-col-sorter border border-2 border-start-0 border-end-0 border-top-0 border-secondary">
-                                    <td class="w-50 fw-bold text-center align-middle">{{ __('texts.bo.other.column') }}</td>
+                                    <td class="w-50 fw-bold text-center align-middle">{{ __('bo_other_column') }}</td>
                                     <td class="fw-bold text-center align-middle">
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </td>
-                                    <td class="w-50 fw-bold text-center align-middle">{{ __('texts.bo.other.type') }}</td>
+                                    <td class="w-50 fw-bold text-center align-middle">{{ __('bo_other_type') }}</td>
                                 </tr>
                             </thead>
                             <tbody>

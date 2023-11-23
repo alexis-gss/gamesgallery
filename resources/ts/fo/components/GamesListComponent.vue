@@ -12,7 +12,7 @@
             name="search"
             v-model="search"
             class="form-control bg-transparent border-0 shadow-none text-white p-0 ps-2"
-            :placeholder="__('texts.fo.search', { games: `${gamesCount}` })"
+            :placeholder="__('fo_search', { games: `${gamesCount}` })"
             type="text"
             maxlength="60"
             autocomplete="off"
@@ -39,7 +39,7 @@
             value="0"
             selected
           >
-            {{ __("texts.fo.search_folder") }}
+            {{ __("fo_search_folder") }}
           </option>
           <option
             v-for="(folder, folderIndex) in allFolders"
@@ -60,7 +60,7 @@
             value="0"
             selected
           >
-            {{ __("texts.fo.search_tag") }}
+            {{ __("fo_search_tag") }}
           </option>
           <option
             v-for="(tag, tagIndex) in allTags"
@@ -85,7 +85,7 @@
           class="spinner-border text-white"
           role="status"
         >
-          <span class="visually-hidden">{{ __("texts.fo.text_loading") }}</span>
+          <span class="visually-hidden">{{ __("fo_text_loading") }}</span>
         </div>
       </div>
       <ul
@@ -127,7 +127,7 @@
           class="list-group-item border-0 bg-transparent text-white p-0"
         >
           <p class="text-decoration-none m-0 p-2">
-            {{ __("texts.fo.no_result") }}
+            {{ __("fo_no_result") }}
           </p>
         </li>
       </ul>
@@ -138,8 +138,8 @@
 <script lang="ts">
 import simplebar from "simplebar-vue";
 import { defineComponent } from "vue";
-import route from "../../modules/route";
-import trans from "../../modules/trans";
+import route from "./../../modules/route";
+import trans from "./../../modules/trans";
 
 export default defineComponent({
   name: "GamesListComponent",

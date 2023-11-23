@@ -92,10 +92,10 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { Tooltip } from "bootstrap";
 import { defineComponent } from "vue";
 import { VueNestable, VueNestableHandle } from "vue3-nestable";
-import route from "../../modules/route";
-import error from "./../../modules/error";
-import sweetalert from "./../../modules/sweetalert";
-import trans from "./../../modules/trans";
+import route from "./../../modules/route";
+import error from "././../../modules/error";
+import sweetalert from "././../../modules/sweetalert";
+import trans from "././../../modules/trans";
 
 export default defineComponent({
   name: "GamesRankingComponent",

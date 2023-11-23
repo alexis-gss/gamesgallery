@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
+            <legend>{{ __('bo_title_general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.identification') }}</b>
+                        <b>{{ __('bo_label_identification') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.name_game') }}">
+                            title="{{ __('bo_tooltip_name_game') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -30,10 +30,10 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.organization') }}</b>
+                        <b>{{ __('bo_label_organization') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.folders', ['number' => count($globalFolders)]) }}">
+                            title="{{ __('bo_tooltip_folders', ['number' => count($globalFolders)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -52,14 +52,14 @@
     </div>
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.visuals') }}</legend>
+            <legend>{{ __('bo_title_visuals') }}</legend>
             <div class="row mb-3">
                 <div class="col-12">
                     <label for="name" class="col-form-label">
-                        <b>{{ __('texts.bo.label.choose_pictures') }}</b>
+                        <b>{{ __('bo_label_choose_pictures') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.game_images') }}">
+                            title="{{ __('bo_tooltip_game_images') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -85,14 +85,14 @@
     </div>
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.organization') }}</legend>
+            <legend>{{ __('bo_title_organization') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     <label for="name" class="col-form-label">
                         <b>{{ Str::of(__('models.tag'))->plural()->ucFirst()->value() }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.tags', ['number' => count($globalTags)]) }}">
+                            title="{{ __('bo_tooltip_tags', ['number' => count($globalTags)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -102,7 +102,7 @@
                         'name'        => 'tags',
                         'value'       => old('tags', $gameModel->tags ?? []),
                         'items'       => $tagModels,
-                        'placeholder' => __('texts.bo.other.taggable_add'),
+                        'placeholder' => __('bo_other_taggable_add'),
                     ];
                     @endphp
                     <div id="belongs-to-many-dropdown" data-json='@json($data)'></div>
@@ -116,7 +116,7 @@
     </div>
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.visibility') }}</legend>
+            <legend>{{ __('bo_title_visibility') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">

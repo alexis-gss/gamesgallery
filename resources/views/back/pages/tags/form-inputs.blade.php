@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3 mb-3">
-            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
+            <legend>{{ __('bo_title_general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="name" class="col-form-label">
-                        <b>{{ __('texts.bo.label.identification') }}</b>
+                        <b>{{ __('bo_label_identification') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.name_tag') }}">
+                            title="{{ __('bo_tooltip_name_tag') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -33,7 +33,7 @@
     </div>
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.visibility') }}</legend>
+            <legend>{{ __('bo_title_visibility') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">

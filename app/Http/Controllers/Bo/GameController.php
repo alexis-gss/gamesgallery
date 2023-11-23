@@ -103,12 +103,12 @@ class GameController extends Controller
                 Tag::setTags($game, collect(request()->tags));
                 return redirect()->route('bo.games.edit', $game)
                     ->with('success', __('crud.messages.has_been_created', [
-                        'model' => Str::of(__('models.game'))->ucfirst()
+                        'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                     ]));
             }
             return redirect()->back()
                 ->with('error', __('crud.messages.cannot_be_created', [
-                    'model' => Str::of(__('models.game'))->ucfirst()
+                    'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));
         });
     }
@@ -144,12 +144,12 @@ class GameController extends Controller
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game)
                     ->with('success', __('crud.messages.has_been_updated', [
-                        'model' => Str::of(__('models.game'))->ucfirst()
+                        'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                     ]));
             }
             return redirect()->route('bo.games.edit', $game)
                 ->with('error', __('crud.messages.cannot_be_updated', [
-                    'model' => Str::of(__('models.game'))->ucfirst()
+                    'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));
         });
     }
@@ -165,12 +165,12 @@ class GameController extends Controller
         if ($game->deleteOrFail()) {
             return redirect()->route('bo.games.index')
                 ->with('success', __('crud.messages.has_been_deleted', [
-                    'model' => Str::of(__('models.game'))->ucfirst()
+                    'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));
         }
         return redirect()->back()
             ->with('error', __('crud.messages.cannot_be_deleted', [
-                'model' => Str::of(__('models.game'))->ucfirst()
+                'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
             ]));
     }
 

@@ -6,9 +6,9 @@
           :for="intId"
           class="col-form-label fw-bold"
         >
-          {{ __("texts.bo.label.choose_picture") }}
+          {{ __("bo_label_choose_picture") }}
           <span
-            :title="__('texts.bo.tooltip.image_input_choose_file')"
+            :title="__('bo_tooltip_image_input_choose_file')"
             data-bs-tooltip="tooltip"
           >
             <i class="fa-solid fa-circle-info" />
@@ -19,7 +19,7 @@
             @click.prevent="chooseAFile"
             class="btn btn-secondary"
             type="button"
-            :title="__('texts.bo.tooltip.image_input_modify_source')"
+            :title="__('bo_tooltip_image_input_modify_source')"
             data-bs-tooltip="tooltip"
           >
             <i class="fa-solid fa-folder-open" />
@@ -46,7 +46,7 @@
             type="text"
             :value="intValueFileName"
             class="form-control right-aligned"
-            :title="__('texts.bo.tooltip.image_input_modify_source')"
+            :title="__('bo_tooltip_image_input_modify_source')"
             data-bs-tooltip="tooltip"
             :aria-describedby="`Help${intId}`"
             readonly
@@ -64,7 +64,7 @@
             :disabled="!intHasImage"
             :class="`btn ${!intHasModdedImage ? 'btn-primary' : 'btn-success'}`"
             type="button"
-            :title="__('texts.bo.tooltip.image_input_resize_image')"
+            :title="__('bo_tooltip_image_input_resize_image')"
             data-bs-tooltip="tooltip"
             data-bs-toggle="modal"
             :data-bs-target="`#Modal${intId}`"
@@ -74,7 +74,7 @@
           <span
             v-if="intHasModdedImage"
             class="input-group-text text-success"
-            :title="__('texts.bo.tooltip.image_input_image_resized')"
+            :title="__('bo_tooltip_image_input_image_resized')"
             data-bs-tooltip="tooltip"
           >
             <i class="fa-solid fa-wand-magic" />
@@ -92,9 +92,9 @@
           v-if="intValue"
           class="col-form-label w-100 fw-bold w-100"
         >
-          {{ __("texts.bo.label.preview_image") }}
+          {{ __("bo_label_preview_image") }}
           <span
-            :title="__('texts.bo.tooltip.image_input_preview_image')"
+            :title="__('bo_tooltip_image_input_preview_image')"
             data-bs-tooltip="tooltip"
           >
             <i class="fa-solid fa-circle-info" />
@@ -104,7 +104,7 @@
           v-if="intValue"
           class="img-fluid"
           :src="intValue"
-          :alt="__('texts.bo.other.preview_image_placeholder')"
+          :alt="__('bo_other_preview_image_placeholder')"
           :aria-describedby="`PreviewHelp${intId}`"
         >
         <small
@@ -135,13 +135,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">
-              {{ __("texts.bo.title.edit_image_before_import") }}
+              {{ __("bo_title_edit_image_before_import") }}
             </h5>
             <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
-              :title="__('texts.bo.tooltip.image_input_close_without_saving')"
+              :title="__('bo_tooltip_image_input_close_without_saving')"
               data-bs-tooltip="tooltip"
             />
           </div>
@@ -152,7 +152,7 @@
                   <div class="btn-group me-4 mt-2">
                     <button
                       class="btn btn-warning"
-                      :title="__('texts.bo.tooltip.image_input_reset_image')"
+                      :title="__('bo_tooltip_image_input_reset_image')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="reset()"
                     >
@@ -162,7 +162,7 @@
                   <div class="btn-group me-4 mt-2">
                     <button
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_zoom_in')"
+                      :title="__('bo_tooltip_image_input_zoom_in')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="zoom(0.1)"
                     >
@@ -170,7 +170,7 @@
                     </button>
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_zoom_out')"
+                      :title="__('bo_tooltip_image_input_zoom_out')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="zoom(-0.1)"
                     >
@@ -180,7 +180,7 @@
                   <div class="btn-group me-4 mt-2">
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_move_left')"
+                      :title="__('bo_tooltip_image_input_move_left')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(-10, 0)"
                     >
@@ -188,7 +188,7 @@
                     </a>
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_move_right')"
+                      :title="__('bo_tooltip_image_input_move_right')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(10, 0)"
                     >
@@ -196,7 +196,7 @@
                     </a>
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_move_up')"
+                      :title="__('bo_tooltip_image_input_move_up')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(0, -10)"
                     >
@@ -204,7 +204,7 @@
                     </a>
                     <a
                       class="btn btn-primary"
-                      :title="__('texts.bo.tooltip.image_input_move_down')"
+                      :title="__('bo_tooltip_image_input_move_down')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(0, 10)"
                     >
@@ -215,7 +215,7 @@
                     <a
                       class="btn btn-primary"
                       :title="
-                        __('texts.bo.tooltip.image_input_mirror_horizontal')
+                        __('bo_tooltip_image_input_mirror_horizontal')
                       "
                       data-bs-tooltip="tooltip"
                       @click.prevent="scale(true)"
@@ -225,7 +225,7 @@
                     <a
                       class="btn btn-primary"
                       :title="
-                        __('texts.bo.tooltip.image_input_mirror_vertical')
+                        __('bo_tooltip_image_input_mirror_vertical')
                       "
                       data-bs-tooltip="tooltip"
                       @click.prevent="scale(false)"
@@ -243,7 +243,7 @@
                         <a
                           class="btn btn-primary"
                           :title="
-                            __('texts.bo.tooltip.image_input_counterclockwise')
+                            __('bo_tooltip_image_input_counterclockwise')
                           "
                           data-bs-tooltip="tooltip"
                           @click.prevent="rotate(-45)"
@@ -252,7 +252,7 @@
                         </a>
                         <a
                           class="btn btn-primary"
-                          :title="__('texts.bo.tooltip.image_input_clockwise')"
+                          :title="__('bo_tooltip_image_input_clockwise')"
                           data-bs-tooltip="tooltip"
                           @click.prevent="rotate(45)"
                         >
@@ -266,7 +266,7 @@
                         class="form-label me-4"
                       >
                         {{
-                          __("texts.bo.other.preview_rotation_degrees", {
+                          __("bo_other_preview_rotation_degrees", {
                             deg: String(intRotationText),
                           })
                         }}
@@ -318,18 +318,18 @@
               class="btn btn-secondary"
               data-bs-dismiss="modal"
               :title="
-                __('texts.bo.tooltip.image_input_modal_close_without_saving')
+                __('bo_tooltip_image_input_modal_close_without_saving')
               "
               data-bs-tooltip="tooltip"
             >
-              {{ __("texts.bo.other.close") }}
+              {{ __("bo_other_close") }}
             </button>
             <button
               @click.prevent="exportToBlob"
               type="button"
               class="btn btn-primary"
               :title="
-                __('texts.bo.tooltip.image_input_modal_close_with_saving')
+                __('bo_tooltip_image_input_modal_close_with_saving')
               "
               data-bs-tooltip="tooltip"
               data-bs-dismiss="modal"
@@ -347,7 +347,7 @@
 import { Tooltip } from "bootstrap";
 import Cropper from "cropperjs";
 import { defineComponent } from "vue";
-import trans from "../../modules/trans";
+import trans from "./../../modules/trans";
 
 const UNITS = [
   "byte",

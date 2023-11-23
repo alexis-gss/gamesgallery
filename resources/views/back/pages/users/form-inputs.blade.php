@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-12 border-bottom">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.general_informations') }}</legend>
+            <legend>{{ __('bo_title_general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.authentification', ['field' => __('validation.attributes.first_name')]) }}</b>
+                        <b>{{ __('bo_label_authentification', ['field' => __('validation.attributes.first_name')]) }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.name_user') }}">
+                            title="{{ __('bo_tooltip_name_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -30,10 +30,10 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.authentification', ['field' => __('validation.attributes.last_name')]) }}</b>
+                        <b>{{ __('bo_label_authentification', ['field' => __('validation.attributes.last_name')]) }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.name_user') }}">
+                            title="{{ __('bo_tooltip_name_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -55,10 +55,10 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.authentification', ['field' => __('validation.attributes.email')]) }}</b>
+                        <b>{{ __('bo_label_authentification', ['field' => __('validation.attributes.email')]) }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.email') }}">
+                            title="{{ __('bo_tooltip_email') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -76,10 +76,10 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.user_rights') }}</b>
+                        <b>{{ __('bo_label_user_rights') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.role') }}">
+                            title="{{ __('bo_tooltip_role') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -107,7 +107,7 @@
     </div>
     <div class="col-12 border-bottom">
         <fieldset class="p-3">
-            <legend>{{ Str::of(__('texts.bo.title.visuals'))->singular() }}</legend>
+            <legend>{{ Str::of(__('bo_title_visuals'))->singular() }}</legend>
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     @php
@@ -128,14 +128,14 @@
     </div>
     <div class="col-12 border-bottom mb-3">
         <fieldset class="p-3">
-            <legend>{{ __('texts.bo.title.security') }}</legend>
+            <legend>{{ __('bo_title_security') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.password') }}</b>
+                        <b>{{ __('bo_label_password') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.password_user') }}">
+                            title="{{ __('bo_tooltip_password_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -150,7 +150,7 @@
                             aria-describedby="btn-password"
                             autocomplete="new-password">
                         <button class="btn btn-primary password-btn"
-                            title="{{ __('texts.bo.tooltip.password_show_hide') }}"
+                            title="{{ __('bo_tooltip_password_show_hide') }}"
                             data-bs="tooltip"
                             type="button"
                             id="btn-password">
@@ -168,10 +168,10 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label for="folder_id" class="col-form-label">
-                        <b>{{ __('texts.bo.label.password_confirm') }}</b>
+                        <b>{{ __('bo_label_password_confirm') }}</b>
                         <span data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('texts.bo.tooltip.confirm_password_user') }}">
+                            title="{{ __('bo_tooltip_confirm_password_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -186,7 +186,7 @@
                             aria-describedby="btn-password-confirm"
                             autocomplete="new-password">
                         <button class="btn btn-primary password-btn"
-                            title="{{ __('texts.bo.tooltip.password_show_hide') }}"
+                            title="{{ __('bo_tooltip_password_show_hide') }}"
                             data-bs="tooltip"
                             type="button"
                             id="btn-password-confirm">

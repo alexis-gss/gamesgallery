@@ -9,7 +9,7 @@
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('texts.global.acces_github') }}"
+            title="{{ __('global_acces_github') }}"
             class="text-reset text-decoration-none">
             {{ $globalName }}
         </a>

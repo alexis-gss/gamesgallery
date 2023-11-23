@@ -37,7 +37,7 @@
                 <td class="text-center align-middle">{{ $folderModel->name }}</td>
                 <td class="text-center align-middle">
                     <div class="btn-sm preview-color mx-auto"
-                        title="{{ __('texts.bo.tooltip.color_details', ['color' => $folderModel->color]) }}"
+                        title="{{ __('bo_tooltip_color_details', ['color' => $folderModel->color]) }}"
                         data-bs="tooltip">
                         <span class="d-block w-100 h-100 rounded-1" style="background-color:{{ $folderModel->color }}"></span>
                     </div>

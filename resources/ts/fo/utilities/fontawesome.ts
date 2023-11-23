@@ -40,6 +40,7 @@ import {
     faCheck,
     faCircleExclamation,
     faRankingStar,
+    faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -87,4 +88,5 @@ library.add(faChevronRight);
 library.add(faCheck);
 library.add(faCircleExclamation);
 library.add(faRankingStar);
+library.add(faGlobe);
 dom.watch();

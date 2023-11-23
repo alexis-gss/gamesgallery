@@ -8,7 +8,7 @@
             @click.prevent="chooseFiles"
             class="btn btn-secondary"
             type="button"
-            :title="__('texts.bo.tooltip.image_input_modify_sources')"
+            :title="__('bo_tooltip_image_input_modify_sources')"
             data-bs-tooltip="tooltip"
             :disabled="intValues.length >= itemLimit[1]"
           >
@@ -29,12 +29,12 @@
             @click.prevent="chooseFiles"
             type="text"
             :value="
-              __('texts.bo.other.number_images', {
+              __('bo_other_number_images', {
                 number: intValues.length + '/' + itemLimit[1],
               })
             "
             class="form-control right-aligned"
-            :title="__('texts.bo.tooltip.image_input_modify_sources')"
+            :title="__('bo_tooltip_image_input_modify_sources')"
             data-bs-tooltip="tooltip"
             :aria-describedby="`Help${intId}`"
             :disabled="intValues.length >= itemLimit[1]"
@@ -43,7 +43,7 @@
           <button
             class="btn btn-primary btn-collapse collapsed"
             type="button"
-            :title="__('texts.bo.tooltip.image_input_show_hide_content')"
+            :title="__('bo_tooltip_image_input_show_hide_content')"
             data-bs-tooltip="tooltip"
             data-bs-toggle="collapse"
             data-bs-target="#multiple-images"
@@ -58,7 +58,7 @@
             @click.prevent="removeFiles"
             class="btn btn-danger"
             type="button"
-            :title="__('texts.bo.tooltip.image_input_remove_images')"
+            :title="__('bo_tooltip_image_input_remove_images')"
             data-bs-tooltip="tooltip"
             :disabled="intValues.length <= 0"
           >
@@ -121,8 +121,8 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { Tooltip } from "bootstrap";
 import { defineComponent } from "vue";
-import error from "../../modules/error";
-import trans from "../../modules/trans";
+import error from "./../../modules/error";
+import trans from "./../../modules/trans";
 import HeavyDocumentInputComponent from "./HeavyDocumentInputComponent.vue";
 
 export default defineComponent({

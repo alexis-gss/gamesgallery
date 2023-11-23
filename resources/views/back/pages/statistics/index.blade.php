@@ -12,7 +12,7 @@
         <a href="{{ route('bo.folders.edit', $latestModels['App\Models\Folder']) }}" class="card card-stats text-decoration-none p-0">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="card-body text-center">
-                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('texts.bo.other.stats_latest_model', ['model' => __('models.folder')]) }}</p>
+                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('bo_other_stats_latest_model', ['model' => __('models.folder')]) }}</p>
                     <p class="card-title m-0">{{ $latestModels['App\Models\Folder']->name }}</p>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 @endif
                 <div class="flex-fill">
                     <div class="card-body text-center @if (isset($latestModels['App\Models\Game']->picture[0])) text-md-start @endif">
-                        <p class="border-bottom fw-bold m-0 pb-1">{{ __('texts.bo.other.stats_latest_model', ['model' => __('models.game')]) }}</p>
+                        <p class="border-bottom fw-bold m-0 pb-1">{{ __('bo_other_stats_latest_model', ['model' => trans_choice('models.game', 1)]) }}</p>
                         <p class="card-title">{{ $latestModels['App\Models\Game']->name }}</p>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
         <a href="{{ route('bo.tags.edit', $latestModels['App\Models\Tag']) }}" class="card card-stats text-decoration-none p-0">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="card-body text-center">
-                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('texts.bo.other.stats_latest_model', ['model' => __('models.tag')]) }}</p>
+                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('bo_other_stats_latest_model', ['model' => __('models.tag')]) }}</p>
                     <p class="card-title m-0">{{ $latestModels['App\Models\Tag']->name }}</p>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => Str::of(__('models.game'))->plural()]))
-@section('description', __('crud.meta.all_models_list', ['model' => Str::of(__('models.game'))->plural()]))
+@section('title', __('crud.meta.all_models', ['model' => trans_choice('models.game', 2)]))
+@section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.game', 2)]))
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 border-bottom">
@@ -11,7 +11,7 @@
         class="btn btn-primary float-right"
         data-bs="tooltip"
         data-bs-placement="top"
-        title="{{ __('crud.actions_model.create', ['model' => __('models.game')]) }}">
+        title="{{ __('crud.actions_model.create', ['model' => trans_choice('models.game', 1)]) }}">
         <i class="fa-solid fa-plus"></i>
     </a>
     @endcan
@@ -44,7 +44,7 @@
                     <a href="{{ route('bo.folders.edit', ['folder' => $gameModel->folder_id]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top"
-                        title="{{ __('texts.bo.tooltip.show_folder') }}"
+                        title="{{ __('bo_tooltip_show_folder') }}"
                         class="text-decoration-none">
                     @endcan
                     <span class="@can('update', $gameModel) badge bg-primary @else text-body @endcan">
@@ -85,7 +85,7 @@
                             target="_blank"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.show', ['model' => __('models.game')]) }}">
+                            title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}">
                             <i class="fa-solid fa-eye"></i>
                         </a>
                         @endcan
@@ -95,7 +95,7 @@
                             href="{{ route('bo.games.duplicate', ['game' => $gameModel]) }}"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.duplicate', ['model' => __('models.game')]) }}">
+                            title="{{ __('crud.actions_model.duplicate', ['model' => trans_choice('models.game', 1)]) }}">
                             <i class="fa-solid fa-copy"></i>
                         </a>
                         @endcan
@@ -104,7 +104,7 @@
                             href="{{ route('bo.games.edit', ['game' => $gameModel]) }}"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.edit', ['model' => __('models.game')]) }}">
+                            title="{{ __('crud.actions_model.edit', ['model' => trans_choice('models.game', 1)]) }}">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
                         @endcan
@@ -115,7 +115,7 @@
                             type="submit"
                             data-bs="tooltip"
                             data-bs-placement="top"
-                            title="{{ __('crud.actions_model.delete', ['model' => __('models.game')]) }}">
+                            title="{{ __('crud.actions_model.delete', ['model' => trans_choice('models.game', 1)]) }}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                         @endcan
@@ -129,7 +129,7 @@
         </tbody>
         @else
         <tr>
-            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => __('models.game')]) }}</td>
+            <td class="border-0">{{ __('crud.other.no_model_found', ['model' => trans_choice('models.game', 1)]) }}</td>
         </tr>
         @endif
     </table>

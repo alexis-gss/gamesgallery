@@ -38,9 +38,9 @@
                     @elseif($activitylogModel->is_console)
                         {{ __('Utilisateur dans la console') }}
                     @elseif($activitylogModel->is_anonymous)
-                    {{ __('texts.bo.other.user_anonym') }}
+                    {{ __('bo_other_user_anonym') }}
                     @else
-                    {{ __('texts.bo.other.user_deleted') }}
+                    {{ __('bo_other_user_deleted') }}
                     @endif
                 </td>
                 @php

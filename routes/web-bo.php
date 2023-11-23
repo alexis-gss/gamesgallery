@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 Route::prefix('bo')
     ->name('bo.')
+    ->middleware('lang')
     ->group(
         function () {
             // * AUTHENTICABLE ROUTES
-            Route::middleware([])
-                ->namespace('\App\Http\Controllers\Bo')
+            Route::namespace('\App\Http\Controllers\Bo')
                 ->group(function () {
                     Auth::routes(
                         [
@@ -92,6 +92,10 @@ Route::prefix('bo')
                     // * ACTIVITY LOGS.
                     Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
                 });
+
+            // * CHANGE LANGUAGES.
+            Route::post('/lang/set', [Controller::class, 'setLang'])->name('lang.set');
+
             // * BOOTSTRAP THEMES.
             Route::post('theme/set', [Controller::class, 'setTheme'])->name('theme.set');
         }

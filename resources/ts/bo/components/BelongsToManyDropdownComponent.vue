@@ -21,7 +21,7 @@
         @tags-changed="changedTags"
         @click.prevent="getPublishedGamesInNotRanking"
         :max-tags="6"
-        :placeholder="intPlaceholder ?? __('texts.bo.other.taggable_add')"
+        :placeholder="intPlaceholder ?? __('bo_other_taggable_add')"
       />
     </div>
     <template
@@ -50,9 +50,9 @@ import type VueTagsInput from "@sipec/vue3-tags-input";
 import { VueTagsInput as VueTagsInputCls } from "@sipec/vue3-tags-input";
 import slugify from "slugify";
 import { defineComponent } from "vue";
-import error from "../../modules/error";
-import route from "../../modules/route";
-import trans from "../../modules/trans";
+import error from "./../../modules/error";
+import route from "./../../modules/route";
+import trans from "./../../modules/trans";
 
 export default defineComponent({
   name: "BelongsToManyDropdownComponent",

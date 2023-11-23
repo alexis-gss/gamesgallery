@@ -103,6 +103,12 @@ body {
             visibility: hidden;
         }
     }
+
+    &-lang {
+        z-index: #{$zindex-fixed};
+        bottom: 1rem;
+        left: 4.5rem;
+    }
 }
 
 .list-group-item {

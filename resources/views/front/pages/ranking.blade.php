@@ -1,7 +1,7 @@
 @extends('front.layout', ['brParam' => $rankModels])
 
-@section('title', __('texts.fo.default_title'))
-@section('description', __('texts.fo.default_description'))
+@section('title', __('fo_default_title'))
+@section('description', __('fo_default_description'))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -10,20 +10,20 @@
         <div class="col-12">
             <div class="my-5">
                 <h1 class="w-fit title-font-regular text-center position-relative mx-auto mb-3 px-5 py-1">
-                    {{ __('Ranking') }}
+                    {{ __('fo_ranking') }}
                     <span class="angles"></span>
                 </h1>
                 <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
                     <a href="{{ route('fo.homepage') }}"
                         class="bg-primary border-0 text-white rounded-2 px-2 text-decoration-none"
-                        title="{{ __('texts.bo.other.back_home') }}"
+                        title="{{ __('bo_other_back_home') }}"
                         data-bs="tooltip"
                         data-bs-placement="top">
                         <i class="fa fa-arrow-left"></i>
                     </a>
                     <span class="mx-1">-</span>
                     <p class="bg-primary text-white rounded-2 px-2 py-0 m-0">
-                        {{ Str::of(__('texts.fo.ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
+                        {{ Str::of(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
                     </p>
                 </div>
             </div>

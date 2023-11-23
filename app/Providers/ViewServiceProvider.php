@@ -43,18 +43,12 @@ class ViewServiceProvider extends ServiceProvider
                 Schema::hasTable('activity_logs') and
                 Schema::hasTable('ranks')
             ) {
-                $globalGames      = Game::query()->with('pictures')->orderBy('name', 'ASC')->get();
-                $globalFolders    = Folder::query()->with('games')->orderBy('name', 'ASC')->get();
-                $globalTags       = Tag::query()->with('games')->orderBy('name', 'ASC')->get();
-                $globalUsers      = User::query()->orderBy('last_name', 'ASC')->get();
-                $globalActivities = ActivityLog::query()->with('user')->get();
-                $globalRanks      = Rank::query()->orderBy('rank', 'ASC')->get();
-                View::share('globalGames', $globalGames);
-                View::share('globalFolders', $globalFolders);
-                View::share('globalTags', $globalTags);
-                View::share('globalUsers', $globalUsers);
-                View::share('globalActivities', $globalActivities);
-                View::share('globalRanks', $globalRanks);
+                View::share('globalGames', Game::query()->with('pictures')->orderBy('name', 'ASC')->get());
+                View::share('globalFolders', Folder::query()->with('games')->orderBy('name', 'ASC')->get());
+                View::share('globalTags', Tag::query()->with('games')->orderBy('name', 'ASC')->get());
+                View::share('globalUsers', User::query()->orderBy('last_name', 'ASC')->get());
+                View::share('globalActivities', ActivityLog::query()->with('user')->get());
+                View::share('globalRanks', Rank::query()->orderBy('rank', 'ASC')->get());
             }
 
             // * FORCE BOOTSTRAP PAGINATOR (or custom if in front)

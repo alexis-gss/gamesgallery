@@ -1,7 +1,7 @@
 @extends('back.layout', ['brParam' => $gameModel])
 
-@section('title', __('crud.meta.creation_model', ['model' => __('models.game')]))
-@section('description', __('crud.meta.creation_model_desc', ['model' => __('models.game')]))
+@section('title', __('crud.meta.creation_model', ['model' => trans_choice('models.game', 1)]))
+@section('description', __('crud.meta.creation_model_desc', ['model' => trans_choice('models.game', 1)]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,7 +11,7 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.list_all', ['model' => Str::of(__('models.game'))->plural()]) }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', 2)]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
@@ -23,7 +23,7 @@
             class="btn btn-primary"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.save', ['model' => __('models.game')]) }}">
+            title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
             <i class="fa-solid fa-floppy-disk"></i>
         </button>
         @endcan
@@ -42,7 +42,7 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.actions_model.save', ['model' => __('models.game')]) }}">
+                title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>

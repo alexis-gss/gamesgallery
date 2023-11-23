@@ -5,7 +5,7 @@
         var chartActivities = window.Echarts.init(document.getElementById('chart-activities'), 'royal');
         var optionActivities = {
             title: {
-                text: 'Lastest activities',
+                text: @json(Str::of(__('bo_other_stats_latest_activities'))->ucFirst()->value()),
                 left: 'center',
                 textStyle: {
                     fontSize: '16px',
@@ -65,28 +65,28 @@
                 type: 'value'
             },
             series: [{
-                    name: 'Games',
+                    name: @json(Str::of(trans_choice('models.game', 2))->ucFirst()->value()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Game']),
                     color: '#0D6EFD',
                 },
                 {
-                    name: 'Folders',
+                    name: @json(Str::of(__('models.folder'))->plural()->ucFirst()->value()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Folder']),
                     color: '#dc3545',
                 },
                 {
-                    name: 'Tags',
+                    name: @json(Str::of(__('models.tag'))->plural()->ucFirst()->value()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Tag']),
                     color: '#0dcaf0',
                 },
                 {
-                    name: 'Users',
+                    name: @json(Str::of(__('models.user'))->plural()->ucFirst()->value()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\User']),

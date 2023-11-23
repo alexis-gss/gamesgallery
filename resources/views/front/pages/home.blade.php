@@ -1,7 +1,7 @@
 @extends('front.layout')
 
-@section('title', __('texts.fo.default_title'))
-@section('description', __('texts.fo.default_description'))
+@section('title', __('fo_default_title'))
+@section('description', __('fo_default_description'))
 
 @section('content')
 <main class="main-home d-flex justify-content-center align-items-center m-0 p-0 mx-md-5 px-md-5">
@@ -15,7 +15,7 @@
         </div>
         <div class="col-12">
             <div class="main-home-latest d-flex justify-content-start align-items-center">
-                <p class="fw-bold m-0">{{ __('texts.fo.last_games_added') }}</p>
+                <p class="fw-bold m-0">{{ __('fo_last_games_added') }}</p>
                 <p class="d-inline-block text-truncate m-0">
                     {{ $gamesLatestString }}</p>
                 </p>

@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
     "login"                => "Login",
     "login_btn"            => "To login",
-    "login_mail"           => "E-Mail address",
+    "login_mail"           => "E-mail address",
     "login_password"       => "Password",
     "placeholder_email"    => "Type the e-mail",
     "placeholder_password" => "Type the password",

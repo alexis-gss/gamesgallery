@@ -1,7 +1,7 @@
 @extends('back.layout', ['brParam' => $gameModel])
 
-@section('title', __('crud.meta.edition_model', ['model' => __('models.game')]))
-@section('description', __('crud.meta.edition_model_desc', ['model' => __('models.game')]))
+@section('title', __('crud.meta.edition_model', ['model' => trans_choice('models.game', 1)]))
+@section('description', __('crud.meta.edition_model_desc', ['model' => trans_choice('models.game', 1)]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
@@ -11,7 +11,7 @@
             class="btn btn-primary text-decoration-none m-0"
             data-bs="tooltip"
             data-bs-placement="top"
-            title="{{ __('crud.actions_model.list_all', ['model' => Str::of(__('models.game'))->plural()]) }}">
+            title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', 2)]) }}">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
@@ -30,7 +30,7 @@
                     target="_blank"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('crud.actions_model.show', ['model' => __('models.game')]) }}">
+                    title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}">
                     <i class="fa-solid fa-eye"></i>
                 </a>
                 @endcan
@@ -39,7 +39,7 @@
                     href="{{ route('bo.games.duplicate', ['game' => $gameModel]) }}"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('crud.actions_model.duplicate', ['model' => __('models.game')]) }}">
+                    title="{{ __('crud.actions_model.duplicate', ['model' => trans_choice('models.game', 1)]) }}">
                     <i class="fa-solid fa-copy"></i>
                 </a>
                 @endcan
@@ -49,7 +49,7 @@
                     class="btn btn-primary"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('crud.actions_model.save', ['model' => __('models.game')]) }}">
+                    title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </button>
                 @endcan
@@ -58,7 +58,7 @@
                     class="btn btn-danger"
                     data-bs="tooltip"
                     data-bs-placement="top"
-                    title="{{ __('crud.actions_model.delete', ['model' => __('models.game')]) }}">
+                    title="{{ __('crud.actions_model.delete', ['model' => trans_choice('models.game', 1)]) }}">
                     <i class="fa-solid fa-trash"></i>
                 </button>
                 @endcan
@@ -78,7 +78,7 @@
                 class="btn btn-primary"
                 data-bs="tooltip"
                 data-bs-placement="top"
-                title="{{ __('crud.actions_model.save', ['model' => __('models.game')]) }}">
+                title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
                 <i class="fa-solid fa-floppy-disk"></i>
             </button>
         </div>

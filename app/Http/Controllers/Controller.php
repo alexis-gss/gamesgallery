@@ -256,4 +256,21 @@ class Controller extends BaseController
         }
         return redirect()->back()->with('success', __('crud.messages.theme_updated'));
     }
+
+    /**
+     * Set the current locale.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setLang(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $lang = $request->lang;
+        if (!\in_array($lang, config('app.locales'))) {
+            $lang = config('app.fallback_locale');
+        }
+        app()->setLocale($lang);
+        session()->put('lang', $lang);
+        return redirect()->back()->with('success', __('crud.messages.lang_updated'));
+    }
 }

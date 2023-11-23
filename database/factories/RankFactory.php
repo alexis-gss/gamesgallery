@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Game;
 use App\Models\Rank;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends Factory<\App\Models\Rank>
@@ -24,6 +26,9 @@ final class RankFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        $gamesUnrank = Game::query()->whereNotIn('id', DB::table('ranks')->pluck('game_id'))->get();
+        return [
+            'game_id' => (count($gamesUnrank)) ? $gamesUnrank->random()->getKey() : null,
+        ];
     }
 }

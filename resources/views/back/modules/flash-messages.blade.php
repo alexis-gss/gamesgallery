@@ -3,7 +3,7 @@
 <div class="alert alert-success alert-dismissible fade show w-100 m-0 mb-3" role="alert">
     <i class="fa-solid fa-circle-check"></i>
     <strong>{!! nl2br(e($message)) !!}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('texts.bo.other.close') }}"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('bo_other_close') }}"></button>
 </div>
 @endif
 
@@ -11,7 +11,7 @@
 <div class="alert alert-danger alert-dismissible fade show w-100 m-0 mb-3" role="alert">
     <i class="fa-solid fa-circle-xmark"></i>
     <strong>{!! nl2br(e($message)) !!}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('texts.bo.other.close') }}"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('bo_other_close') }}"></button>
 </div>
 @endif
 
@@ -19,7 +19,7 @@
 <div class="alert alert-warning alert-dismissible fade show w-100 m-0 mb-3" role="alert">
     <i class="fa-solid fa-circle-exclamation"></i>
     <strong>{!! nl2br(e($message)) !!}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('texts.bo.other.close') }}"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('bo_other_close') }}"></button>
 </div>
 @endif
 
@@ -27,13 +27,13 @@
 <div class="alert alert-info alert-dismissible fade show w-100 m-0 mb-3" role="alert">
     <i class="fa-solid fa-circle-info"></i>
     <strong>{!! nl2br(e($message)) !!}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('texts.bo.other.close') }}"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('bo_other_close') }}"></button>
 </div>
 @endif
 
 @if (isset($errors) && $errors->any())
 <div class="alert alert-danger alert-dismissible fade show w-100 m-0 mb-3" role="alert">
-    <p class="fw-bold m-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;{{ __('texts.bo.other.errors_list') }}</p>
+    <p class="fw-bold m-0"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;{{ __('bo_other_errors_list') }}</p>
     @if ($errors->any())
     <ul class="list-unstyled m-0">
         @foreach ($errors->all() as $error)
@@ -41,7 +41,7 @@
         @endforeach
     </ul>
     @endif
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('texts.bo.other.close') }}"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('bo_other_close') }}"></button>
 </div>
 @endif
 @endif

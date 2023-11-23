@@ -8,12 +8,13 @@
 <body class="position-relative text-font-regular bg-first container">
     @include('front.partials.github')
 
-    @if (!request()->routeIs('fo.homepage'))
+    @if (request()->routeIs('fo.homepage'))
     <!-- Navigation -->
+    @include('front.partials.btn-ranking')
+    @include('front.partials.btn-lang')
+    @else
     @include('front.layouts.nav')
     @include('front.partials.btn-scroll')
-    @else
-    @include('front.partials.btn-ranking')
     @endif
 
     <div data-aos="fade">

@@ -18,7 +18,7 @@
                 'name'        => 'ranks',
                 'value'       => [],
                 'items'       => $gameModels,
-                'placeholder' => __('texts.bo.other.rank_add'),
+                'placeholder' => __('bo_other_rank_add'),
             ];
             @endphp
             <div id="belongs-to-many-dropdown" data-json='@json($data)' class="w-100"></div>

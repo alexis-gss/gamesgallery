@@ -1,17 +1,17 @@
 <template>
   <div class="d-flex flex-row justify-content-around align-items-center w-100">
     <span>
-      {{ __("texts.bo.other.word_counter_words") }}&nbsp;:&nbsp;<b>{{ intWords }}</b>
+      {{ __("bo_other_word_counter_words") }}&nbsp;:&nbsp;<b>{{ intWords }}</b>
     </span>
     <span>
-      {{ __("texts.bo.other.word_counter_characters") }}&nbsp;:&nbsp;<b>{{ intChars }}</b>
+      {{ __("bo_other_word_counter_characters") }}&nbsp;:&nbsp;<b>{{ intChars }}</b>
     </span>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import trans from "../../modules/trans";
+import trans from "./../../modules/trans";
 
 export default defineComponent({
   name: "WordCounterComponent",

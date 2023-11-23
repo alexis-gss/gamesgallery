@@ -34,6 +34,7 @@ return [
         'publish_status_saved'            => 'Change of publication status successful !',
         'right'                           => 'You don\'t have the rights to access this part !',
         'theme_updated'                   => 'The theme has been updated !',
+        'lang_updated'                    => 'The lang has been updated !',
     ],
 
     'search' => [
