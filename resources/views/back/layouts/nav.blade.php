@@ -1,4 +1,4 @@
-<nav id="navbar" class="navbar navbar-expand-md position-fixed fixed-top bg-body-tertiary shadow-sm">
+<nav id="navbar" class="navbar navbar-expand-xxl position-fixed fixed-top bg-body-tertiary shadow-sm">
     <div class="container">
         <a class="navbar-brand"
             href="{{ route('fo.games.index') }}"

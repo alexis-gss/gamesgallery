@@ -6,7 +6,7 @@
 </head>
 
 <body class="position-relative text-font-regular bg-first container">
-    @include('front.partials.github')
+    @include('front.partials.btn-github')
     @include('front.partials.btn-lang')
 
     @if (!request()->routeIs('fo.ranks.index'))

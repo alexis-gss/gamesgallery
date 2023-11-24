@@ -15,8 +15,8 @@
                 </h1>
                 <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
                     <a href="{{ route('fo.games.index') }}"
-                        class="bg-primary border-0 text-white rounded-2 px-2 text-decoration-none"
-                        title="{{ __('bo_other_back_home') }}"
+                        class="btn btn-secondary bg-primary border-0 text-white rounded-2 px-2 py-0 text-decoration-none"
+                        title="{{ __('fo_back_to_homepage', ['model' => trans_choice('models.game', 2)]) }}"
                         data-bs="tooltip"
                         data-bs-placement="top">
                         <i class="fa fa-arrow-left"></i>
@@ -31,7 +31,7 @@
             <ul class="bg-secondary rounded p-2">
                 @foreach ($rankModels as $key => $rankModel)
                 <li class="list-group-item border-0 rounded-2 bg-transparent p-0">
-                    <a href="{{ route('fo.games.show', $rankModel->game->slug) }}" class="position-relative d-flex flex-row justify-content-start align-items-center btn border-0 text-white text-decoration-none w-100 p-1">
+                    <a href="{{ route('fo.games.show', $rankModel->game->slug) }}" class="btn btn-secondary position-relative d-flex flex-row justify-content-start align-items-center btn border-0 text-white text-decoration-none w-100 p-1">
                         <div class="d-flex flex-row justify-content-start align-items-center">
                             <span class="list-group-item-span z-0" style="background-color: {{ $rankModel->game->folder()->firstOrFail()->color }};"></span>
                             <span class="title-font-regular ps-1 z-1">

@@ -31,25 +31,19 @@ $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
                 {{ $colname }}
             </span>
             @if(!session("$routeName.sort_way") or session("$routeName.sort_col") !== $col or (session("$routeName.sort_way") === 'desc' and session("$routeName.sort_col") === $col))
-            <a class="text-decoration-none ms-1"
-                href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'asc', 'rst' => null])) }}">
-                <button
-                    class="btn btn-sm btn-outline-secondary"
-                    title="{{ __('crud.filter.sort_descending', ['name' => Str::of($colname)->lower()]) }}"
-                    data-bs="tooltip">
-                    <i class="fas fa-arrow-down 2xs"></i>
-                </button>
+            <a class="btn btn-sm btn-outline-secondary text-decoration-none ms-1"
+                href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'asc', 'rst' => null])) }}"
+                title="{{ __('crud.filter.sort_descending', ['name' => Str::of($colname)->lower()]) }}"
+                data-bs="tooltip">
+                <i class="fas fa-arrow-down 2xs"></i>
             </a>
             @endif
             @if(!session("$routeName.sort_way") or session("$routeName.sort_col") !== $col or (session("$routeName.sort_way") === 'asc' and session("$routeName.sort_col") === $col))
-            <a class="text-decoration-none ms-1"
-                href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'desc', 'rst' => null])) }}">
-                <button
-                    class="btn btn-sm btn-outline-secondary"
-                    title="{{ __('crud.filter.sort_ascending', ['name' => Str::of($colname)->lower()]) }}"
-                    data-bs="tooltip">
-                    <i class="fas fa-arrow-up 2xs"></i>
-                </button>
+            <a class="btn btn-sm btn-outline-secondary text-decoration-none ms-1"
+                href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'desc', 'rst' => null])) }}"
+                title="{{ __('crud.filter.sort_ascending', ['name' => Str::of($colname)->lower()]) }}"
+                data-bs="tooltip">
+                <i class="fas fa-arrow-up 2xs"></i>
             </a>
             @endif
         </div>

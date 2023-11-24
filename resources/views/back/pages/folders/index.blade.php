@@ -39,7 +39,7 @@
                     <div class="btn-sm preview-color mx-auto"
                         title="{{ __('bo_tooltip_color_details', ['color' => $folderModel->color]) }}"
                         data-bs="tooltip">
-                        <span class="d-block w-100 h-100 rounded-1" style="background-color:{{ $folderModel->color }}"></span>
+                        <span class="d-block w-100 h-100 rounded-1" style="background-color:{{ $folderModel->color }}" tabindex="0"></span>
                     </div>
                 </td>
                 @include('back.modules.change-published-status', [

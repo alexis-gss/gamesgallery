@@ -115,5 +115,6 @@
     "fo_ranking_details": "Top :number favorite video games",
     "fo_homepage": "Homepage",
     "fo_ranking": "Ranking",
+    "fo_back_to_homepage": "Back to the :model list",
     "global_acces_github": "Access to the Github's repository"
 }

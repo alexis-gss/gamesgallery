@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(!$this->app->environment('production'));
 
         // * HTTPS FIX
-        URL::forceScheme('https');
+        // URL::forceScheme('https');
 
         // * LOCAL FORCE eg: for Carbon
         setlocale(LC_ALL, \sprintf(

@@ -20,7 +20,7 @@
           >
           <button
             @click="clearInputSearch()"
-            class="btn d-flex align-items-center text-white border-0"
+            class="btn btn-primary d-flex align-items-center text-white border-0"
             type="button"
           >
             <i class="fa-solid fa-xmark" />
@@ -101,7 +101,7 @@
           >
             <a
               :href="getGameRoute(game.slug)"
-              class="position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-white text-decoration-none w-100 p-2"
+              class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-white text-decoration-none w-100 p-2"
             >
               <div
                 class="d-flex flex-row justify-content-start align-items-center"
