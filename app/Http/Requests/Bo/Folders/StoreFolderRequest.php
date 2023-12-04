@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Bo\Folders;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class StoreFolderRequest extends FormRequest
@@ -14,7 +15,7 @@ class StoreFolderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('backend')->check();
+        return Gate::check('update', $this->route('folder'));
     }
 
     /**

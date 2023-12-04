@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Bo\Tags;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class StoreTagRequest extends FormRequest
@@ -14,7 +15,7 @@ class StoreTagRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('backend')->check();
+        return Gate::check('update', $this->route('tag'));
     }
 
     /**

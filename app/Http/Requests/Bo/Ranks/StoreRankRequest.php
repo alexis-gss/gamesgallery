@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Bo\Ranks;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StoreRankRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreRankRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('backend')->check();
+        return Gate::check('update', $this->route('rank'));
     }
 
     /**
