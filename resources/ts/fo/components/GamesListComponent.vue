@@ -142,6 +142,7 @@ import route from "../../modules/route";
 import trans from "../../modules/trans";
 
 export default defineComponent({
+  name: "GamesListComponent",
   mixins: [route, trans],
   components: {
     simplebar,

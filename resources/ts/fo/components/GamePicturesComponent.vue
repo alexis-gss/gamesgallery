@@ -201,6 +201,7 @@ import { defineComponent } from "vue";
 import trans from "./../../modules/trans";
 
 export default defineComponent({
+  name: "GamePicturesComponent",
   mixins: [trans],
   data(): {
     gameName: string;
