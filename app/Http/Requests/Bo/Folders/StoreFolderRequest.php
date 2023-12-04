@@ -27,7 +27,7 @@ class StoreFolderRequest extends FormRequest
     {
         $this->merge([
             'slug'      => Str::of(strip_tags($this->name))->slug()->value(),
-            'published' => $this->published ? true : false
+            'published' => $this->boolean('published'),
         ]);
     }
 

@@ -27,7 +27,7 @@ class StoreTagRequest extends FormRequest
     {
         $this->merge([
             'slug'      => Str::of($this->name)->slug()->value(),
-            'published' => $this->published ? true : false
+            'published' => $this->boolean('published')
         ]);
     }
 
