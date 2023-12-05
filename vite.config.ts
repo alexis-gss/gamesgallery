@@ -1,8 +1,8 @@
-import legacy from "@vitejs/plugin-legacy";
 import vue from "@vitejs/plugin-vue";
 import laravel from "laravel-vite-plugin";
 import path from "path";
 import { defineConfig } from "vite";
+import babel from "vite-plugin-babel";
 import checker from "vite-plugin-checker";
 import eslint from "vite-plugin-eslint";
 import stylelint from "vite-plugin-stylelint";
@@ -17,9 +17,16 @@ export default defineConfig({
                 chunkFileNames: `assets/${
                     process.env.NODE_ENV === "local" ? "[name]-" : ""
                 }[hash].js`,
-                assetFileNames: `assets/${
-                    process.env.NODE_ENV === "local" ? "[name]-" : ""
-                }[hash].[ext]`,
+                assetFileNames: (chunk) => {
+                    if (
+                        String(chunk.name).endsWith("mail-theme.scss") ||
+                        chunk.name === "mail-theme.css"
+                    ) {
+                        return "vendor/mail/html/themes/default.[ext]";
+                    }
+                    return `assets/${process.env.NODE_ENV === "local" ? "[name]-" : ""
+                    }[hash].[ext]`;
+                },
             },
         },
         chunkSizeWarningLimit: 700,
@@ -92,13 +99,14 @@ export default defineConfig({
             failOnWarning: false,
             failOnError: false,
         }),
+        babel({
+            babelConfig: {
+                targets: "last 3 version, not dead, >0.3%"
+            }
+        }),
         vue({
             isProduction: process.env.NODE_ENV !== "local" ? true : false,
             exclude: ["node_modules", "vendor"],
-        }),
-        legacy({
-            targets: "last 3 version, not dead, >0.3%",
-            renderLegacyChunks: false,
         }),
     ],
     resolve: {
