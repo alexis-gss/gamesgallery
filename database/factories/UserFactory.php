@@ -24,7 +24,7 @@ final class UserFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $published = fake()->boolean(75);
         return [

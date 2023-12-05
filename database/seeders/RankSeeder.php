@@ -14,7 +14,7 @@ class RankSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Rank::factory(10)->make()->each(function (Rank $rank, int $key) {
             $rank->rank    = $key + 1;

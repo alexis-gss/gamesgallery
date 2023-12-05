@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         User::factory(5)->make()->each(function (User $user) {
             $user->picture = FileStorageHelper::storeFile(

@@ -12,7 +12,7 @@ class TagSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Tag::factory(12)->create();
     }

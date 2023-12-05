@@ -24,7 +24,7 @@ final class GameFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name      = fake()->unique()->word;
         $published = fake()->boolean(75);

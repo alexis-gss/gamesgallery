@@ -12,7 +12,7 @@ class FolderSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Folder::factory(12)->create();
     }
