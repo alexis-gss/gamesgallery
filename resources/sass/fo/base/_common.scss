@@ -1,40 +1,40 @@
 body {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .main {
-  &-home {
-    min-height: calc(100vh - 2rem);
+    &-home {
+        min-height: calc(100vh - 2rem);
 
-    &-latest {
-      height: 2rem;
+        &-latest {
+            height: 2rem;
 
-      .fw-bold {
-        min-width: 10.4rem;
-      }
+            .fw-bold {
+                min-width: 10.4rem;
+            }
+        }
     }
-  }
 
-  &-page {
-    min-height: calc(100vh - 10rem - 3rem);
-  }
+    &-page {
+        min-height: calc(100vh - 10rem - 3rem);
+    }
 }
 
 .angles {
-  position: absolute;
-  z-index: 0;
-  background:
-    linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 0,
-    linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 0 0,
-    linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 0,
-    linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 100% 0,
-    linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 100%,
-    linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 100% 100%,
-    linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 100%,
-    linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 0 100%;
-  background-repeat: no-repeat;
-  background-size: 7px 7px;
-  inset: 0;
+    position: absolute;
+    z-index: 0;
+    background:
+        linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 0,
+        linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 0 0,
+        linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 0,
+        linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 100% 0,
+        linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 100%,
+        linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 100% 100%,
+        linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 100%,
+        linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 0 100%;
+    background-repeat: no-repeat;
+    background-size: 7px 7px;
+    inset: 0;
 }
 
 .github-icon {
@@ -106,34 +106,34 @@ body {
 }
 
 .list-group-item {
-  span {
-    z-index: 5;
-  }
+    span {
+        z-index: 5;
+    }
 
-  &-span {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 0.2rem;
-    height: 100%;
-  }
+    &-span {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 0.2rem;
+        height: 100%;
+    }
 
-  &:hover &-span {
-    width: 100%;
-  }
+    &:hover &-span {
+        width: 100%;
+    }
 }
 
 .show-image {
-  z-index: 10;
-  transform: scale(1) !important;
+    z-index: 10;
+    transform: scale(1) !important;
 }
 
 .ratio img {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-  color: #{$color-light};
+    color: #{$color-light};
 }

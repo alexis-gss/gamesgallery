@@ -1,53 +1,53 @@
 .nav {
-  z-index: #{$zindex-fixed};
-  bottom: 1rem;
-  width: 30rem !important;
-  max-width: calc(100% - 2rem);
+    z-index: #{$zindex-fixed};
+    bottom: 1rem;
+    width: 30rem !important;
+    max-width: calc(100% - 2rem);
 
-  .game-selected {
-    font-style: italic;
+    .game-selected {
+        font-style: italic;
 
-    svg {
-      width: 16px;
-    }
-  }
-
-  .simplebar-content {
-    height: 100%;
-  }
-
-  &-modal {
-    overflow: hidden;
-    max-width: 100%;
-    max-height: #{$fo-menu-height};
-    transition: #{$time-transition-global};
-
-    &-hidden {
-      overflow: hidden;
-      max-height: 0;
-      margin: 0 !important;
-    }
-  }
-
-  &-games {
-    &-list {
-      height: calc(#{$fo-menu-height} - 8rem);
-      overflow-y: auto;
+        svg {
+            width: 16px;
+        }
     }
 
-    a:hover svg {
-      width: 16px;
+    .simplebar-content {
+        height: 100%;
     }
-  }
 
-  &-filter {
-    z-index: 1020;
-    opacity: 0.25;
-    transition: 0.3s;
+    &-modal {
+        overflow: hidden;
+        max-width: 100%;
+        max-height: #{$fo-menu-height};
+        transition: #{$time-transition-global};
 
-    &-hidden {
-      opacity: 0;
-      visibility: hidden;
+        &-hidden {
+            overflow: hidden;
+            max-height: 0;
+            margin: 0 !important;
+        }
     }
-  }
+
+    &-games {
+        &-list {
+            height: calc(#{$fo-menu-height} - 8rem);
+            overflow-y: auto;
+        }
+
+        a:hover svg {
+            width: 16px;
+        }
+    }
+
+    &-filter {
+        z-index: 1020;
+        opacity: 0.25;
+        transition: 0.3s;
+
+        &-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
 }

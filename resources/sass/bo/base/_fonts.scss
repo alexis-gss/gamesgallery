@@ -1,10 +1,10 @@
 $font-path: '/resources/assets/fonts';
 
 @font-face {
-  font-family: rubik-regular;
-  font-style: normal;
-  font-weight: 400;
-  src:
-    url('#{$font-path}/RubikMonoOne-Regular.ttf')
-    format('truetype');
+    font-family: rubik-regular;
+    font-style: normal;
+    font-weight: 400;
+    src:
+        url('#{$font-path}/RubikMonoOne-Regular.ttf')
+        format('truetype');
 }

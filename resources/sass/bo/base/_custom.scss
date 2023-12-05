@@ -1,124 +1,126 @@
 svg {
-  vertical-align: sub !important;
+    vertical-align: sub !important;
 }
 
-main {
-  min-height: calc(100vh - #{$bo-header-height} - #{$bo-footer-height});
+body {
+    > main {
+        min-height: calc(100vh - #{$bo-header-height} - #{$bo-footer-height});
+    }
+
+    > footer {
+        height: #{$bo-footer-height};
+        box-shadow: 0 -0.125rem 0.25rem rgb(0 0 0 / 7.5%) !important;
+    }
 }
 
 .container-fluid {
-  margin-top: #{$bo-header-height};
+    margin-top: #{$bo-header-height};
 }
 
 #navbar {
-  height: #{$bo-header-height};
-}
-
-#footer {
-  height: #{$bo-footer-height};
-  box-shadow: 0 -0.125rem 0.25rem rgb(0 0 0 / 7.5%) !important;
+    height: #{$bo-header-height};
 }
 
 .profile-picture {
-  width: 2rem;
-  height: 2rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .password-btn {
-  width: 2.9rem;
+    width: 2.9rem;
 }
 
 .btn-md {
-  height: 38px;
+    height: 38px;
 }
 
 .btn-sm {
-  height: 31px;
+    height: 31px;
 }
 
 .preview-color {
-  width: 32px;
+    width: 32px;
 }
 
 .navbar .dropdown-menu-color,
 .pagination-custom .dropdown-menu {
-  overflow: auto;
-  min-width: 6rem;
-  max-height: 178px;
+    overflow: auto;
+    min-width: 6rem;
+    max-height: 178px;
 }
 
 .table {
-  &-fix-action {
-    th:last-child,
-    td:last-child {
-      position: sticky;
-      right: 0;
-      width: 0;
-      background-color: rgb(var(--bs-tertiary-bg-rgb));
-      color: rgb(var(--bs-body-color));
-      white-space: nowrap;
+    &-fix-action {
+        th:last-child,
+        td:last-child {
+            position: sticky;
+            right: 0;
+            width: 0;
+            background-color: rgb(var(--bs-tertiary-bg-rgb));
+            color: rgb(var(--bs-body-color));
+            white-space: nowrap;
+        }
     }
-  }
 
-  &-col-sorter {
-    height: 3rem;
-  }
+    &-col-sorter {
+        height: 3rem;
+    }
 }
 
 .changelog {
-  height: 48vh;
+    height: 48vh;
 }
 
 .card {
-  &-stats {
-    height: 10rem;
-  }
+    &-stats {
+        height: 10rem;
+    }
 
-  .flex-fill {
-    min-width: 50%;
-  }
+    .flex-fill {
+        min-width: 50%;
+    }
 
-  &-filter {
-    width: 5rem;
-    background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, var(--bs-primary-bg-rgb) 100%);
-  }
+    &-filter {
+        width: 5rem;
+        background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, var(--bs-primary-bg-rgb) 100%);
+    }
 
-  &-auth {
-    max-width: 50rem;
-  }
+    &-auth {
+        max-width: 50rem;
+    }
 
-  &-pellet {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-  }
+    &-pellet {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+    }
 }
 
 .charts-sm {
-  height: 300px;
+    height: 300px;
 }
 
 .charts-md {
-  height: 500px;
+    height: 500px;
 }
 
 .title-font-regular {
-  font-family: #{$font-default-title};
+    font-family: #{$font-default-title};
 }
 
 .angles {
-  position: absolute;
-  z-index: 0;
-  background:
-    linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 0,
-    linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 0 0,
-    linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 0,
-    linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 100% 0,
-    linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
-    linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
-    linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 100%,
-    linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 0 100%;
-  background-repeat: no-repeat;
-  background-size: 7px 7px;
-  inset: 0;
+    position: absolute;
+    z-index: 0;
+    background:
+        linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 0,
+        linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 0 0,
+        linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 0,
+        linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 100% 0,
+        linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
+        linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
+        linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 100%,
+        linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 0 100%;
+    background-repeat: no-repeat;
+    background-size: 7px 7px;
+    inset: 0;
 }
