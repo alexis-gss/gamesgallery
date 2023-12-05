@@ -39,7 +39,7 @@
                 <td class="text-center align-middle">{{ $userModel->first_name }}</td>
                 <td class="text-center align-middle">{{ $userModel->last_name }}</td>
                 <td class="text-center align-middle">
-                    @if(auth('backend')->user()->id === $userModel->id || Gate::check('isConceptor'))
+                    @if(auth('backend')->user()->getRouteKey() === $userModel->getRouteKey() || Gate::check('isConceptor'))
                     {{ $userModel->email }}
                     @else
                     @include('back.modules.user-right')

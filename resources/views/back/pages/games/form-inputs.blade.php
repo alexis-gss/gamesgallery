@@ -39,7 +39,7 @@
                     </label>
                     <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button">
                         @foreach ($globalFolders as $folder)
-                        <option value="{{ $folder->id }}" @if ($folder->id == $gameModel->folder_id) selected @endif>
+                        <option value="{{ $folder->getRouteKey()  }}" @if ($folder->getRouteKey() == $gameModel->folder_id) selected @endif>
                             {{ $folder->name }}
                         </option>
                         @endforeach
