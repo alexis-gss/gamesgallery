@@ -1,7 +1,7 @@
 <nav id="navbar" class="navbar navbar-expand-md position-fixed fixed-top bg-body-tertiary shadow-sm">
     <div class="container">
         <a class="navbar-brand"
-            href="{{ route('fo.homepage') }}"
+            href="{{ route('fo.games.index') }}"
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="bottom"

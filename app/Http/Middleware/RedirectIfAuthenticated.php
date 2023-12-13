@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
             if (auth($guard)->check()) {
                 switch ($guard) {
                     case 'frontend':
-                        return \redirect()->route('fo.homepage');
+                        return \redirect()->route('fo.games.index');
                     case 'backend':
                         if (!$request->routeIs('bo.*')) {
                             continue;

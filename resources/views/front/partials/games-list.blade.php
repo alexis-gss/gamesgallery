@@ -9,4 +9,4 @@ $dataGame = [
     'allTags'    => $tagModels,
 ];
 @endphp
-<div class="games-list @if (Route::is('fo.homepage')) bg-secondary rounded-2 p-2 @else mt-2 @endif" data-json='@json($dataGame)'></div>
+<div class="games-list @if (request()->routeIs('fo.games.index')) bg-secondary rounded-2 p-2 @else mt-2 @endif" data-json='@json($dataGame)'></div>

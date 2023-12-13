@@ -73,7 +73,7 @@ class GameController extends Controller
                 'tagModels'    => $this->tagModels,
             ]);
         } else {
-            return redirect()->route('fo.homepage');
+            return redirect()->route('fo.games.index');
         } //end if
     }
 

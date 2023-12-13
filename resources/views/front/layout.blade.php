@@ -7,12 +7,13 @@
 
 <body class="position-relative text-font-regular bg-first container">
     @include('front.partials.github')
-
-    @if (request()->routeIs('fo.homepage'))
-    <!-- Navigation -->
-    @include('front.partials.btn-ranking')
     @include('front.partials.btn-lang')
-    @else
+
+    @if (!request()->routeIs('fo.ranks.index'))
+    @include('front.partials.btn-ranking')
+    @endif
+
+    @if (!request()->routeIs('fo.games.index'))
     @include('front.layouts.nav')
     @include('front.partials.btn-scroll')
     @endif

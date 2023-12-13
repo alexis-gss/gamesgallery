@@ -14,7 +14,7 @@
                     <span class="angles"></span>
                 </h1>
                 <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
-                    <a href="{{ route('fo.homepage') }}"
+                    <a href="{{ route('fo.games.index') }}"
                         class="bg-primary border-0 text-white rounded-2 px-2 text-decoration-none"
                         title="{{ __('bo_other_back_home') }}"
                         data-bs="tooltip"

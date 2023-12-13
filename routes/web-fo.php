@@ -9,7 +9,7 @@ Route::name('fo.')
     ->group(function () {
         // * GAMES
         Route::get('/', [GameController::class, 'index'])
-            ->name('homepage');
+            ->name('games.index');
         Route::get('/game/{slug}', [GameController::class, 'show'])
             ->where('slug', '^[a-zA-Z0-9-]*$')
             ->name('games.show');

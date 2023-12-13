@@ -5,18 +5,18 @@ use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator;
 
 // * HOMEPAGE
-Breadcrumbs::for('fo.homepage', function (Generator $trail) {
-    $trail->push(trans('fo_homepage'), route('fo.homepage'));
+Breadcrumbs::for('fo.games.index', function (Generator $trail) {
+    $trail->push(trans('fo_homepage'), route('fo.games.index'));
 });
 
 // * GAMES
 Breadcrumbs::for('fo.games.show', function (Generator $trail, Game $game) {
-    $trail->parent('fo.homepage');
+    $trail->parent('fo.games.index');
     $trail->push($game->name, route('fo.games.show', $game));
 });
 
 // * RANKS
 Breadcrumbs::for('fo.ranks.index', function (Generator $trail) {
-    $trail->parent('fo.homepage');
+    $trail->parent('fo.games.index');
     $trail->push(trans('fo_ranking'));
 });
