@@ -73,7 +73,7 @@
     "bo_other_home_contact": "Si vous avez des problèmes ou si vous avez besoin de plus d'informations, veuillez contacter l'administrateur du projet.",
     "bo_other_stats_latest_model": "Dernier :model ajouté",
     "bo_other_stats_latest_activities": "Dernières activités",
-    "bo_other_stats_model_by_model": ":model1 par :model2",
+    "bo_other_stats_by": "par",
     "bo_other_access_website": "Accès au site web",
     "bo_other_homepage": "Page d'accueil",
     "bo_other_edit_profile": "Profil",

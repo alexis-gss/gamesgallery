@@ -5,10 +5,11 @@
         var chartGamesByFolders = window.Echarts.init(document.getElementById('chart-games-by-folders'), 'royal');
         optionGamesByFolders = {
             title: {
-                text: @json(Str::of(__('bo_other_stats_model_by_model', [
-                    'model1' => Str::of(trans_choice('models.game', 2))->plural()->ucFirst()->value(),
-                    'model2' => Str::of(__('models.folder'))->plural()->ucFirst()->value()
-                ]))->ucFirst()->value()),
+                text: @json(Str::of(trans_choice('models.game', 2))->plural()->ucFirst()->value() .
+                        "\u{00A0}" .
+                        __('bo_other_stats_by') .
+                        "\u{00A0}" .
+                        Str::of(__('models.folder'))->plural()->ucFirst()->value()),
                 left: 'center',
                 textStyle: {
                     fontSize: '16px',
