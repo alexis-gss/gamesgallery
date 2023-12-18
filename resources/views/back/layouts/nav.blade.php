@@ -54,7 +54,7 @@
                         @foreach (\App\Enums\Theme\BootstrapThemeEnum::toArray() as $key => $bootstrapTheme)
                         <input type="radio" class="btn-check" name="theme" id="theme{{ $key }}" value="{{ $bootstrapTheme->value }}">
                         <label class="dropdown-item btn btn-secondary @if ($bootstrapTheme->value === intval(Cache::get('theme'))) active @endif" for="theme{{ $key }}">
-                            {{ $bootstrapTheme->label }}
+                            {{ Str::of($bootstrapTheme->label)->ucFirst() }}
                         </label>
                         @endforeach
                     </form>
