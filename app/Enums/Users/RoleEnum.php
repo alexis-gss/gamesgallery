@@ -16,8 +16,8 @@ enum RoleEnum: int
      * Optionnal labels definition
      */
     private const LABELS = [
-        self::conceptor->name => 'Conceptor',
-        self::admin->name     => 'Administrator',
-        self::visitor->name   => 'Visitor',
+        self::conceptor->name => 'enums.user-role.conceptor',
+        self::admin->name     => 'enums.user-role.admin',
+        self::visitor->name   => 'enums.user-role.visitor',
     ];
 }

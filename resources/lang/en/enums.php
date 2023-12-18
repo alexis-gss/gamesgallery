@@ -7,5 +7,10 @@ return [
         "light"  => "light",
         "dark"   => "dark",
         "custom" => "custom",
+    ],
+    'user-role' => [
+        "conceptor" => "conceptor",
+        "admin"     => "admin",
+        "visitor"   => "visitor",
     ]
 ];

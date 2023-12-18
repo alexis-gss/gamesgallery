@@ -99,7 +99,7 @@
                         data-bs-toggle="dropdown">
                         <div class="d-flex flex-column align-items-end lh-1">
                             <span class="fw-bold">{{ auth('backend')->user()->first_name }}&nbsp;{{ auth('backend')->user()->last_name }}</span>
-                            <small class="text-secondary-body">{{ auth('backend')->user()->role->label() }}</small>
+                            <small class="text-secondary-body">{{ Str::of(auth('backend')->user()->role->label())->ucFirst() }}</small>
                         </div>
                         <div class="profile-picture ms-2 me-1">
                             <img class="w-100 h-100 rounded-circle" src="{{ asset(auth('backend')->user()->picture) }}" alt="{{ auth('backend')->user()->picture_alt }}">
