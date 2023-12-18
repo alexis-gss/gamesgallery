@@ -1,5 +1,5 @@
 <div class="charts-sm w-100" id="chart-activities"></div>
-<script>
+<script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-activities */
         var chartActivities = window.Echarts.init(document.getElementById('chart-activities'), 'royal');

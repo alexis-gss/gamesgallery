@@ -39,7 +39,7 @@
 
 {{-- DEBUG --}}
 @if (config('app.debug'))
-<script nonce="{{ $nonce }}">
+<script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>
     window.vueDebug = true;
 </script>
 @endif

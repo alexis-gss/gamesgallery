@@ -212,7 +212,7 @@
 
 @canAny(['create', 'update'], ($userModel ??\App\Models\User::class))
 @push('scripts')
-<script>
+<script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", () => {
         // Submit button clone.
         const submit = document.getElementById('formSubmit')

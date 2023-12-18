@@ -1,5 +1,5 @@
 <div class="charts-sm w-100" id="chart-games-by-tags"></div>
-<script>
+<script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-games-by-tags */
         var chartGamesByTags = window.Echarts.init(document.getElementById('chart-games-by-tags'), 'royal');

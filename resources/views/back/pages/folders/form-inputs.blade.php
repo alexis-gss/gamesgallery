@@ -93,7 +93,7 @@
 
 @can('update', $folderModel)
 @push('scripts')
-<script>
+<script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", () => {
         // Submit button clone.
         const submit = document.getElementById('formSubmit')

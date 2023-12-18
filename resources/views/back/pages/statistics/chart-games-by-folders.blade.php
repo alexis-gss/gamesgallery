@@ -1,5 +1,5 @@
 <div class="charts-md w-100" id="chart-games-by-folders"></div>
-<script>
+<script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-games-by-folders */
         var chartGamesByFolders = window.Echarts.init(document.getElementById('chart-games-by-folders'), 'royal');

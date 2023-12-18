@@ -1,4 +1,4 @@
-<script @if (isset($nonce)) nonce="{{ $nonce }}" @endif>
+<script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>
     if (!window.__SYSTEM) {
         window.__SYSTEM = {};
     }
