@@ -9,12 +9,9 @@ import {
     faArrowsAltH,
     faArrowsAltV,
     faBan,
-    faBars,
     faCheck,
     faChevronLeft,
     faChevronRight,
-    faCircleArrowDown,
-    faCircleArrowUp,
     faCircleCheck,
     faCircleExclamation,
     faCircleInfo,
@@ -65,7 +62,6 @@ library.add(faCircleInfo);
 library.add(faCircleCheck);
 library.add(faCircleXmark);
 library.add(faXmark);
-library.add(faBars);
 library.add(faCrop);
 library.add(faWandMagic);
 library.add(faSyncAlt);
@@ -73,8 +69,6 @@ library.add(faSearchPlus);
 library.add(faSearchMinus);
 library.add(faArrowLeft);
 library.add(faArrowRight);
-library.add(faCircleArrowUp);
-library.add(faCircleArrowDown);
 library.add(faArrowsAltH);
 library.add(faArrowsAltV);
 library.add(faUndoAlt);
