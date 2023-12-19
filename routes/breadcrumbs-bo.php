@@ -10,8 +10,8 @@ use Diglactic\Breadcrumbs\Generator;
 use Illuminate\Support\Str;
 
 // * AUTH
-Breadcrumbs::for('login', function ($trail) {
-    $trail->parent('fo.homepage');
+Breadcrumbs::for('bo.login', function ($trail) {
+    $trail->parent('fo.games.index');
     $trail->push(__('Connection'), route('bo.login'));
 });
 
