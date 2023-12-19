@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Bo\Statistics\ActivityDateRequest;
 use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
@@ -16,9 +17,10 @@ class StatisticController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Http\Requests\Bo\Statistics\ActivityDateRequest $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(): \Illuminate\Contracts\View\View
+    public function index(ActivityDateRequest $request): \Illuminate\Contracts\View\View
     {
         $latestModels    = [];
         $activityModels  = [];
@@ -29,13 +31,16 @@ class StatisticController extends Controller
             User::class,
         ];
 
-        $latestDays           = collect(CarbonPeriod::create(Carbon::now()->subDays(29), Carbon::now()));
-        $dateLastDaysFormated = $latestDays->map(function ($date) {
+        $dateLastDays         = collect(CarbonPeriod::create(
+            $request->validated()['date_start'] ?? Carbon::now()->subDays(29),
+            $request->validated()['date_end'] ?? Carbon::now()
+        ));
+        $dateLastDaysFormated = $dateLastDays->map(function ($date) {
             return $date->format('d/m');
         })->toArray();
 
-        collect($activitiesClass)->map(function ($class) use (&$activityModels, &$latestModels, $latestDays) {
-            collect($latestDays->toArray())->map(function ($date) use (&$activityModels, $class) {
+        collect($activitiesClass)->map(function ($class) use (&$activityModels, &$latestModels, $dateLastDays) {
+            collect($dateLastDays->toArray())->map(function ($date) use (&$activityModels, $class) {
                 $activityModels[$class][] = count(
                     ActivityLog::query()
                         ->where('model_class', $class)
@@ -45,10 +50,10 @@ class StatisticController extends Controller
             });
             $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
         });
-
         return view('back.pages.statistics.index', compact(
             'latestModels',
             'activityModels',
+            'dateLastDays',
             'dateLastDaysFormated',
         ));
     }

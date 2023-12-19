@@ -195,6 +195,8 @@ return [
         'folder_associated' => 'folder associated',
         'model'             => 'target element',
         'event'             => 'event',
+        'date_start'        => 'start date',
+        'date_end'          => 'end date',
     ],
     "rule"                 => [
         'select-single'      => 'Choose a :entity among the list.',

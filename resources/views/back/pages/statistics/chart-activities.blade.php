@@ -1,4 +1,24 @@
-<div class="charts-sm w-100" id="chart-activities"></div>
+<div class="row">
+    <div class="col-12">
+        <form class="input-group mb-3" action="{{ route('bo.statistics.activities') }}" method="POST">
+            <label class="input-group-text" for="date_start">{{ Str::of(__('validation.custom.date_start'))->ucFirst() }}</label>
+            <input class="form-control" id="date_start" name="date_start" type="date"
+                value="{{ !empty($dateLastDays->first())? $dateLastDays->first()->format('Y-m-d'): Carbon::now()->startOfMonth()->format('Y-m-d') }}"
+                required>
+            @csrf
+            <label class="input-group-text" for="date_end">{{ Str::of(__('validation.custom.date_end'))->ucFirst() }}</label>
+            <input class="form-control" id="date_end" name="date_end" type="date"
+                value="{{ !empty($dateLastDays->last()) ? $dateLastDays->last()->format('Y-m-d') : Carbon::now()->format('Y-m-d') }}"
+                required>
+            <button class="btn btn-primary" data-bs="tooltip" type="submit" title="{{ __('bo_other_stats_show_activities') }}">
+                {{ __('bo_other_stats_visualize') }}
+            </button>
+        </form>
+    </div>
+    <div class="col-12 mt-4">
+        <div class="charts-sm w-100" id="chart-activities"></div>
+    </div>
+</div>
 <script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-activities */

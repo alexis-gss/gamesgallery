@@ -36,9 +36,11 @@ Route::prefix('bo')
                     // * HOMEPAGE
                     Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
-                    // * STATS
-                    Route::get('/stats', [StatisticController::class, 'index'])
-                        ->name('statistics');
+                    // * STATISTICS
+                    Route::get('/statistics', [StatisticController::class, 'index'])
+                        ->name('statistics.index');
+                    Route::post('/statistics/activities', [StatisticController::class, 'index'])
+                        ->name('statistics.activities');
 
                     // * GAMES
                     Route::resource('games', GameController::class)->except('show');

@@ -51,17 +51,17 @@
 </div>
 <div class="row">
     <div class="col-12 mb-3">
-        <div class="card border-top p-5">
+        <div class="card border-top p-3 p-md-5">
             @include('back.pages.statistics.chart-activities')
         </div>
     </div>
     <div class="col-12 mb-3">
-        <div class="card border-top p-5">
+        <div class="card border-top p-3 p-md-5">
             @include('back.pages.statistics.chart-games-by-tags')
         </div>
     </div>
     <div class="col-12 mb-3">
-        <div class="card border-top p-5">
+        <div class="card border-top p-3 p-md-5">
             @include('back.pages.statistics.chart-games-by-folders')
         </div>
     </div>

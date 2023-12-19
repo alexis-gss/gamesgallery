@@ -222,6 +222,8 @@ return [
         'folder_associated' => 'dossier associé',
         'model'             => 'élément ciblé',
         'event'             => 'évènement',
+        'date_start'        => 'date de début',
+        'date_end'          => 'date de fin',
     ],
     "rule"                 => [
         'select-single'      => 'Sélectionner un :entity parmis la liste.',

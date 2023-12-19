@@ -21,8 +21,8 @@ Breadcrumbs::for('bo.homepage', function (Generator $trail) {
 });
 
 // * STATISTIQUES
-Breadcrumbs::for('bo.statistics', function (Generator $trail) {
-    $trail->push(Str::of(__('models.statistic'))->plural()->ucfirst(), route('bo.statistics'));
+Breadcrumbs::for('bo.statistics.index', function (Generator $trail) {
+    $trail->push(Str::of(__('models.statistic'))->plural()->ucfirst(), route('bo.statistics.index'));
 });
 
 // * GAMES
