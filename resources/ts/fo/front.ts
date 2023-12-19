@@ -1,7 +1,9 @@
-// * UTILITIES
+// * GLOBAL UTILITIES
+import "./../utilities/axios";
+import "./../utilities/bootstrap";
+
+// * FRONT UTILITIES
 import "./utilities/aos";
-import "./utilities/axios";
-import "./utilities/bootstrap";
 import "./utilities/fontawesome";
 import "./utilities/vue-fo";
 
