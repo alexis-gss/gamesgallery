@@ -10,7 +10,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @if (request()->routeIs('bo.statistics.index')) fw-bold @endif"
+        <a class="nav-link @if (request()->routeIs('bo.statistics.*')) fw-bold @endif"
             href="{{ route('bo.statistics.index') }}"
             title="{{ __('bo_tooltip_statistics', ['model' => Str::of(__('models.statistic'))->plural()]) }}"
             data-bs="tooltip"

@@ -39,8 +39,8 @@ Route::prefix('bo')
                     // * STATISTICS
                     Route::get('/statistics', [StatisticController::class, 'index'])
                         ->name('statistics.index');
-                    Route::post('/statistics/activities', [StatisticController::class, 'index'])
-                        ->name('statistics.activities');
+                    Route::post('/statistics', [StatisticController::class, 'index'])
+                        ->name('statistics.update');
 
                     // * GAMES
                     Route::resource('games', GameController::class)->except('show');

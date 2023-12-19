@@ -7,61 +7,73 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom pb-3">
     @include('breadcrumbs.breadcrumb-body')
 </div>
+<!-- LATEST DATA UPDATED -->
 <div class="row py-3">
-    <div class="col-12 col-md-3 py-0">
-        <a href="{{ route('bo.folders.edit', $latestModels['App\Models\Folder']) }}" class="card card-stats text-decoration-none p-0">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <div class="card-body text-center">
-                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('bo_other_stats_latest_model', ['model' => __('models.folder')]) }}</p>
-                    <p class="card-title m-0">{{ $latestModels['App\Models\Folder']->name }}</p>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="col-12 col-md-6 py-2 p-md-0">
-        <a href="{{ route('bo.games.edit', $latestModels['App\Models\Game']) }}" class="card card-stats overflow-hidden text-decoration-none p-0">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                @if (isset($latestModels['App\Models\Game']->pictures[0]))
-                <div class="d-none d-md-block position-relative overflow-hidden w-fit h-100">
-                    <img class="w-auto h-100"
-                        src="{{ request()->root() . "/storage/pictures/" . $latestModels['App\Models\Game']->slug . "/" . $latestModels['App\Models\Game']->pictures[0]->uuid . "." . $latestModels['App\Models\Game']->pictures[0]->type }}"
-                        alt="{{ __('alt') }}">
-                    <span class="card-filter position-absolute top-0 end-0 h-100"></span>
-                </div>
-                @endif
-                <div class="flex-fill">
-                    <div class="card-body text-center @if (isset($latestModels['App\Models\Game']->picture[0])) text-md-start @endif">
-                        <p class="border-bottom fw-bold m-0 pb-1">{{ __('bo_other_stats_latest_model', ['model' => trans_choice('models.game', 1)]) }}</p>
-                        <p class="card-title">{{ $latestModels['App\Models\Game']->name }}</p>
+    <div class="col-12 py-0">
+        <div class="card card-stats border-0">
+            <ul class="nav nav-tabs" id="tab-latest-data-updated" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane"
+                        type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>
+                        {{ __('Latest data updated') }}
+                    </button>
+                </li>
+                @foreach($navLinks as $navLink)
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @if($loop->first) active @endif" id="{{ $navLink['name'] }}-tab" data-bs-toggle="tab"
+                        data-bs-target="#{{ $navLink['name'] }}-tab-pane" type="button" role="tab"
+                        aria-controls="{{ $navLink['name'] }}-tab-pane" aria-selected="true">
+                        {{ Str::of($navLink['translation'])->ucFirst() }}
+                    </button>
+                </li>
+                @endforeach
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom" id="tab-latest-data-updated-content">
+                @foreach($navLinks as $navLink)
+                <div class="tab-pane fade @if($loop->first) active show @endif" id="{{ $navLink['name'] }}-tab-pane" role="tabpanel"
+                    aria-labelledby="{{ $navLink['name'] }}-tab">
+                    <div class="card-body bg-body-tertiary">
+                        <table class="table table-hover m-0">
+                            <tbody>
+                                <tr class="border-bottom">
+                                    <td class="text-center align-middle bg-transparent">
+                                        {{ Str::of($navLink['field'])->ucfirst() }}
+                                    </td>
+                                    <td class="text-center align-middle bg-transparent">
+                                        {{ $navLink['value'] }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-0 text-center align-middle bg-transparent">
+                                        {{ Str::of(__('validation.attributes.updated_at'))->ucfirst() }}
+                                    </td>
+                                    <td class="border-0 text-center align-middle bg-transparent">
+                                        <span class="badge bg-secondary">{{ $navLink['model']->updated_at->isoFormat('LLLL') }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                @endforeach
             </div>
-        </a>
-    </div>
-    <div class="col-12 col-md-3 py-0">
-        <a href="{{ route('bo.tags.edit', $latestModels['App\Models\Tag']) }}" class="card card-stats text-decoration-none p-0">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <div class="card-body text-center">
-                    <p class="border-bottom fw-bold m-0 pb-1">{{ __('bo_other_stats_latest_model', ['model' => __('models.tag')]) }}</p>
-                    <p class="card-title m-0">{{ $latestModels['App\Models\Tag']->name }}</p>
-                </div>
-            </div>
-        </a>
+        </div>
     </div>
 </div>
+<!-- CHARTS -->
 <div class="row">
     <div class="col-12 mb-3">
-        <div class="card border-top p-3 p-md-5">
+        <div class="card bg-body-tertiary border-top p-3 p-md-5">
             @include('back.pages.statistics.chart-activities')
         </div>
     </div>
     <div class="col-12 mb-3">
-        <div class="card border-top p-3 p-md-5">
+        <div class="card bg-body-tertiary border-top p-3 p-md-5">
             @include('back.pages.statistics.chart-games-by-tags')
         </div>
     </div>
     <div class="col-12 mb-3">
-        <div class="card border-top p-3 p-md-5">
+        <div class="card bg-body-tertiary border-top p-3 p-md-5">
             @include('back.pages.statistics.chart-games-by-folders')
         </div>
     </div>

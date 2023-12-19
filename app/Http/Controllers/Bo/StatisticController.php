@@ -7,10 +7,13 @@ use App\Http\Requests\Bo\Statistics\ActivityDateRequest;
 use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
+use App\Models\Picture;
+use App\Models\Rank;
 use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Str;
 
 class StatisticController extends Controller
 {
@@ -28,6 +31,8 @@ class StatisticController extends Controller
             Game::class,
             Folder::class,
             Tag::class,
+            Picture::class,
+            Rank::class,
             User::class,
         ];
 
@@ -50,11 +55,56 @@ class StatisticController extends Controller
             });
             $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
         });
+
+        $navLinks = $this->getNavTabsData($latestModels);
+
         return view('back.pages.statistics.index', compact(
-            'latestModels',
+            'navLinks',
             'activityModels',
             'dateLastDays',
             'dateLastDaysFormated',
         ));
+    }
+
+    /**
+     * Return an array of data to integrate latest model updated.
+     *
+     * @param array $latestModels
+     * @return array
+     */
+    public function getNavTabsData(array $latestModels): array
+    {
+        $navLinks = [];
+        foreach ($latestModels as $model) {
+            $name        = Str::of(class_basename($model))->lower()->value();
+            $translation = (get_class($model) === 'App\Models\Game')
+                ? trans_choice('models.game', 1)
+                : trans('models.' . $name);
+            $field       = (get_class($model) === 'App\Models\User')
+                ? trans('validation.attributes.first_name') . " / " . trans('validation.attributes.last_name')
+                : trans('validation.attributes.name');
+            switch (get_class($model)) {
+                case 'App\Models\Picture':
+                    $value = $model->uuid . "." . $model->type;
+                    break;
+                case 'App\Models\Rank':
+                    $value = $model->game->name;
+                    break;
+                case 'App\Models\User':
+                    $value = $model->first_name . " " . $model->last_name;
+                    break;
+                default:
+                    $value = $model->name;
+                    break;
+            } //end switch
+            $navLinks[] = [
+                "name"        => $name,
+                "translation" => $translation,
+                "model"       => $model,
+                "field"       => $field,
+                "value"       => $value,
+            ];
+        } //end foreach
+        return $navLinks;
     }
 }

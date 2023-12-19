@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-12">
-        <form class="input-group mb-3" action="{{ route('bo.statistics.activities') }}" method="POST">
+        <form class="input-group mb-3" action="{{ route('bo.statistics.update') }}" method="POST">
             <label class="input-group-text" for="date_start">{{ Str::of(__('validation.custom.date_start'))->ucFirst() }}</label>
             <input class="form-control" id="date_start" name="date_start" type="date"
-                value="{{ !empty($dateLastDays->first())? $dateLastDays->first()->format('Y-m-d'): Carbon::now()->startOfMonth()->format('Y-m-d') }}"
+                value="{{ !empty($dateLastDays->first())? $dateLastDays->first()->format('Y-m-d'): Carbon::now()->subDays(29)->format('Y-m-d') }}"
                 required>
             @csrf
             <label class="input-group-text" for="date_end">{{ Str::of(__('validation.custom.date_end'))->ucFirst() }}</label>

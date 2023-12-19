@@ -24,6 +24,9 @@ Breadcrumbs::for('bo.homepage', function (Generator $trail) {
 Breadcrumbs::for('bo.statistics.index', function (Generator $trail) {
     $trail->push(Str::of(__('models.statistic'))->plural()->ucfirst(), route('bo.statistics.index'));
 });
+Breadcrumbs::for('bo.statistics.update', function (Generator $trail) {
+    $trail->push(Str::of(__('models.statistic'))->plural()->ucfirst(), route('bo.statistics.index'));
+});
 
 // * GAMES
 Breadcrumbs::for('bo.games.index', function (Generator $trail) {
