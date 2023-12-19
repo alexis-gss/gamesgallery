@@ -52,16 +52,11 @@ class SecureHeaders
             "connect-src 'self' blob:;",
             "img-src * data: blob:;",
             'frame-src ;',
-            "font-src 'self' data: https://fonts.gstatic.com;",
+            "font-src 'self' data: ;",
             "style-src 'self' 'unsafe-inline' " . \implode(' ', [
-                'https://cdnjs.cloudflare.com',
                 'https://fonts.googleapis.com',
-                'https://use.fontawesome.com',
             ]) . ';',
-            "script-src 'self' {$jsDev} " . \implode(' ', [
-                'https:  blob:',
-                'https://cdnjs.cloudflare.com',
-            ]) . ';'
+            "script-src 'self' {$jsDev} ;"
         ];
 
         $response->headers->set(
