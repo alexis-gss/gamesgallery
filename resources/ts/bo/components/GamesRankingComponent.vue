@@ -44,7 +44,7 @@
                 :href="getShowGameRoute(item.slug)"
                 class="btn btn-sm btn-warning"
                 target="_blank"
-                :title="__('Voir le jeu')"
+                :title="__('bo_tooltip_ranking_see_game')"
                 data-bs="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-eye" />
@@ -52,21 +52,21 @@
               <a
                 :href="getEditGameRoute(item.game_id)"
                 class="btn btn-sm btn-primary"
-                :title="__('Modifier le jeu')"
+                :title="__('bo_tooltip_ranking_update_game')"
                 data-bs="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-pencil" />
               </a>
+              <button
+                @click="deleteRank($event, item as never as RankObject)"
+                class="btn btn-sm btn-danger confirmDelete"
+                :title="__('bo_tooltip_ranking_delete_game')"
+                data-bs="tooltip"
+                ref="confirmDelete"
+              >
+                <FontAwesomeIcon icon="fa-solid fa-xmark" />
+              </button>
             </div>
-            <button
-              @click="deleteRank($event, item as never as RankObject)"
-              class="btn btn-sm btn-danger confirmDelete ms-1"
-              :title="__('Supprimer le jeu')"
-              data-bs="tooltip"
-              ref="confirmDelete"
-            >
-              <FontAwesomeIcon icon="fa-solid fa-xmark" />
-            </button>
           </div>
         </vue-nestable-handle>
       </template>
@@ -80,7 +80,7 @@
         role="status"
       >
         <span class="visually-hidden">
-          {{ __("form.image_input_viewer_loading") }}
+          {{ __("bo_tooltip_viewer_loading") }}
         </span>
       </div>
     </div>

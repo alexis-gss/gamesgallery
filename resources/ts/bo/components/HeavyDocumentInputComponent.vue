@@ -139,7 +139,7 @@
               role="status"
             >
               <span class="visually-hidden">
-                {{ __("bo_tooltip_image_input_viewer_loading") }}
+                {{ __("bo_tooltip_viewer_loading") }}
               </span>
             </div>
           </div>
