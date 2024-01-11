@@ -76,7 +76,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function cspReportRoute()
+    private function cspReportRoute(): void
     {
         // * CSP REPORT URI, Please add /csp-report to VerifyCsrfToken $except middleware
         \Illuminate\Support\Facades\Route::post('/csp-report', function () {

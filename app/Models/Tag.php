@@ -6,11 +6,8 @@ use App\Traits\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
- * Tag.
- *
  * @property integer                         $id           Id.
  * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
@@ -87,7 +84,7 @@ class Tag extends Model
      *
      * @return void
      */
-    private static function setPublishedDate(Tag $tag)
+    private static function setPublishedDate(Tag $tag): void
     {
         $tag->published_at = ($tag->published) ? now() : null;
     }
@@ -106,12 +103,12 @@ class Tag extends Model
     /**
      * Set model's tags.
      *
-     * @param Model                          $model
-     * @param \Illuminate\Support\Collection $tags
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Support\Collection      $tags
      *
      * @return void
      */
-    public static function setTags(Model $model, Collection $tags)
+    public static function setTags(Model $model, Collection $tags): void
     {
         $model->tags()->sync($tags->pluck('id'));
     }
@@ -123,7 +120,7 @@ class Tag extends Model
      *
      * @return void
      */
-    private static function removeTagsFromGame(Tag $tag)
+    private static function removeTagsFromGame(Tag $tag): void
     {
         $tag->games()->detach();
     }
@@ -131,7 +128,7 @@ class Tag extends Model
     /**
      * Remove all tags previously associated.
      *
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     public static function removeTags(Model $model): void
@@ -146,7 +143,7 @@ class Tag extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function games()
+    public function games(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(Game::class, 'taggable');
     }

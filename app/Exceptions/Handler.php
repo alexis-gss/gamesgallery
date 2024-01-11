@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler
      * @throws \Throwable If errors.
      * @phpcs:disable Squiz.Commenting.FunctionComment.TypeHintMissing
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception): \Symfony\Component\HttpFoundation\Response
     {
         //phpcs:enable
         if ($this->isHttpException($exception)) {

@@ -14,7 +14,7 @@ enum ActivityLogsEventEnum: int
     case deleted    = 4;
 
     /**
-     * Optionnal labels definition
+     * Optionnal labels definition.
      */
     private const LABELS = [
         self::created->name    => 'crud.actions.create',
@@ -24,7 +24,7 @@ enum ActivityLogsEventEnum: int
     ];
 
     /**
-     * Custom added classes definition
+     * Custom added classes definition.
      */
     private const BOOTSTRAPCLASS = [
         self::created->name    => 'success',
@@ -34,7 +34,7 @@ enum ActivityLogsEventEnum: int
     ];
 
     /**
-     * Get Class
+     * Get Class.
      *
      * @return string
      */

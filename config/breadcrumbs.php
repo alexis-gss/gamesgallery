@@ -74,5 +74,4 @@ return [
 
     // * Generator
     'generator-class' => Diglactic\Breadcrumbs\Generator::class,
-
 ];

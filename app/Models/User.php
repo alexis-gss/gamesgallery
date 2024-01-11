@@ -5,14 +5,13 @@ namespace App\Models;
 use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
 use App\Traits\Models\ActivityLog;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Folder of games.
- *
  * @property integer                         $id            Id.
  * @property string                          $first_name    Firstname.
  * @property string                          $last_name     Lastname.
@@ -116,7 +115,7 @@ class User extends Authenticatable
      * @param self $model
      * @return void
      */
-    private static function updatePublishedStatus(self $model)
+    private static function updatePublishedStatus(self $model): void
     {
         if (optional(auth('backend')->user())->getKey() === $model->getKey()) {
             \validator(
@@ -133,7 +132,7 @@ class User extends Authenticatable
      * @param self $model
      * @return void
      */
-    private static function checkElevationPrivileges(self $model)
+    private static function checkElevationPrivileges(self $model): void
     {
         throw_if(
             auth('backend')->user() and auth('backend')->user()->role->value() > $model->role->value(),
@@ -147,7 +146,7 @@ class User extends Authenticatable
      * @param self $model
      * @return void
      */
-    private static function setImage(self $model)
+    private static function setImage(self $model): void
     {
         $model->picture_alt   = "Default picture of " . $model->first_name . " " . $model->last_name . " account";
         $model->picture_title = "User's picture of " . $model->first_name . " " . $model->last_name . " account";
@@ -187,7 +186,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function activityLogs()
+    public function activityLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ActivityLog::class);
     }

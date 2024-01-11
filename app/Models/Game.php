@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Game.
- *
  * @property integer                         $id           Id.
  * @property \App\Models\Folder              $folder_id    Folder associated.
  * @property string                          $name         Name.
@@ -92,7 +90,7 @@ class Game extends Model
      * @param \App\Models\Game $game
      * @return void
      */
-    private static function setPublishedDate(Game $game)
+    private static function setPublishedDate(Game $game): void
     {
         if ($game->published && !$game->getOriginal('published')) {
             $game->published_at = now();

@@ -12,14 +12,14 @@ trait HasPicture
      *
      * @var integer
      */
-    private $minWith = 100;
+    private $minWidth = 100;
 
     /**
      * Maximum width
      *
      * @var integer
      */
-    private $maxWith = 3840;
+    private $maxWidth = 3840;
 
     /**
      * Minimum height
@@ -36,28 +36,28 @@ trait HasPicture
     private $maxHeight = 2160;
 
     /**
-     * Image rules
+     * Image rules.
      *
      * @param string       $name
      * @param boolean      $required
-     * @param integer|null $minWith
+     * @param integer|null $minWidth
      * @param integer|null $minHeight
-     * @param integer|null $maxWith
+     * @param integer|null $maxWidth
      * @param integer|null $maxHeight
      * @return array
      */
     public function pictureRules(
         string $name = 'picture',
         bool $required = true,
-        ?int $minWith = null,
+        ?int $minWidth = null,
         ?int $minHeight = null,
-        ?int $maxWith = null,
+        ?int $maxWidth = null,
         ?int $maxHeight = null
     ): array {
         $sizes = (object)[
-            'minWith'   => $minWith ?? $this->minWith,
+            'minWidth'  => $minWidth ?? $this->minWidth,
             'minHeight' => $minHeight ?? $this->minHeight,
-            'maxWith'   => $maxWith ?? $this->maxWith,
+            'maxWidth'  => $maxWidth ?? $this->maxWidth,
             'maxHeight' => $maxHeight ?? $this->maxHeight
         ];
         return [
@@ -71,15 +71,15 @@ trait HasPicture
     }
 
     /**
-     * Images rules
+     * Images rules.
      *
      * @param string       $name
      * @param boolean      $required
      * @param integer|null $limitMin
      * @param integer|null $limitMax
-     * @param integer|null $minWith
+     * @param integer|null $minWidth
      * @param integer|null $minHeight
-     * @param integer|null $maxWith
+     * @param integer|null $maxWidth
      * @param integer|null $maxHeight
      * @return array
      */
@@ -88,23 +88,24 @@ trait HasPicture
         ?bool $required = null,
         ?int $limitMin = null,
         ?int $limitMax = null,
-        ?int $minWith = null,
+        ?int $minWidth = null,
         ?int $minHeight = null,
-        ?int $maxWith = null,
+        ?int $maxWidth = null,
         ?int $maxHeight = null
     ): array {
         $sizes = (object)[
             'required'  => $required ?? $this->required,
             'limitMin'  => $limitMin ?? $this->limitMin,
             'limitMax'  => $limitMax ?? $this->limitMax,
-            'minWith'   => $minWith ?? $this->minWith,
+            'minWidth'  => $minWidth ?? $this->minWidth,
             'minHeight' => $minHeight ?? $this->minHeight,
-            'maxWith'   => $maxWith ?? $this->maxWith,
+            'maxWidth'  => $maxWidth ?? $this->maxWidth,
             'maxHeight' => $maxHeight ?? $this->maxHeight
         ];
         return [
             "{$name}" => ($required ? 'required' : 'nullable') . "|array|between:$limitMin,$limitMax",
-            "{$name}.*" => [ ($required ? 'required' : 'nullable'),
+            "{$name}.*" => [
+                ($required ? 'required' : 'nullable'),
                 function (string $attribute, $value, callable $fail) use ($sizes) {
                     return $this->validatePicture($attribute, $value, $fail, $sizes);
                 }
@@ -144,18 +145,18 @@ trait HasPicture
             $height = intval($dimensions[1]);
 
             $xMessage = trans(
-                ":attribute la largeur doit être comprise entre {$sizes->minWith}px et {$sizes->maxWith}px"
+                ":attribute la largeur doit être comprise entre {$sizes->minWidth}px et {$sizes->maxWidth}px"
             );
-            if ($sizes->minWith === $sizes->maxWith) {
-                $xMessage = trans(":attribute la largeur doit être de {$sizes->minWith}px");
+            if ($sizes->minWidth === $sizes->maxWidth) {
+                $xMessage = trans(":attribute la largeur doit être de {$sizes->minWidth}px");
             }
             $yMessage = trans(
-                ":attribute la hauteur doit être comprise entre {$sizes->minWith}px et {$sizes->maxWith}px"
+                ":attribute la hauteur doit être comprise entre {$sizes->minWidth}px et {$sizes->maxWidth}px"
             );
             if ($sizes->minHeight === $sizes->maxHeight) {
-                $yMessage = trans(":attribute la hauteur doit être de {$sizes->minWith}px");
+                $yMessage = trans(":attribute la hauteur doit être de {$sizes->minWidth}px");
             }
-            if (($width < $sizes->minWith) or ($width > $sizes->maxWith)) {
+            if (($width < $sizes->minWidth) or ($width > $sizes->maxWidth)) {
                 $fail($xMessage);
             }
             if (($height < $sizes->minHeight) or ($height > $sizes->maxHeight)) {
@@ -248,7 +249,7 @@ trait HasPicture
      * @param boolean $useStorage
      * @return string|false
      */
-    private function getUploadedFileMimeType(string $value, bool $useStorage)
+    private function getUploadedFileMimeType(string $value, bool $useStorage): string|false
     {
         return !$useStorage ? File::mimeType($value) : Storage::mimeType($value);
     }

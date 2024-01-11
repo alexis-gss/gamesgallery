@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Bo;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateChangeOrderRequest extends FormRequest

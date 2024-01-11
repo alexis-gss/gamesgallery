@@ -13,7 +13,7 @@ enum RoleEnum: int
     case visitor   = 99;
 
     /**
-     * Optionnal labels definition
+     * Optionnal labels definition.
      */
     private const LABELS = [
         self::conceptor->name => 'enums.user-role.conceptor',

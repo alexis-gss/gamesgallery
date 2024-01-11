@@ -30,11 +30,11 @@ class TranslationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Gather provided langs checking from files
+     * Gather provided langs checking from files.
      *
      * @return \Illuminate\Support\Collection<string, string>
      */
-    private function collectLocalesStrings(): Collection
+    private function collectLocalesStrings(): \Illuminate\Support\Collection
     {
         return collect(File::allFiles(resource_path('lang/')))->flatMap(function (SplFileInfo $file) {
             if ($file->getRelativePath() and \strpos($file->getRelativePath(), 'vendor') !== 0) {
@@ -44,7 +44,7 @@ class TranslationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Gather all php translations
+     * Gather all php translations.
      *
      * @param string $locale
      * @return array<string, string>
@@ -60,7 +60,7 @@ class TranslationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Gather json translations
+     * Gather json translations.
      *
      * @param string $locale
      * @return array<string, string>

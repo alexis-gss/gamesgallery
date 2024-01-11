@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Folder of games.
- *
  * @property integer                         $id           Id.
  * @property integer                         $rank         Rank of the game.
  * @property \App\Models\Game                $game_id      Game associated.

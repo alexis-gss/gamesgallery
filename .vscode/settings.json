@@ -1,10 +1,26 @@
 {
-        // #1D1D1D
-        // #737373
-        // #FFFFFF
-    
-        "workbench.colorCustomizations": {
-            "icon.foreground": "#737373",
-            "activityBar.activeBorder": "#FFFFFF"
-        }
-    }
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#292d32",
+        "activityBar.activeBorder": "#1a1d02",
+        "activityBar.background": "#292d32",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#a73869",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "sash.hoverBorder": "#292d32",
+        "statusBar.background": "#121416",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#292d32",
+        "statusBarItem.remoteBackground": "#121416",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#121416",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#12141699",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "commandCenter.border": "#e7e7e799"
+    },
+    "peacock.remoteColor": "#121416",
+    "intelephense.environment.phpVersion": "8.2.0",
+    "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
+    "intelephense.phpdoc.useFullyQualifiedNames": true
+}

@@ -7,8 +7,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Picture of a specific game.
- *
  * @property integer                         $id           Id.
  * @property \App\Models\Game                $game_id      Game associated.
  * @property string                          $uuid         Uuid.
@@ -57,11 +55,11 @@ class Picture extends Model
     /**
      * Rename the folder where pictures are saved.
      *
-     * @param Model  $model
-     * @param string $slug
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string                              $slug
      * @return void
      */
-    public static function renameFolderSavedPictures(Model $model, string $slug)
+    public static function renameFolderSavedPictures(Model $model, string $slug): void
     {
         if ($slug !== $model->slug) {
             $directory = Storage::disk('public')->path("pictures/" . $slug);

@@ -5,11 +5,8 @@ namespace App\Models;
 use App\Traits\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 /**
- * Folder of games.
- *
  * @property integer                         $id           Id.
  * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.

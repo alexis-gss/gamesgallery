@@ -70,7 +70,7 @@ class UserCreate extends Command
      *
      * @return integer
      */
-    public function handle()
+    public function handle(): int
     {
         $this->first_name = null;
         $this->addFirstname();

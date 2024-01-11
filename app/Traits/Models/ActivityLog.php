@@ -13,6 +13,7 @@ use App\Observers\ModelObserver;
 trait ActivityLog
 {
     /**
+     * Perform any actions required after the model boots.
      *
      * @return void
      */

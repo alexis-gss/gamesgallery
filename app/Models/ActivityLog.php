@@ -93,7 +93,7 @@ class ActivityLog extends Model
     /**
      * Get old, new columns that has changed.
      *
-     * @param \self                                         $activity
+     * @param self                                          $activity
      * @param \Illuminate\Database\Eloquent\Model           $model
      * @param \App\Enums\ActivityLogs\ActivityLogsEventEnum $eventEnum
      * @return array|null
@@ -126,7 +126,7 @@ class ActivityLog extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

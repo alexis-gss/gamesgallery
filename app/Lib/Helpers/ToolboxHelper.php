@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ToolboxHelper
 {
     /**
-     * Assert That no Back Office url is present on txt
+     * Assert That no Back Office url is present on txt.
      *
      * @param string $field
      * @param string $text
@@ -55,7 +55,7 @@ class ToolboxHelper
     }
 
     /**
-     * Assert That only external url is present on txt
+     * Assert That only external url is present on txt.
      *
      * @param string $field
      * @param string $text
@@ -99,7 +99,7 @@ class ToolboxHelper
     }
 
     /**
-     * Mutltibyte string replace
+     * Mutltibyte string replace.
      *
      * @param mixed   $search
      * @param mixed   $replace

@@ -13,11 +13,11 @@ enum BootstrapThemeEnum: int
     case custom = 3;
 
     /**
-     * Optionnal labels definition
+     * Optionnal labels definition.
      */
     private const LABELS = [
-        self::light->name => 'enums.bootstrap-theme.light',
-        self::dark->name  => 'enums.bootstrap-theme.dark',
-        self::custom->name  => 'enums.bootstrap-theme.custom',
+        self::light->name  => 'enums.bootstrap-theme.light',
+        self::dark->name   => 'enums.bootstrap-theme.dark',
+        self::custom->name => 'enums.bootstrap-theme.custom',
     ];
 }

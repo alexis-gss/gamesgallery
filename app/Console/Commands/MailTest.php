@@ -29,7 +29,7 @@ class MailTest extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         Mail::raw(sprintf('Mail-test from %s %s', \config('app.name'), \config('app.url')), function ($msg) {
             $msg->to('john.doe@gmail.com')->subject('Test Email');
