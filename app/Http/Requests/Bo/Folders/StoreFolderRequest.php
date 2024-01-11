@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Bo\Folders;
 
+use App\Models\Folder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -15,7 +16,7 @@ class StoreFolderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::check('update', $this->route('folder'));
+        return Gate::check('update', Folder::class);
     }
 
     /**
@@ -23,7 +24,7 @@ class StoreFolderRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'slug'      => Str::of(strip_tags($this->name))->slug()->value(),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Bo\Games;
 
+use App\Models\Game;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -15,7 +16,7 @@ class StoreGameRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::check('update', $this->route('game'));
+        return Gate::check('update', Game::class);
     }
 
     /**
@@ -23,7 +24,7 @@ class StoreGameRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'slug'      => Str::of(strip_tags($this->name))->slug()->value(),

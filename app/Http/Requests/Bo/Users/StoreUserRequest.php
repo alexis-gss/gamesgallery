@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Bo\Users;
 
 use App\Enums\Users\RoleEnum;
+use App\Models\User;
 use App\Traits\Requests\HasPicture;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
@@ -20,7 +21,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::check('update', $this->route('user'));
+        return Gate::check('update', User::class);
     }
 
     /**
@@ -28,7 +29,7 @@ class StoreUserRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->mergePicture('picture');
     }

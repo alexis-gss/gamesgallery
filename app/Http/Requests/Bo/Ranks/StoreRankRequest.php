@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Bo\Ranks;
 
+use App\Models\Rank;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +15,7 @@ class StoreRankRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::check('update', $this->route('rank'));
+        return Gate::check('update', Rank::class);
     }
 
     /**
@@ -22,7 +23,7 @@ class StoreRankRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'ranks' => collect($this->ranks)->map(function ($rank) {
@@ -52,8 +53,8 @@ class StoreRankRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'ranks'        => trans('rank of the game'),
-            'ranks.*'      => trans('id of the game'),
+            'ranks'   => trans('rank of the game'),
+            'ranks.*' => trans('id of the game'),
         ];
     }
 }

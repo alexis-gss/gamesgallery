@@ -11,7 +11,7 @@ class ActivityDateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'date_start' => 'nullable|required_if:date_end,!=,null|date',

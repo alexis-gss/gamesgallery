@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Bo\Tags;
 
+use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -13,9 +14,9 @@ class StoreTagRequest extends FormRequest
      *
      * @return boolean
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return Gate::check('update', $this->route('tag'));
+        return Gate::check('create', Tag::class);
     }
 
     /**
@@ -23,7 +24,7 @@ class StoreTagRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'slug'      => Str::of($this->name)->slug()->value(),
@@ -36,7 +37,7 @@ class StoreTagRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'slug'      => 'required|string|unique:tags,slug|max:255',
