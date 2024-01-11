@@ -57,6 +57,7 @@
     "bo_tooltip_image_input_modal_close_without_saving": "Close the modal without saving",
     "bo_tooltip_image_input_modal_close_with_saving": "Save and close the modal",
     "bo_tooltip_ranking_see_game": "Show the game",
+    "bo_tooltip_ranking_add_game": "Add one or multiple game(s)",
     "bo_tooltip_ranking_update_game": "Edit the game",
     "bo_tooltip_ranking_delete_game": "Remove the game from the ranking",
     "bo_tooltip_viewer_loading": "Image loading",

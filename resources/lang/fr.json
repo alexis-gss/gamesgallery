@@ -57,6 +57,7 @@
     "bo_tooltip_image_input_modal_close_without_saving": "Fermer la fenêtre modale sans enregistrer",
     "bo_tooltip_image_input_modal_close_with_saving": "Enregistrer et fermer la fenêtre modale",
     "bo_tooltip_ranking_see_game": "Voir le jeu",
+    "bo_tooltip_ranking_add_game": "Ajouter un ou plusieurs jeu(x)",
     "bo_tooltip_ranking_update_game": "Éditer le jeu",
     "bo_tooltip_ranking_delete_game": "Supprimer le jeu du classement",
     "bo_tooltip_viewer_loading": "Chargement de l'image",

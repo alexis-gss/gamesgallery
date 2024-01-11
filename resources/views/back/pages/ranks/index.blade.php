@@ -23,7 +23,8 @@
             @endphp
             <div id="belongs-to-many-dropdown" data-json='@json($data)' class="w-100"></div>
             @include('back.modules.input-error', ['inputName' => 'tags'])
-            <button class="btn btn-primary rounded-0 rounded-end" type="submit">
+            <button class="btn btn-primary rounded-0 rounded-end" type="submit" data-bs="tooltip"
+                title="{{ __('bo_tooltip_ranking_add_game') }}">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </form>
