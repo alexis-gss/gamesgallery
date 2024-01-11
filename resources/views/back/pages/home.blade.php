@@ -9,7 +9,7 @@
 </div>
 <div class="row mt-3">
     <div class="col">
-        <div class="card text-center p-5">
+        <div class="card bg-body-tertiary text-center p-5">
             <h5>{{ __('bo_other_home_hello', ['first_name' => auth()->user()->first_name, 'last_name' => auth()->user()->last_name]) }}</h5>
             <p class="m-0">
                 {{ __('bo_other_home_welcome') }}
@@ -25,7 +25,7 @@
 </div>
 <div class="row mt-3">
     <div class="col-12">
-        <div class="card changelog overflow-y-scroll p-5">
+        <div class="card changelog bg-body-tertiary overflow-y-scroll p-5">
             {!! $changelog !!}
         </div>
     </div>
