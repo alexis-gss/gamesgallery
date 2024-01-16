@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 /**
  * Creates a new user.
@@ -210,16 +211,20 @@ class UserCreate extends Command
             try {
                 $tmp                         = $this->choice(
                     'Select his role',
-                    [RoleEnum::conceptor->label(), RoleEnum::admin->label(), RoleEnum::visitor->label()],
-                    RoleEnum::visitor->label(),
+                    [
+                        Str::of(RoleEnum::conceptor->label())->ucFirst()->value(),
+                        Str::of(RoleEnum::admin->label())->ucFirst()->value(),
+                        Str::of(RoleEnum::visitor->label())->ucFirst()->value()
+                    ],
+                    Str::of(RoleEnum::visitor->label())->ucFirst()->value(),
                     $maxAttempts             = null,
                     $allowMultipleSelections = false
                 );
-                if ($tmp === RoleEnum::conceptor->label()) {
+                if ($tmp === Str::of(RoleEnum::conceptor->label())->ucFirst()->value()) {
                     $tmp = RoleEnum::conceptor->value();
-                } elseif ($tmp === RoleEnum::admin->label()) {
+                } elseif ($tmp === Str::of(RoleEnum::admin->label())->ucFirst()->value()) {
                     $tmp = RoleEnum::admin->value();
-                } elseif ($tmp === RoleEnum::visitor->label()) {
+                } elseif ($tmp === Str::of(RoleEnum::visitor->label())->ucFirst()->value()) {
                     $tmp = RoleEnum::visitor->value();
                 }
                 $this->role = ToolboxHelper::getValidatedEnum(
