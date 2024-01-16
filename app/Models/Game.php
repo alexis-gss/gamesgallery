@@ -17,12 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
- * @method protected static function booted()                     Perform any actions required after the model boots.
- * @method private static function setSlug($game)                 Set model's slug.
- * @method private static function setPublishedDate($game)        Set model's published date.
- * @method private static function setOrder($game)                Set model's order after the last element of the list.
- * @method public static function updatePictures($game, $request) Differentiate between old and new pictures, remove
- * oldests and save news.
+ * @method protected static function booted()              Perform any actions required after the model boots.
+ * @method private static function setSlug($game)          Set model's slug.
+ * @method private static function setPublishedDate($game) Set model's published date.
+ * @method private static function setOrder($game)         Set model's order after the last element of the list.
  *
  * @property-read \App\Models\Folder $folder
  * Get Folder that owns the Game (relationship).
@@ -108,40 +106,6 @@ class Game extends Model
     private static function setOrder(Game $game): void
     {
         $game->order = \intval(self::query()->max('order')) + 1;
-    }
-
-    /**
-     * Differentiate between old and new pictures,
-     * remove oldests and save news.
-     *
-     * @param \App\Models\Game $game
-     * @param array            $request
-     * @return void
-     */
-    public static function updatePictures(Game $game, array $request): void
-    {
-        $picturesAlreadySaved = $game->pictures;
-        $newPictures          = collect();
-        if (isset($request['uuid'])) {
-            foreach ($request['uuid'] as $key => $value) {
-                $getPicture = Picture::where('game_id', $game->getKey())
-                    ->where('uuid', $request['uuid'][$key])
-                    ->first();
-                if (is_null($getPicture)) {
-                    $picture            = new Picture();
-                    $picture->game_id   = $game->getKey();
-                    $picture->uuid      = $request['uuid'][$key];
-                    $picture->published = true;
-                } else {
-                    $picture = $getPicture;
-                }
-                $picture->label = $request['label'][$key];
-                $picture->type  = pathinfo($picture->label, PATHINFO_EXTENSION);
-                $picture->saveOrFail();
-                $newPictures->add($picture);
-            } //end foreach
-        } //end if
-        Picture::removePictures($picturesAlreadySaved->diff($newPictures));
     }
 
     // * RELATIONSHIPS

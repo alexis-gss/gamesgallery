@@ -20,7 +20,6 @@ return new class extends Migration
             $table->char('uuid', 36)->nullable()->unique()
                 ->comment('Universally Unique Identifier (UUID) of the image.');
             $table->string('label')->comment('Label of the image.');
-            $table->string('type', 20)->comment('Type of the image (jpeg, jpg, png).');
             $table->boolean('published')->comment('The image is already published.');
             $table->timestamps();
         });

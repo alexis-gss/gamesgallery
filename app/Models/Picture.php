@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Storage;
  * @property \App\Models\Game                $game_id      Game associated.
  * @property string                          $uuid         Uuid.
  * @property string                          $label        Label.
- * @property string                          $type         Type (extension).
  * @property boolean                         $published    Published status.
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
  * @method protected static function booted()                       Perform any actions required after the model boots.
+ * @method public static function updatePictures($game, $request)   Differentiate between old and new pictures, remove
+ * oldests and save news.
  * @method public static function renameFolderSavedPictures($model) Rename the folder where there is saved pictures.
  * @method private static function removePicture($picture)          Delete one specific picture.
  * @method private static function removePictures($pictures)        Remove all pictures previously associated.
@@ -34,7 +35,6 @@ class Picture extends Model
         'game_id',
         'uuid',
         'label',
-        'type',
         'published',
     ];
 
@@ -51,6 +51,39 @@ class Picture extends Model
     }
 
     // * METHODS
+
+    /**
+     * Differentiate between old and new pictures,
+     * remove oldests and save news.
+     *
+     * @param \App\Models\Game $game
+     * @param array            $request
+     * @return void
+     */
+    public static function updatePictures(Game $game, array $request): void
+    {
+        $picturesAlreadySaved = $game->pictures;
+        $newPictures          = collect();
+        if (isset($request['uuid'])) {
+            foreach ($request['uuid'] as $key => $value) {
+                $getPicture = Picture::where('game_id', $game->getKey())
+                    ->where('uuid', $request['uuid'][$key])
+                    ->first();
+                if (is_null($getPicture)) {
+                    $picture            = new Picture();
+                    $picture->game_id   = $game->getKey();
+                    $picture->uuid      = $request['uuid'][$key];
+                    $picture->published = true;
+                } else {
+                    $picture = $getPicture;
+                }
+                $picture->label = pathinfo($request['label'][$key])['filename'];
+                $picture->saveOrFail();
+                $newPictures->add($picture);
+            } //end foreach
+        } //end if
+        Picture::removePictures($picturesAlreadySaved->diff($newPictures));
+    }
 
     /**
      * Rename the folder where pictures are saved.
@@ -77,7 +110,8 @@ class Picture extends Model
      */
     private static function removePicture(Picture $picture): void
     {
-        $pathFile = "pictures/" . $picture->game->slug . "/" . $picture->uuid . "." . $picture->type;
+        $picture  = Picture::query()->where('id', $picture->getKey())->with('game')->first();
+        $pathFile = "pictures/" . $picture->game->slug . "/" . $picture->uuid . ".webp";
         if (Storage::disk('public')->exists($pathFile)) {
             Storage::disk('public')->delete($pathFile);
         }

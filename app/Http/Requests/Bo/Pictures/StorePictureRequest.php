@@ -18,8 +18,6 @@ class StorePictureRequest extends FormRequest
             'uuid.*'  => 'required|string|min:3|max:255',
             'label'   => 'sometimes|nullable|array',
             'label.*' => 'required|string|min:3|max:255',
-            'type'    => 'sometimes|nullable|array',
-            'type.*'  => 'required|string|min:1|max:20',
         ];
     }
 }

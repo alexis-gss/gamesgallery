@@ -329,8 +329,7 @@ export default defineComponent({
         this.gameSlug +
         "/" +
         this.gamePictures[n].uuid +
-        "." +
-        this.gamePictures[n].type
+        ".webp"
       );
     },
     /**

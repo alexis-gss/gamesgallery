@@ -38,6 +38,7 @@
             data-bs-tooltip="tooltip"
             :aria-describedby="`Help${intId}`"
             :disabled="intValues.length >= itemLimit[1]"
+            accept="image/png, image/jpg, image/jpeg"
             readonly
           >
           <button

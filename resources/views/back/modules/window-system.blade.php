@@ -21,7 +21,9 @@
             games: {
                 show: "{{ route('fo.games.show', 'ID') }}",
                 edit: "{{ route('bo.games.edit', 'ID') }}",
-                upload: "{{ route('bo.games.upload') }}",
+            },
+            pictures: {
+                upload: "{{ route('bo.pictures.upload') }}"
             },
             ranks: {
                 games: "{{ route('bo.ranks.games') }}",

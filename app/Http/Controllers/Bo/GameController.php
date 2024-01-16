@@ -8,18 +8,15 @@ use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Http\Requests\Bo\Pictures\StorePictureRequest;
 use App\Http\Requests\Bo\Pictures\UpdatePictureRequest;
 use App\Models\Game;
+use App\Models\Picture;
 use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
-use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
-use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class GameController extends Controller
 {
@@ -98,8 +95,10 @@ class GameController extends Controller
             $game->fill(Arr::except($request->validated(), ['tags']));
 
             if ($game->saveOrFail()) {
-                $pictureValidator = Validator::make($request->all(), StorePictureRequest::rules());
-                $game->updatePictures($game, $pictureValidator->validated());
+                Picture::updatePictures($game, Validator::make(
+                    $request->all(),
+                    StorePictureRequest::rules()
+                )->validated());
                 Tag::setTags($game, collect(request()->tags));
                 return redirect()->route('bo.games.edit', $game)
                     ->with('success', __('crud.messages.has_been_created', [
@@ -139,7 +138,10 @@ class GameController extends Controller
     {
         return DB::transaction(function () use ($request, $game) {
             $game->fill(Arr::except($request->validated(), ['tags']));
-            $game->updatePictures($game, Validator::make($request->all(), UpdatePictureRequest::rules())->validated());
+            Picture::updatePictures($game, Validator::make(
+                $request->all(),
+                UpdatePictureRequest::rules()
+            )->validated());
             Tag::setTags($game, collect($request->tags));
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game)
@@ -183,59 +185,5 @@ class GameController extends Controller
     public function duplicate(Game $game): \Illuminate\Contracts\View\View
     {
         return $this->create($game->replicate());
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException Bla.
-     */
-    public function upload(Request $request)
-    {
-        // Create the file receiver.
-        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
-        // Check if the upload is success, throw exception or return response you need.
-        if ($receiver->isUploaded() === false) {
-            throw new UploadMissingFileException();
-        }
-        // Receive the file.
-        $save = $receiver->receive();
-        // Check if the upload has finished (in chunk mode it will send smaller files).
-        if ($save->isFinished()) {
-            // Save the file and return any response you need, current example uses `move` function.
-            // If you are not using move, you need to manually delete the file: unlink($save->getFile()->getPathname()).
-            return $this->saveFile(
-                $save->getFile(),
-                (isset($request->uuid)) ? $request->uuid : false,
-                (isset($request->gameSlug)) ? $request->gameSlug : false
-            );
-        }
-        // We are in chunk mode, lets send the current progress.
-        /** @var AbstractHandler $handler */
-        $handler = $save->handler();
-        return response()->json([
-            "done" => $handler->getPercentageDone(),
-            'status' => true
-        ]);
-    }
-
-    /**
-     * @param \Illuminate\Http\UploadedFile $file
-     * @param mixed                         $uuid
-     * @param string                        $gameSlug
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException Bla.
-     */
-    protected function saveFile(UploadedFile $file, mixed $uuid, string $gameSlug)
-    {
-        if ($uuid === false) {
-            $uuid = Str::uuid();
-        }
-        $finalPath = storage_path('app/public/pictures/' . $gameSlug . '/');
-        // Move the file name.
-        $file->move($finalPath, $uuid . '.' . $file->getClientOriginalExtension());
-        return response()->json([
-            'uid' => $uuid,
-        ]);
     }
 }

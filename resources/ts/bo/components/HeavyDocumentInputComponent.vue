@@ -301,9 +301,9 @@ export default defineComponent({
      * Get upload heavy document route.
      */
     getUploadDocumentRoute() {
-      const uploadDocumentRoute = route.methods.route("bo.games.upload");
+      const uploadDocumentRoute = route.methods.route("bo.pictures.upload");
       if (!uploadDocumentRoute) {
-        throw new Error("Undefined route bo.games.upload");
+        throw new Error("Undefined route bo.pictures.upload");
       }
       return uploadDocumentRoute;
     },
@@ -330,7 +330,7 @@ export default defineComponent({
       let result = JSON.parse(message);
       this.intDocument = file.file as unknown as ChunkFile;
       this.intDocument.uuid = result.uid;
-      this.intDocument.label = file.file.name;
+      this.intDocument.label = file.file.name.replace(/\.[^/.]+$/, "");
       this.intSuccess = true;
       this.intDocumentLoaded = true;
       const intInputFileResult = this.$refs.progressBar as HTMLInputElement;
@@ -361,10 +361,7 @@ export default defineComponent({
           this.intGameSlug +
           "/" +
           this.intDocument?.uuid +
-          "." +
-          this.intDocument?.label.split(".")[
-            this.intDocument?.label.split(".").length - 1
-          ];
+          ".webp";
         imgEditor.onload = () => {
           this.intViewerLoadImage = false;
         };

@@ -4,6 +4,7 @@ use App\Http\Controllers\Bo\ActivityLogsController;
 use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
+use App\Http\Controllers\Bo\PictureController;
 use App\Http\Controllers\Bo\RankController;
 use App\Http\Controllers\Bo\StatisticController;
 use App\Http\Controllers\Bo\TagController;
@@ -50,8 +51,10 @@ Route::prefix('bo')
                         ->name('games.change-published');
                     Route::get('/games/{game}/duplicate', [GameController::class, 'duplicate'])
                         ->name('games.duplicate');
-                    Route::post('/games/upload', [GameController::class, 'upload'])
-                        ->name('games.upload');
+
+                    // * PICTURES
+                    Route::post('/pictures/upload', [PictureController::class, 'upload'])
+                        ->name('pictures.upload');
 
                     // * FOLDERS
                     Route::resource('folders', FolderController::class)->except('show');
