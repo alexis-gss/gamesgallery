@@ -1,4 +1,15 @@
-#### **12.10.23 ► v3.0**
+#### **12.10.23 ► v4.0.0**
+
+-   Add ranking of games - #29
+-   Add DeleteUnassociatedPictures job - issue #30
+-   Add translations in front & back - issue #31
+-   Add range dates for activities statistics
+-   Update statistics data
+-   Update accessibility - issue #32
+-   Clean project (docblock, prototype, indentation)
+-   Clean upload images method + optimize images with the .webp type mime
+
+#### **12.10.23 ► v3.0.0**
 
 -   Bump laravel 8.75->10.\* + bump others depedencies - issue #20
 -   Add bootstrap themes - issue #13
@@ -11,7 +22,7 @@
 -   Update login back-end
 -   Update users role/permissions
 
-#### **17.08.23 ► v2.5**
+#### **17.08.23 ► v2.5.0**
 
 -   Add duplicate model functionnality
 -   Add latest games on homepage
@@ -24,7 +35,7 @@
 -   Update btn actions on model
 -   Fix user's picture when run the command user:create
 
-#### **22.05.23 ► v2.4**
+#### **22.05.23 ► v2.4.0**
 
 -   Add glightbox
 -   Add simplebar
@@ -36,7 +47,7 @@
 -   Update access rights
 -   Minor fixes/bugs
 
-#### **04.04.23 ► v2.3**
+#### **04.04.23 ► v2.3.0**
 
 -   Add github-actions/github-issue-templates
 -   Add status for tags and folders
@@ -48,20 +59,20 @@
 
 -   Update new method for saving images.
 
-#### **11.09.22 ► v2.2**
+#### **11.09.22 ► v2.2.0**
 
 -   Adding tags for games.
 
-#### **10.10.22 ► v2.1**
+#### **10.10.22 ► v2.1.0**
 
 -   Adding a users administration.
 
-#### **12.08.22 ► v2.0**
+#### **12.08.22 ► v2.0.0**
 
 -   Total redesign of the project under Laravel
 -   Separation of the front/back office
 -   Addition of an administration interface with authentication
 
-#### **17.02.22 ► v1.0**
+#### **17.02.22 ► v1.0.0**
 
 -   Working project.
