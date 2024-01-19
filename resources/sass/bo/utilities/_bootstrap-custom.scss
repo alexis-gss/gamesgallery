@@ -1,15 +1,36 @@
-// * OTHERS VARIABLES
-.w-fit {
-    width: fit-content;
-}
+@use "sass:list";
+@import "mixins";
 
-// * RESPONSIVE VARIABLES
+// SET SOME CLASSES WITH BOOTSTRAP BREAKPOINTS
 @each $breakpoint in map-keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-        .w#{$infix}-fit {
-            width: fit-content !important;
+        @include generate-bs-borders($infix, $prefix);
+
+        .w#{$infix}-25 {
+            width: 25% !important;
+        }
+        .w#{$infix}-50 {
+            width: 50% !important;
+        }
+        .w#{$infix}-75 {
+            width: 75% !important;
+        }
+        .w#{$infix}-100 {
+            width: 100% !important;
+        }
+
+        @each $prop, $unit in (width: vw, height: vh) {
+            @each $size in [25, 50, 75, 100] {
+                .#{$unit}#{$infix}-#{$size} {
+                    #{$prop}: #{$size}#{$unit} !important;
+                }
+            }
+        }
+
+        @each $color, $value in $theme-colors {
+            @include generate-bs-borders($infix, $prefix, $color);
         }
     }
 }

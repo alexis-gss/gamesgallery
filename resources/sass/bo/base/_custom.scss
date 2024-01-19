@@ -1,8 +1,16 @@
-svg {
-    vertical-align: sub !important;
-}
-
 body {
+    > nav {
+        .navbar {
+            &-toggler.collapsed .navbar-toggler-icon-close {
+                display: none;
+            }
+
+            &-toggler:not(.collapsed) .navbar-toggler-icon {
+                display: inline;
+            }
+        }
+    }
+
     > main {
         min-height: calc(100vh - #{$bo-header-height} - #{$bo-footer-height});
     }
@@ -13,12 +21,22 @@ body {
     }
 }
 
+svg {
+    vertical-align: sub !important;
+}
+
 .container-fluid {
     margin-top: #{$bo-header-height};
 }
 
 #navbar {
-    height: #{$bo-header-height};
+    overflow: auto;
+    min-height: #{$bo-header-height};
+    max-height: 100vh;
+
+    @include media-breakpoint-up(xl) {
+        overflow: visible;
+    }
 }
 
 .profile-picture {
@@ -123,4 +141,8 @@ body {
     background-repeat: no-repeat;
     background-size: 7px 7px;
     inset: 0;
+}
+
+.w-fit {
+    width: fit-content;
 }
