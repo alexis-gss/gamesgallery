@@ -6,52 +6,34 @@
 
 </div>
 
-# Games Gallery
-Games Gallery is, as its name suggests, a gallery of images from a multitude of video games I've played. Each game is listed and associated with a folder to sort them by license or universe.
+# Introduction
+[Games Gallery](http://games-gallery.alexis-gousseau.com/) is, as its name suggests, a gallery of images from a multitude of video games I've played. Each game is listed and associated with a folder to sort them by license or universe.
 
 Each element (name, image, folder, color, etc.) can be managed in the back-office (/bo) and accessed via authentication.
 
 # Table of contents
 
-- [Games Gallery](#games-gallery)
+- [Introduction](#introduction)
 - [Table of contents](#table-of-contents)
 - [Frameworks, Platforms and Libraries](#frameworks-platforms-and-libraries)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
-    - [Introduction](#introduction)
+    - [Create a task](#create-a-task)
     - [Fixing a Bug](#fixing-a-bug)
     - [Proposing a Change](#proposing-a-change)
 - [Changelog](#changelog)
 - [Copyright and License](#copyright-and-license)
 
 # Frameworks, Platforms and Libraries
-![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white) ![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D) ![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D) ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white) ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) ![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
 
 # Documentation
 
-Download the project :
-
-    git clone https://github.com/alexis-gss/games-gallery.git
-
-Install the Composer/Node.js dependencies :
-
-    composer i/npm i
-
-Run the serve :
-
-    php artisan serve
-
-Compile sass/ts files :
-
-    npm run prod
-
-Create a new user (visitor or admin) to login to the back-end : 
-
-    php artisan user:create
+You can find all the documentation of this project on this link : [Games Gallery documention](https://docs-games-gallery.alexis-gousseau.com).
 
 # Contributing
 
-### Introduction 
+### Create a task
 
 You can create a [new issue](https://github.com/alexis-gss/games-gallery/issues/new/choose) with a specific templates : bug or feature.
 
@@ -73,6 +55,6 @@ See the [CHANGELOG.md](CHANGELOG.md) file for details.
 
 # Copyright and License
 
-[games-gallery](https://github.com/alexis-gss/games-gallery) was written by [Alexis Gousseau](https://github.com/alexis-gss).
+[Games Gallery](http://games-gallery.alexis-gousseau.com/) was written by [Alexis Gousseau](https://github.com/alexis-gss).
 
 Copyright (c) 2022 and beyond Alexis Gousseau.
