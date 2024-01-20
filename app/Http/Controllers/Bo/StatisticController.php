@@ -46,14 +46,12 @@ class StatisticController extends Controller
 
         collect($activitiesClass)->map(function ($class) use (&$activityModels, &$latestModels, $dateLastDays) {
             collect($dateLastDays->toArray())->map(function ($date) use (&$activityModels, $class) {
-                $activityModels[$class][] = count(
-                    ActivityLog::query()
-                        ->where('model_class', $class)
-                        ->whereDate('created_at', $date)
-                        ->get()
-                );
+                $activityModels[$class][] = ActivityLog::query()
+                    ->where('model_class', $class)
+                    ->whereDate('created_at', $date)
+                ->count();
             });
-            $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->firstOrFail();
+            $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->first() ?? [];
         });
 
         $navLinks = $this->getNavTabsData($latestModels);
@@ -76,34 +74,36 @@ class StatisticController extends Controller
     {
         $navLinks = [];
         foreach ($latestModels as $model) {
-            $name        = Str::of(class_basename($model))->lower()->value();
-            $translation = (get_class($model) === 'App\Models\Game')
-                ? trans_choice('models.game', 1)
-                : trans('models.' . $name);
-            $field       = (get_class($model) === 'App\Models\User')
-                ? trans('validation.attributes.first_name') . " / " . trans('validation.attributes.last_name')
-                : trans('validation.attributes.name');
-            switch (get_class($model)) {
-                case 'App\Models\Picture':
-                    $value = $model->uuid . "." . $model->type;
-                    break;
-                case 'App\Models\Rank':
-                    $value = $model->game->name;
-                    break;
-                case 'App\Models\User':
-                    $value = $model->first_name . " " . $model->last_name;
-                    break;
-                default:
-                    $value = $model->name;
-                    break;
-            } //end switch
-            $navLinks[] = [
-                "name"        => $name,
-                "translation" => $translation,
-                "model"       => $model,
-                "field"       => $field,
-                "value"       => $value,
-            ];
+            if ($model instanceof \Illuminate\Database\Eloquent\Model) {
+                $name        = Str::of(class_basename($model))->lower()->value();
+                $translation = (get_class($model) === 'App\Models\Game')
+                    ? trans_choice('models.game', 1)
+                    : trans('models.' . $name);
+                $field       = (get_class($model) === 'App\Models\User')
+                    ? trans('validation.attributes.first_name') . " / " . trans('validation.attributes.last_name')
+                    : trans('validation.attributes.name');
+                switch (get_class($model)) {
+                    case 'App\Models\Picture':
+                            $value = $model->uuid . ".webp";
+                        break;
+                    case 'App\Models\Rank':
+                        $value = $model->game->name;
+                        break;
+                    case 'App\Models\User':
+                        $value = $model->first_name . " " . $model->last_name;
+                        break;
+                    default:
+                        $value = $model->name;
+                        break;
+                } //end switch
+                $navLinks[] = [
+                    "name"        => $name,
+                    "translation" => $translation,
+                    "model"       => $model,
+                    "field"       => $field,
+                    "value"       => $value,
+                ];
+            } //end if
         } //end foreach
         return $navLinks;
     }
