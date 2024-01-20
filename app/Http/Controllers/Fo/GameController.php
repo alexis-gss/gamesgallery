@@ -25,8 +25,10 @@ class GameController extends Controller
 
         /** @var string $gamesLatestString */
         $gamesLatestString = "";
-        foreach ($gameLatestModels as $gameModel) {
-            $gamesLatestString = $gamesLatestString . $gameModel->name . " / ";
+        foreach ($gameLatestModels as $key => $gameModel) {
+            $gamesLatestString = $gamesLatestString .
+                $gameModel->name .
+                (($key !== count($gameLatestModels) - 1) ? " / " : "...");
         }
 
         return view('front.pages.home', [

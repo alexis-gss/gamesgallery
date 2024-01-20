@@ -3,10 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let menuFilter: HTMLDivElement|null;
     let btnGames: NodeListOf<HTMLSpanElement>;
     let btnScroll: HTMLButtonElement|null;
-    let btnScrollContent: HTMLDivElement|null;
+    let breadcrumb: HTMLDivElement|null;
+    let homeTextContent: HTMLDivElement|null;
 
     selectors();
     events();
+    setLatestGamesWidth();
 
     /**
      * Set all selectors on the page.
@@ -20,8 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
         btnScroll = document.querySelector(
             ".btn-scroll"
         );
-        btnScrollContent = document.querySelector(
-            ".btn-scroll .btn"
+        breadcrumb = document.querySelector(
+            ".breadcrumb"
+        );
+        homeTextContent = document.querySelector(
+            ".main-home-latest"
         );
     }
 
@@ -33,8 +38,23 @@ document.addEventListener("DOMContentLoaded", function () {
         btnGames?.forEach((element) => {
             element.addEventListener("click", displayMenuGames);
         });
-        btnScrollContent?.addEventListener("click", scrollToTheTop);
+        btnScroll?.addEventListener("click", scrollToTheTop);
         menuFilter?.addEventListener("click", displayMenuGames);
+        window.addEventListener("resize", setLatestGamesWidth);
+    }
+
+    /**
+     * Set the width of the latest games content.
+     */
+    function setLatestGamesWidth() {
+        setTimeout(() => {
+            if (homeTextContent && homeTextContent.nextElementSibling)
+                if (window.matchMedia("(min-width: 992px)").matches)
+                    homeTextContent.setAttribute("style", "width:calc(100% - " +
+                        (homeTextContent.nextElementSibling as HTMLDivElement).offsetWidth + "px)");
+                else
+                    homeTextContent.setAttribute("style", "width:100%");
+        }, 100);
     }
 
     /**
@@ -56,8 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
      * Check the distance between two scroll specific position.
      */
     function checkDistanceTop() {
-        document.documentElement.scrollTop < 200
-            ? btnScroll?.classList.add("btn-scroll-hidden")
-            : btnScroll?.classList.remove("btn-scroll-hidden");
+        if (document.documentElement.scrollTop < 200) {
+            btnScroll?.classList.add("btn-scroll-hidden");
+            breadcrumb?.classList.remove("breadrumb-resize");
+        } else {
+            btnScroll?.classList.remove("btn-scroll-hidden");
+            breadcrumb?.classList.add("breadrumb-resize");
+        }
     }
 });

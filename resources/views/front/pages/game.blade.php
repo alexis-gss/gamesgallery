@@ -11,7 +11,7 @@
         <div class="my-5">
             <h1 class="w-fit title-font-regular text-center position-relative mx-auto mb-3 px-5 py-1">
                 {{ $gameModel->name }}
-                <span class="angles"></span>
+                <span class="d-none d-sm-block angles"></span>
             </h1>
             <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
                 <a href="{{ route('fo.games.index') }}"

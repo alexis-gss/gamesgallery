@@ -1,5 +1,5 @@
 <template>
-  <div v-if="gamePictures.length > 0">
+  <div v-if="gameLoading || gamePictures.length > 0">
     <div
       v-for="n in incrementNumber"
       :key="n"
@@ -289,9 +289,11 @@ export default defineComponent({
       window.axios
         .get(url)
         .then((response) => {
-          this.gamePictures = this.gamePictures.concat(
-            Object.values(response.data.data.data)
-          );
+          if (response.data.data.data !== undefined) {
+            this.gamePictures = this.gamePictures.concat(
+              Object.values(response.data.data.data)
+            );
+          }
           this.gameLoading = false;
           this.updateGlightbox();
         })

@@ -9,6 +9,9 @@
             <i class="fa-solid fa-bars"></i>
         </span>
         @include('./../../breadcrumbs/breadcrumb-body')
+        <span class="btn btn-scroll text-light bg-primary border border-top-0 border-end-0 border-bottom-0 border-secondary rounded-start-0 p-3 btn-scroll-hidden">
+            <i class="fa-solid fa-arrow-up"></i>
+        </span>
     </button>
 </nav>
 

@@ -6,12 +6,12 @@
 
 @section('content')
 <main class="main-page m-0 p-0 mx-md-5 px-md-5">
-    <div class="row w-100">
+    <div class="row w-100 mx-auto">
         <div class="col-12">
             <div class="my-5">
                 <h1 class="w-fit title-font-regular text-center position-relative mx-auto mb-3 px-5 py-1">
                     {{ __('fo_ranking') }}
-                    <span class="angles"></span>
+                    <span class="d-none d-sm-block angles"></span>
                 </h1>
                 <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
                     <a href="{{ route('fo.games.index') }}"

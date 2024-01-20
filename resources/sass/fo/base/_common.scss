@@ -7,6 +7,7 @@ body {
         min-height: calc(100vh - 2rem);
 
         &-latest {
+            width: 100%;
             height: 2rem;
 
             .fw-bold {
@@ -82,10 +83,6 @@ body {
         }
 
         &:hover {
-            p {
-                width: 8.5rem !important;
-            }
-
             svg {
                 animation-play-state: paused;
             }
@@ -96,9 +93,13 @@ body {
         z-index: #{$zindex-fixed};
         right: 4.5rem;
         bottom: 1rem;
+        overflow: hidden;
+        width: 46px;
         transition: 0.3s;
 
         &-hidden {
+            width: 0;
+            padding: 0 !important;
             opacity: 0;
             visibility: hidden;
         }
@@ -108,6 +109,16 @@ body {
         z-index: #{$zindex-fixed};
         bottom: 1rem;
         left: 4.5rem;
+    }
+}
+
+.breadrumb {
+    &-resize {
+        width: calc(100% - calc(2 * 46px)) !important;
+    }
+
+    &-item + &-item::before {
+        color: #{$color-light};
     }
 }
 
@@ -129,17 +140,4 @@ body {
     &:hover &-span {
         width: 100%;
     }
-}
-
-.show-image {
-    z-index: 10;
-    transform: scale(1) !important;
-}
-
-.ratio img {
-    transform: scale(1.1);
-}
-
-.breadcrumb-item + .breadcrumb-item::before {
-    color: #{$color-light};
 }
