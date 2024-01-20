@@ -112,13 +112,13 @@ body {
     }
 }
 
-.breadrumb {
+.breadcrumb {
     &-resize {
         width: calc(100% - calc(2 * 46px)) !important;
     }
 
     &-item + &-item::before {
-        color: #{$color-light};
+        color: #{$color-light} !important;
     }
 }
 
