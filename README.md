@@ -2,7 +2,7 @@
 
 ![Banner of the github account](./resources/assets/images/github-visual.png)
 
-![GitHub latest commit](https://img.shields.io/github/last-commit/alexis-gss/gamesgallery/develop?color=212529&style=for-the-badge) ![GitHub tag](https://img.shields.io/github/tag/alexis-gss/gamesgallery?style=for-the-badge&color=212529) ![GitHub open issues](https://img.shields.io/github/issues-raw/alexis-gss/gamesgallery?style=for-the-badge&color=212529)
+![GitHub latest commit](https://img.shields.io/github/last-commit/alexis-gss/games-gallery/develop?color=212529&style=for-the-badge) ![GitHub tag](https://img.shields.io/github/tag/alexis-gss/games-gallery?style=for-the-badge&color=212529) ![GitHub open issues](https://img.shields.io/github/issues-raw/alexis-gss/games-gallery?style=for-the-badge&color=212529)
 
 </div>
 
@@ -31,7 +31,7 @@ Each element (name, image, folder, color, etc.) can be managed in the back-offic
 
 Download the project :
 
-    git clone https://github.com/alexis-gss/gamesgallery.git
+    git clone https://github.com/alexis-gss/games-gallery.git
 
 Install the Composer/Node.js dependencies :
 
@@ -53,7 +53,7 @@ Create a new user (visitor or admin) to login to the back-end :
 
 ### Introduction 
 
-You can create a [new issue](https://github.com/alexis-gss/gamesgallery/issues/new/choose) with a specific templates : bug or feature.
+You can create a [new issue](https://github.com/alexis-gss/games-gallery/issues/new/choose) with a specific templates : bug or feature.
 
 Once your code is working, please run the following commands `npm run stylelint`, `npm run eslint` and check `phpcs errors` to verify that your code is following the same coding standards.
 
@@ -73,6 +73,6 @@ See the [CHANGELOG.md](CHANGELOG.md) file for details.
 
 # Copyright and License
 
-[gamesgallery](https://github.com/alexis-gss/gamesgallery) was written by [Alexis Gousseau](https://github.com/alexis-gss).
+[games-gallery](https://github.com/alexis-gss/games-gallery) was written by [Alexis Gousseau](https://github.com/alexis-gss).
 
 Copyright (c) 2022 and beyond Alexis Gousseau.

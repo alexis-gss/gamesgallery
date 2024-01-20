@@ -5,7 +5,7 @@
         <span>-</span>
         @endif
         @if (isset($globalName))
-        <a href="https://github.com/alexis-gss/gamesgallery"
+        <a href="https://github.com/alexis-gss/games-gallery"
             target="_blank"
             data-bs="tooltip"
             data-bs-placement="top"
