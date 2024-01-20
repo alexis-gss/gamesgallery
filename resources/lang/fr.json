@@ -107,6 +107,8 @@
     "fo_default_title": "Accueil",
     "fo_default_description": "Application web réalisée avec Laravel, listant toutes les captures d'écran prises dans les jeux vidéo.",
     "fo_description": "Liste de toutes les captures d'écran que j'ai prises du jeu :game.",
+    "fo_ranking_title": "Classement",
+    "fo_ranking_description": "Classement personnel des jeux publiés dans le projet.",
     "fo_no_result": "Aucun résultat ne correspond à votre recherche",
     "fo_images_loaded": "Toutes les images sont chargées",
     "fo_images_no_one": "Pas d'images",

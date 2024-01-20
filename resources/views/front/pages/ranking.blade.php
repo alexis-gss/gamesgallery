@@ -1,7 +1,7 @@
 @extends('front.layout', ['brParam' => $rankModels])
 
-@section('title', __('fo_default_title'))
-@section('description', __('fo_default_description'))
+@section('title', __('fo_ranking_title') ?? __('fo_default_title'))
+@section('description', __('fo_ranking_description') ?? __('fo_default_description'))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
