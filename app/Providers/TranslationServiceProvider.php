@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Lib\Helpers\ToolboxHelper;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
@@ -20,9 +21,19 @@ class TranslationServiceProvider extends ServiceProvider
         foreach ($this->collectLocalesStrings() as $locale) {
             // * Suported locales
             Cache::rememberForever(sprintf('translations.%s', $locale), function () use ($locale) {
-                $translations = [
-                    'php' => $this->phpTranslations($locale),
-                    'json' => $this->jsonTranslations($locale),
+                $phpTransFallback  = $this->phpTranslations(config('app.fallback_locale'));
+                $phpTransLocale    = $this->phpTranslations($locale);
+                $jsonTransFallback = $this->jsonTranslations(config('app.fallback_locale'));
+                $jsonTransLocale   = $this->jsonTranslations($locale);
+                $translations      = [
+                    'php' => ToolboxHelper::arrayMergeRecursiveDistinct(
+                        $phpTransLocale,
+                        $phpTransFallback,
+                    ),
+                    'json' => ToolboxHelper::arrayMergeRecursiveDistinct(
+                        $jsonTransLocale,
+                        $jsonTransFallback,
+                    ),
                 ];
                 return $translations;
             });
