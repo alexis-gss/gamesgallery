@@ -1,10 +1,5 @@
-import { Tooltip } from "bootstrap";
+import * as bootstrap from "bootstrap";
+import tooltip from "./../modules/tooltip";
 
-document.addEventListener("DOMContentLoaded", function () {
-    const tooltipTriggerList = [].slice.call(
-        document.querySelectorAll("[data-bs=\"tooltip\"]")
-    );
-    tooltipTriggerList.map(function (element) {
-        return new Tooltip(element);
-    });
-});
+window.bootstrap = bootstrap;
+tooltip.methods.setBootstrapTooltip();

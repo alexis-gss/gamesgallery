@@ -344,9 +344,9 @@
 </template>
 
 <script lang="ts">
-import { Tooltip } from "bootstrap";
 import Cropper from "cropperjs";
 import { defineComponent } from "vue";
+import tooltip from "./../../modules/tooltip";
 import trans from "./../../modules/trans";
 
 const UNITS = [
@@ -361,7 +361,7 @@ const BYTES_PER_KB = 1024;
 
 export default defineComponent({
   name: "ImageInputComponent",
-  mixins: [trans],
+  mixins: [tooltip, trans],
   emits: ["browseFile"],
   props: {
     value: {
@@ -396,7 +396,6 @@ export default defineComponent({
     };
     intOriginalFileName: string;
     intPreviewStyle: string;
-    intTooltipList: HTMLButtonElement[];
   } {
     return {
       intId: "",
@@ -425,7 +424,6 @@ export default defineComponent({
       },
       intOriginalFileName: "",
       intPreviewStyle: "",
-      intTooltipList: [],
     };
   },
   mounted() {
@@ -449,7 +447,7 @@ export default defineComponent({
     }
     this.intHasImage = false;
     this.$nextTick(() => {
-      this.updateBootstrapTooltip();
+      this.setBootstrapTooltip();
     });
   },
   computed: {
@@ -495,31 +493,6 @@ export default defineComponent({
     },
   },
   methods: {
-    /**
-     * Update Bootstrap tooltips.
-     */
-    updateBootstrapTooltip() {
-      let newTooltipList = [].slice.call(
-        document.querySelectorAll(
-          ".image-input-" + this.intId + " [data-bs-tooltip=\"tooltip\"]"
-        )
-      ) as HTMLButtonElement[];
-      let tmp = newTooltipList.filter((x) => !this.intTooltipList.includes(x));
-      tmp.map((tooltip) => {
-        return new Tooltip(tooltip);
-      });
-      this.intTooltipList = newTooltipList;
-      this.closeBootstrapTooltip();
-    },
-    /**
-     * Close all Bootstrap tooltips.
-     */
-    closeBootstrapTooltip() {
-      this.intTooltipList.forEach((tooltip) => {
-        tooltip.blur();
-        Tooltip.getInstance(tooltip)?.hide();
-      });
-    },
     /**
      * Cropper preview style.
      */
@@ -757,7 +730,7 @@ export default defineComponent({
       }
       this.intHasModdedImage = true;
       this.$nextTick(() => {
-        this.updateBootstrapTooltip();
+        this.setBootstrapTooltip();
       });
       this.intValue = this.intCropper
         .getCroppedCanvas({

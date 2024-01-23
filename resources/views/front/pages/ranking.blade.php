@@ -2,50 +2,51 @@
 
 @section('title', __('fo_ranking_title') ?? __('fo_default_title'))
 @section('description', __('fo_ranking_description') ?? __('fo_default_description'))
-@section('breadcrumb', request()->route()->getName())
+@section('breadcrumb',
+    request()->route()->getName())
 
 @section('content')
-<main class="main-page m-0 p-0 mx-md-5 px-md-5">
-    <div class="row w-100 mx-auto">
-        <div class="col-12">
-            <div class="my-5">
-                <h1 class="w-fit title-font-regular text-center position-relative mx-auto mb-3 px-5 py-1">
-                    {{ __('fo_ranking') }}
-                    <span class="d-none d-sm-block angles"></span>
-                </h1>
-                <div class="d-flex flex-row justify-content-center align-items-center user-select-none text-center w-100">
-                    <a href="{{ route('fo.games.index') }}"
-                        class="btn btn-secondary bg-primary border-0 text-white rounded-2 px-2 py-0 text-decoration-none"
-                        title="{{ __('fo_back_to_homepage', ['model' => trans_choice('models.game', 2)]) }}"
-                        data-bs="tooltip"
-                        data-bs-placement="top">
-                        <i class="fa fa-arrow-left"></i>
-                    </a>
-                    <span class="mx-1">-</span>
-                    <p class="bg-primary text-white rounded-2 px-2 py-0 m-0">
-                        {{ Str::of(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
-                    </p>
+    <main class="main-page mx-md-5 px-md-5 m-0 p-0">
+        <div class="row w-100 mx-auto">
+            <div class="col-12">
+                <div class="my-5">
+                    <h1 class="title-font-regular position-relative mx-auto mb-3 w-fit px-5 py-1 text-center">
+                        {{ __('fo_ranking') }}
+                        <span class="d-none d-sm-block angles"></span>
+                    </h1>
+                    <div class="d-flex justify-content-center align-items-center user-select-none w-100 flex-row text-center">
+                        <a class="btn btn-secondary bg-primary rounded-2 text-decoration-none border-0 px-2 py-0 text-white"
+                            data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('fo.games.index') }}"
+                            title="{{ __('fo_back_to_homepage', ['model' => trans_choice('models.game', 2)]) }}">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                        <span class="mx-1">-</span>
+                        <p class="bg-primary rounded-2 m-0 px-2 py-0 text-white">
+                            {{ Str::of(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
+                        </p>
+                    </div>
                 </div>
+                @if (isset($rankModels))
+                    <ul class="bg-secondary rounded p-2">
+                        @foreach ($rankModels as $key => $rankModel)
+                            <li class="list-group-item rounded-2 border-0 bg-transparent p-0">
+                                <a class="btn btn-secondary position-relative d-flex justify-content-start align-items-center btn text-decoration-none w-100 flex-row border-0 p-1 text-white"
+                                    href="{{ route('fo.games.show', $rankModel->game->slug) }}">
+                                    <div class="d-flex justify-content-start align-items-center flex-row">
+                                        <span class="list-group-item-span z-0"
+                                            style="background-color: {{ $rankModel->game->folder()->firstOrFail()->color }};"></span>
+                                        <span class="title-font-regular z-1 ps-1">
+                                            @php $rank = $key + 1; @endphp
+                                            {{ $rank < 10 ? 0 . $rank : $rank }}&nbsp;-&nbsp;
+                                        </span>
+                                    </div>
+                                    <p class="z-1 my-1">{{ $rankModel->name }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
-            @if (isset($rankModels))
-            <ul class="bg-secondary rounded p-2">
-                @foreach ($rankModels as $key => $rankModel)
-                <li class="list-group-item border-0 rounded-2 bg-transparent p-0">
-                    <a href="{{ route('fo.games.show', $rankModel->game->slug) }}" class="btn btn-secondary position-relative d-flex flex-row justify-content-start align-items-center btn border-0 text-white text-decoration-none w-100 p-1">
-                        <div class="d-flex flex-row justify-content-start align-items-center">
-                            <span class="list-group-item-span z-0" style="background-color: {{ $rankModel->game->folder()->firstOrFail()->color }};"></span>
-                            <span class="title-font-regular ps-1 z-1">
-                                @php $rank = $key + 1; @endphp
-                                {{ (($rank < 10) ? (0 . $rank) : $rank) }}&nbsp;-&nbsp;
-                            </span>
-                        </div>
-                        <p class="z-1 my-1">{{ $rankModel->name }}</p>
-                    </a>
-                </li>
-                @endforeach
-            </ul>
-            @endif
         </div>
-    </div>
-</main>
+    </main>
 @endsection

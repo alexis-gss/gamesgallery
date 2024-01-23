@@ -45,7 +45,7 @@
                 class="btn btn-sm btn-warning"
                 target="_blank"
                 :title="__('bo_tooltip_ranking_see_game')"
-                data-bs="tooltip"
+                data-bs-tooltip="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-eye" />
               </a>
@@ -53,7 +53,7 @@
                 :href="getEditGameRoute(item.game_id)"
                 class="btn btn-sm btn-primary"
                 :title="__('bo_tooltip_ranking_update_game')"
-                data-bs="tooltip"
+                data-bs-tooltip="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-pencil" />
               </a>
@@ -61,7 +61,7 @@
                 @click="deleteRank($event, item as never as RankObject)"
                 class="btn btn-sm btn-danger confirmDelete"
                 :title="__('bo_tooltip_ranking_delete_game')"
-                data-bs="tooltip"
+                data-bs-tooltip="tooltip"
                 ref="confirmDelete"
               >
                 <FontAwesomeIcon icon="fa-solid fa-xmark" />
@@ -89,10 +89,10 @@
 
 <script lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { Tooltip } from "bootstrap";
 import { defineComponent } from "vue";
 import { VueNestable, VueNestableHandle } from "vue3-nestable";
 import route from "./../../modules/route";
+import tooltip from "./../../modules/tooltip";
 import error from "././../../modules/error";
 import sweetalert from "././../../modules/sweetalert";
 import trans from "././../../modules/trans";
@@ -104,7 +104,7 @@ export default defineComponent({
     VueNestableHandle,
     FontAwesomeIcon,
   },
-  mixins: [route, trans, sweetalert, error],
+  mixins: [error, route, sweetalert, tooltip, trans],
   data(): {
     intCsrf: string | null | undefined;
     intId: String;
@@ -112,7 +112,6 @@ export default defineComponent({
     intGames: LaravelModel[];
     intMessage: object | object[] | null;
     intLoading: boolean;
-    intTooltipList: HTMLButtonElement[];
   } {
     return {
       intCsrf: document
@@ -123,7 +122,6 @@ export default defineComponent({
       intGames: [],
       intMessage: null,
       intLoading: false,
-      intTooltipList: [],
     };
   },
   mounted() {
@@ -132,7 +130,7 @@ export default defineComponent({
     this.intId = data.id;
     this.intRanks = data.rankModels;
     this.$nextTick(() => {
-      this.updateBootstrapTooltip();
+      this.setBootstrapTooltip();
     });
   },
   methods: {
@@ -156,7 +154,7 @@ export default defineComponent({
       }
       window.axios.post(route, { ranks: newOrder }).catch(this.ajaxErrorHandler);
       this.$nextTick(() => {
-        this.updateBootstrapTooltip();
+        this.setBootstrapTooltip();
       });
     },
     /** Assign the new order and parent id to each rank. */
@@ -225,13 +223,13 @@ export default defineComponent({
                 setTimeout(() => {
                   this.intMessage = null;
                   this.$nextTick(() => {
-                    this.updateBootstrapTooltip();
+                    this.setBootstrapTooltip();
                   });
                 }, 6000);
               }
               this.intLoading = false;
               this.$nextTick(() => {
-                this.updateBootstrapTooltip();
+                this.setBootstrapTooltip();
               });
             })
             .catch(this.ajaxErrorHandler);
@@ -263,28 +261,7 @@ export default defineComponent({
         }
       }
       console.log(message);
-    },
-    /** Update Bootstrap tooltips. */
-    updateBootstrapTooltip() {
-      let newTooltipList = [].slice.call(
-        document.querySelectorAll(
-          ".ranks-" + this.intId + " [data-bs=\"tooltip\"]"
-        )
-      ) as HTMLButtonElement[];
-      let tmp = newTooltipList.filter((x) => !this.intTooltipList.includes(x));
-      tmp.map((tooltip) => {
-        return new Tooltip(tooltip);
-      });
-      this.closeBootstrapTooltip();
-      this.intTooltipList = newTooltipList;
-    },
-    /** Close all Bootstrap tooltips. */
-    closeBootstrapTooltip() {
-      this.intTooltipList.forEach((tooltip) => {
-        tooltip.blur();
-        Tooltip.getInstance(tooltip)?.hide();
-      });
-    },
+    }
   },
 });
 </script>

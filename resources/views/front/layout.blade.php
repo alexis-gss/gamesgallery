@@ -9,7 +9,7 @@
     @include('front.partials.btn-github')
 
     @if (!request()->routeIs('fo.games.index'))
-    @include('front.layouts.nav')
+        @include('front.layouts.nav')
     @endif
 
     <div data-aos="fade">

@@ -157,16 +157,16 @@
 
 <script lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { Tooltip } from "bootstrap";
 import Resumable from "resumablejs";
 import type { PropType } from "vue";
 import { defineComponent } from "vue";
 import route from "./../../modules/route";
+import tooltip from "./../../modules/tooltip";
 import trans from "./../../modules/trans";
 
 export default defineComponent({
   name: "HeavyDocumentInputComponent",
-  mixins: [route, trans],
+  mixins: [route, tooltip, trans],
   components: {
     FontAwesomeIcon,
   },
@@ -214,7 +214,6 @@ export default defineComponent({
     intGameSlug: string;
     intSimpleComponent: boolean;
     intViewerLoadImage: boolean;
-    intTooltipList: HTMLButtonElement[];
     intDocumentLoaded: boolean;
     intInputUuid: HTMLInputElement | null;
     intInputLabel: HTMLInputElement | null;
@@ -233,7 +232,6 @@ export default defineComponent({
       intGameSlug: "",
       intSimpleComponent: false,
       intViewerLoadImage: false,
-      intTooltipList: [],
       intDocumentLoaded: false,
       intInputUuid: null,
       intInputLabel: null,
@@ -259,7 +257,7 @@ export default defineComponent({
     }
     this.$nextTick(() => {
       this.getInputsAttribute();
-      this.updateBootstrapTooltip();
+      this.setBootstrapTooltip();
     });
   },
   methods: {
@@ -339,7 +337,7 @@ export default defineComponent({
         this.intIsUploading = false;
         this.$nextTick(() => {
           this.editImageAttribute();
-          this.updateBootstrapTooltip();
+          this.setBootstrapTooltip();
         });
       }, 800);
     },
@@ -383,32 +381,7 @@ export default defineComponent({
         this.intInputUuid.value = this.intDocument?.uuid ?? "";
         this.intInputLabel.value = this.intDocument?.label ?? "";
       }
-    },
-    /**
-     * Update Bootstrap tooltips.
-     */
-    updateBootstrapTooltip() {
-      let newTooltipList = [].slice.call(
-        document.querySelectorAll(
-          ".image-heavy-input-" + this.intId + " [data-bs-tooltip=\"tooltip\"]"
-        )
-      ) as HTMLButtonElement[];
-      let tmp = newTooltipList.filter((x) => !this.intTooltipList.includes(x));
-      tmp.map((tooltip) => {
-        return new Tooltip(tooltip);
-      });
-      this.intTooltipList = newTooltipList;
-      this.closeBootstrapTooltip();
-    },
-    /**
-     * Close all Bootstrap tooltips.
-     */
-    closeBootstrapTooltip() {
-      this.intTooltipList.forEach((tooltip) => {
-        tooltip.blur();
-        Tooltip.getInstance(tooltip)?.hide();
-      });
-    },
+    }
   },
 });
 </script>

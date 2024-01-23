@@ -10,7 +10,7 @@
             <input class="form-control" id="date_end" name="date_end" type="date"
                 value="{{ !empty($dateLastDays->last()) ? $dateLastDays->last()->format('Y-m-d') : Carbon::now()->format('Y-m-d') }}"
                 required>
-            <button class="btn btn-primary" data-bs="tooltip" type="submit" title="{{ __('bo_other_stats_show_activities') }}">
+            <button class="btn btn-primary" data-bs-tooltip="tooltip" type="submit" title="{{ __('bo_other_stats_show_activities') }}">
                 {{ __('bo_other_stats_visualize') }}
             </button>
         </form>

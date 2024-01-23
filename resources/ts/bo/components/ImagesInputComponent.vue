@@ -120,15 +120,15 @@
 
 <script lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { Tooltip } from "bootstrap";
 import { defineComponent } from "vue";
 import error from "./../../modules/error";
+import tooltip from "./../../modules/tooltip";
 import trans from "./../../modules/trans";
 import HeavyDocumentInputComponent from "./HeavyDocumentInputComponent.vue";
 
 export default defineComponent({
   name: "ImagesInputComponent",
-  mixins: [error, trans],
+  mixins: [error, tooltip, trans],
   components: {
     FontAwesomeIcon,
     HeavyDocumentInputComponent,
@@ -141,7 +141,6 @@ export default defineComponent({
     intHasImages: boolean;
     intValues: ChunkFile[];
     intHelper: string;
-    intTooltipList: HTMLButtonElement[];
     intBtnCollapse: HTMLButtonElement | null;
     intLoopLoadImages: number;
     intViewerLoadImage: boolean;
@@ -160,7 +159,6 @@ export default defineComponent({
       intValues: [],
       intHelper: "",
       intBtnCollapse: null,
-      intTooltipList: [],
       intLoopLoadImages: 0,
       intViewerLoadImage: false,
       intInputImages: null,
@@ -185,7 +183,7 @@ export default defineComponent({
     this.allErrors = data.errors ?? {};
     this.$nextTick(() => {
       this.initComponent();
-      this.updateBootstrapTooltip();
+      this.setBootstrapTooltip();
     });
   },
   methods: {
@@ -278,7 +276,7 @@ export default defineComponent({
           this.setErrorMessage("Pictures download limit exceeded");
         }
       } else {
-        this.updateBootstrapTooltip();
+        this.setBootstrapTooltip();
         this.intLoopLoadImages = this.intValues.length;
       }
     },
@@ -298,32 +296,7 @@ export default defineComponent({
       setTimeout(() => {
         this.intMessage = null;
       }, 5000);
-    },
-    /**
-     * Update Bootstrap tooltips.
-     */
-    updateBootstrapTooltip() {
-      let newTooltipList = [].slice.call(
-        document.querySelectorAll(
-          ".images-input-" + this.intId + " [data-bs-tooltip=\"tooltip\"]"
-        )
-      ) as HTMLButtonElement[];
-      let tmp = newTooltipList.filter((x) => !this.intTooltipList.includes(x));
-      tmp.map((tooltip) => {
-        return new Tooltip(tooltip);
-      });
-      this.intTooltipList = newTooltipList;
-      this.closeBootstrapTooltip();
-    },
-    /**
-     * Close all Bootstrap tooltips.
-     */
-    closeBootstrapTooltip() {
-      this.intTooltipList.forEach((tooltip) => {
-        tooltip.blur();
-        Tooltip.getInstance(tooltip)?.hide();
-      });
-    },
+    }
   },
 });
 </script>

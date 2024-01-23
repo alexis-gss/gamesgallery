@@ -1,5 +1,7 @@
 {{-- Title --}}
+{{-- blade-formatter-disable --}}
 <title>{{ config('app.name') }}@hasSection('title') - @yield('title')@endif</title>
+{{-- blade-formatter-enable --}}
 
 {{-- Meta --}}
 <meta charset="utf-8">
@@ -11,7 +13,9 @@
 <meta name="robots" content="noindex,nofollow">
 
 {{-- Open Graph --}}
+{{-- blade-formatter-disable --}}
 <meta property="og:title" content="{{ config('app.name') }}@hasSection('title') - @yield('title')@endif" />
+{{-- blade-formatter-enable --}}
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ config('app.url') }}" />
 <meta property="og:site_name" content="{{ config('app.name') }}" />
@@ -38,7 +42,7 @@
 @stack('styles')
 
 @if (config('app.debug'))
-<script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>
-    window.vueDebug = true;
-</script>
+    <script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>
+        window.vueDebug = true;
+    </script>
 @endif
