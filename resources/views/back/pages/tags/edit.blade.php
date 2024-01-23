@@ -52,6 +52,9 @@
         @endcan
         @include('back.pages.tags.form-inputs')
         @can('update', $tagModel)
+            @include('back.partials.script-button-clone')
+        @endcan
+        @can('update', $tagModel)
             <div class="row mt-3">
                 <div class="col text-center">
                     <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"

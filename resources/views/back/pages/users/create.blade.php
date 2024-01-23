@@ -30,6 +30,9 @@
         @endcan
         @include('back.pages.users.form-inputs')
         @can('create', \App\Models\User::class)
+            @include('back.partials.script-button-clone')
+        @endcan
+        @can('create', \App\Models\User::class)
             <div class="row mt-3">
                 <div class="col text-center">
                     <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"

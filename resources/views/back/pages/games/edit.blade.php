@@ -52,17 +52,24 @@
             @endcan
         </div>
     </div>
-    <form action="{{ route('bo.games.update', $gameModel) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+    @can('update', $gameModel)
+        <form action="{{ route('bo.games.update', $gameModel) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+        @endcan
         @include('back.pages.games.form-inputs')
-        <div class="row mt-3">
-            <div class="col text-center">
-                <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                    title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
-                    <i class="fa-solid fa-floppy-disk"></i>
-                </button>
+        @can('update', $gameModel)
+            @include('back.partials.script-button-clone')
+        @endcan
+        @can('update', $gameModel)
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                        title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    @endcan
 @endsection

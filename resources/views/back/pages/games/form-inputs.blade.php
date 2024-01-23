@@ -130,19 +130,3 @@
         <p class="fw-bold m-0 p-0">{{ __('crud.other.required_fields') }}</p>
     </div>
 </div>
-
-@can('update', $gameModel)
-    @push('scripts')
-        <script nonce="{{ $nonce }}">
-            document.addEventListener("DOMContentLoaded", () => {
-                // Submit button clone.
-                const submit = document.getElementById('formSubmit')
-                submitClone = document.getElementById('formSubmitClone');
-                submitClone.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    submit.click('');
-                })
-            });
-        </script>
-    @endpush
-@endcan

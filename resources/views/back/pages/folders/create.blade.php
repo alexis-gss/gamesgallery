@@ -30,6 +30,9 @@
         @endcan
         @include('back.pages.folders.form-inputs')
         @can('create', $folderModel)
+            @include('back.partials.script-button-clone')
+        @endcan
+        @can('create', $folderModel)
             <div class="row mt-3">
                 <div class="col text-center">
                     <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
