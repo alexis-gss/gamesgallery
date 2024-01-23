@@ -18,6 +18,19 @@ return [
 
     /*
         |--------------------------------------------------------------------------
+        | Application Conceptor
+        |--------------------------------------------------------------------------
+        |
+        | This value is the name of the conceptor of your application. This value
+        | is used when the framework needs to place the application conceptor's
+        | name in a notification or any other location as required by the
+        | application or its packages.
+    */
+
+    'conceptor' => env('APP_CONCEPTOR', 'John Doe'),
+
+    /*
+        |--------------------------------------------------------------------------
         | Application Environment
         |--------------------------------------------------------------------------
         |
