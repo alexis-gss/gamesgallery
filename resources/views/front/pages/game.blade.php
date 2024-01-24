@@ -45,3 +45,7 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+{!! $gameModel->toSchemaOrg()->toScript() !!}
+@endpush

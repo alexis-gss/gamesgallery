@@ -50,3 +50,7 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    {!! $staticPageModel->toSchemaOrg()->toScript() !!}
+@endpush

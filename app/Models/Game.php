@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Traits\Models\ActivityLog;
+use App\Traits\Models\SchemaOrg;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\SchemaOrg\Schema;
 
 /**
  * @property integer                         $id           Id.
@@ -21,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method private static function setSlug($game)          Set model's slug.
  * @method private static function setPublishedDate($game) Set model's published date.
  * @method private static function setOrder($game)         Set model's order after the last element of the list.
+ * @method public function toSchemaOrg()                   Set micro data.
  *
  * @property-read \App\Models\Folder $folder
  * Get Folder that owns the Game (relationship).
@@ -33,6 +36,7 @@ class Game extends Model
 {
     use ActivityLog;
     use HasFactory;
+    use SchemaOrg;
 
     /**
      * The attributes that are fillable.
@@ -106,6 +110,31 @@ class Game extends Model
     private static function setOrder(Game $game): void
     {
         $game->order = \intval(self::query()->max('order')) + 1;
+    }
+
+    /**
+     * Set micro data.
+     *
+     * @return \Spatie\SchemaOrg\WebPage
+     */
+    public function toSchemaOrg(): \Spatie\SchemaOrg\WebPage
+    {
+        return Schema::WebPage()
+            ->inLanguage(config('app.locale'))
+            ->datePublished($this->published_at)
+            ->genre("Game image gallery")
+            ->headline($this->name)
+            ->isPartOf($this->folder->name)
+            ->mainContentOfPage(route('fo.games.show', $this))
+            ->primaryImageOfPage(sprintf(
+                '%s/storage/pictures/%s/%s',
+                route("fo.games.index"),
+                $this->slug,
+                $this->pictures->first()->uuid . ".webp"
+            ))->about($this->name)
+            ->reviewedBy($this->toPersonSchema())
+            ->editor($this->toPersonSchema())
+            ->author($this->toPersonSchema());
     }
 
     // * RELATIONSHIPS
