@@ -11,7 +11,7 @@ use App\Models\Picture;
 use App\Models\Rank;
 use App\Models\Tag;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Str;
 
@@ -93,6 +93,7 @@ class StatisticController extends Controller
                         $value = $model->first_name . " " . $model->last_name;
                         break;
                     default:
+                        // @phpstan-ignore-next-line
                         $value = $model->name;
                         break;
                 } //end switch

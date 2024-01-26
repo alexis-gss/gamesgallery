@@ -16,7 +16,7 @@ class GameController extends Controller
     /**
      * Show the application homepage.
      *
-     * @return Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View
      */
     public function index(): \Illuminate\Contracts\View\View
     {
@@ -95,7 +95,7 @@ class GameController extends Controller
     {
         $selectedTagId    = intval($request->FILTERSID[0] ?? 0);
         $selectedFolderId = intval($request->FILTERSID[1] ?? 0);
-        /** @var HTMLCollection<\App\Models\Game> */
+        /** @var \Illuminate\Support\Collection $gamesFiltered */
         $gamesFiltered = Game::query()->where('published', true)
             ->when($selectedTagId, function ($query) use ($selectedTagId) {
                 $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {

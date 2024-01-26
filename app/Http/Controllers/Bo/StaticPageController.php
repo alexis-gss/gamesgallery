@@ -63,7 +63,7 @@ class StaticPageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param App\Models\StaticPage $static_page
+     * @param \App\Models\StaticPage $static_page
      * @return \Illuminate\Contracts\View\View
      */
     public function edit(StaticPage $static_page): \Illuminate\Contracts\View\View

@@ -6,6 +6,7 @@ use App\Traits\Models\ActivityLog;
 use App\Traits\Models\SchemaOrg;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 /**
@@ -14,16 +15,15 @@ use Spatie\SchemaOrg\Schema;
  * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
  * @property boolean                         $published    Published status.
- * @property \Illuminate\Support\Carbon      $published_at Published date update.
+ * @property \Illuminate\Support\Carbon|null $published_at Published date update.
  * @property integer                         $order        Order of the name.
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
- * @method protected static function booted()              Perform any actions required after the model boots.
- * @method private static function setSlug($game)          Set model's slug.
- * @method private static function setPublishedDate($game) Set model's published date.
- * @method private static function setOrder($game)         Set model's order after the last element of the list.
- * @method public function toSchemaOrg()                   Set micro data.
+ * @method static void booted()                     Perform any actions required after the model boots.
+ * @method static void setPublishedDate(self $game) Set model's published date.
+ * @method static void setOrder(self $game)         Set model's order after the last element of the list.
+ * @method \Spatie\SchemaOrg\WebPage toSchemaOrg()  Set micro data.
  *
  * @property-read \App\Models\Folder $folder
  * Get Folder that owns the Game (relationship).
@@ -41,7 +41,7 @@ class Game extends Model
     /**
      * The attributes that are fillable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'slug',
@@ -55,7 +55,7 @@ class Game extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'published'    => 'bool',
@@ -70,17 +70,17 @@ class Game extends Model
     protected static function booted(): void
     {
         static::creating(function (self $game) {
-            static::setOrder($game);
-            static::setPublishedDate($game);
-            Picture::renameFolderSavedPictures($game, "default_folder");
+            self::setOrder($game);
+            self::setPublishedDate($game);
+            (new Picture())->renameFolderSavedPictures($game, "default_folder");
         });
         static::updating(function (self $game) {
-            static::setPublishedDate($game);
-            Picture::renameFolderSavedPictures($game, $game->getOriginal('slug'));
+            self::setPublishedDate($game);
+            (new Picture())->renameFolderSavedPictures($game, $game->getOriginal('slug'));
         });
         static::deleting(function (self $game) {
-            Tag::removeTags($game);
-            Picture::removePictures($game->pictures);
+            (new Tag())->removeTags($game);
+            (new Picture())->removePictures($game->pictures);
         });
     }
 
@@ -89,13 +89,13 @@ class Game extends Model
     /**
      * Set model's published date.
      *
-     * @param \App\Models\Game $game
+     * @param self $game
      * @return void
      */
-    private static function setPublishedDate(Game $game): void
+    private static function setPublishedDate(self $game): void
     {
         if ($game->published && !$game->getOriginal('published')) {
-            $game->published_at = now();
+            $game->published_at = Carbon::now();
         } elseif (!$game->published) {
             $game->published_at = null;
         }
@@ -104,10 +104,10 @@ class Game extends Model
     /**
      * Set model's order after the last element of the list.
      *
-     * @param \App\Models\Game $game
+     * @param self $game
      * @return void
      */
-    private static function setOrder(Game $game): void
+    private static function setOrder(self $game): void
     {
         $game->order = \intval(self::query()->max('order')) + 1;
     }
@@ -125,13 +125,19 @@ class Game extends Model
             ->genre("Game image gallery")
             ->headline($this->name)
             ->isPartOf($this->folder->name)
-            ->mainContentOfPage(route('fo.games.show', $this))
-            ->primaryImageOfPage(sprintf(
-                '%s/storage/pictures/%s/%s',
-                route("fo.games.index"),
-                $this->slug,
-                $this->pictures->first()->uuid . ".webp"
-            ))->about($this->name)
+            ->relatedLink(route('fo.games.show', $this))
+            ->image(
+                sprintf(
+                    '%s/storage/pictures/%s/%s',
+                    route("fo.games.index"),
+                    $this->slug,
+                    $this->pictures->first()->uuid . ".webp"
+                )
+            )
+            ->about(
+                Schema::Thing()
+                    ->name($this->name)
+            )
             ->reviewedBy($this->toPersonSchema())
             ->editor($this->toPersonSchema())
             ->author($this->toPersonSchema());

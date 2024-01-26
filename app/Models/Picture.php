@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Storage;
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
- * @method protected static function booted()                       Perform any actions required after the model boots.
- * @method public static function updatePictures($game, $request)   Differentiate between old and new pictures, remove
- * oldests and save news.
- * @method public static function renameFolderSavedPictures($model) Rename the folder where there is saved pictures.
- * @method private static function removePicture($picture)          Delete one specific picture.
- * @method private static function removePictures($pictures)        Remove all pictures previously associated.
+ * @method static void booted()                                              Perform any actions required after the
+ * model boots.
+ * @method static void updatePictures(Game $game, array $request)          Differentiate between old and new
+ * pictures, remove oldests and save news.
+ * @method static void renameFolderSavedPictures(Game $game, string $slug) Rename the folder where there is
+ * saved pictures.
+ * @method static void removePicture(self $model)                          Delete one specific picture.
+ * @method static void removePictures(Collection $pictures)                Remove all pictures previously associated.
  *
  * @property-read \App\Models\Game $game Get the Game that owns the Picture (relationship).
  */
@@ -29,7 +31,7 @@ class Picture extends Model
     /**
      * The attributes that are fillable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'game_id',
@@ -46,7 +48,7 @@ class Picture extends Model
     protected static function booted(): void
     {
         static::deleting(function (self $picture) {
-            static::removePicture($picture);
+            self::removePicture($picture);
         });
     }
 
@@ -82,22 +84,22 @@ class Picture extends Model
                 $newPictures->add($picture);
             } //end foreach
         } //end if
-        Picture::removePictures($picturesAlreadySaved->diff($newPictures));
+        (new Picture())->removePictures($picturesAlreadySaved->diff($newPictures));
     }
 
     /**
      * Rename the folder where pictures are saved.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string                              $slug
+     * @param \App\Models\Game $game
+     * @param string           $slug
      * @return void
      */
-    public static function renameFolderSavedPictures(Model $model, string $slug): void
+    public static function renameFolderSavedPictures(Game $game, string $slug): void
     {
-        if ($slug !== $model->slug) {
+        if ($slug !== $game->slug) {
             $directory = Storage::disk('public')->path("pictures/" . $slug);
             if (is_dir($directory)) {
-                rename($directory, Storage::disk('public')->path("pictures/" . $model->slug));
+                rename($directory, Storage::disk('public')->path("pictures/" . $game->slug));
             }
         }
     }
@@ -105,10 +107,10 @@ class Picture extends Model
     /**
      * Delete one specific picture.
      *
-     * @param \App\Models\Picture $picture
+     * @param self $picture
      * @return void
      */
-    private static function removePicture(Picture $picture): void
+    private static function removePicture(self $picture): void
     {
         $picture  = Picture::query()->where('id', $picture->getKey())->with('game')->first();
         $pathFile = "pictures/" . $picture->game->slug . "/" . $picture->uuid . ".webp";

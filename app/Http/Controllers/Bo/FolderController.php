@@ -136,7 +136,7 @@ class FolderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param App\Models\Folder $folder
+     * @param \App\Models\Folder $folder
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Folder $folder): \Illuminate\Http\RedirectResponse

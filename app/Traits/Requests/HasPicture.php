@@ -2,8 +2,7 @@
 
 namespace App\Traits\Requests;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use App\Lib\Helpers\ToolboxHelper;
 
 trait HasPicture
 {
@@ -64,7 +63,7 @@ trait HasPicture
             $name => [
                 $required ? 'required' : 'nullable',
                 function (string $attribute, $value, callable $fail) use ($sizes) {
-                    return $this->validatePicture($attribute, $value, $fail, $sizes);
+                    ToolboxHelper::validatePicture($attribute, $value, $fail, $sizes);
                 }
             ]
         ];
@@ -107,62 +106,10 @@ trait HasPicture
             "{$name}.*" => [
                 ($required ? 'required' : 'nullable'),
                 function (string $attribute, $value, callable $fail) use ($sizes) {
-                    return $this->validatePicture($attribute, $value, $fail, $sizes);
+                    ToolboxHelper::validatePicture($attribute, $value, $fail, $sizes);
                 }
             ]
         ];
-    }
-
-    /**
-     * Validate picture.
-     *
-     * @param string   $attribute
-     * @param mixed    $value
-     * @param callback $fail
-     * @param object   $sizes
-     * @return void
-     * @phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
-     */
-    private function validatePicture(string $attribute, mixed $value, callable $fail, object $sizes)
-    {
-        if (!($useStorage = Storage::exists($value)) and !File::exists($value)) {
-            $fail(trans(":attribute n'existe pas dans le système de fichier"));
-            return;
-        }
-        /** @var string */
-        $fileFullPath = $this->getUploadedFileFullPath($value, $useStorage);
-        if (
-            !\in_array($this->getUploadedFileMimeType($value, $useStorage), [
-                'image/jpeg', 'image/jpg', 'image/png', 'image/gif'
-            ])
-        ) {
-            $fail(trans(":attribute doit être une image de type 'image/jpeg,image/jpg,image/png,image/gif'"));
-        }
-        if (!($dimensions = \getimagesize($fileFullPath)) or !isset($dimensions[0]) or !isset($dimensions[1])) {
-            $fail(trans(":attribute impossible de valider les dimensions"));
-        } else {
-            $width  = intval($dimensions[0]);
-            $height = intval($dimensions[1]);
-
-            $xMessage = trans(
-                ":attribute la largeur doit être comprise entre {$sizes->minWidth}px et {$sizes->maxWidth}px"
-            );
-            if ($sizes->minWidth === $sizes->maxWidth) {
-                $xMessage = trans(":attribute la largeur doit être de {$sizes->minWidth}px");
-            }
-            $yMessage = trans(
-                ":attribute la hauteur doit être comprise entre {$sizes->minWidth}px et {$sizes->maxWidth}px"
-            );
-            if ($sizes->minHeight === $sizes->maxHeight) {
-                $yMessage = trans(":attribute la hauteur doit être de {$sizes->minWidth}px");
-            }
-            if (($width < $sizes->minWidth) or ($width > $sizes->maxWidth)) {
-                $fail($xMessage);
-            }
-            if (($height < $sizes->minHeight) or ($height > $sizes->maxHeight)) {
-                $fail($yMessage);
-            }
-        } //end if
     }
 
     /**
@@ -228,29 +175,5 @@ trait HasPicture
                 ]);
             }
         } //end if
-    }
-
-    /**
-     * Get the file full path.
-     *
-     * @param string  $value
-     * @param boolean $useStorage
-     * @return string
-     */
-    private function getUploadedFileFullPath(string $value, bool $useStorage): string
-    {
-        return !$useStorage ? realpath($value) ?: $value : Storage::getAdapter()->applyPathPrefix($value);
-    }
-
-    /**
-     * Get the file mimetype.
-     *
-     * @param string  $value
-     * @param boolean $useStorage
-     * @return string|false
-     */
-    private function getUploadedFileMimeType(string $value, bool $useStorage): string|false
-    {
-        return !$useStorage ? File::mimeType($value) : Storage::mimeType($value);
     }
 }

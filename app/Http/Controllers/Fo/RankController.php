@@ -26,9 +26,11 @@ class RankController extends Controller
             ->orderby('rank', 'ASC')
             ->with('game')
             ->get()
-            ->each(function ($rank) {
-                $rank->name = $rank->game->name;
-                $rank->slug = $rank->game->slug;
+            ->each(function (Rank $rank) {
+                // @phpstan-ignore-next-line
+                $rank->game_name = $rank->game->name;
+                // @phpstan-ignore-next-line
+                $rank->game_slug = $rank->game->slug;
             });
 
         return view('front.pages.ranking', [

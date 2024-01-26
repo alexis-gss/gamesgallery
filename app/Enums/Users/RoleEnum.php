@@ -14,6 +14,8 @@ enum RoleEnum: int
 
     /**
      * Optionnal labels definition.
+     *
+     * @phpstan-ignore-next-line
      */
     private const LABELS = [
         self::conceptor->name => 'enums.user-role.conceptor',

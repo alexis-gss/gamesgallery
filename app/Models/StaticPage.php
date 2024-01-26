@@ -17,8 +17,8 @@ use Spatie\SchemaOrg\Schema;
  * @property-read \Illuminate\Support\Carbon $created_at      Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at      Updated date.
  *
- * @method protected static function booted() Perform any actions required after the model boots.
- * @method public function toSchemaOrg()      Set micro data.
+ * @method static void booted()                    Perform any actions required after the model boots.
+ * @method \Spatie\SchemaOrg\WebPage toSchemaOrg() Set micro data.
  */
 class StaticPage extends Model
 {

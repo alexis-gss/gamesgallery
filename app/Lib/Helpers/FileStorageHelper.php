@@ -268,7 +268,7 @@ class FileStorageHelper
         $filename = Str::of($filename)->ltrim('.-');
         // * Optional beautification
         if ($beautify) {
-            $filename = static::beautifyFilename($filename);
+            $filename = self::beautifyFilename($filename);
         }
         // * Maximize filename length to 255 bytes http://serverfault.com/a/9548/44086
         /** @var string */

@@ -25,12 +25,12 @@ use Illuminate\Support\Facades\Hash;
  * @property-read \Illuminate\Support\Carbon $created_at    Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at    Updated date.
  *
- * @method protected static function booted()                    Perform any actions required after the model boots.
- * @method private static function updatePublishedStatus($model) Check if the authenticable user can update the
+ * @method static void booted()                          Perform any actions required after the model boots.
+ * @method static void updatePublishedStatus(self $user) Check if the authenticable user can update the
  * published status.
- * @method private static function setImage($user)               Set model's account's picture.
- * @method private static function setOrder($folder)             Set model's order after the last element of the list.
- * @method private static function updatePassword($target)       Update model's password.
+ * @method static void setImage(self $user)              Set model's account's picture.
+ * @method static void setOrder(self $user)              Set model's order after the last element of the list.
+ * @method static void updatePassword(self $user)        Update model's password.
  *
  * @property-read \App\Models\ActivityLog $activityLogs Activities logs One-to-many relationship.
  */
@@ -43,7 +43,7 @@ class User extends Authenticatable
     /**
      * The attributes that are fillable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'first_name',
@@ -62,7 +62,7 @@ class User extends Authenticatable
     /**
      * Cast the property to an enum.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'role'              => RoleEnum::class,
@@ -73,7 +73,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -87,23 +87,23 @@ class User extends Authenticatable
      */
     protected static function booted(): void
     {
-        static::creating(function (self $model) {
-            static::updatePassword($model);
-            static::setOrder($model);
-            static::setImage($model);
-            static::checkElevationPrivileges($model);
+        static::creating(function (self $user) {
+            self::updatePassword($user);
+            self::setOrder($user);
+            self::setImage($user);
+            self::checkElevationPrivileges($user);
         });
-        static::updating(function (self $model) {
-            static::updatePassword($model);
-            static::setImage($model);
-            static::updatePublishedStatus($model);
-            static::checkElevationPrivileges($model);
+        static::updating(function (self $user) {
+            self::updatePassword($user);
+            self::setImage($user);
+            self::updatePublishedStatus($user);
+            self::checkElevationPrivileges($user);
         });
-        static::updated(function (self $model) {
-            FileStorageHelper::removeOldFile($model, 'picture');
+        static::updated(function (self $user) {
+            FileStorageHelper::removeOldFile($user, 'picture');
         });
-        static::deleted(function (self $model) {
-            FileStorageHelper::removeFile($model, 'picture');
+        static::deleted(function (self $user) {
+            FileStorageHelper::removeFile($user, 'picture');
         });
     }
 
@@ -112,14 +112,14 @@ class User extends Authenticatable
     /**
      * Check if the authenticable user can update the published status.
      *
-     * @param self $model
+     * @param self $user
      * @return void
      */
-    private static function updatePublishedStatus(self $model): void
+    private static function updatePublishedStatus(self $user): void
     {
-        if (optional(auth('backend')->user())->getKey() === $model->getKey()) {
+        if (optional(auth('backend')->user())->getKey() === $user->getKey()) {
             \validator(
-                ['published' => $model->published],
+                ['published' => $user->published],
                 ['published' => 'required|boolean|accepted'],
                 ['published.accepted' => trans('Vous ne pouvez pas déactiver votre propre compte')],
             )->validate();
@@ -129,13 +129,13 @@ class User extends Authenticatable
     /**
      * Prevent user elevation privileges.
      *
-     * @param self $model
+     * @param self $user
      * @return void
      */
-    private static function checkElevationPrivileges(self $model): void
+    private static function checkElevationPrivileges(self $user): void
     {
         throw_if(
-            auth('backend')->user() and auth('backend')->user()->role->value() > $model->role->value(),
+            auth('backend')->user() and auth('backend')->user()->role->value() > $user->role->value(),
             AuthorizationException::class
         );
     }
@@ -143,39 +143,39 @@ class User extends Authenticatable
     /**
      * Set model's account's picture.
      *
-     * @param self $model
+     * @param self $user
      * @return void
      */
-    private static function setImage(self $model): void
+    private static function setImage(self $user): void
     {
-        $model->picture_alt   = "Default picture of " . $model->first_name . " " . $model->last_name . " account";
-        $model->picture_title = "User's picture of " . $model->first_name . " " . $model->last_name . " account";
-        $model->picture       = FileStorageHelper::storeFile($model, $model->picture, true);
+        $user->picture_alt   = "Default picture of " . $user->first_name . " " . $user->last_name . " account";
+        $user->picture_title = "User's picture of " . $user->first_name . " " . $user->last_name . " account";
+        $user->picture       = FileStorageHelper::storeFile($user, $user->picture, true);
     }
 
     /**
      * Set model's order after the last element of the list.
      *
-     * @param self $model
+     * @param self $user
      * @return void
      */
-    private static function setOrder(self $model): void
+    private static function setOrder(self $user): void
     {
-        $model->order = \intval(self::query()->max('order')) + 1;
+        $user->order = \intval(self::query()->max('order')) + 1;
     }
 
     /**
      * Update model's password.
      *
-     * @param self $model
+     * @param self $user
      * @return void
      */
-    private static function updatePassword(self $model): void
+    private static function updatePassword(self $user): void
     {
-        if ($model->password != null and Hash::needsRehash($model->password)) {
-            $model->password = Hash::make($model->password);
+        if ($user->password != null and Hash::needsRehash($user->password)) {
+            $user->password = Hash::make($user->password);
         } else {
-            $model->password = $model->getOriginal('password');
+            $user->password = $user->getOriginal('password');
         }
     }
 

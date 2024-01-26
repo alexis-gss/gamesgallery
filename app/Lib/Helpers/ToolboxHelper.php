@@ -2,16 +2,14 @@
 
 namespace App\Lib\Helpers;
 
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ToolboxHelper
 {
@@ -121,5 +119,88 @@ class ToolboxHelper
         }
 
         return $merged;
+    }
+
+    /**
+     * Validate picture
+     *
+     * @param string      $attribute
+     * @param string|null $value
+     * @param callable    $fail
+     * @param object      $sizes
+     * @return void
+     */
+    public static function validatePicture(string $attribute, string|null $value, callable $fail, object $sizes): void
+    {
+        if (!($useStorage = Storage::exists($value)) and !File::exists($value)) {
+            $fail(trans(':attribute n\'existe pas dans le système de fichier', [
+                'attribute' => $attribute
+            ]));
+            return;
+        }
+        $fileFullPath = self::getUploadedFileFullPath($value, $useStorage);
+        if (
+            !\in_array(self::getUploadedFileMimeType($value, $useStorage), [
+                'image/jpeg', 'image/jpg', 'image/png', 'image/gif'
+            ])
+        ) {
+            $fail(trans(':attribute doit être une image de type \'image/jpeg,image/jpg,image/png,image/gif\'', [
+                'attribute' => $attribute
+            ]));
+        }
+        if (!($dimensions = \getimagesize($fileFullPath))) {
+            $fail(trans(':attribute impossible de valider les dimensions', [
+                'attribute' => $attribute
+            ]));
+        } else {
+            $width  = intval($dimensions[0]);
+            $height = intval($dimensions[1]);
+
+            $xMessage = trans(
+                ":attribute la largeur doit être comprise entre {$sizes->minWidth}px et {$sizes->maxWidth}px"
+            );
+            if ($sizes->minWidth === $sizes->maxWidth) {
+                $xMessage = trans(":attribute la largeur doit être de {$sizes->minWidth}px");
+            }
+            $yMessage = trans(
+                ":attribute la hauteur doit être comprise entre {$sizes->minWidth}px et {$sizes->maxWidth}px"
+            );
+            if ($sizes->minHeight === $sizes->maxHeight) {
+                $yMessage = trans(":attribute la hauteur doit être de {$sizes->minHeight}px");
+            }
+
+            if (($width < $sizes->minWidth) or ($width > $sizes->maxWidth)) {
+                $fail($xMessage);
+            }
+            if (($height < $sizes->minHeight) or ($height > $sizes->maxHeight)) {
+                $fail($yMessage);
+            }
+        } //end if
+    }
+
+    /**
+     * Get the file full path
+     *
+     * @param string  $value
+     * @param boolean $useStorage
+     * @return string
+     */
+    private static function getUploadedFileFullPath(string $value, bool $useStorage): string
+    {
+        /** @var \Illuminate\Filesystem\FilesystemAdapter */
+        $disk = Storage::disk();
+        return !$useStorage ? (realpath($value) ?: $value) : $disk->path($value);
+    }
+
+    /**
+     * Get the file mimetype
+     *
+     * @param string  $value
+     * @param boolean $useStorage
+     * @return string|false
+     */
+    private static function getUploadedFileMimeType(string $value, bool $useStorage)
+    {
+        return !$useStorage ? File::mimeType($value) : Storage::mimeType($value);
     }
 }

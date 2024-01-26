@@ -99,18 +99,17 @@ class TagController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\Bo\Tags\StoreTagRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function jsonStore(StoreTagRequest $request)
+    public function jsonStore(StoreTagRequest $request): \Illuminate\Http\JsonResponse
     {
         return DB::transaction(function () use ($request) {
             /** @var \App\Models\Tag */
             $tag = Tag::where('slug', Str::of($request->name)->slug())->firstOrNew();
             $tag->fill($request->validated());
 
-            if ($tag->saveOrFail()) {
-                $saved = $tag->saveOrFail();
-                return \response()->json($saved ? $tag->toArray() : [], $saved ? 200 : 500);
+            if ($tagSaved = $tag->saveOrFail()) {
+                return \response()->json($tagSaved);
             }
         });
     }
@@ -154,7 +153,7 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param App\Models\Tag $tag
+     * @param \App\Models\Tag $tag
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Tag $tag): \Illuminate\Http\RedirectResponse

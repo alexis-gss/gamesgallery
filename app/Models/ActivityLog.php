@@ -3,21 +3,22 @@
 namespace App\Models;
 
 use App\Enums\ActivityLogs\ActivityLogsEventEnum;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * @property string                          $model_class Target model.
- * @property string                          $model_id    Id of the target model.
- * @property string                          $event       Event of this activity (ActivityLogsEventEnum).
- * @property string                          $data        Changes.
- * @property-read \Illuminate\Support\Carbon $created_at  Created date.
+ * @property string                                        $model_class Target model.
+ * @property string                                        $model_id    Id of the target model.
+ * @property \App\Enums\ActivityLogs\ActivityLogsEventEnum $event       Event of this activity (ActivityLogsEventEnum).
+ * @property array|null                                    $data        Changes.
+ * @property \Illuminate\Support\Carbon                    $created_at  Created date.
  *
- * @method public static function addActivity($model, $eventEnum) Add new activity to the activity logs list.
- * @method public static function getValuesChanged($activity, $model, $eventEnum)
+ * @method static void addActivity(Model $model, ActivityLogsEventEnum $eventEnum) Add new activity to
+ * the activity logs list.
+ * @method static array|null getChangedColumns(self $activity, Model $model, ActivityLogsEventEnum $eventEnum)
  * Get old, new and type of values changed.
  *
  * @property-read \App\Models\User $user User BelongsTo relation.
@@ -85,7 +86,7 @@ class ActivityLog extends Model
         $activity->model_class  = \get_class($model);
         $activity->model_id     = $model->getKey();
         $activity->event        = $eventEnum;
-        $activity->data         = static::getChangedColumns($activity, $model, $eventEnum);
+        $activity->data         = self::getChangedColumns($activity, $model, $eventEnum);
         $activity->created_at   = Carbon::now();
         $activity->saveOrFail();
     }
@@ -100,7 +101,8 @@ class ActivityLog extends Model
      */
     public static function getChangedColumns(self $activity, Model $model, ActivityLogsEventEnum $eventEnum): array|null
     {
-        $modelClassName = $activity->model_class;
+        $modelClassName   = $activity->model_class;
+        $targetModelTypes = [];
         /** Get type of each fields of the target model */
         $targetModel = $activity->model_class::where(
             (new $modelClassName())->getRouteKeyName(),

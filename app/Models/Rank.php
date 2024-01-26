@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
+ * @method static void booted()            Perform any actions required after the model boots.
+ * @method static void setRank(self $rank) Set model's rank after the last element of the list.
+ *
  * @property-read \App\Models\Game $game Get the Game that owns the Picture (relationship).
  */
 class Rank extends Model
@@ -23,7 +26,7 @@ class Rank extends Model
     /**
      * The attributes that are fillable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'game_id',
@@ -37,19 +40,19 @@ class Rank extends Model
     protected static function booted(): void
     {
         static::creating(function (self $rank) {
-            static::setRank($rank);
+            self::setRank($rank);
         });
     }
 
     // * METHODS
 
     /**
-     * Set model's order after the last element of the list.
+     * Set model's rank after the last element of the list.
      *
-     * @param \App\Models\Rank $rank
+     * @param self $rank
      * @return void
      */
-    private static function setRank(Rank $rank): void
+    private static function setRank(self $rank): void
     {
         $rank->rank = \intval(self::query()->max('rank')) + 1;
     }

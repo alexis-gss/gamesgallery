@@ -71,9 +71,9 @@ class RankController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Rank $rank
-     * @return \Illuminate\Http\Response
+     * @return array|\Illuminate\Database\Eloquent\Collection
      */
-    public function destroy(Rank $rank)
+    public function destroy(Rank $rank): array|\Illuminate\Database\Eloquent\Collection
     {
         return DB::transaction(function () use ($rank) {
             if ($rank->deleteOrFail()) {
@@ -93,7 +93,7 @@ class RankController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    public function saveOrder(Request $request)
+    public function saveOrder(Request $request): void
     {
         foreach ($request->ranks as $newRank) {
             $rank         = Rank::where('id', $newRank['id'])->first();
@@ -112,11 +112,7 @@ class RankController extends Controller
         return Rank::query()
             ->orderby('rank', 'ASC')
             ->with('game')
-            ->get()
-            ->each(function ($rank) {
-                $rank->name = $rank->game->name;
-                $rank->slug = $rank->game->slug;
-            });
+            ->get();
     }
 
     /**

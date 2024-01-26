@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Lib\Helpers\ToolboxHelper;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -43,7 +42,7 @@ class TranslationServiceProvider extends ServiceProvider
     /**
      * Gather provided langs checking from files.
      *
-     * @return \Illuminate\Support\Collection<string, string>
+     * @return \Illuminate\Support\Collection<int, string>
      */
     private function collectLocalesStrings(): \Illuminate\Support\Collection
     {

@@ -111,7 +111,7 @@ class Controller extends BaseController
                 );
                 return $query;
             }
-            // Get models woth enum's label.
+            // Get models with enum's label.
             if (is_array($this->getSearchValue($query, $search, $field))) {
                 foreach ($this->getSearchValue($query, $search, $field) as $array) {
                     $query->orWhereRaw(
@@ -122,7 +122,7 @@ class Controller extends BaseController
                 return $query;
             }
             // Get models with relation's name/label.
-            if (Str::endsWith($field, '_id') && $query->getModel()->has(Str::remove('_id', $field))) {
+            if (Str::endsWith($field, '_id')) {
                 $query->orWhereHas(Str::remove('_id', $field), function ($queryRelation) use ($field, $search) {
                     if (Schema::hasColumn(Str::remove('_id', $field) . 's', 'name')) {
                         $queryRelation->where('name', 'like', '%' . $search . '%');
@@ -155,6 +155,7 @@ class Controller extends BaseController
             isset($query->getModel()->getCasts()[$field]) and // Check if there is cast about specific field.
             enum_exists($query->getModel()->getCasts()[$field]) // Check if the cast is an enum.
         ) {
+            // @phpstan-ignore-next-line
             $cases = collect($query->getModel()->getCasts()[$field]::toArray());
             $enum  = $cases->filter(function ($item) use ($search) {
                 return preg_match('/' . Str::of($search)->lower() . '/', Str::of($item->label)->lower());
@@ -191,8 +192,8 @@ class Controller extends BaseController
         }
         if (request()->sort_col and request()->sort_way and Schema::hasColumn($table, request()->sort_col)) {
             if (
-                !isset($ignore) or
-                (isset($ignore) and !in_array(request()->sort_col, $ignore))
+                !empty($ignore) or
+                !in_array(request()->sort_col, $ignore)
             ) {
                 $query = $query->orderBy(\sprintf("$table.%s", request()->sort_col), request()->sort_way);
             }

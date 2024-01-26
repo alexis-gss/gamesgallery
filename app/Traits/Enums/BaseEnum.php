@@ -98,12 +98,12 @@ trait BaseEnum
             self::setCache('enums', \collect(self::cases())
                 ->mapWithKeys(function ($enum) use ($definitions) {
                     $baseArray = [
-                        'name' => $enum->name,
+                        'name'  => $enum->name,
                         'label' => $enum->label(),
                         'value' => $enum->value,
                     ];
                     foreach ($definitions as $index => $elements) {
-                        $index = Str::of($index)->singular()->lower();
+                        $index = Str::of($index)->lower()->singular()->value();
                         if (!isset($elements[$enum->name])) {
                             throw new \Error("Missing definition {$index} " . self::class . " for {$enum->name}");
                         }
@@ -211,7 +211,7 @@ trait BaseEnum
         if (!isset($GLOBALS[self::class])) {
             $GLOBALS[self::class] = [
                 'props' => [
-                    'enums' => [],
+                    'enums'  => [],
                     'values' => [],
                     'labels' => []
                 ],

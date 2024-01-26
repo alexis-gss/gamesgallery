@@ -16,10 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
- * @method protected static function booted()                Perform any actions required after the model boots.
- * @method private static function setSlug($folder)          Set model's slug.
- * @method private static function setPublishedDate($folder) Set model's published date.
- * @method private static function setOrder($folder)         Set model's order after the last element of the list.
+ * @method static void booted()                       Perform any actions required after the model boots.
+ * @method static void setPublishedDate(self $folder) Set model's published date.
+ * @method static void setOrder(self $folder)         Set model's order after the last element of the list.
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
  * Get Games of the Folder (relationship).
@@ -32,7 +31,7 @@ class Folder extends Model
     /**
      * The attributes that are fillable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'slug',
@@ -46,7 +45,7 @@ class Folder extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'published'    => 'bool',
@@ -61,11 +60,11 @@ class Folder extends Model
     protected static function booted(): void
     {
         static::creating(function (self $folder) {
-            static::setOrder($folder);
-            static::setPublishedDate($folder);
+            self::setOrder($folder);
+            self::setPublishedDate($folder);
         });
         static::updating(function (self $folder) {
-            static::setPublishedDate($folder);
+            self::setPublishedDate($folder);
         });
     }
 
@@ -74,11 +73,11 @@ class Folder extends Model
     /**
      * Set model's published date.
      *
-     * @param \App\Models\Folder $folder
+     * @param self $folder
      *
      * @return void
      */
-    private static function setPublishedDate(Folder $folder): void
+    private static function setPublishedDate(self $folder): void
     {
         $folder->published_at = ($folder->published) ? now() : null;
     }
@@ -86,10 +85,10 @@ class Folder extends Model
     /**
      * Set model's order after the last element of the list.
      *
-     * @param \App\Models\Folder $folder
+     * @param self $folder
      * @return void
      */
-    private static function setOrder(Folder $folder): void
+    private static function setOrder(self $folder): void
     {
         $folder->order = \intval(self::query()->max('order')) + 1;
     }

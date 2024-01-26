@@ -6,11 +6,11 @@ use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Creates a new user.
@@ -27,42 +27,42 @@ class UserCreate extends Command
     /**
      * The console command description.
      *
-     * @var string
+     * @var string|null
      */
     protected $description = 'Create user (Conceptor, Administrator or Visitor)';
 
     /**
      * The first name of the new user.
      *
-     * @var string
+     * @var string|null
      */
     protected $first_name;
 
     /**
      * The last name of the new user.
      *
-     * @var string
+     * @var string|null
      */
     protected $last_name;
 
     /**
      * The email of the new user.
      *
-     * @var string
+     * @var string|null
      */
     protected $email;
 
     /**
      * The password of the new user.
      *
-     * @var string
+     * @var string|null
      */
     protected $password;
 
     /**
      * The role of the new user.
      *
-     * @var integer
+     * @var \App\Enums\Users\RoleEnum|null
      */
     protected $role;
 
@@ -227,14 +227,14 @@ class UserCreate extends Command
                 } elseif ($tmp === Str::of(RoleEnum::visitor->label())->ucFirst()->value()) {
                     $tmp = RoleEnum::visitor->value();
                 }
-                $this->role = ToolboxHelper::getValidatedEnum(
+                $this->role = RoleEnum::make(ToolboxHelper::getValidatedEnum(
                     $tmp,
                     'role',
                     '\App\Enums\Users\RoleEnum',
-                );
+                ));
             } catch (ValidationException $e) {
                 $this->error(sprintf(
-                    'Please choose from the selection',
+                    'Please choose from the selection %s',
                     \implode(',', collect($e->errors())->flatten()->all())
                 ));
                 continue;

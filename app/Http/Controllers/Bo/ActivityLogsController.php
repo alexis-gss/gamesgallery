@@ -63,7 +63,7 @@ class ActivityLogsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param App\Models\ActivityLog $activity_log
+     * @param \App\Models\ActivityLog $activity_log
      * @return \Illuminate\Contracts\View\View
      */
     public function show(ActivityLog $activity_log): \Illuminate\Contracts\View\View

@@ -32,8 +32,8 @@ type RankObj = {
     id: number;
     rank: number;
     game_id: number;
-    name: string,
-    slug: string,
+    game_name: string,
+    game_slug: string,
     created_at: Date;
     updated_at: Date;
 };

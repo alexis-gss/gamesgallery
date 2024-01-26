@@ -33,7 +33,7 @@
             </p>
             &nbsp;
             <p class="m-0">
-              {{ item.name }}
+              {{ item.game_name }}
             </p>
           </div>
           <div
@@ -41,7 +41,7 @@
           >
             <div class="input-group">
               <a
-                :href="getShowGameRoute(item.slug)"
+                :href="getShowGameRoute(item.game_slug)"
                 class="btn btn-sm btn-warning"
                 target="_blank"
                 :title="__('bo_tooltip_ranking_see_game')"

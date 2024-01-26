@@ -14,6 +14,8 @@ enum BootstrapThemeEnum: int
 
     /**
      * Optionnal labels definition.
+     *
+     * @phpstan-ignore-next-line
      */
     private const LABELS = [
         self::light->name  => 'enums.bootstrap-theme.light',

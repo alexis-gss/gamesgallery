@@ -70,7 +70,7 @@ class GameController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param App\Models\Game $game
+     * @param \App\Models\Game $game
      * @return \Illuminate\Contracts\View\View
      * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
@@ -95,11 +95,11 @@ class GameController extends Controller
             $game->fill(Arr::except($request->validated(), ['tags']));
 
             if ($game->saveOrFail()) {
-                Picture::updatePictures($game, Validator::make(
+                (new Picture())->updatePictures($game, Validator::make(
                     $request->all(),
                     StorePictureRequest::rules()
                 )->validated());
-                Tag::setTags($game, collect(request()->tags));
+                (new Tag())->setTags($game, collect(request()->tags));
                 return redirect()->route('bo.games.edit', $game)
                     ->with('success', __('crud.messages.has_been_created', [
                         'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
@@ -115,7 +115,7 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param App\Models\Game $game
+     * @param \App\Models\Game $game
      * @return \Illuminate\Contracts\View\View
      * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
@@ -138,11 +138,11 @@ class GameController extends Controller
     {
         return DB::transaction(function () use ($request, $game) {
             $game->fill(Arr::except($request->validated(), ['tags']));
-            Picture::updatePictures($game, Validator::make(
+            (new Picture())->updatePictures($game, Validator::make(
                 $request->all(),
                 UpdatePictureRequest::rules()
             )->validated());
-            Tag::setTags($game, collect($request->tags));
+            (new Tag())->setTags($game, collect($request->tags));
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game)
                     ->with('success', __('crud.messages.has_been_updated', [

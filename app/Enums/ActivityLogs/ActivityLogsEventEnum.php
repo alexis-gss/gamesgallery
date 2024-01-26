@@ -15,6 +15,8 @@ enum ActivityLogsEventEnum: int
 
     /**
      * Optionnal labels definition.
+     *
+     * @phpstan-ignore-next-line
      */
     private const LABELS = [
         self::created->name    => 'crud.actions.create',

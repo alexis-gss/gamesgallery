@@ -13,6 +13,8 @@ enum StaticPageTypeEnum: int
 
     /**
      * Optionnal labels definition.
+     *
+     * @phpstan-ignore-next-line
      */
     private const LABELS = [
         self::home->name    => 'fo_homepage',

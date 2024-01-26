@@ -41,7 +41,7 @@ class PictureController extends Controller
             );
         }
         // We are in chunk mode, lets send the current progress.
-        /** @var AbstractHandler $handler */
+        /** @var \Pion\Laravel\ChunkUpload\Handler\AbstractHandler $handler */
         $handler = $save->handler();
         return response()->json([
             "done"   => $handler->getPercentageDone(),
@@ -77,6 +77,8 @@ class PictureController extends Controller
         $file->move($finalPath, $currentImageName);
 
         // Change the image format at webp.
+        /** @var resource|\GdImage|false $image */
+        $image = false;
         switch ($file->getClientOriginalExtension()) {
             case 'jpg':
                 $image = imagecreatefromjpeg($finalPath . $currentImageName);

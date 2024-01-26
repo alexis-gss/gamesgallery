@@ -45,7 +45,7 @@ class DeleteUnassociatedPictures implements ShouldQueue, ShouldBeUnique
      *
      * @var \Illuminate\Database\Eloquent\Collection
      */
-    private $pictures = [];
+    private $pictures;
 
     /**
      * Create a new job instance.
