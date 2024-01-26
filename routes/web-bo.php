@@ -6,6 +6,7 @@ use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
 use App\Http\Controllers\Bo\PictureController;
 use App\Http\Controllers\Bo\RankController;
+use App\Http\Controllers\Bo\StaticPageController;
 use App\Http\Controllers\Bo\StatisticController;
 use App\Http\Controllers\Bo\TagController;
 use App\Http\Controllers\Bo\UserController;
@@ -84,6 +85,13 @@ Route::prefix('bo')
                         ->name('ranks.save-order');
                     Route::get('/ranks/games', [RankController::class, 'getPublishedGamesInNotRanking'])
                         ->name('ranks.games');
+
+                    // * STATIC PAGES
+                    Route::resource('static_pages', StaticPageController::class)
+                        ->only(['index', 'edit', 'update']);
+                    Route::patch('/static_pages/{static_page}/change-order/{direction}', [
+                        StaticPageController::class, 'changeOrder'
+                    ])->where('direction', 'up|down')->name('static_pages.change-order');
 
                     // * USERS
                     Route::resource('users', UserController::class)->except('show');

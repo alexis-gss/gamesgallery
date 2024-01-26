@@ -29,6 +29,7 @@ return [
         'cannot_be_updated'               => ':model cannot be updated',
         'has_been_deleted'                => ':model has been deleted',
         'cannot_be_deleted_with_children' => ':model cannot be deleted with children',
+        'cannot_event_on_model'           => 'Impossible to :event a new :model|Impossible to :event a new :model',
         'order_changed'                   => 'The order has been changed !',
         'order_not_changed'               => 'The order hasn\'t been changed !',
         'publish_status_saved'            => 'Change of publication status successful !',

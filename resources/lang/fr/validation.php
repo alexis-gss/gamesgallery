@@ -224,6 +224,9 @@ return [
         'event'             => 'évènement',
         'date_start'        => 'date de début',
         'date_end'          => 'date de fin',
+        'page_type'         => 'type de page',
+        'seo_title'         => 'titre SEO',
+        'seo_description'   => 'description SEO',
     ],
     "rule"                 => [
         'select-single'      => 'Sélectionner un :entity parmis la liste.',

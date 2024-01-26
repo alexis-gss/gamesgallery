@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Folder;
 use App\Models\Game;
+use App\Models\StaticPage;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -45,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::model('user', User::class);
+        Route::model('static_page', StaticPage::class);
         Route::model('tag', Tag::class);
         Route::model('folder', Folder::class);
         Route::model('game', Game::class);

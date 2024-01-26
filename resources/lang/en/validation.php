@@ -197,6 +197,9 @@ return [
         'event'             => 'event',
         'date_start'        => 'start date',
         'date_end'          => 'end date',
+        'page_type'         => 'page type',
+        'seo_title'         => 'SEO title',
+        'seo_description'   => 'SEO description',
     ],
     "rule"                 => [
         'select-single'      => 'Choose a :entity among the list.',

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             GameSeeder::class,
             RankSeeder::class,
             UserSeeder::class,
+            StaticPageSeeder::class
         ]);
     }
 }

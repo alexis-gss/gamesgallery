@@ -3,6 +3,7 @@
 use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
+use App\Models\StaticPage;
 use App\Models\Tag;
 use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -126,4 +127,24 @@ Breadcrumbs::for('bo.ranks.index', function (Generator $trail) {
         Str::of(trans('models.rank'))->plural()->ucfirst(),
         route('bo.ranks.index')
     );
+});
+
+// * STATIC_PAGES
+Breadcrumbs::for('bo.static_pages.index', function (Generator $trail) {
+    $trail->push(
+        Str::of(trans_choice('models.static_page', 2))->ucfirst(),
+        route('bo.static_pages.index')
+    );
+});
+Breadcrumbs::for('bo.static_pages.create', function (Generator $trail) {
+    $trail->parent('bo.static_pages.index');
+    $trail->push(Str::of(trans('crud.actions.create'))->ucfirst(), route('bo.static_pages.create'));
+});
+Breadcrumbs::for('bo.static_pages.edit', function (Generator $trail, StaticPage $static_page) {
+    $trail->parent('bo.static_pages.index');
+    $trail->push(Str::of(trans('crud.actions.edit'))->ucfirst(), route('bo.static_pages.edit', $static_page));
+});
+Breadcrumbs::for('bo.static_pages.duplicate', function (Generator $trail) {
+    $trail->parent('bo.static_pages.index');
+    $trail->push(Str::of(trans('crud.actions.duplicate'))->ucfirst());
 });

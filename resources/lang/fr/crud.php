@@ -29,6 +29,8 @@ return [
         'cannot_be_updated'               => ':model n\'a pas été mis à jour',
         'has_been_deleted'                => ':model a été supprimé',
         'cannot_be_deleted_with_children' => ':model n\'a pas été supprimé',
+        'cannot_event_on_model'           => 'Impossible de :event un nouveau :model|Impossible de
+            :event une nouvelle :model',
         'order_changed'                   => 'L\'ordre a été modifié !',
         'order_not_changed'               => 'L\'ordre n\'a pas été modifié !',
         'publish_status_saved'            => 'Changement d\'état de publication réussi !',

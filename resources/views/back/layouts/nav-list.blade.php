@@ -57,7 +57,15 @@
                     {{ __('bo_other_admin') }}
                 </button>
                 <div class="dropdown-menu m-0 p-1 text-center" aria-labelledby="navbarDropdownAdmin">
+                    @can('viewAny', \App\Models\StaticPage::class)
+                        <a class="dropdown-item w-100 text-decoration-none @if (request()->routeIs('bo.static_pages.*')) active @endif p-2"
+                            data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.static_pages.index') }}"
+                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalStaticPages), 'model' => Str::of(trans_choice('models.static_page', 2))]) }}">
+                            {{ Str::of(trans_choice('models.static_page', 2))->ucfirst() }}
+                        </a>
+                    @endcan
                     @can('viewAny', \App\Models\ActivityLog::class)
+                        <hr class="dropdown-divider m-0">
                         <a class="dropdown-item w-100 text-decoration-none @if (request()->routeIs('bo.activity_logs.*')) active @endif p-2"
                             data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.activity_logs.index') }}"
                             title="{{ __('bo_tooltip_list_models', ['count' => count($globalActivities), 'model' => Str::of(trans_choice('models.activity_log', 2))]) }}">

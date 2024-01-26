@@ -21,7 +21,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::check('update', User::class);
+        return Gate::check('create', User::class);
     }
 
     /**

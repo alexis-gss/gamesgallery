@@ -31,7 +31,7 @@ class RedirectIfAuthenticated
                         if (!$request->routeIs('bo.*')) {
                             continue;
                         }
-                        return \redirect()->route('bo.dashboard');
+                        return \redirect()->route('bo.homepage');
                     default:
                         throw new \RuntimeException("Unhandled guard `{$guard}` .");
                 }

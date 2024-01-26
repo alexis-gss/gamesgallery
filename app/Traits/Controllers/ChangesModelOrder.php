@@ -23,6 +23,15 @@ trait ChangesModelOrder
     ): \Illuminate\Http\RedirectResponse {
         $params    = collect(request()->route()->parameterNames);
         $className = Str::of($params->get($params->count() - 2))->lower()->ucfirst();
+
+        /** Check if the model has a multiple words class name */
+        if (str_contains($className, '_')) {
+            $classNameExplode = explode('_', $className);
+            $className        = "";
+            foreach ($classNameExplode as $string) {
+                $className .= Str::of($string)->ucfirst();
+            }
+        }
         $className = "\\App\\Models\\$className";
         if (!class_exists($className)) {
             throw new \RuntimeException("The $className class doesn't exist.");
@@ -37,15 +46,19 @@ trait ChangesModelOrder
 
         return DB::transaction(function () use ($request, $className, $currentModel) {
             /** @var \Illuminate\Database\Eloquent\Model|null */
-            $targetModel = $className::where('order', $request->direction ? '<' : '>', $currentModel->order)
+            $targetModel = $className::where(
+                'order',
+                $request->direction ? '<' : '>',
+                $currentModel->getOriginal('order')
+            )
                 ->orderBy('order', $request->direction ? 'DESC' : 'ASC')->first();
 
             if (!$targetModel) {
                 return redirect()->back()->with('error', trans('crud.messages.order_not_changed'));
             }
-            $newOrder = $currentModel->order;
-            $currentModel->update(['order' => $targetModel->order]);
-            $targetModel->update(['order'  => $newOrder]);
+            $newOrder = $currentModel->getOriginal('order');
+            $currentModel->update(['order' => $targetModel->getOriginal('order')]);
+            $targetModel->update(['order' => $newOrder]);
 
             return redirect()->back()->with('success', trans('crud.messages.order_changed'));
         });

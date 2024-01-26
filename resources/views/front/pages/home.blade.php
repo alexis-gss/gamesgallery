@@ -1,7 +1,7 @@
 @extends('front.layout')
 
-@section('title', __('fo_default_title'))
-@section('description', __('fo_default_description'))
+@section('title', $staticPageModel->seo_title ?? __('fo_home_title'))
+@section('description', $staticPageModel->seo_description ?? __('fo_home_description'))
 
 @section('content')
     <main class="main-home d-flex justify-content-center align-items-center mx-md-5 px-md-5 m-0 p-0 py-5">

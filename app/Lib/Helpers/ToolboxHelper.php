@@ -8,96 +8,13 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ToolboxHelper
 {
-    /**
-     * Assert That no Back Office url is present on txt.
-     *
-     * @param string $field
-     * @param string $text
-     * @return string
-     * @throws \Illuminate\Validation\ValidationException If url is a bo url.
-     */
-    public static function assertNoInternalBoUrls(string $field, string $text): string
-    {
-        $routes = Route::getRoutes();
-        // * Url replace and email replace.
-        $text = preg_replace_callback(
-            // phpcs:ignore Generic.Files.LineLength.TooLong
-            '/(?P<url>(?:http[s]?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))/',
-            function ($matches) use ($routes, $field) {
-                $match = collect($matches)->first() ?? '';
-                $url   = $match;
-                try {
-                    $request = Request::create($url);
-                    // If a route is match then it do not throws exception.
-                    if (
-                        \parse_url(config('app.url'), \PHP_URL_HOST) === \parse_url($url, \PHP_URL_HOST) &&
-                        trim($routes->match($request)->getPrefix() ?? '', '/') === 'bo'
-                    ) {
-                        // Removes the matched url.
-                        throw ValidationException::withMessages([
-                            $field => ':attribute : Il est interdit de coller une url du back office dans ce champ'
-                        ]);
-                    }
-                    return $match;
-                } catch (NotFoundHttpException $e) {
-                    return $match;
-                }
-            },
-            $text
-        );
-        return $text;
-    }
-
-    /**
-     * Assert That only external url is present on txt.
-     *
-     * @param string $field
-     * @param string $text
-     * @return string
-     * @throws \Illuminate\Validation\ValidationException If url is a bo url.
-     */
-    public static function assertNoInternalUrls(string $field, string $text): string
-    {
-        self::assertNoInternalBoUrls($field, $text);
-        $routes = Route::getRoutes();
-        // * Url replace and email replace.
-        $text = preg_replace_callback(
-            // phpcs:ignore Generic.Files.LineLength.TooLong
-            '/(?P<url>(?:http[s]?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))/',
-            function ($matches) use ($routes, $field) {
-                $match = collect($matches)->first() ?? '';
-                $url   = $match;
-                try {
-                    $request = Request::create($url);
-                    // If a route is match then it do not throws exception.
-                    if (
-                        \parse_url(config('app.url'), \PHP_URL_HOST) === \parse_url($url, \PHP_URL_HOST) &&
-                        $routes->match($request)
-                    ) {
-                        // Removes the matched url.
-                        throw ValidationException::withMessages([
-                            $field => sprintf(
-                                ':attribute : Il est interdit de coller une url de %s dans ce champ',
-                                config('app.name')
-                            )
-                        ]);
-                    }
-                    return $match;
-                } catch (NotFoundHttpException $e) {
-                    return $match;
-                }
-            },
-            $text
-        );
-        return $text;
-    }
-
     /**
      * Mutltibyte string replace.
      *

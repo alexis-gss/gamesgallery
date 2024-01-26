@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Fo;
 
+use App\Enums\Pages\StaticPageTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Game;
+use App\Models\StaticPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -20,6 +22,9 @@ class GameController extends Controller
     {
         $this->getModelsPublished();
 
+        /** @var \App\Models\StaticPage $staticPageModel */
+        $staticPageModel = StaticPage::query()->where('type', StaticPageTypeEnum::home->value())->first();
+
         /** @var \Illuminate\Support\Collection $gameLatestModels */
         $gameLatestModels = Game::query()->where('published', true)->orderBy('published_at', 'DESC')->take(20)->get();
 
@@ -32,6 +37,7 @@ class GameController extends Controller
         }
 
         return view('front.pages.home', [
+            'staticPageModel'   => $staticPageModel,
             'gameModels'        => $this->gameModels,
             'gamesLatestString' => $gamesLatestString,
             'folderModels'      => $this->folderModels,
