@@ -29,6 +29,13 @@ use Illuminate\Support\Facades\Storage;
 class Picture extends Model
 {
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['ratings'];
+
+    /**
      * The attributes that are fillable.
      *
      * @var array<string>
@@ -142,5 +149,15 @@ class Picture extends Model
     public function game(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Game::class);
+    }
+
+    /**
+     * Get Ratings of the Picture (relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Rating::class);
     }
 }

@@ -8,7 +8,7 @@
 <body class="position-relative text-font-regular bg-first container">
     @include('front.partials.btn-github')
 
-    @if (!request()->routeIs('fo.games.index'))
+    @if (request()->routeIs('fo.games.show') || request()->routeIs('fo.ranks.index'))
         @include('front.layouts.nav')
     @endif
 

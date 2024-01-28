@@ -7,6 +7,7 @@ $warning: $color-warning;
 $danger: $color-danger;
 $light: $color-light;
 $dark: $color-dark;
+$white: $color-white;
 $theme-colors: (
     primary: $primary,
     secondary: $secondary,
@@ -16,4 +17,5 @@ $theme-colors: (
     danger: $danger,
     light: $light,
     dark: $dark,
+    "white": $white,
 );

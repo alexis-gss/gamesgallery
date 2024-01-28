@@ -23,7 +23,7 @@
             class="btn btn-primary d-flex align-items-center text-white border-0"
             type="button"
           >
-            <i class="fa-solid fa-xmark" />
+            <FontAwesomeIcon icon="fa-solid fa-xmark" />
           </button>
         </div>
       </div>
@@ -73,7 +73,7 @@
       </div>
     </div>
     <!-- List of games -->
-    <simplebar
+    <Simplebar
       class="nav-games-list"
       data-simplebar-auto-hide="false"
     >
@@ -131,12 +131,13 @@
           </p>
         </li>
       </ul>
-    </simplebar>
+    </Simplebar>
   </div>
 </template>
 
 <script lang="ts">
-import simplebar from "simplebar-vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Simplebar from "simplebar-vue";
 import { defineComponent } from "vue";
 import route from "./../../modules/route";
 import trans from "./../../modules/trans";
@@ -145,7 +146,8 @@ export default defineComponent({
   name: "GamesListComponent",
   mixins: [route, trans],
   components: {
-    simplebar,
+    FontAwesomeIcon,
+    Simplebar,
   },
   data(): {
     games: [
@@ -241,7 +243,7 @@ export default defineComponent({
       }
       window.axios
         .post(storeTagRoute, {
-          FILTERSID: filters,
+          filters_id: filters,
         })
         .then((reponse) => {
           this.games = reponse.data;

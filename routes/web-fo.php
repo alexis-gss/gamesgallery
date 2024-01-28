@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Fo\GameController;
 use App\Http\Controllers\Fo\StaticPageController;
+use App\Http\Controllers\Fo\RatingController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('fo.')
@@ -11,7 +12,7 @@ Route::name('fo.')
         Route::get('/game/{slug}', [GameController::class, 'show'])
             ->where('slug', '^[a-zA-Z0-9-]*$')
             ->name('games.show');
-        Route::post('/game/search/{filtersId}', [GameController::class, 'getGamesFiltered'])
+        Route::post('/game/filtered/{filters_id}', [GameController::class, 'getGamesFiltered'])
             ->name('games.filtered');
 
         // * STATIC PAGES
@@ -19,6 +20,12 @@ Route::name('fo.')
             ->name('games.index');
         Route::get('/ranking', [StaticPageController::class, 'ranking'])
             ->name('ranks.index');
+
+        // * RATINGS
+        Route::post('/ratings/{picture_id}', [RatingController::class, 'update'])
+            ->name('ratings.update');
+        Route::post('/ratings/filtered/{ip_address}', [RatingController::class, 'getRatingsFromIp'])
+            ->name('ratings.filtered');
 
         // * CHANGE LANGUAGES.
         Route::post('/lang/set', [Controller::class, 'setLang'])->name('lang.set');

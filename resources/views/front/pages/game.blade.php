@@ -40,6 +40,7 @@
                         'gameName' => $gameModel->name,
                         'gameSlug' => $gameModel->slug,
                         'gamePictures' => $gamePictures,
+                        'ratingModels' => $ratingModels,
                     ];
                 @endphp
                 <div class="game-pictures position-relative" data-json='@json($dataGame)'></div>

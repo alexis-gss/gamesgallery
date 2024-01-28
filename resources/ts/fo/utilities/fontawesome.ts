@@ -6,15 +6,15 @@ import {
     faBars,
     faGlobe,
     faRankingStar,
+    faThumbsUp,
     faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+    faThumbsUp as farThumbsUp,
+} from "@fortawesome/free-regular-svg-icons";
 
 config.autoReplaceSvg = false;
-library.add(faArrowUp);
-library.add(faXmark);
-library.add(faBars);
-library.add(faArrowLeft);
-library.add(faGithub);
-library.add(faRankingStar);
-library.add(faGlobe);
+
+// @ts-ignore
+library.add( faArrowUp, faXmark, faBars, faArrowLeft, faGithub, faRankingStar, faGlobe, faThumbsUp, farThumbsUp);
 dom.watch();

@@ -16,6 +16,7 @@
         "@eastdesire/jscolor": "^2.5.1",
         "@fortawesome/fontawesome-svg-core": "latest",
         "@fortawesome/free-brands-svg-icons": "latest",
+        "@fortawesome/free-regular-svg-icons": "^6.5.1",
         "@fortawesome/free-solid-svg-icons": "latest",
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "@sipec/vue3-tags-input": "^3.0.4",

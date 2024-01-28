@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Fo;
 use App\Http\Controllers\Controller;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Game;
+use App\Models\Rating;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -28,12 +29,22 @@ class GameController extends Controller
             /** @var array $gamePictures */
             $gamePictures = [];
             if (count($gameModel->pictures)) {
+                $gameModel->pictures->map(function ($picture) {
+                    $picture->ratings_count = count($picture->ratings);
+                    return $picture;
+                });
                 $gamePictures = ToolboxHelper::customPaginate(
                     $gameModel->pictures,
                     (count($gameModel->pictures) <= 12) ? count($gameModel->pictures) : 12,
                     ['path' => Paginator::resolveCurrentPath()]
                 );
             }
+
+            /** @var \Illuminate\Database\Eloquent\Collection $ratingModels */
+            $ratingModels = Rating::query()->where('ip_address', request()->ip())
+                ->get()->map(function ($rating) {
+                    return $rating->picture_id;
+                });
 
             if ($request->ajax()) {
                 return response()->json(['data' => $gamePictures]);
@@ -45,6 +56,7 @@ class GameController extends Controller
                 'gamePictures' => $gamePictures,
                 'folderModels' => $this->folderModels,
                 'tagModels'    => $this->tagModels,
+                'ratingModels' => $ratingModels,
             ]);
         } else {
             return redirect()->route('fo.games.index');
@@ -59,8 +71,8 @@ class GameController extends Controller
      */
     public function getGamesFiltered(Request $request): \Illuminate\Http\JsonResponse
     {
-        $selectedTagId    = intval($request->FILTERSID[0] ?? 0);
-        $selectedFolderId = intval($request->FILTERSID[1] ?? 0);
+        $selectedTagId    = intval($request->filters_id[0] ?? 0);
+        $selectedFolderId = intval($request->filters_id[1] ?? 0);
         /** @var \Illuminate\Support\Collection $gamesFiltered */
         $gamesFiltered = Game::query()->where('published', true)
             ->when($selectedTagId, function ($query) use ($selectedTagId) {
