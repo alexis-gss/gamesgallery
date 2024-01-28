@@ -7,6 +7,7 @@ use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Http\Requests\Bo\Pictures\StorePictureRequest;
 use App\Http\Requests\Bo\Pictures\UpdatePictureRequest;
+use App\Models\Folder;
 use App\Models\Game;
 use App\Models\Picture;
 use App\Models\Tag;
@@ -76,10 +77,17 @@ class GameController extends Controller
      */
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
-        $tagModels = Tag::select(['id', 'name', 'slug'])->get();
+        /** @var \Illuminate\Database\Eloquent\Collection $folderModels */
+        $folderModels = Folder::query()->where('published', true)->get();
 
-        return view('back.pages.games.create', ['gameModel' => $game, 'tagModels' => $tagModels]);
+        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
+        $tagModels = Tag::select(['id', 'name', 'slug'])->where('published', true)->get();
+
+        return view('back.pages.games.create', [
+            'gameModel'    => $game,
+            'folderModels' => $folderModels,
+            'tagModels'    => $tagModels
+        ]);
     }
 
     /**
@@ -121,10 +129,17 @@ class GameController extends Controller
      */
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
-        $tagModels = Tag::select(['id', 'name', 'slug'])->get();
+        /** @var \Illuminate\Database\Eloquent\Collection $folderModels */
+        $folderModels = Folder::query()->where('published', true)->get();
 
-        return view('back.pages.games.edit', ['gameModel' => $game, 'tagModels' => $tagModels]);
+        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
+        $tagModels = Tag::select(['id', 'name', 'slug'])->where('published', true)->get();
+
+        return view('back.pages.games.edit', [
+            'gameModel'    => $game,
+            'folderModels' => $folderModels,
+            'tagModels'    => $tagModels
+        ]);
     }
 
     /**

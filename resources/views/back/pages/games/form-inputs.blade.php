@@ -26,12 +26,12 @@
                     <label class="col-form-label" for="folder_id">
                         <b>{{ __('bo_label_organization') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top"
-                            title="{{ __('bo_tooltip_folders', ['number' => count($globalFolders)]) }}">
+                            title="{{ __('bo_tooltip_folders', ['number' => count($folderModels)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
                     <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button">
-                        @foreach ($globalFolders as $folder)
+                        @foreach ($folderModels as $folder)
                             <option value="{{ $folder->getRouteKey() }}" @if ($folder->getRouteKey() == $gameModel->folder_id) selected @endif>
                                 {{ $folder->name }}
                             </option>
@@ -83,7 +83,7 @@
                     <label class="col-form-label" for="name">
                         <b>{{ Str::of(__('models.tag'))->plural()->ucFirst()->value() }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top"
-                            title="{{ __('bo_tooltip_tags', ['number' => count($globalTags)]) }}">
+                            title="{{ __('bo_tooltip_tags', ['number' => count($tagModels)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>

@@ -26,9 +26,11 @@
                         @if (count($gameModel->tags) > 0)
                             <span class="ms-1">-</span>
                             @foreach ($gameModel->tags as $tag)
-                                <p class="bg-primary rounded-2 my-0 ms-1 px-2 py-0 text-white">
-                                    {{ $tag->name }}
-                                </p>
+                                @if ($tag->published)
+                                    <p class="bg-primary rounded-2 my-0 ms-1 px-2 py-0 text-white">
+                                        {{ $tag->name }}
+                                    </p>
+                                @endif
                             @endforeach
                         @endif
                     </div>
