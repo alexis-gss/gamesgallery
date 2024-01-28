@@ -8,9 +8,8 @@ enum BootstrapThemeEnum: int
 {
     use BaseEnum;
 
-    case light  = 1;
-    case dark   = 2;
-    case custom = 3;
+    case light = 1;
+    case dark  = 2;
 
     /**
      * Optionnal labels definition.
@@ -18,8 +17,7 @@ enum BootstrapThemeEnum: int
      * @phpstan-ignore-next-line
      */
     private const LABELS = [
-        self::light->name  => 'enums.bootstrap-theme.light',
-        self::dark->name   => 'enums.bootstrap-theme.dark',
-        self::custom->name => 'enums.bootstrap-theme.custom',
+        self::light->name => 'enums.bootstrap-theme.light',
+        self::dark->name  => 'enums.bootstrap-theme.dark',
     ];
 }
