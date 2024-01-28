@@ -36,6 +36,7 @@ svg {
 
     @include media-breakpoint-up(xl) {
         overflow: visible;
+        height: #{$bo-header-height};
     }
 }
 
