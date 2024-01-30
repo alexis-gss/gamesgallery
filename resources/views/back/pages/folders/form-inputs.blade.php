@@ -29,17 +29,17 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    <input class="form-control" id="color" name="color"
-                        data-jscolor="{
-                            value: '{{ old('color', $folderModel->color) }}',
-                            borderColor: 'var(--bs-border-color)',
-                            backgroundColor: 'rgb(var(--bs-body-bg-rgb))',
-                            shadow: false,
-                            palette:[
-                                '#FFFFFF', '#808080', '#000000', '#996e36', '#f55525', '#ffe438', '#88dd20', '#22e0cd', '#269aff', '#bb1cd4'
-                            ],
-                        }"
-                        type="text" required>
+                    @php
+                        $data = [
+                            'id' => 'folderColor',
+                            'name' => 'color',
+                            'value' => old('color', $folderModel->color ?? ''),
+                            'rgbaMode' => $rgbaMode ?? true,
+                            'nullable' => $nullable ?? false,
+                            'ariaDescribedby' => "folderColorHelp"
+                        ];
+                    @endphp
+                    <div class="color-picker" data-json='@json($data)'></div>
                     <small class="text-body-secondary">
                         {{ __('validation.rule.color_label') }}
                     </small>

@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Casts\RgbaColor;
 use App\Traits\Models\ActivityLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer                         $id           Id.
- * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
+ * @property string                          $name         Name.
+ * @property integer                         $color        Color.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon      $published_at Published date update.
- * @property integer                         $order        Order of the name.
+ * @property integer                         $order        Order.
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
@@ -48,6 +50,7 @@ class Folder extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'color'        => RgbaColor::class,
         'published'    => 'bool',
         'published_at' => 'datetime'
     ];

@@ -43,7 +43,7 @@ class StoreFolderRequest extends FormRequest
             'slug'      => 'required|string|unique:folders,slug|max:255',
             'name'      => 'required|string|min:2|max:255',
             'published' => 'required|boolean',
-            'color'     => 'required|string|min:6|max:8|regex:(^[#]([A-Za-z0-9]{6,8})$)'
+            'color'     => 'required|color_rgba',
         ];
     }
 
