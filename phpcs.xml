@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="Games Gallery"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <description>Created with the PHP Coding Standard Generator. http://edorian.github.com/php-coding-standard-generator/</description>
     <arg name="colors" />
     <arg name="extensions" value="php" />
@@ -120,6 +119,7 @@
     </rule>
     <rule ref="Squiz.Commenting.PostStatementComment"/>
     <rule ref="Squiz.Commenting.VariableComment"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse" />
 
     <!-- For Laravel migrations -->
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">

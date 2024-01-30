@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Hash;
  * @property string                          $picture_title Attribute title of the picture.
  * @property string                          $password      Password.
  * @property \App\Enums\Users\RoleEnum       $role          Role.
- * @property integer                         $order         Order of the name.
+ * @property integer                         $order         Order.
  * @property-read \Illuminate\Support\Carbon $created_at    Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at    Updated date.
  *

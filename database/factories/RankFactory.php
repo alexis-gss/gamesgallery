@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Game;
-use App\Models\Rank;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
 
@@ -12,13 +11,6 @@ use Illuminate\Support\Facades\DB;
  */
 final class RankFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Rank::class;
-
     /**
      * Define the model's default state.
      *

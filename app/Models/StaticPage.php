@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\SchemaOrg\Schema;
 
 /**
- * @property \App\Enums\StaticPageType       $type            Page type (StaticPageTypeEnum).
- * @property string                          $seo_title       Seo title about 70 chars as recommended.
- * @property string                          $seo_description Seo description about 160 chars as recommended.
- * @property string                          $title           Title for the page.
- * @property integer                         $order           Order of the page.
+ * @property \App\Enums\StaticPageType       $type            Page type.
+ * @property string                          $seo_title       Seo title.
+ * @property string                          $seo_description Seo description.
+ * @property string                          $title           Title.
+ * @property integer                         $order           Order.
  * @property-read \Illuminate\Support\Carbon $created_at      Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at      Updated date.
  *

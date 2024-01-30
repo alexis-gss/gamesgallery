@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Fo\GameController;
-use App\Http\Controllers\Fo\RankController;
 use App\Http\Controllers\Fo\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
