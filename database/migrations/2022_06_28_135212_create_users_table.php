@@ -18,16 +18,16 @@ return new class extends Migration
             $table->string('first_name')->comment('First name of the user.');
             $table->string('last_name')->comment('Last name of the user.');
             $table->string('email')->unique()->comment('Email of the user that is unique.');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('picture')->comment('Picture associated to this user.');
             $table->string('picture_alt')->comment('Alt attribute of the image.');
             $table->string('picture_title')->comment('Title attribute of the image.');
             $table->string('password')->comment('Encrypted password of the user.');
             $table->rememberToken();
             $table->unsignedTinyInteger('role')->comment('Role of the user who defines the rights/access.');
+            $table->integer('order')->comment('Order of this user.');
+            $table->timestamp('email_verified_at')->nullable();
             $table->boolean('published')->comment('The user is published or not.');
             $table->timestamp('published_at')->nullable()->comment('The date on which the user was published.');
-            $table->integer('order')->comment('Order of this user.');
             $table->timestamps();
         });
     }

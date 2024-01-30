@@ -14,9 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('taggables', function (Blueprint $table) {
+            $table->string('taggable_type', 60);
             $table->foreignId('tag_id')->references('id')->on('tags');
             $table->foreignId('taggable_id')->references('id')->on('games');
-            $table->string('taggable_type', 60);
         });
     }
 

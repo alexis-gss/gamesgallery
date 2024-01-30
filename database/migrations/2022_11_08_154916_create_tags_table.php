@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id()->comment('Id of the tag.');
             $table->string('name')->comment('Nom du tag qui sera unique.');
             $table->string('slug')->unique()->comment('Slugify the name of the tag.');
+            $table->integer('order')->comment('Order of this tag.');
             $table->boolean('published')->comment('The tag is published or not');
             $table->timestamp('published_at')->nullable()->comment('The date on which the tag was published.');
-            $table->integer('order')->comment('Order of this tag.');
             $table->timestamps();
         });
     }

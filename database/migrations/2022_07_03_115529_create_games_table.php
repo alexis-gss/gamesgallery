@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id()->comment('Id of the game.');
-            $table->index('folder_id')->unsigned();
-            $table->foreignId('folder_id')->references('id')->on('folders');
             $table->string('name')->comment('Name of the game.');
             $table->string('slug')->unique()->comment('Slugify the name of the game.');
+            $table->index('folder_id')->unsigned();
+            $table->foreignId('folder_id')->references('id')->on('folders');
+            $table->integer('order')->comment('Order of this game.');
             $table->boolean('published')->comment('The game is published or not.');
             $table->timestamp('published_at')->nullable()->comment('The date on which the game was published.');
-            $table->integer('order')->comment('Order of this game.');
             $table->timestamps();
         });
     }

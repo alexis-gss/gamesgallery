@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('ranks', function (Blueprint $table) {
             $table->id()->comment('Id of the rank.');
-            $table->integer('rank')->comment('Rank of the game.');
             $table->index('game_id')->unsigned();
             $table->foreignId('game_id')->references('id')->on('games');
+            $table->integer('rank')->comment('Rank of the game.');
             $table->timestamps();
         });
     }

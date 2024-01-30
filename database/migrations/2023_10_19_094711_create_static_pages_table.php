@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('static_pages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('type')->unique()->comment('Type of the static page.');
             $table->string('seo_title')->comment('Seo title of the static page.');
             $table->string('seo_description')->comment('Seo description of the static page.');
             $table->string('title')->comment('Title of the static page.');
+            $table->unsignedTinyInteger('type')->unique()->comment('Type of the static page.');
             $table->integer('order')->comment('Order of the static page.');
             $table->timestamps();
         });
