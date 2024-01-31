@@ -69,12 +69,15 @@ return [
     ],
 
     'other' => [
-        'no_model_found'  => 'Aucun résultat (:model) trouvé',
-        'up'              => 'Modifier l\'ordre d\'apparition vers le haut',
-        'down'            => 'Modifier l\'ordre d\'apparition vers le bas',
-        'user-right'      => 'Vous n\'avez pas les droits',
-        'publish'         => 'Publier',
-        'unpublish'       => 'Dépublier',
-        'required_fields' => '* Champs obligatoires',
+        'no_model_found'          => 'Aucun résultat (:model) trouvé',
+        'up'                      => 'Modifier l\'ordre d\'apparition vers le haut',
+        'down'                    => 'Modifier l\'ordre d\'apparition vers le bas',
+        'user-right'              => 'Vous n\'avez pas les droits',
+        'publish'                 => 'Publier',
+        'unpublish'               => 'Dépublier',
+        'required_fields'         => '* Champs obligatoires',
+        'reset_password'          => 'Envoyer un e-mail de réinitialisation du mot de passe à l\'utilisateur',
+        'reset_password_email'    => 'Procédure de ré-initialisation du mot de passe envoyé à l\'utilisateur',
+        'reset_password_complete' => 'Procédure de ré-initialisation du mot de passe terminée',
     ],
 ];

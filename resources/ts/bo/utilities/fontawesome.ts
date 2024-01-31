@@ -26,6 +26,7 @@ import {
     faFolderOpen,
     faGlobe,
     faGripVertical,
+    faKey,
     faListUl,
     faMagnifyingGlass,
     faPaintRoller,
@@ -85,4 +86,5 @@ library.add(faCircleExclamation);
 library.add(faPaintRoller);
 library.add(faGripVertical);
 library.add(faGlobe);
+library.add(faKey);
 dom.watch();

@@ -26,8 +26,8 @@ Route::prefix('bo')
                         [
                             'login'    => true,
                             'logout'   => true,
+                            'reset'    => true,
                             'register' => false,
-                            'reset'    => false,
                             'confirm'  => false,
                             'verify'   => false,
                         ]

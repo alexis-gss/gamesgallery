@@ -12,18 +12,21 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @property integer                         $id            Id.
- * @property string                          $first_name    Firstname.
- * @property string                          $last_name     Lastname.
- * @property string                          $email         Email.
- * @property string                          $picture       Path of the account's picture.
- * @property string                          $picture_alt   Attribute alt of the picture.
- * @property string                          $picture_title Attribute title of the picture.
- * @property string                          $password      Password.
- * @property \App\Enums\Users\RoleEnum       $role          Role.
- * @property integer                         $order         Order.
- * @property-read \Illuminate\Support\Carbon $created_at    Created date.
- * @property-read \Illuminate\Support\Carbon $updated_at    Updated date.
+ * @property integer                         $id                Id.
+ * @property string                          $first_name        Firstname.
+ * @property string                          $last_name         Lastname.
+ * @property string                          $email             Email.
+ * @property string                          $picture           Path of the account's picture.
+ * @property string                          $picture_alt       Attribute alt of the picture.
+ * @property string                          $picture_title     Attribute title of the picture.
+ * @property string                          $password          Password.
+ * @property \App\Enums\Users\RoleEnum       $role              Role.
+ * @property integer                         $order             Order.
+ * @property \Illuminate\Support\Carbon      $published         Published status.
+ * @property \Illuminate\Support\Carbon|null $published_at      Publication status update date.
+ * @property \Illuminate\Support\Carbon|null $email_verified_at Email verified date.
+ * @property-read \Illuminate\Support\Carbon $created_at        Created date.
+ * @property-read \Illuminate\Support\Carbon $updated_at        Updated date.
  *
  * @method static void booted()                          Perform any actions required after the model boots.
  * @method static void updatePublishedStatus(self $user) Check if the authenticable user can update the
@@ -54,9 +57,10 @@ class User extends Authenticatable
         'picture_title',
         'password',
         'role',
+        'order',
         'published',
         'published_at',
-        'order',
+        'email_verified_at',
     ];
 
     /**

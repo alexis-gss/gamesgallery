@@ -15,27 +15,38 @@
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
         </div>
-        <div class="mb-md-0 mb-2">
+        <div class="btn-group mb-md-0 mb-2">
+            @can('resetPassword', $userModel)
+                <form method="POST" action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
+                    @csrf
+                    <button class="btn btn-warning rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
+                        title="{{ Str::ucfirst(__('crud.other.reset_password')) }}">
+                        <i class="fa-solid fa-key"></i>
+                    </button>
+                </form>
+            @endcan
             @canAny(['delete', 'duplicate', 'update'], $userModel)
                 <form class="confirmDeleteTS" action="{{ route('bo.users.destroy', $userModel) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="btn-group" role="group">
                         @can('duplicate', $userModel)
-                            <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                href="{{ route('bo.users.duplicate', ['user' => $userModel]) }}"
+                            <a class="btn btn-secondary @can('resetPassword', $userModel) rounded-start-0 @endcan" data-bs-tooltip="tooltip"
+                                data-bs-placement="top" href="{{ route('bo.users.duplicate', ['user' => $userModel]) }}"
                                 title="{{ __('crud.actions_model.duplicate', ['model' => __('models.user')]) }}">
                                 <i class="fa-solid fa-copy"></i>
                             </a>
                         @endcan
                         @can('update', $userModel)
-                            <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                            <button class="btn btn-primary @can(['resetPassword', 'duplicate'], $userModel) rounded-start-0 @endcan"
+                                id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
                                 title="{{ __('crud.actions_model.save', ['model' => __('models.user')]) }}">
                                 <i class="fa-solid fa-floppy-disk"></i>
                             </button>
                         @endcan
                         @can('delete', $userModel)
-                            <button class="btn btn-danger" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                            <button class="btn btn-danger @can(['resetPassword', 'duplicate', 'update'], $userModel) rounded-start-0 @endcan"
+                                data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
                                 title="{{ __('crud.actions_model.delete', ['model' => __('models.user')]) }}">
                                 <i class="fa-solid fa-trash"></i>
                             </button>

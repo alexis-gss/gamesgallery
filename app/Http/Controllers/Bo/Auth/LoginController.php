@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Bo\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -34,9 +34,9 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View
      */
-    public function showLoginForm()
+    public function showLoginForm(): \Illuminate\Contracts\View\View
     {
         return view('back.auth.login');
     }
@@ -57,7 +57,7 @@ class LoginController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return boolean
      */
-    protected function attemptLogin(Request $request)
+    protected function attemptLogin(Request $request): bool
     {
         $credentials = $this->credentials($request);
         // * Attempt login only using published users.

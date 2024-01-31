@@ -68,12 +68,15 @@ return [
     ],
 
     'other' => [
-        'no_model_found'  => 'No :model found',
-        'up'              => 'Change the order of appearance upwards',
-        'down'            => 'Change the order of appearance downwards',
-        'user-right'      => 'You do not have the rights',
-        'publish'         => 'Publish',
-        'unpublish'       => 'Unpublish',
-        'required_fields' => '* Required fields',
+        'no_model_found'          => 'No :model found',
+        'up'                      => 'Change the order of appearance upwards',
+        'down'                    => 'Change the order of appearance downwards',
+        'user-right'              => 'You do not have the rights',
+        'publish'                 => 'Publish',
+        'unpublish'               => 'Unpublish',
+        'required_fields'         => '* Required fields',
+        'reset_password'          => 'Send a password reset e-mail to the user',
+        'reset_password_email'    => 'Procedure for resetting the password sent to the user',
+        'reset_password_complete' => 'Password reset procedure completed',
     ],
 ];

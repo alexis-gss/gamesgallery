@@ -140,4 +140,17 @@ class UserPolicy
             UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
             UserStaticRules::atLeastRole($authUser, $user->role);
     }
+
+    /**
+     * Determine whether the user can send a email to the user for reset his password.
+     *
+     * @param \App\Models\User $authUser
+     * @param \App\Models\User $user
+     * @return boolean
+     */
+    public function resetPassword(User $authUser, User $user): bool
+    {
+        return $authUser->getRouteKey() !== $user->getRouteKey() and
+            UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+    }
 }
