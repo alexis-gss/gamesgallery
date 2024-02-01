@@ -4,7 +4,7 @@
             <legend>{{ __('bo_title_general_informations') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
-                    <label class="col-form-label" for="folder_id">
+                    <label class="col-form-label" for="first_name">
                         <b>{{ __('bo_label_authentification', ['field' => __('validation.attributes.first_name')]) }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_name_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -24,7 +24,7 @@
                     @include('back.modules.input-error', ['inputName' => 'first_name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
-                    <label class="col-form-label" for="folder_id">
+                    <label class="col-form-label" for="last_name">
                         <b>{{ __('bo_label_authentification', ['field' => __('validation.attributes.last_name')]) }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_name_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -44,7 +44,7 @@
                     @include('back.modules.input-error', ['inputName' => 'last_name'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
-                    <label class="col-form-label" for="folder_id">
+                    <label class="col-form-label" for="email">
                         <b>{{ __('bo_label_authentification', ['field' => __('validation.attributes.email')]) }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_email') }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -59,7 +59,7 @@
                     @include('back.modules.input-error', ['inputName' => 'email'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
-                    <label class="col-form-label" for="folder_id">
+                    <label class="col-form-label" for="role">
                         <b>{{ __('bo_label_user_rights') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_role') }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -111,7 +111,7 @@
             <legend>{{ __('bo_title_security') }}</legend>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-group">
-                    <label class="col-form-label" for="folder_id">
+                    <label class="col-form-label" for="password">
                         <b>{{ __('bo_label_password') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_password_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -137,7 +137,7 @@
                     @include('back.modules.input-error', ['inputName' => 'password'])
                 </div>
                 <div class="col-12 col-md-6 form-group">
-                    <label class="col-form-label" for="folder_id">
+                    <label class="col-form-label" for="password_confirmation">
                         <b>{{ __('bo_label_password_confirm') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_confirm_password_user') }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -167,6 +167,30 @@
             </div>
         </fieldset>
     </div>
+    @can('changePublished', $userModel)
+        <div class="col-12 border-bottom mb-3">
+            <fieldset class="p-3">
+                <legend>{{ __('bo_title_visibility') }}</legend>
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6 form-check form-switch">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
+                                name="published" type="checkbox" value="1" role="button"
+                                @if (old('published', $userModel->published ?? '')) checked @endif>
+                            <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
+                                <b>{{ Str::of(__('validation.custom.publishment'))->ucFirst() }}</b>
+                            </label>
+                            <br>
+                            <small class="form-text text-body-secondary">
+                                {{ __('validation.boolean', ['attribute' => __('validation.custom.publishment')]) }}
+                            </small>
+                        </div>
+                        @include('back.modules.input-error', ['inputName' => 'published'])
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    @endcan
     <div class="col-12 text-center">
         <p class="fw-bold m-0 p-0">{{ __('crud.other.required_fields') }}</p>
     </div>
