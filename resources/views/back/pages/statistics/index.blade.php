@@ -15,7 +15,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button"
                             role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>
-                            {{ __('Latest data updated') }}
+                            {{ __('bo_other_stats_latest_model') }}
                         </button>
                     </li>
                     @foreach ($navLinks as $navLink)
@@ -23,7 +23,7 @@
                             <button class="nav-link @if ($loop->first) active @endif" id="{{ $navLink['name'] }}-tab"
                                 data-bs-toggle="tab" data-bs-target="#{{ $navLink['name'] }}-tab-pane" type="button" role="tab"
                                 aria-controls="{{ $navLink['name'] }}-tab-pane" aria-selected="true">
-                                {{ Str::of($navLink['translation'])->ucFirst() }}
+                                {{ $navLink['translation'] }}
                             </button>
                         </li>
                     @endforeach
@@ -40,7 +40,11 @@
                                                 {{ Str::of($navLink['field'])->ucfirst() }}
                                             </td>
                                             <td class="bg-transparent text-center align-middle">
-                                                {{ $navLink['value'] }}
+                                                <a href="{{ route('bo.' . Str::of($navLink['name'])->plural . '.edit', $navLink['model']) }}"
+                                                    class="btn btn-sm btn-primary" target="_blank" data-bs-tooltip="tooltip"
+                                                    title="{{ __('crud.actions_model.show', ['model' => $navLink['translation']]) }}">
+                                                    {{ $navLink['value'] }}
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -75,6 +79,11 @@
         <div class="col-12 mb-3">
             <div class="card bg-body-tertiary border-top p-md-5 p-3">
                 @include('back.pages.statistics.chart-games-by-folders')
+            </div>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="card bg-body-tertiary border-top p-md-5 p-3">
+                @include('back.pages.statistics.chart-pictures-by-ratings')
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ return [
     'statistic'    => 'statistic',
     'tag'          => 'tag',
     'rank'         => 'rank',
+    'rating'       => 'rate',
     'static_page'  => 'static page|static pages',
     'user'         => 'user',
 ];

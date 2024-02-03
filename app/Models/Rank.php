@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Rank extends Model
 {
-    use ActivityLog;
     use HasFactory;
 
     /**

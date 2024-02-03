@@ -112,7 +112,13 @@ class RankController extends Controller
         return Rank::query()
             ->orderby('rank', 'ASC')
             ->with('game')
-            ->get();
+            ->get()
+            ->each(function (Rank $rank) {
+                // @phpstan-ignore-next-line
+                $rank->game_name = $rank->game->name;
+                // @phpstan-ignore-next-line
+                $rank->game_slug = $rank->game->slug;
+            });
     }
 
     /**

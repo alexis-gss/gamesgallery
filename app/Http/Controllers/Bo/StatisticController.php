@@ -7,12 +7,12 @@ use App\Http\Requests\Bo\Statistics\ActivityDateRequest;
 use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
-use App\Models\Picture;
-use App\Models\Rank;
+use App\Models\Rating;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StatisticController extends Controller
@@ -31,8 +31,6 @@ class StatisticController extends Controller
             Game::class,
             Folder::class,
             Tag::class,
-            Picture::class,
-            Rank::class,
             User::class,
         ];
 
@@ -56,11 +54,20 @@ class StatisticController extends Controller
 
         $navLinks = $this->getNavTabsData($latestModels);
 
+        $picturesRatings = Rating::query()
+            ->with(['picture', 'picture.game'])
+            ->select('picture_id', DB::raw('count(*) as ratings_count'))
+            ->groupBy('picture_id')
+            ->orderBy('ratings_count', 'desc')
+            ->take(5)
+            ->get();
+
         return view('back.pages.statistics.index', compact(
             'navLinks',
             'activityModels',
             'dateLastDays',
             'dateLastDaysFormated',
+            'picturesRatings',
         ));
     }
 
@@ -80,15 +87,10 @@ class StatisticController extends Controller
                     ? trans_choice('models.game', 1)
                     : trans('models.' . $name);
                 $field       = (get_class($model) === 'App\Models\User')
-                    ? trans('validation.attributes.first_name') . " / " . trans('validation.attributes.last_name')
-                    : trans('validation.attributes.name');
+                ? Str::of(trans('validation.attributes.first_name'))->ucFirst() . " / " .
+                    Str::of(trans('validation.attributes.last_name'))->ucFirst()
+                    : Str::of(trans('validation.attributes.name'))->ucFirst();
                 switch (get_class($model)) {
-                    case 'App\Models\Picture':
-                            $value = $model->uuid . ".webp";
-                        break;
-                    case 'App\Models\Rank':
-                        $value = $model->game->name;
-                        break;
                     case 'App\Models\User':
                         $value = $model->first_name . " " . $model->last_name;
                         break;
