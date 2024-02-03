@@ -1,260 +1,78 @@
 <template>
-  <div v-if="gameLoading || gamePictures.length > 0">
-    <div
-      v-for="n in incrementNumber"
-      :key="n"
+  <template v-if="gameLoading || gamePictures.length > 0">
+    <template
+      v-for="paginateIndex in incrementNumber"
+      :key="paginateIndex"
     >
-      <div class="row w-100 mx-auto p-0">
-        <div
-          v-for="(a, i) in 4"
-          :key="a"
-          :class="`glightbox-wrapper position-relative col-12 col-sm-6 col-lg-${
-            gameItems / 4
-          } p-1`"
-          data-aos="fade-up"
-        >
-          <template v-if="gamePictures[n + i]">
-            <a
-              :href="getPicturePath(n + i)"
-              class="glightbox"
-              data-gallery="games-pictures"
-            >
-              <div
-                class="ratio ratio-16x9 overflow-hidden"
+      <template
+        v-for="(templateValue, templateIndex) in picturesTemplate"
+        :key="templateIndex"
+      >
+        <div class="row w-100 mx-auto p-0">
+          <div
+            v-for="(pictureValue, pictureIndex) in templateValue"
+            :key="pictureValue"
+            :class="`glightbox-wrapper position-relative col-12 col-sm-6 col-lg-${gameItems / templateValue} p-1`"
+            data-aos="fade-up"
+          >
+            <template v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]">
+              <a
+                :href="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
+                class="glightbox"
+                data-gallery="games-pictures"
               >
-                <img
-                  :src="getPicturePath(n + i)"
-                  :alt="'Picture n°' + (n + 1 + i) + ' from the game ' + gameName"
-                  :title="'Picture n°' + (n + 1 + i) + ' from the game ' + gameName"
-                  class="d-none w-100 z-1"
-                  @load="gameImageLazyLoad"
+                <div
+                  class="ratio ratio-16x9 overflow-hidden"
                 >
-                <div class="picture-loader position-absolute top-0 start-0 w-100 h-100 z-3">
-                  <div
-                    class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                  <img
+                    :src="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
+                    :alt="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
+                    :title="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
+                    class="d-none w-100 z-1"
+                    @load="gameImageLazyLoad"
                   >
+                  <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
                     <div
-                      class="spinner-border text-light"
-                      role="status"
+                      class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
                     >
-                      <span class="visually-hidden">
-                        {{ __("fo_text_loading") }}
-                      </span>
+                      <div
+                        class="spinner-border text-light"
+                        role="status"
+                      >
+                        <span class="visually-hidden">
+                          {{ __("fo_text_loading") }}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                v-if="picturesRatings.includes(gamePictures[n + i].id)"
-                class="picture-likes position-absolute top-0 end-0 d-flex justify-content-center align-items-center bg-white p-2 m-1 z-2"
+              </a>
+              <button
+                class="picture-likes btn btn-white position-absolute bottom-0 end-0 rounded-0 m-1 z-2"
+                :class="(ratingLoading) ? 'disabled': ''"
+                :disabled="ratingLoading"
+                @click="ajaxPictureUpvote(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)"
               >
                 <span
-                  :id="`ratings-${gamePictures[n + i].id}`"
+                  :id="`ratings-${gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id}`"
                   class="me-1"
                 >
-                  {{ gamePictures[n + i].ratings_count }}
+                  {{ gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count }}
                 </span>
-                <FontAwesomeIcon icon="fa-solid fa-thumbs-up" />
-              </div>
-            </a>
-            <button
-              v-if="!picturesRatings.includes(gamePictures[n + i].id)"
-              class="picture-likes btn btn-white position-absolute top-0 end-0 rounded-0 m-1 z-2"
-              @click="ajaxPictureUpvote(gamePictures[n + i].id)"
-            >
-              <span class="me-1">{{ gamePictures[n + i].ratings_count }}</span>
-              <FontAwesomeIcon icon="fa-regular fa-thumbs-up" />
-            </button>
-          </template>
+                <FontAwesomeIcon
+                  icon="fa-regular fa-thumbs-up"
+                  :class="(picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
+                />
+                <FontAwesomeIcon
+                  icon="fa-solid fa-thumbs-up"
+                  :class="(!picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
+                />
+              </button>
+            </template>
+          </div>
         </div>
-      </div>
-      <div class="row w-100 mx-auto p-0">
-        <div
-          v-for="(b, i) in 3"
-          :key="b"
-          :class="`glightbox-wrapper position-relative col-12 col-sm col-lg-${gameItems / 3} p-1`"
-          data-aos="fade-up"
-        >
-          <template v-if="gamePictures[n + 4 + i]">
-            <a
-              :href="getPicturePath(n + 4 + i)"
-              class="glightbox"
-              data-gallery="games-pictures"
-            >
-              <div
-                class="ratio ratio-16x9 overflow-hidden"
-              >
-                <img
-                  :src="getPicturePath(n + 4 + i)"
-                  :alt="'Picture n°' + (n + 5 + i) + ' from the game ' + gameName"
-                  :title="'Picture n°' + (n + 5 + i) + ' from the game ' + gameName"
-                  class="d-none w-100 z-1"
-                  @load="gameImageLazyLoad"
-                >
-                <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
-                  <div
-                    class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
-                  >
-                    <div
-                      class="spinner-border text-light"
-                      role="status"
-                    >
-                      <span class="visually-hidden">
-                        {{ __("fo_text_loading") }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                v-if="picturesRatings.includes(gamePictures[n + 4 + i].id)"
-                class="picture-likes position-absolute top-0 end-0 d-flex justify-content-center align-items-center bg-white p-2 m-1 z-2"
-              >
-                <span
-                  :id="`ratings-${gamePictures[n + 4 + i].id}`"
-                  class="me-1"
-                >
-                  {{ gamePictures[n + 4 + i].ratings_count }}
-                </span>
-                <FontAwesomeIcon icon="fa-solid fa-thumbs-up" />
-              </div>
-            </a>
-            <button
-              v-if="!picturesRatings.includes(gamePictures[n + 4 + i].id)"
-              class="picture-likes btn btn-white position-absolute top-0 end-0 rounded-0 m-1 z-2"
-              @click="ajaxPictureUpvote(gamePictures[n + 4 + i].id)"
-            >
-              <span class="me-1">{{ gamePictures[n + 4 + i].ratings_count }}</span>
-              <FontAwesomeIcon icon="fa-regular fa-thumbs-up" />
-            </button>
-          </template>
-        </div>
-      </div>
-      <div class="row w-100 mx-auto p-0">
-        <div
-          v-for="(c, i) in 2"
-          :key="c"
-          :class="`glightbox-wrapper position-relative col-12 col-sm-${gameItems / 2} p-1`"
-          data-aos="fade-up"
-        >
-          <template v-if="gamePictures[n + 7 + i]">
-            <a
-              :href="getPicturePath(n + 7 + i)"
-              class="glightbox"
-              data-gallery="games-pictures"
-            >
-              <div
-                class="ratio ratio-16x9 overflow-hidden"
-              >
-                <img
-                  :src="getPicturePath(n + 7 + i)"
-                  :alt="'Picture n°' + (n + 8 + i) + ' from the game ' + gameName"
-                  :title="'Picture n°' + (n + 8 + i) + ' from the game ' + gameName"
-                  class="d-none w-100 z-1"
-                  @load="gameImageLazyLoad"
-                >
-                <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
-                  <div
-                    class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
-                  >
-                    <div
-                      class="spinner-border text-light"
-                      role="status"
-                    >
-                      <span class="visually-hidden">
-                        {{ __("fo_text_loading") }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                v-if="picturesRatings.includes(gamePictures[n + 7 + i].id)"
-                class="picture-likes position-absolute top-0 end-0 d-flex justify-content-center align-items-center bg-white p-2 m-1 z-2"
-              >
-                <span
-                  :id="`ratings-${gamePictures[n + 7 + i].id}`"
-                  class="me-1"
-                >
-                  {{ gamePictures[n + 7 + i].ratings_count }}
-                </span>
-                <FontAwesomeIcon icon="fa-solid fa-thumbs-up" />
-              </div>
-            </a>
-            <button
-              v-if="!picturesRatings.includes(gamePictures[n + 7 + i].id)"
-              class="picture-likes btn btn-white position-absolute top-0 end-0 rounded-0 m-1 z-2"
-              @click="ajaxPictureUpvote(gamePictures[n + 7 + i].id)"
-            >
-              <span class="me-1">{{ gamePictures[n + 7 + i].ratings_count }}</span>
-              <FontAwesomeIcon icon="fa-regular fa-thumbs-up" />
-            </button>
-          </template>
-        </div>
-      </div>
-      <div class="row w-100 mx-auto p-0">
-        <div
-          v-for="(d, i) in 3"
-          :key="d"
-          :class="`glightbox-wrapper position-relative col-12 col-sm col-lg-${gameItems / 3} p-1`"
-          data-aos="fade-up"
-        >
-          <template v-if="gamePictures[n + 9 + i]">
-            <a
-              :href="getPicturePath(n + 9 + i)"
-              class="glightbox"
-              data-gallery="games-pictures"
-            >
-              <div
-                class="ratio ratio-16x9 overflow-hidden"
-              >
-                <img
-                  :src="getPicturePath(n + 9 + i)"
-                  :alt="'Picture n°' + (n + 10 + i) + ' from the game ' + gameName"
-                  :title="'Picture n°' + (n + 10 + i) + ' from the game ' + gameName"
-                  class="d-none w-100 z-1"
-                  @load="gameImageLazyLoad"
-                >
-                <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
-                  <div
-                    class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
-                  >
-                    <div
-                      class="spinner-border text-light"
-                      role="status"
-                    >
-                      <span class="visually-hidden">
-                        {{ __("fo_text_loading") }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                v-if="picturesRatings.includes(gamePictures[n + 9 + i].id)"
-                class="picture-likes position-absolute top-0 end-0 d-flex justify-content-center align-items-center bg-white p-2 m-1 z-2"
-              >
-                <span
-                  :id="`ratings-${gamePictures[n + 9 + i].id}`"
-                  class="me-1"
-                >
-                  {{ gamePictures[n + 9 + i].ratings_count }}
-                </span>
-                <FontAwesomeIcon icon="fa-solid fa-thumbs-up" />
-              </div>
-            </a>
-            <button
-              v-if="!picturesRatings.includes(gamePictures[n + 9 + i].id)"
-              class="picture-likes btn btn-white position-absolute top-0 end-0 rounded-0 m-1 z-2"
-              @click="ajaxPictureUpvote(gamePictures[n + 9 + i].id)"
-            >
-              <span class="me-1">{{ gamePictures[n + 9 + i].ratings_count }}</span>
-              <FontAwesomeIcon icon="fa-regular fa-thumbs-up" />
-            </button>
-          </template>
-        </div>
-      </div>
-    </div>
+      </template>
+    </template>
     <div class="w-100 text-center mt-5">
       <div
         v-if="gameLoading"
@@ -270,7 +88,7 @@
         {{ __("fo_images_loaded") }}
       </div>
     </div>
-  </div>
+  </template>
   <div
     v-else
     class="text-center"
@@ -306,7 +124,9 @@ export default defineComponent({
     gameLoading: boolean;
     gameAllLoaded: boolean;
     gameViewer: GLightbox | null;
+    picturesTemplate: Array<number>;
     picturesRatings: Array<number>;
+    ratingLoading: boolean;
   } {
     return {
       gameName: "",
@@ -318,7 +138,9 @@ export default defineComponent({
       gameLoading: true,
       gameAllLoaded: false,
       gameViewer: null,
+      picturesTemplate: [4,3,2,3],
       picturesRatings: [],
+      ratingLoading: false,
     };
   },
   mounted() {
@@ -444,6 +266,7 @@ export default defineComponent({
      * Return a list of games which corresponds to the search from selects.
      */
     ajaxPictureUpvote(id: number): void {
+      this.ratingLoading = true;
       const updateRatingRoute = route.methods.route("fo.ratings.update");
       if (!updateRatingRoute) {
         throw new Error("Undefined route fo.ratings.update");
@@ -453,14 +276,39 @@ export default defineComponent({
           picture_id: id,
         })
         .then((reponse) => {
-          this.picturesRatings.push(reponse.data);
+          let addingNumber = 0;
+          if (reponse.data.rating_exist) {
+            this.picturesRatings.splice(this.picturesRatings.indexOf(reponse.data.picture_id), 1);
+            addingNumber = -1;
+          } else {
+            this.picturesRatings.push(reponse.data.picture_id);
+            addingNumber = +1;
+          }
           this.$nextTick(() => {
-            const ratingsCount = document.getElementById("ratings-" + String(reponse.data)) as HTMLSpanElement|null;
+            const ratingsCount = document.getElementById("ratings-" + String(reponse.data.picture_id)) as HTMLSpanElement|null;
             if (ratingsCount) {
-              ratingsCount.textContent = String(Number(ratingsCount.textContent) + 1);
+              ratingsCount.textContent = String(Number(ratingsCount.textContent) + addingNumber);
             }
+            this.ratingLoading = false;
           });
         });
+    },
+    /**
+     * Return the number of the picture.
+     *
+     * @param paginateIndex
+     * @param templateIndex
+     */
+    getPictureNumber(paginateIndex: number, templateIndex: number) {
+      let result = 0;
+      if (this.picturesTemplate[templateIndex - 1] !== undefined) {
+        for (let index = 0; index <= templateIndex - 1; index++) {
+          result += this.picturesTemplate[index];
+        }
+      } else {
+        result = 0;
+      }
+      return paginateIndex + result;
     }
   },
 });
