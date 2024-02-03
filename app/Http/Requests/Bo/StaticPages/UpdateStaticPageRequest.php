@@ -25,7 +25,7 @@ class UpdateStaticPageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'seo_title'       => 'required|min:45|max:70',
+            'seo_title'       => 'required|min:3|max:70',
             'seo_description' => 'required|min:50|max:160',
             'title'           => 'required|min:3|max:255',
         ];

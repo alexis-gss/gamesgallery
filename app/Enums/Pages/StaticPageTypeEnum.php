@@ -20,4 +20,22 @@ enum StaticPageTypeEnum: int
         self::home->name    => 'fo_homepage',
         self::ranking->name => 'fo_ranking',
     ];
+
+    /**
+     * Optionnal labels definition.
+     */
+    private const ROUTES = [
+        self::home->name    => 'fo.games.index',
+        self::ranking->name => 'fo.ranks.index',
+    ];
+
+    /**
+     * Get Class.
+     *
+     * @return string
+     */
+    public function routeName(): string
+    {
+        return self::ROUTES[$this->name];
+    }
 }

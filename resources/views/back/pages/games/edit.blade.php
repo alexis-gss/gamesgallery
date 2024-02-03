@@ -60,8 +60,6 @@
         @include('back.pages.games.form-inputs')
         @can('update', $gameModel)
             @include('back.partials.script-button-clone')
-        @endcan
-        @can('update', $gameModel)
             <div class="row mt-3">
                 <div class="col text-center">
                     <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"

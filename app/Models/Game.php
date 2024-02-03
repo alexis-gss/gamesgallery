@@ -119,21 +119,24 @@ class Game extends Model
      */
     public function toSchemaOrg(): \Spatie\SchemaOrg\WebPage
     {
-        return Schema::WebPage()
+        $schema = Schema::WebPage()
             ->inLanguage(config('app.locale'))
             ->datePublished($this->published_at)
             ->genre("Game image gallery")
             ->headline($this->name)
             ->isPartOf($this->folder->name)
-            ->relatedLink(route('fo.games.show', $this))
-            ->image(
+            ->relatedLink(route('fo.games.show', $this));
+        if ($this->pictures->first()) {
+            $schema->image(
                 sprintf(
                     '%s/storage/pictures/%s/%s',
                     route("fo.games.index"),
                     $this->slug,
                     $this->pictures->first()->uuid . ".webp"
                 )
-            )
+            );
+        }
+        return $schema
             ->about(
                 Schema::Thing()
                     ->name($this->name)

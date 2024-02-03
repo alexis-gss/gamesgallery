@@ -20,7 +20,6 @@
                 <thead>
                     @include('back.modules.table-col-sorter', [
                         'cols' => [
-                            'type' => Str::of(__('validation.custom.page_type'))->ucfirst(),
                             'seo_title' => Str::of(__('validation.custom.seo_title'))->ucfirst(),
                             'seo_description' => Str::of(__('validation.custom.seo_description'))->ucfirst(),
                             'title' => Str::of(__('validation.attributes.title'))->ucfirst(),
@@ -32,9 +31,6 @@
                 <tbody>
                     @foreach ($staticPageModels as $staticPageModel)
                         <tr class="border-bottom">
-                            <td class="text-center align-middle">
-                                <p class="col-10 text-truncate m-0">{{ $staticPageModel->type }}</p>
-                            </td>
                             <td class="text-center align-middle">
                                 <p class="col-10 text-truncate m-0">{{ $staticPageModel->seo_title }}</p>
                             </td>
@@ -59,21 +55,23 @@
                             @endif
                             <td class="text-end align-middle">
                                 @canAny(['update', 'view'], $staticPageModel)
-                                    {{-- @can('view', $staticPageModel)
-                                        <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                            href="{{ route('fo.games.show', $staticPageModel->slug) }}"
-                                            title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.static_page', 1)]) }}"
-                                            target="_blank">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                    @endcan --}}
-                                    @can('update', $staticPageModel)
-                                        <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                            href="{{ route('bo.games.edit', ['game' => $staticPageModel]) }}"
-                                            title="{{ __('crud.actions_model.edit', ['model' => trans_choice('models.static_page', 1)]) }}">
-                                            <i class="fa-solid fa-pencil"></i>
-                                        </a>
-                                    @endcan
+                                    <div class="btn-group">
+                                        @can('view', $staticPageModel)
+                                            <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                                href="{{ route($staticPageModel->type->routeName()) }}"
+                                                title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.static_page', 1)]) }}"
+                                                target="_blank">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                        @endcan
+                                        @can('update', $staticPageModel)
+                                            <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                                href="{{ route('bo.static_pages.edit', ['static_page' => $staticPageModel]) }}"
+                                                title="{{ __('crud.actions_model.edit', ['model' => trans_choice('models.static_page', 1)]) }}">
+                                                <i class="fa-solid fa-pencil"></i>
+                                            </a>
+                                        @endcan
+                                    </div>
                                 @else
                                     @include('back.modules.user-right')
                                 @endcan

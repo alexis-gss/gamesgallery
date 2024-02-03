@@ -68,7 +68,7 @@ class StaticPageController extends Controller
      */
     public function edit(StaticPage $static_page): \Illuminate\Contracts\View\View
     {
-        return view('bo.pages.static_pages.edit', ['staticPageModel' => $static_page]);
+        return view('back.pages.static_pages.edit', ['staticPageModel' => $static_page]);
     }
 
     /**
@@ -86,12 +86,12 @@ class StaticPageController extends Controller
             if ($static_page->saveOrFail()) {
                 return redirect()->route('bo.static_pages.edit', $static_page)
                     ->with('success', __('crud.messages.has_been_updated', [
-                        'model' => Str::ucfirst(\trans_choice('models.classes.static_page', 1))
+                        'model' => Str::ucfirst(trans_choice('models.static_page', 1))
                     ]));
             }
             return redirect()->route('bo.static_pages.edit', $static_page)
                 ->with('error', __('crud.messages.cannot_be_updated', [
-                    'model' => Str::ucfirst(\trans_choice('models.classes.static_page', 1))
+                    'model' => Str::ucfirst(trans_choice('models.static_page', 1))
                 ]));
         });
     }
