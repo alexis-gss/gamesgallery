@@ -1,104 +1,108 @@
 <template>
-  <template v-if="gameLoading || gamePictures.length > 0">
-    <template
-      v-for="paginateIndex in incrementNumber"
-      :key="paginateIndex"
-    >
+  <div class="position-relative">
+    <template v-if="gameLoading || gamePictures.length > 0">
       <template
-        v-for="(templateValue, templateIndex) in picturesTemplate"
-        :key="templateIndex"
+        v-for="paginateIndex in incrementNumber"
+        :key="paginateIndex"
       >
-        <div class="row w-100 mx-auto p-0">
-          <div
-            v-for="(pictureValue, pictureIndex) in templateValue"
-            :key="pictureValue"
-            :class="`glightbox-wrapper position-relative col-12 col-sm-6 col-lg-${gameItems / templateValue} p-1`"
-            data-aos="fade-up"
-          >
-            <template v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]">
-              <a
-                :href="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
-                class="glightbox"
-                data-gallery="games-pictures"
-              >
-                <div
-                  class="ratio ratio-16x9 overflow-hidden"
+        <template
+          v-for="(templateValue, templateIndex) in picturesTemplate"
+          :key="templateIndex"
+        >
+          <div class="row w-100 mx-auto p-0">
+            <div
+              v-for="(pictureValue, pictureIndex) in templateValue"
+              :key="pictureValue"
+              :class="`glightbox-wrapper position-relative col-12 col-sm-6 col-lg-${gameItems / templateValue} p-1`"
+              data-aos="fade-up"
+            >
+              <template v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]">
+                <a
+                  :href="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
+                  class="glightbox"
+                  data-gallery="games-pictures"
                 >
-                  <img
-                    :src="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
-                    :alt="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
-                    :title="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
-                    class="d-none w-100 z-1"
-                    @load="gameImageLazyLoad"
+                  <div
+                    class="ratio ratio-16x9 overflow-hidden"
                   >
-                  <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
-                    <div
-                      class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                    <img
+                      :src="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
+                      :alt="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
+                      :title="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
+                      class="d-none w-100 z-1"
+                      @load="gameImageLazyLoad"
                     >
+                    <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
                       <div
-                        class="spinner-border text-light"
-                        role="status"
+                        class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
                       >
-                        <span class="visually-hidden">
-                          {{ __("fo_text_loading") }}
-                        </span>
+                        <div
+                          class="spinner-border text-light"
+                          role="status"
+                        >
+                          <span class="visually-hidden">
+                            {{ __("fo_text_loading") }}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </a>
-              <button
-                class="picture-likes btn btn-white position-absolute bottom-0 end-0 rounded-0 m-1 z-2"
-                :class="(ratingLoading) ? 'disabled': ''"
-                :disabled="ratingLoading"
-                @click="ajaxPictureUpvote(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)"
-              >
-                <span
-                  :id="`ratings-${gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id}`"
-                  class="me-1"
+                </a>
+                <button
+                  class="picture-likes btn btn-white position-absolute bottom-0 end-0 rounded-0 m-1 z-2"
+                  :class="(ratingLoading) ? 'disabled': ''"
+                  :disabled="ratingLoading"
+                  @click="ajaxPictureUpvote(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)"
                 >
-                  {{ gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count }}
-                </span>
-                <FontAwesomeIcon
-                  icon="fa-regular fa-thumbs-up"
-                  :class="(picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
-                />
-                <FontAwesomeIcon
-                  icon="fa-solid fa-thumbs-up"
-                  :class="(!picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
-                />
-              </button>
-            </template>
+                  <span
+                    :id="`ratings-${gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id}`"
+                    :data-picture-id="getPictureNumber(paginateIndex, templateIndex) + pictureIndex"
+                    class="me-1"
+                  >
+                    {{ gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count }}
+                  </span>
+                  <FontAwesomeIcon
+                    icon="fa-regular fa-thumbs-up"
+                    :class="(picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
+                  />
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-thumbs-up"
+                    :class="(!picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
+                  />
+                </button>
+              </template>
+            </div>
           </div>
-        </div>
+        </template>
       </template>
+      <div class="w-100 text-center mt-5">
+        <div
+          v-if="gameLoading"
+          class="spinner-border text-primary"
+          role="status"
+        >
+          <span class="visually-hidden">{{ __("fo_text_loading") }}</span>
+        </div>
+        <div
+          v-if="gameAllLoaded"
+          class="fst-italic text-secondary"
+        >
+          {{ __("fo_images_loaded") }}
+        </div>
+      </div>
     </template>
-    <div class="w-100 text-center mt-5">
-      <div
-        v-if="gameLoading"
-        class="spinner-border text-primary"
-        role="status"
-      >
-        <span class="visually-hidden">{{ __("fo_text_loading") }}</span>
-      </div>
-      <div
-        v-if="gameAllLoaded"
-        class="fst-italic text-secondary"
-      >
-        {{ __("fo_images_loaded") }}
-      </div>
+    <div
+      v-else
+      class="text-center"
+    >
+      {{ __("fo_images_no_one") }}
     </div>
-  </template>
-  <div
-    v-else
-    class="text-center"
-  >
-    {{ __("fo_images_no_one") }}
   </div>
 </template>
 
 <script lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { Toast } from "bootstrap";
 import GLightbox from "glightbox";
 import { defineComponent } from "vue";
 import route from "./../../modules/route";
@@ -153,7 +157,8 @@ export default defineComponent({
     this.gameItems =
       data.gamePictures.per_page < 12 ? 12 : data.gamePictures.per_page;
     this.picturesRatings = data.ratingModels;
-    this.initComponent();
+    this.checkScroll();
+    this.getPictures();
   },
   computed: {
     /**
@@ -167,13 +172,6 @@ export default defineComponent({
     },
   },
   methods: {
-    /**
-     * Get the location.
-     */
-    initComponent() {
-      this.checkScroll();
-      this.getPictures();
-    },
     /**
      * Increment the current page number when the
      * user scroll to the bottom.
@@ -276,22 +274,61 @@ export default defineComponent({
           picture_id: id,
         })
         .then((reponse) => {
-          let addingNumber = 0;
+          // Add or remove the vote.
+          let numberToAdd = "0";
           if (reponse.data.rating_exist) {
             this.picturesRatings.splice(this.picturesRatings.indexOf(reponse.data.picture_id), 1);
-            addingNumber = -1;
+            numberToAdd = "-1";
           } else {
             this.picturesRatings.push(reponse.data.picture_id);
-            addingNumber = +1;
+            numberToAdd = "+1";
           }
           this.$nextTick(() => {
             const ratingsCount = document.getElementById("ratings-" + String(reponse.data.picture_id)) as HTMLSpanElement|null;
             if (ratingsCount) {
-              ratingsCount.textContent = String(Number(ratingsCount.textContent) + addingNumber);
+              ratingsCount.textContent = String(Number(ratingsCount.textContent) + Number(numberToAdd));
             }
             this.ratingLoading = false;
+            this.showToastLike(numberToAdd, ratingsCount?.getAttribute("data-picture-id"), reponse.data.rating_exist);
           });
         });
+    },
+    /**
+     * Show a new bootstrap toast.
+     */
+    showToastLike(numberToAdd: string, pictureNumber: string|null|undefined, like: boolean) {
+      let toastContainer = document.querySelector(".toast-container");
+      let toastTemplate = document.querySelector(".toast-container .toast");
+      if (toastTemplate) {
+        let toastLike = toastTemplate.cloneNode(true) as HTMLElement;
+        toastContainer?.appendChild(toastLike);
+        const bootstrapToast = new Toast(toastLike);
+        // Set badge data.
+        let toastLikeBadge = toastLike.querySelector(".badge");
+        if (toastLikeBadge) {
+          toastLikeBadge.textContent = numberToAdd;
+          toastLikeBadge.classList.add((like) ? "bg-danger" : "bg-success");
+        }
+        // Set picture number.
+        let toastPictureId = toastLike.querySelector(".toast-picture-id");
+        if (toastPictureId && pictureNumber)
+          toastPictureId.textContent = String(Number(pictureNumber) + 1);
+        // Set game name.
+        let toastGameName = toastLike.querySelector(".toast-game-name");
+        if (toastGameName)
+          toastGameName.textContent = this.gameName;
+        // Set action text.
+        let toastAction = toastLike.querySelector(".toast-action");
+        let toastActionDetail = toastLike.querySelector(".toast-action-detail");
+        if (toastAction)
+          toastAction.textContent = (like) ? trans.methods.__("fo_toast_unlike") : trans.methods.__("fo_toast_like");
+        if (toastActionDetail)
+          toastActionDetail.textContent = (like) ? "de retirer" : "d'ajouter";
+        bootstrapToast?.show();
+        toastLike.addEventListener("hidden.bs.toast", () => {
+          toastLike.remove();
+        });
+      }
     },
     /**
      * Return the number of the picture.

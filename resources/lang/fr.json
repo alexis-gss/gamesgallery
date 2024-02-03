@@ -126,5 +126,8 @@
     "fo_homepage": "Accueil",
     "fo_ranking": "Classement",
     "fo_back_to_homepage": "Retourner à la liste des :model",
+    "fo_toast_like": "Like ajouté",
+    "fo_toast_unlike": "Like retiré",
+    "fo_toast_time": "à l'instant",
     "global_acces_github": "Accès au dépôt Github"
 }

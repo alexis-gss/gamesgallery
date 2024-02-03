@@ -23,7 +23,7 @@
                         <p class="rounded-2 m-0 px-2 py-0 text-white" style="background-color:{{ $gameModel->folder->color }}">
                             {{ $gameModel->folder->name }}
                         </p>
-                        @if (count($gameModel->tags) > 0)
+                        @if (count($gameModel->tags) > 0 && $gameModel->tags->contains('published', true))
                             <span class="ms-1">-</span>
                             @foreach ($gameModel->tags as $tag)
                                 @if ($tag->published)
@@ -43,7 +43,7 @@
                         'ratingModels' => $ratingModels,
                     ];
                 @endphp
-                <div class="game-pictures position-relative" data-json='@json($dataGame)'></div>
+                <div class="game-pictures" data-json='@json($dataGame)'></div>
             @endif
         </div>
     </main>
