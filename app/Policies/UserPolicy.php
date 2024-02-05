@@ -151,6 +151,7 @@ class UserPolicy
     public function resetPassword(User $authUser, User $user): bool
     {
         return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+            UserStaticRules::atLeastRole($authUser, RoleEnum::admin) and
+            UserStaticRules::atLeastRole($authUser, $user->role);
     }
 }
