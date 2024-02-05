@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Hash;
  * @property string                          $password          Password.
  * @property \App\Enums\Users\RoleEnum       $role              Role.
  * @property integer                         $order             Order.
- * @property \Illuminate\Support\Carbon      $published         Published status.
+ * @property boolean                         $published         Published status.
  * @property \Illuminate\Support\Carbon|null $published_at      Publication status update date.
  * @property \Illuminate\Support\Carbon|null $email_verified_at Email verified date.
  * @property-read \Illuminate\Support\Carbon $created_at        Created date.

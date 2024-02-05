@@ -59,7 +59,9 @@ class ResetPasswordController extends Controller
             $userModel = User::query()->where('email', $request->email)->first();
             $userModel->update([
                 'password'          => Hash::make($request->password),
-                'email_verified_at' => (!is_null($userModel->email_verified_at)) ? $userModel->email_verified_at : Carbon::now()
+                'email_verified_at' => (!is_null($userModel->email_verified_at)) ?
+                    $userModel->email_verified_at :
+                    Carbon::now()
             ]);
 
             // Notification target user.

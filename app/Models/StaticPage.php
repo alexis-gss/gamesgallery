@@ -76,9 +76,11 @@ class StaticPage extends Model
     {
         return Schema::WebPage()
             ->inLanguage(config('app.locale'))
+            // @phpstan-ignore-next-line
             ->relatedLink(route($this->type->routeName()))
             ->isAccessibleForFree(true)
             ->headline($this->seo_description)
+            // @phpstan-ignore-next-line
             ->mainEntityOfPage(route($this->type->routeName()))
             ->publisher($this->toPersonSchema())
             ->author($this->toPersonSchema());

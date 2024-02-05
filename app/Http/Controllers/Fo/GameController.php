@@ -30,6 +30,7 @@ class GameController extends Controller
             $gamePictures = [];
             if (count($gameModel->pictures)) {
                 $gameModel->pictures->map(function ($picture) {
+                    // @phpstan-ignore-next-line
                     $picture->ratings_count = count($picture->ratings);
                     return $picture;
                 });

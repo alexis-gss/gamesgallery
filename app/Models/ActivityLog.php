@@ -109,7 +109,7 @@ class ActivityLog extends Model
             $activity->model_id
         )->first();
         if ($targetModel != null) {
-            // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
+            // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
             $targetModelTypes = collect($targetModel->toArray())
                 ->map(function ($field, $fieldIndex) use ($targetModel) {
                     return Schema::getColumnType($targetModel->getTable(), $fieldIndex);

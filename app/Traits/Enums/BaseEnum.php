@@ -89,7 +89,7 @@ trait BaseEnum
     /**
      * Get enums.
      *
-     * @return array
+     * @return array<self>
      */
     public static function toArray(): array
     {
