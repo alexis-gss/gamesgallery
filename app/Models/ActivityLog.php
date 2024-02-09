@@ -6,20 +6,14 @@ use App\Enums\ActivityLogs\ActivityLogsEventEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * @property string                                        $model_class Target model.
  * @property string                                        $model_id    Id of the target model.
  * @property \App\Enums\ActivityLogs\ActivityLogsEventEnum $event       Event of this activity (ActivityLogsEventEnum).
- * @property array|null                                    $data        Changes.
- * @property \Illuminate\Support\Carbon                    $created_at  Created date.
- *
- * @method static void addActivity(Model $model, ActivityLogsEventEnum $eventEnum) Add new activity to
- * the activity logs list.
- * @method static array|null getChangedColumns(self $activity, Model $model, ActivityLogsEventEnum $eventEnum)
- * Get old, new and type of values changed.
+ * @property array                                         $data        Changes.
+ * @property-read \Illuminate\Support\Carbon               $created_at  Created date.
  *
  * @property-read \App\Models\User $user User BelongsTo relation.
  */
@@ -86,8 +80,9 @@ class ActivityLog extends Model
         $activity->model_class  = \get_class($model);
         $activity->model_id     = $model->getKey();
         $activity->event        = $eventEnum;
-        $activity->data         = self::getChangedColumns($activity, $model, $eventEnum);
-        $activity->created_at   = Carbon::now();
+        $activity->data         = static::getChangedColumns($activity, $model, $eventEnum);
+        // @phpstan-ignore-next-line
+        $activity->created_at = now();
         $activity->saveOrFail();
     }
 
@@ -97,28 +92,73 @@ class ActivityLog extends Model
      * @param self                                          $activity
      * @param \Illuminate\Database\Eloquent\Model           $model
      * @param \App\Enums\ActivityLogs\ActivityLogsEventEnum $eventEnum
-     * @return array|null
+     * @return array
      */
-    public static function getChangedColumns(self $activity, Model $model, ActivityLogsEventEnum $eventEnum): array|null
+    public static function getChangedColumns(self $activity, Model $model, ActivityLogsEventEnum $eventEnum): array
     {
-        $modelClassName   = $activity->model_class;
-        $targetModelTypes = [];
+        $modelClassName = $activity->model_class;
         /** Get type of each fields of the target model */
+        /** @var \Illuminate\Database\Eloquent\Model|null $targetModel */
         $targetModel = $activity->model_class::where(
             (new $modelClassName())->getRouteKeyName(),
             $activity->model_id
         )->first();
-        if ($targetModel != null) {
-            // phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
-            $targetModelTypes = collect($targetModel->toArray())
-                ->map(function ($field, $fieldIndex) use ($targetModel) {
-                    return Schema::getColumnType($targetModel->getTable(), $fieldIndex);
-                })->toArray();
-            // phpcs:enable
+
+        if (\is_null($targetModel)) {
+            return [];
         }
+        $targetModelTypes = collect($targetModel->toArray())
+            ->map(fn ($value) => self::getValueType($value))
+            ->toArray();
         /** Return old, new and type of values changed */
         return ($eventEnum === ActivityLogsEventEnum::updated) ?
-            array_intersect_key($targetModelTypes, $model->getChanges()) : null;
+            array_intersect_key($targetModelTypes, $model->getChanges()) : [];
+    }
+
+
+    /**
+     * Get a value type as a string
+     * ! Use this for display purpose only
+     *
+     * @param mixed $value
+     * @return string
+     * @throws \RuntimeException If type is unhlanded.
+     * @phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
+     */
+    private static function getValueType(mixed $value): string
+    {
+        // phpcs:enable
+        $type = \gettype($value);
+        switch ($type) {
+                // phpcs:ignore PSR2.ControlStructures.SwitchDeclaration.TerminatingComment
+            case 'string':
+                return match (true) {
+                    Str::length(\strip_tags($value)) !== Str::length($value) => 'html',
+                    Str::startsWith($value, 'storage/modelfiles') => 'file',
+                    Str::isUuid($value) => 'uuid',
+                    Str::isUlid($value) => 'ulid',
+                    Str::isUrl($value) => 'url',
+                    Str::isMatch('/^[0-9A-Za-z_-]{10}[048AEIMQUYcgkosw]$/', $value) => 'youtube_video_id',
+                    \is_numeric($value) => 'numeric',
+                    Str::isJson($value) and
+                        (Str::startsWith($value, '[') or Str::startsWith($value, '{')) => 'json',
+                    default => 'string'
+                };
+            case 'NULL':
+            case 'object':
+            case 'array':
+            case 'integer':
+            case 'boolean':
+                return $type;
+            case 'double':
+                return is_float($value) ? 'float' : 'double';
+            case 'resource (closed)':
+            case 'resource':
+                throw new \RuntimeException('Laravel model properties should not contain resources !');
+            case 'unknown type':
+            default:
+                throw new \RuntimeException('Unhandled Type ' . \gettype($value));
+        } //end switch
     }
 
     // * RELATIONS
