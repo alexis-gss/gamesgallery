@@ -47,7 +47,7 @@ class StatisticController extends Controller
                 $activityModels[$class][] = ActivityLog::query()
                     ->where('model_class', $class)
                     ->whereDate('created_at', $date)
-                ->count();
+                    ->count();
             });
             $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->first() ?? [];
         });

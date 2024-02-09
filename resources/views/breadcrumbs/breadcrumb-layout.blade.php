@@ -4,7 +4,7 @@
         @foreach ($breadcrumbs as $breadcrumb)
             @if ($breadcrumb->url && !$loop->last)
                 <li class="breadcrumb-item d-flex">
-                    <a class="@if (!Request::is('bo/*')) p-3 pe-0 text-white @else h2 ps-2 m-0 fw-bold @endif"
+                    <a class="@if (!Request::is('bo/*')) text-decoration-none p-3 pe-0 text-white @else h2 ps-2 m-0 fw-bold @endif"
                         href="{{ $breadcrumb->url }}">
                         {{ $breadcrumb->title }}
                     </a>
