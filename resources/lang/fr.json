@@ -76,7 +76,7 @@
     "bo_other_back_office_login": "Connexion",
     "bo_other_back_office_login_desc": "Formulaire d'authentification du back office.",
     "bo_other_changelog": "Journal des modifications",
-    "bo_other_home_hello": "Bonjour :first_name :last_name !",
+    "bo_other_home_hello": "Bonjour :first_name :last_name 👋",
     "bo_other_home_welcome": "Bienvenue dans le back-office, où vous pouvez gérer l'ensemble de votre application web (texte, images, couleurs, dossiers, etc...).",
     "bo_other_home_contact": "Si vous avez des problèmes ou si vous avez besoin de plus d'informations, veuillez contacter l'administrateur du projet.",
     "bo_other_stats_latest_model": "Dernières données mises à jour",
