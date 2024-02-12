@@ -18,39 +18,41 @@ class TranslationServiceProvider extends ServiceProvider
     public function boot(): void
     {
         foreach ($this->collectLocalesStrings() as $locale) {
-            // * Suported locales
+            // * Suported locales.
             Cache::rememberForever(sprintf('translations.%s', $locale), function () use ($locale) {
                 $phpTransFallback  = $this->phpTranslations(config('app.fallback_locale'));
                 $phpTransLocale    = $this->phpTranslations($locale);
                 $jsonTransFallback = $this->jsonTranslations(config('app.fallback_locale'));
                 $jsonTransLocale   = $this->jsonTranslations($locale);
                 $translations      = [
-                    'php' => ToolboxHelper::arrayMergeRecursiveDistinct(
-                        $phpTransLocale,
+                    'php'  => ToolboxHelper::arrayMergeRecursiveDistinct(
                         $phpTransFallback,
+                        $phpTransLocale,
                     ),
                     'json' => ToolboxHelper::arrayMergeRecursiveDistinct(
-                        $jsonTransLocale,
                         $jsonTransFallback,
+                        $jsonTransLocale,
                     ),
                 ];
                 return $translations;
             });
-        }
+        } //end foreach
     }
 
     /**
      * Gather provided langs checking from files.
      *
-     * @return \Illuminate\Support\Collection<int, string>
+     * @return \Illuminate\Support\Collection<string, string>
      */
     private function collectLocalesStrings(): \Illuminate\Support\Collection
     {
+        // * En dur dans ->keys array<int,string>.
+        // @phpstan-ignore-next-line
         return collect(File::allFiles(resource_path('lang/')))->flatMap(function (SplFileInfo $file) {
             if ($file->getRelativePath() and \strpos($file->getRelativePath(), 'vendor') !== 0) {
                 return [$file->getRelativePath() => ''];
             }
-        })->keys();
+        })->keys()->merge(config('app.locales', []));
     }
 
     /**
@@ -62,6 +64,10 @@ class TranslationServiceProvider extends ServiceProvider
     private function phpTranslations(string $locale): array
     {
         $path = resource_path("lang/$locale");
+
+        if (!File::exists($path) or !File::isReadable($path)) {
+            return [];
+        }
 
         return collect(File::allFiles($path))->flatMap(function ($file) use ($locale) {
             $translation = $file->getBasename('.php');
@@ -79,10 +85,10 @@ class TranslationServiceProvider extends ServiceProvider
     {
         $path = resource_path("lang/$locale.json");
 
-        if (is_string($path) && is_readable($path)) {
-            return json_decode(file_get_contents($path), true) ?? [];
+        if (!File::exists($path) or !File::isReadable($path)) {
+            return [];
         }
 
-        return [];
+        return json_decode(File::get($path), true) ?? [];
     }
 }
