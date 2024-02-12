@@ -158,8 +158,11 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag): \Illuminate\Http\RedirectResponse
     {
+        /** @var array<string,string> */
+        $previousQueries = [];
+        \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
         if ($tag->deleteOrFail()) {
-            return redirect()->route('bo.tags.index')
+            return redirect()->route('bo.tags.index', $previousQueries)
                 ->with('success', __('crud.messages.has_been_deleted', [
                     'model' => Str::of(__('models.tag'))->ucfirst()
                 ]));

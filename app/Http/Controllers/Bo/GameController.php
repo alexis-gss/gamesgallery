@@ -179,8 +179,11 @@ class GameController extends Controller
      */
     public function destroy(Game $game): \Illuminate\Http\RedirectResponse
     {
+        /** @var array<string,string> */
+        $previousQueries = [];
+        \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
         if ($game->deleteOrFail()) {
-            return redirect()->route('bo.games.index')
+            return redirect()->route('bo.games.index', $previousQueries)
                 ->with('success', __('crud.messages.has_been_deleted', [
                     'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));

@@ -145,8 +145,11 @@ class UserController extends Controller
      */
     public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
+        /** @var array<string,string> */
+        $previousQueries = [];
+        \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
         if ($user->deleteOrFail()) {
-            return redirect()->route('bo.users.index')
+            return redirect()->route('bo.users.index', $previousQueries)
                 ->with('success', __('crud.messages.has_been_deleted', [
                     'model' => Str::of(__('models.user'))->ucfirst()
                 ]));

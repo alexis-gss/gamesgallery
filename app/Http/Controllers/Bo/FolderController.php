@@ -142,8 +142,11 @@ class FolderController extends Controller
     public function destroy(Folder $folder): \Illuminate\Http\RedirectResponse
     {
         if (count($folder->games) === 0) {
+            /** @var array<string,string> */
+            $previousQueries = [];
+            \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
             if ($folder->deleteOrFail()) {
-                return redirect()->route('bo.folders.index')
+                return redirect()->route('bo.folders.index', $previousQueries)
                     ->with('success', __('crud.messages.has_been_deleted', [
                         'model' => Str::of(__('models.folder'))->ucfirst()
                     ]));
