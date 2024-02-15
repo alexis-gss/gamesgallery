@@ -49,7 +49,7 @@ When implementing a feature please create an issue first explaining your idea an
 
 # Changelog
 
-Latest version v4.1.0.
+Latest version v4.1.1.
 
 See the [CHANGELOG.md](CHANGELOG.md) file for details.
 

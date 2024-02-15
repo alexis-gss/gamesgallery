@@ -1,3 +1,13 @@
+#### **15.02.24 ► v4.1.1**
+
+-   Add previous query when redirect on delete model
+-   Update depedencies
+-   Update github actions/issue templates
+-   Fix navigation responsive
+-   Fix translation of the toast message
+-   Fix sass component
+-   Minor fixes/bugs
+
 #### **12.02.24 ► v4.1.0**
 
 -   Add static pages for home and ranking pages
