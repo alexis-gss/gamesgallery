@@ -179,7 +179,7 @@ class Game extends Model
     }
 
     /**
-     * Get Rank that of the Game (relationship).
+     * Get Rank of the Game (relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
      */

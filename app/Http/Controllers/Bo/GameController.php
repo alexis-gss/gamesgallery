@@ -41,7 +41,7 @@ class GameController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Builder $query */
-        $query = Game::query()->with('folder')->with('pictures');
+        $query = Game::query()->with(['folder', 'pictures']);
 
         /** @var string $search Search field */
         $search = $request->search;
