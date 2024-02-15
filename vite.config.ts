@@ -1,4 +1,5 @@
 import vue from "@vitejs/plugin-vue";
+import autoprefixer from "autoprefixer";
 import laravel from "laravel-vite-plugin";
 import path from "path";
 import postcssDiscard from "postcss-discard-comments";
@@ -45,6 +46,7 @@ export default defineConfig({
                 postcssDiscard({
                     removeAll: true,
                 }),
+                autoprefixer(),
             ],
         },
     },
@@ -101,11 +103,7 @@ export default defineConfig({
             failOnWarning: false,
             failOnError: false,
         }),
-        babel({
-            babelConfig: {
-                targets: "last 3 version, not dead, >0.3%"
-            }
-        }),
+        babel(),
         vue({
             isProduction: process.env.NODE_ENV !== "local" ? true : false,
             exclude: ["node_modules", "vendor"],
