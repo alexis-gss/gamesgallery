@@ -11,7 +11,7 @@
           <input
             name="search"
             v-model="search"
-            class="form-control bg-transparent border-0 shadow-none text-white p-0 ps-2"
+            class="form-control bg-transparent border-0 shadow-none text-white ps-2"
             :placeholder="__('fo_search', { games: `${gamesCount}` })"
             type="text"
             maxlength="60"
@@ -30,7 +30,7 @@
       <div class="col-12 row">
         <!-- Filter by folders -->
         <select
-          class="col-6 form-select bg-primary border-0 border-end border-1 border-secondary shadow-none text-white rounded-0 w-50 px-2 pt-2 py-1"
+          class="col-12 col-md-6 form-select select-border border-0 bg-primary shadow-none text-white rounded-0 px-2 py-2"
           name="folder"
           role="button"
           @change="setSelectedValue($event)"
@@ -51,7 +51,7 @@
         </select>
         <!-- Filter by tags -->
         <select
-          class="col-6 form-select bg-primary border-0 shadow-none text-white rounded-0 w-50 px-2 pt-2 py-1"
+          class="col-12 col-md-6 form-select bg-primary border-0 shadow-none text-white rounded-0 px-2 py-2"
           name="tag"
           role="button"
           @change="setSelectedValue($event)"
@@ -268,3 +268,20 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+.nav-games .form-control::placeholder {
+  color: var(--bs-light);
+}
+.nav-games .select-border {
+  border-bottom: solid 1px var(--bs-secondary) !important;
+
+  @include media-breakpoint-up(md) {
+    border-right: solid 1px var(--bs-secondary) !important;
+    border-bottom: 0 !important;
+  }
+}
+</style>

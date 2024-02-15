@@ -351,13 +351,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./../../../sass/fo/utilities/variables";
 .gscrollbar-fixer {
   margin: auto !important;
-}
-.nav-games .form-control::placeholder {
-  color: #{$color-light};
 }
 .glightbox {
   z-index: 10;

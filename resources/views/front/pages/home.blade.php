@@ -27,7 +27,7 @@
                         <a class="btn btn-primary d-flex justify-content-center align-items-center text-light bg-primary w-fit flex-row border-0 p-3"
                             data-bs-tooltip="tooltip" type="button" href="{{ route('fo.ranks.index') }}"
                             title="{{ __('fo_ranking_personnal') }}">
-                            <i class="fa-solid fa-ranking-star"></i>
+                            <i class="fa-solid fa-ranking-star text-white"></i>
                         </a>
                     @endif
                     <button

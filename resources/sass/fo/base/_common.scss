@@ -39,6 +39,7 @@ body {
 }
 
 .github-icon {
+    position: absolute;
     z-index: #{$zindex-fixed};
     width: 10rem;
     height: 2rem;
