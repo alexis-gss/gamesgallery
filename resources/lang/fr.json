@@ -130,5 +130,11 @@
     "fo_toast_like": "Like ajouté",
     "fo_toast_unlike": "Like retiré",
     "fo_toast_time": "à l'instant",
+    "fo_toast_message_like": "d'ajouter",
+    "fo_toast_message_unlike": "de retirer",
+    "fo_toast_message_part1": "Vous venez",
+    "fo_toast_message_part2": "un",
+    "fo_toast_message_part3": "à la photo",
+    "fo_toast_message_part4": "du jeu",
     "global_acces_github": "Accès au dépôt Github"
 }

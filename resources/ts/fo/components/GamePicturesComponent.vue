@@ -323,7 +323,7 @@ export default defineComponent({
         if (toastAction)
           toastAction.textContent = (like) ? trans.methods.__("fo_toast_unlike") : trans.methods.__("fo_toast_like");
         if (toastActionDetail)
-          toastActionDetail.textContent = (like) ? "de retirer" : "d'ajouter";
+          toastActionDetail.textContent = (like) ? trans.methods.__("fo_toast_message_unlike") : trans.methods.__("fo_toast_message_like");
         bootstrapToast?.show();
         toastLike.addEventListener("hidden.bs.toast", () => {
           toastLike.remove();
