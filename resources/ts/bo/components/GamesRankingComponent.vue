@@ -265,3 +265,104 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.ranks-games {
+  .loading {
+    z-index: 5;
+    background-color: rgb(0 0 0 / 15%);
+  }
+  .badge {
+    color: var(--bs-body-bg);
+  }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+  .nestable-list {
+    padding: 0;
+    list-style: none;
+  }
+  .nestable {
+    position: relative;
+    [draggable="true"] {
+      cursor: move;
+    }
+    .nestable-rtl {
+      direction: rtl;
+    }
+    .nestable .nestable-list {
+      padding: 0 0 0 23px;
+      margin: 0;
+      list-style-type: none;
+    }
+    .nestable-rtl .nestable-list {
+      padding: 0 40px 0 0;
+    }
+    .nestable > .nestable-list {
+      padding: 0;
+    }
+    .nestable-item .nestable-list,
+    .nestable-item-copy .nestable-list {
+      margin: 10px 0 0 20px;
+    }
+    .nestable-drag-layer > .nestable-list {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      background-color: rgb(106 127 233 / 27.4%);
+    }
+    .nestable-item,
+    .nestable-item-copy {
+      margin: 10px 0 0;
+    }
+    .nestable-item {
+      position: relative;
+      .nestable-content {
+        border-radius: var(--bs-border-radius) !important;
+      }
+    }
+    .nestable-item:first-child,
+    .nestable-item-copy:first-child {
+      margin-top: 0;
+    }
+    .nestable-item.is-dragging .nestable-list {
+      pointer-events: none;
+    }
+    .nestable-item.is-dragging * {
+      opacity: 0;
+    }
+    .nestable-item.is-dragging::before {
+      position: absolute;
+      border: 1px dashed rgb(73 100 241);
+      border-radius: 5px;
+      background-color: rgb(106 127 233 / 27.4%);
+      content: " ";
+      inset: 0;
+    }
+    .nestable-drag-layer {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    .nestable-rtl .nestable-drag-layer {
+      right: 0;
+      left: auto;
+    }
+    .nestable-rtl .nestable-drag-layer > .nestable-list {
+      padding: 0;
+    }
+    .nestable-handle {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+}
+</style>

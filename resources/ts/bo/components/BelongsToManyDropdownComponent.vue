@@ -210,3 +210,58 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.vue-tags-input {
+  max-width: 100% !important;
+  background-color: var(--bs-body-bg) !important;
+}
+.ti-autocomplete {
+  max-height: 10rem !important;
+  border: var(--bs-border-width) solid var(--bs-border-color) !important;
+  border-radius: 0.375rem;
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+  overflow-y: auto !important;
+  ul {
+    padding: 0.25rem !important;
+  }
+}
+.ti-input {
+  height: 38px;
+  border-color: var(--bs-border-color) !important;
+  border-radius: 0.375rem;
+}
+.ti-tags {
+  line-height: inherit !important;
+}
+.ti-tag,
+.ti-new-tag-input-wrapper {
+  padding: 0.1rem !important;
+  margin: 0.1rem !important;
+}
+.ti-new-tag-input-wrapper {
+  font-size: 1em !important;
+  input {
+    min-width: 70px !important;
+    background-color: transparent;
+  }
+}
+.ti-selected-item {
+  background-color: var(--bs-primary) !important;
+}
+.ti-tag {
+  padding: 0.1rem 0.3rem !important;
+  border-radius: 0.375rem !important;
+  background-color: var(--bs-primary) !important;
+}
+.belongs-to-many-dropdown-ranksListInput {
+  .ti-input {
+    border-radius: 0 !important;
+  }
+  .ti-autocomplete {
+    border-top: 0 !important;
+    border-radius: 0 0 0.375rem 0.375rem !important;
+  }
+}
+</style>

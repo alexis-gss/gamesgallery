@@ -350,3 +350,30 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@import "./../../../sass/fo/utilities/variables";
+.gscrollbar-fixer {
+  margin: auto !important;
+}
+.nav-games .form-control::placeholder {
+  color: #{$color-light};
+}
+.glightbox {
+  z-index: 10;
+  transition: .3s;
+  img {
+    transition: .3s;
+  }
+}
+.glightbox-wrapper:hover img,
+.glightbox-wrapper:focus img {
+  transform: scale(1.05) !important;
+}
+.picture-likes {
+  width: fit-content;
+  min-width: 55px;
+  height: 40px;
+  transition: .3s !important;
+}
+</style>

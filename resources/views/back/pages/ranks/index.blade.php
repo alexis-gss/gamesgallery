@@ -17,6 +17,7 @@
                     @csrf
                     @php
                         $data = [
+                            'id' => 'ranksListInput',
                             'name' => 'ranks',
                             'value' => [],
                             'items' => $gameModels,
@@ -34,7 +35,7 @@
             <div class="col-12 mt-3">
                 @php
                     $data = [
-                        'id' => 'games',
+                        'id' => 'gamesRanking',
                         'rankModels' => $rankModels,
                     ];
                 @endphp

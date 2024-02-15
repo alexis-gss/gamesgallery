@@ -300,3 +300,59 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.image-input,
+.images-input {
+  .image-modification {
+    display: block;
+    max-width: 100%;
+  }
+  .rotate-button {
+    display: flex;
+    flex-direction: column;
+  }
+  .rotate-drag {
+    display: flex;
+    width: 100%;
+    flex-direction: column-reverse;
+    input {
+      width: 100%;
+    }
+  }
+  .preview-image {
+    position: relative;
+    div {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      overflow: hidden;
+      border: 1px solid #000;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+  .right-aligned {
+    overflow: hidden !important;
+    direction: ltr !important;
+  }
+  .right-aligned:not(:focus) {
+    text-align: left !important;
+    text-overflow: ellipsis !important;
+  }
+  .btn-collapse svg {
+    transform: rotate(180deg);
+    transition: 0.3s;
+  }
+  .collapsed {
+    svg {
+      transform: rotate(0deg);
+    }
+  }
+  .progress {
+    height: 23px;
+  }
+  #multiple-images .row {
+    overflow-y: auto;
+  }
+}
+</style>

@@ -269,8 +269,14 @@ export default defineComponent({
   .chrome-picker {
     z-index: 9;
   }
-  &.no-transparent .vc-chrome-alpha-wrap {
+  .vc-chrome-alpha-wrap {
     display: none;
+  }
+  .vc-chrome-body {
+    background-color: var(--bs-body-bg);
+  }
+  .vc-chrome-fields .vc-input__input {
+    color: var(--bs-body-color);
   }
 }
 </style>

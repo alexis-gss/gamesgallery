@@ -102,3 +102,26 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.word-counter {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-bottom: 0;
+  background-color: rgb(var(--bs-tertiary-bg-rgb));
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  color: var(--bs-body-color);
+}
+.word-counter + input[type='text'],
+.word-counter + textarea,
+.word-counter-varchar + textarea {
+  border-radius: 0 0 0.375rem 0.375rem !important;
+}
+.word-counter + .input-group button[type='button'] {
+  border-radius: 0 0 0.375rem !important;
+}
+.word-counter + .input-group input[type='text'],
+.word-counter + .input-group input[type='password'] {
+  border-radius: 0 0 0 0.375rem !important;
+}
+</style>
