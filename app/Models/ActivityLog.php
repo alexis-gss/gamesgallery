@@ -3,9 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ActivityLogs\ActivityLogsEventEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
 /**
@@ -19,9 +17,6 @@ use Illuminate\Support\Str;
  */
 class ActivityLog extends Model
 {
-    use HasFactory;
-    use Notifiable;
-
     /**
      * Indicates if the model should be timestamped.
      *

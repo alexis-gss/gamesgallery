@@ -21,4 +21,16 @@ trait ActivityLog
     {
         static::observe(ModelObserver::class);
     }
+
+    // * RELATIONS
+
+    /**
+     * Activities logs One-to-many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activityLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }
