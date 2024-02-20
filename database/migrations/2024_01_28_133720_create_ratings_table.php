@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->index('picture_id')->unsigned();
-            $table->foreignId('picture_id')->references('id')->on('pictures');
             $table->ipAddress('ip_address')->comment('IP address of the user.');
+            $table->foreignId('picture_id')->constrained('pictures')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

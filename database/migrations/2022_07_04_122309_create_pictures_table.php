@@ -18,8 +18,7 @@ return new class extends Migration
             $table->char('uuid', 36)->nullable()->unique()
                 ->comment('Universally Unique Identifier (UUID) of the image.');
             $table->string('label')->comment('Label of the image.');
-            $table->index('game_id')->unsigned();
-            $table->foreignId('game_id')->references('id')->on('games');
+            $table->foreignId('game_id')->constrained('games')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('published')->comment('The image is already published.');
             $table->timestamps();
         });
