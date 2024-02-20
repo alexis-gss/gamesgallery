@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id()->comment('Id of the tag.');
-            $table->string('name')->comment('Nom du tag qui sera unique.');
+            $table->json('name')->comment('Name of the tag.');
             $table->string('slug')->unique()->comment('Slugify the name of the tag.');
             $table->integer('order')->comment('Order of this tag.');
             $table->boolean('published')->comment('The tag is published or not');

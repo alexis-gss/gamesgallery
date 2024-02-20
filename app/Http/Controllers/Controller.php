@@ -39,13 +39,30 @@ class Controller extends BaseController
      */
     public function getModelsPublished(): void
     {
-        $this->gameModels   = Game::query()->where('published', true)
+        $this->gameModels   = Game::query()
+            ->where('published', true)
             ->orderBy('slug', 'ASC')
             ->whereHas('folder', function ($q) {
                 $q->where('published', true);
             })->with('pictures')->get();
-        $this->folderModels = Folder::query()->where('published', true)->orderBy('slug', 'ASC')->get();
-        $this->tagModels    = Tag::query()->where('published', true)->orderBy('slug', 'ASC')->get();
+        $this->folderModels = Folder::query()
+            ->where('published', true)
+            ->orderBy('slug', 'ASC')
+            ->get()
+            ->map(function ($gameModel) {
+                // @phpstan-ignore-next-line
+                $gameModel->nameLocale = $gameModel->name;
+                return $gameModel;
+            });
+        $this->tagModels    = Tag::query()
+            ->where('published', true)
+            ->orderBy('slug', 'ASC')
+            ->get()
+            ->map(function ($tagModel) {
+                // @phpstan-ignore-next-line
+                $tagModel->nameLocale = $tagModel->name;
+                return $tagModel;
+            });
     }
 
     /**

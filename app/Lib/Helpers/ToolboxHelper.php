@@ -2,6 +2,7 @@
 
 namespace App\Lib\Helpers;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -122,7 +123,7 @@ class ToolboxHelper
     }
 
     /**
-     * Validate picture
+     * Validate picture.
      *
      * @param string      $attribute
      * @param string|null $value
@@ -179,7 +180,7 @@ class ToolboxHelper
     }
 
     /**
-     * Get the file full path
+     * Get the file full path.
      *
      * @param string  $value
      * @param boolean $useStorage
@@ -193,7 +194,7 @@ class ToolboxHelper
     }
 
     /**
-     * Get the file mimetype
+     * Get the file mimetype.
      *
      * @param string  $value
      * @param boolean $useStorage
@@ -202,5 +203,46 @@ class ToolboxHelper
     private static function getUploadedFileMimeType(string $value, bool $useStorage)
     {
         return !$useStorage ? File::mimeType($value) : Storage::mimeType($value);
+    }
+
+    /**
+     * Dynamic model query.
+     *
+     * @param string                                          $defaultLocale
+     * @param \Illuminate\Contracts\Database\Eloquent\Builder $q
+     * @param string                                          $column
+     * @param string                                          $value
+     * @return \Illuminate\Contracts\Database\Eloquent\Builder
+     */
+    public static function queryColumnWithLocales(
+        string $defaultLocale,
+        Builder $q,
+        string $column,
+        string $value
+    ): \Illuminate\Contracts\Database\Eloquent\Builder {
+        $currentLocale = app()->currentLocale();
+        $locales       = collect(config('app.locales'))
+            ->mapWithKeys(fn (string $locale) => [$locale => $locale]);
+        if (!$locales->has($defaultLocale)) {
+            // * Remove default locale.
+            $locales->pull($defaultLocale);
+        }
+        if (!$locales->has($currentLocale)) {
+            // * Remove current locale.
+            $locales->pull($currentLocale);
+        }
+
+        return $q->where(function (Builder $q) use ($defaultLocale, $currentLocale, $locales, $column, $value) {
+            // * Query default locale
+            $q->whereRaw("JSON_EXTRACT({$column}, '$.{$defaultLocale}') = '{$value}'");
+            if ($defaultLocale !== $currentLocale) {
+                // * Query current locale
+                $q->whereRaw("JSON_EXTRACT({$column}, '$.{$currentLocale}') = '{$value}'");
+            }
+            // * Query any other locale
+            $locales->each(fn ($locale) => $q->orWhereRaw(
+                "JSON_EXTRACT({$column}, '$.{$locale}') = '{$value}'"
+            ));
+        });
     }
 }

@@ -158,7 +158,7 @@ export default defineComponent({
     },
     parseTags(tags: CustomTag[]): CustomTag[] {
       return tags.map((tag: CustomTag) => {
-        tag.text = String(tag.name);
+        tag.text = String(tag.nameLocale ?? tag.name);
         tag.slug = String(tag.slug);
         return tag;
       });
@@ -228,7 +228,6 @@ export default defineComponent({
   }
 }
 .ti-input {
-  height: 38px;
   border-color: var(--bs-border-color) !important;
   border-radius: 0.375rem;
 }

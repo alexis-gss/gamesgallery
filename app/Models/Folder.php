@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\RgbaColor;
 use App\Traits\Models\ActivityLog;
+use App\Traits\Models\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,6 +32,7 @@ class Folder extends Model
 {
     use ActivityLog;
     use HasFactory;
+    use HasTranslations;
 
     /**
      * The attributes that are fillable.
@@ -55,6 +57,15 @@ class Folder extends Model
         'color'        => RgbaColor::class,
         'published'    => 'bool',
         'published_at' => 'datetime'
+    ];
+
+    /**
+     * Translatable fields.
+     *
+     * @var array
+     */
+    public $translatable = [
+        'name',
     ];
 
     /**

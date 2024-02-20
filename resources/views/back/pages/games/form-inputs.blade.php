@@ -91,7 +91,13 @@
                         $data = [
                             'id' => 'tags',
                             'name' => 'tags',
-                            'value' => old('tags', $gameModel->tags ?? []),
+                            'value' => old(
+                                'tags',
+                                $gameModel->tags->map(function ($tagModel) {
+                                    $tagModel->nameLocale = $tagModel->name;
+                                    return $tagModel;
+                                }) ?? [],
+                            ),
                             'items' => $tagModels,
                             'placeholder' => __('bo_other_taggable_add'),
                         ];

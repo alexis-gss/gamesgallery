@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Models\ActivityLog;
+use App\Traits\Models\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -33,6 +34,7 @@ class Tag extends Model
 {
     use ActivityLog;
     use HasFactory;
+    use HasTranslations;
 
     /**
      * The attributes that are mass assignable.
@@ -55,6 +57,15 @@ class Tag extends Model
     protected $casts = [
         'published'    => 'bool',
         'published_at' => 'datetime'
+    ];
+
+    /**
+     * Translatable fields.
+     *
+     * @var array
+     */
+    public $translatable = [
+        'name',
     ];
 
     /**

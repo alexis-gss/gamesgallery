@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Pages\StaticPageTypeEnum;
 use App\Traits\Models\ActivityLog;
+use App\Traits\Models\HasTranslations;
 use App\Traits\Models\SchemaOrg;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\SchemaOrg\Schema;
@@ -26,6 +27,7 @@ use Spatie\SchemaOrg\Schema;
 class StaticPage extends Model
 {
     use ActivityLog;
+    use HasTranslations;
     use SchemaOrg;
 
     /**
@@ -47,6 +49,17 @@ class StaticPage extends Model
      */
     protected $casts = [
         'type' => StaticPageTypeEnum::class,
+    ];
+
+    /**
+     * Translatable fields.
+     *
+     * @var array
+     */
+    public $translatable = [
+        'seo_title',
+        'seo_description',
+        'title',
     ];
 
     /**

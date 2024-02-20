@@ -46,7 +46,7 @@
             :key="folderIndex"
             :value="folder.id"
           >
-            {{ folder.name }}
+            {{ folder.nameLocale }}
           </option>
         </select>
         <!-- Filter by tags -->
@@ -67,7 +67,7 @@
             :key="tagIndex"
             :value="tag.id"
           >
-            {{ tag.name }}
+            {{ tag.nameLocale }}
           </option>
         </select>
       </div>

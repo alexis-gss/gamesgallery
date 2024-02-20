@@ -35,29 +35,48 @@ class FileStorageHelper
      * @param \Illuminate\Http\UploadedFile|\SplFileInfo|string $file     The file, will just return itself is string.
      * @param boolean                                           $slugify  Force filename slugification.
      * @param string|null                                       $filename This string may be used to store the file.
+     * @param boolean                                           $private  To store the file in a private space.
      * @return string
      * @throws \RuntimeException If file copy fails.
+     * @phpcs:disable Generic.Metrics.CyclomaticComplexity.TooHigh
      */
-    public static function storeFile(Model $model, $file, bool $slugify = false, string $filename = null): string
-    {
+    public static function storeFile(
+        Model $model,
+        $file,
+        bool $slugify = false,
+        string $filename = null,
+        bool $private = false
+    ): string {
+        // phpcs:enable
         $tableName = $model->getTable();
         if (\is_object($file) and $file instanceof \Illuminate\Http\UploadedFile) {
             /** @var \Illuminate\Http\UploadedFile $file */
             $filename = $filename ?: $file->getClientOriginalName();
             $filename = $slugify ? self::slugifyFileName($filename) : $filename;
-            $newPath  = self::prepareMoveFile($tableName, $filename);
+            $newPath  = self::prepareMoveFile($tableName, $filename, $private);
             $newPath  = str_replace(storage_path('app'), '', $newPath);
-            $file->storePubliclyAs(
+
+            if (!$private) {
+                // * Store public file.
+                $file->storePubliclyAs(
+                    pathinfo($newPath, \PATHINFO_DIRNAME),
+                    pathinfo($newPath, \PATHINFO_BASENAME)
+                );
+                return 'storage' . str_replace('/public', '', $newPath);
+            }
+
+            $file->storeAs(
                 pathinfo($newPath, \PATHINFO_DIRNAME),
                 pathinfo($newPath, \PATHINFO_BASENAME)
             );
-            return 'storage' . str_replace('/public', '', $newPath);
-        }
+
+            return str_replace('/private/', '', $newPath);
+        } //end if
         if (\is_object($file) and $file instanceof \SplFileInfo) {
             /** @var \SplFileInfo $file */
             $filename = $filename ?: $file->getBaseName();
             $filename = $slugify ? self::slugifyFileName($filename) : $filename;
-            $newPath  = self::prepareMoveFile($tableName, $filename);
+            $newPath  = self::prepareMoveFile($tableName, $filename, $private);
             if (!File::copy($file->getRealPath(), $newPath)) {
                 throw new \RuntimeException(sprintf(
                     'Failed to copy file %s to %s',
@@ -65,7 +84,9 @@ class FileStorageHelper
                     $newPath
                 ));
             }
-            return \ltrim(str_replace(\storage_path('app/public'), '/storage', $newPath), '/');
+            return $private ?
+                \ltrim(str_replace(\storage_path('app/private'), '/storage/app/private', $newPath), '/') :
+                \ltrim(str_replace(\storage_path('app/public'), '/storage', $newPath), '/');
         }
         return strval($file);
     }
@@ -159,22 +180,27 @@ class FileStorageHelper
      * Prepare storage path and return
      * the file full path.
      *
-     * @param string $tableName Model table name.
-     * @param string $filename  The basename for the file.
+     * @param string  $tableName Model table name.
+     * @param string  $filename  The basename for the file.
+     * @param boolean $private   May the file be stored in a private dir.
      * @return string
      */
-    private static function prepareMoveFile(string $tableName, string $filename): string
+    private static function prepareMoveFile(string $tableName, string $filename, bool $private = false): string
     {
+        // * Security filter
+        $filename = \htmlspecialchars($filename);
         // * Security filter + beautifier
         $filename = self::sanitizeFileName($filename);
-        // * Security filter
-        $filename = \filter_var($filename, \FILTER_SANITIZE_STRING);
         // * Slugify filename
         $ext      = \pathinfo($filename, \PATHINFO_EXTENSION);
-        $filename = Str::of(\pathinfo($filename, \PATHINFO_FILENAME))->slug() .
+        $filename = Str::slug(\pathinfo($filename, \PATHINFO_FILENAME)) .
             (\strlen($ext) ? ".{$ext}" : '');
 
-        $folderPath = self::getStoragePath($tableName, $filename);
+        $folderPath = self::getStoragePath(
+            $private ? 'app/private/modelfiles' : 'app/public/modelfiles',
+            $tableName,
+            $filename
+        );
         $filename   = self::getFileUniqueName($folderPath, $filename);
         return "{$folderPath}/{$filename}";
     }
@@ -184,15 +210,17 @@ class FileStorageHelper
      * storage/modelfiles/posts/10/04/19/5f
      * year/month/day/md5 first 2 letters.
      *
+     * @param string $storage_dir
      * @param string $table
      * @param string $filename
      * @return string
      */
-    private static function getStoragePath(string $table, string $filename): string
+    private static function getStoragePath(string $storage_dir, string $table, string $filename): string
     {
         $filenameHash = \md5($filename);
         $pathFolder   = \storage_path(sprintf(
-            'app/public/modelfiles/%s/%s/%s/%s/%s',
+            '%s/%s/%s/%s/%s/%s',
+            $storage_dir,
             $table,
             gmdate('y'),
             gmdate('m'),
