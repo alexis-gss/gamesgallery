@@ -25,7 +25,7 @@ trait ActivityLog
     // * RELATIONS
 
     /**
-     * Activities logs One-to-many relationship.
+     * Get Activities of the Model (morph-to-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

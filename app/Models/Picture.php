@@ -25,7 +25,10 @@ use Illuminate\Support\Facades\Storage;
  * @method static void removePicture(self $model)                          Delete one specific picture.
  * @method static void removePictures(Collection $pictures)                Remove all pictures previously associated.
  *
- * @property-read \App\Models\Game $game Get the Game that owns the Picture (relationship).
+ * @property-read \App\Models\Game $game
+ * Get the Game that owns the Picture (belongs-to relationship).
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Rating[] $ratings
+ * Get Ratings of the Picture (has-many relationship).
  */
 class Picture extends Model
 {
@@ -145,7 +148,7 @@ class Picture extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get the Game that owns the Picture (relationship).
+     * Get the Game that owns the Picture (belongs-to relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -155,7 +158,7 @@ class Picture extends Model
     }
 
     /**
-     * Get Ratings of the Picture (relationship).
+     * Get Ratings of the Picture (has-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

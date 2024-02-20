@@ -13,7 +13,11 @@ use Illuminate\Support\Str;
  * @property array                                         $data        Changes.
  * @property-read \Illuminate\Support\Carbon               $created_at  Created date.
  *
- * @property-read \App\Models\User $user User BelongsTo relation.
+ * @property-read \App\Models\Folder     $folder Get Folder that owns the Activity log (belongs-to relationship).
+ * @property-read \App\Models\Game       $game Get Game that owns the Activity log (belongs-to relationship).
+ * @property-read \App\Models\Tag        $tag Get Tag that owns the Activity log (belongs-to relationship).
+ * @property-read \App\Models\StaticPage $tag Get StaticPage that owns the Activity log (belongs-to relationship).
+ * @property-read \App\Models\User       $user Get User that owns the Activity log (belongs-to relationship).
  */
 class ActivityLog extends Model
 {
@@ -159,7 +163,47 @@ class ActivityLog extends Model
     // * RELATIONS
 
     /**
-     * User BelongsTo relation.
+     * Get Folder that owns the Activity log (belongs-to relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function folder(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    /**
+     * Get Game that owns the Activity log (belongs-to relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function game(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Game::class);
+    }
+
+    /**
+     * Get Tag that owns the Activity log (belongs-to relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tag(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Tag::class);
+    }
+
+    /**
+     * Get Static page that owns the Activity log (belongs-to relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function staticPage(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(StaticPage::class);
+    }
+
+    /**
+     * Get User that owns the Activity log (belongs-to relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -25,12 +25,16 @@ use Spatie\SchemaOrg\Schema;
  * @method static void setOrder(self $game)         Set model's order after the last element of the list.
  * @method \Spatie\SchemaOrg\WebPage toSchemaOrg()  Set micro data.
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * Get Activities of the Game (morph-to-many relationship).
  * @property-read \App\Models\Folder $folder
- * Get Folder that owns the Game (relationship).
+ * Get Folder that owns the Game (belongs-to relationship).
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
- * Get Tags of the Game (relationship).
+ * Get Tags of the Game (morph-to-many relationship).
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Picture[] $pictures
- * Get Pictures of the Game (relationship).
+ * Get Pictures of the Game (has-many relationship).
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Rank[] $rank
+ * Get Rank of the Game (belongs-to relationship).
  */
 class Game extends Model
 {
@@ -149,7 +153,7 @@ class Game extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get Folder that owns the Game (relationship).
+     * Get Folder that owns the Game (belongs-to relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -159,7 +163,7 @@ class Game extends Model
     }
 
     /**
-     * Get Tags of the Game (relationship).
+     * Get Tags of the Game (morph-to-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
@@ -169,7 +173,7 @@ class Game extends Model
     }
 
     /**
-     * Get Pictures of the Game (relationship).
+     * Get Pictures of the Game (has-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -179,12 +183,12 @@ class Game extends Model
     }
 
     /**
-     * Get Rank of the Game (relationship).
+     * Get Rank of the Game (belongs-to relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
      */
     public function rank(): \Illuminate\Database\Eloquent\Relations\BelongsTo|null
     {
-        return $this->belongsTo(Folder::class);
+        return $this->belongsTo(Rank::class);
     }
 }

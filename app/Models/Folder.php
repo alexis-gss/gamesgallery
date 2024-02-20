@@ -22,8 +22,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static void setPublishedDate(self $folder) Set model's published date.
  * @method static void setOrder(self $folder)         Set model's order after the last element of the list.
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * Get Activities of the Folder (morph-to-many relationship).
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
- * Get Games of the Folder (relationship).
+ * Get Games of the Folder (has-many relationship).
  */
 class Folder extends Model
 {
@@ -99,7 +101,7 @@ class Folder extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get Games of the Folder (relationship).
+     * Get Games of the Folder (has-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

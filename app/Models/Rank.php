@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static void booted()            Perform any actions required after the model boots.
  * @method static void setRank(self $rank) Set model's rank after the last element of the list.
  *
- * @property-read \App\Models\Game $game Get the Game that owns the Picture (relationship).
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
+ * Get Games of the Rank (belongs-to relationship).
  */
 class Rank extends Model
 {
@@ -58,7 +59,7 @@ class Rank extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get the Game that owns the Picture (relationship).
+     * Get Games of the Rank (belongs-to relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

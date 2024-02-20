@@ -35,7 +35,8 @@ use Illuminate\Support\Facades\Hash;
  * @method static void setOrder(self $user)              Set model's order after the last element of the list.
  * @method static void updatePassword(self $user)        Update model's password.
  *
- * @property-read \App\Models\ActivityLog $activityLogs Activities logs One-to-many relationship.
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * Get Activities of the User (morph-to-many relationship).
  */
 class User extends Authenticatable
 {

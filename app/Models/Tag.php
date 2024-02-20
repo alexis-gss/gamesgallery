@@ -24,8 +24,10 @@ use Illuminate\Support\Collection;
  * @method static void removeTagsFromGame(self $tag)           Remove a specific tag from all games.
  * @method static void removeTags(Model $model)                Remove all tags previously associated.
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * Get Activities of the Tag (morph-to-many relationship).
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
- * Get Games of the tag (relationship).
+ * Get Games of the Tag (morph-to-many relationship).
  */
 class Tag extends Model
 {
@@ -137,7 +139,7 @@ class Tag extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get Games of the tag (relationship).
+     * Get Games of the Tag (morph-to-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */

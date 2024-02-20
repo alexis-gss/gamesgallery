@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Support\Carbon $created_at Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at Updated date.
  *
- * @property-read \App\Models\Picture $picture Get the Picture that owns the Rating (relationship).
+ * @property-read \App\Models\Picture $picture Get the Picture that owns the Rating (belongs-to relationship).
  */
 class Rating extends Model
 {
@@ -31,7 +31,7 @@ class Rating extends Model
     // * RELATIONSHIPS
 
     /**
-     * Get the Picture that owns the Rating (relationship).
+     * Get the Picture that owns the Rating (belongs-to relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

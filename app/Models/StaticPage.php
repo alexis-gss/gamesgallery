@@ -9,16 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\SchemaOrg\Schema;
 
 /**
- * @property \App\Enums\StaticPageType       $type            Page type.
- * @property string                          $seo_title       Seo title.
- * @property string                          $seo_description Seo description.
- * @property string                          $title           Title.
- * @property integer                         $order           Order.
- * @property-read \Illuminate\Support\Carbon $created_at      Created date.
- * @property-read \Illuminate\Support\Carbon $updated_at      Updated date.
+ * @property \App\Enums\Pages\StaticPageTypeEnum $type            Page type.
+ * @property string                              $seo_title       Page seo title.
+ * @property string                              $seo_description Page seo description.
+ * @property string                              $title           Page title.
+ * @property integer                             $order           Page order.
+ * @property-read \Illuminate\Support\Carbon     $created_at      Created date.
+ * @property-read \Illuminate\Support\Carbon     $updated_at      Updated date.
  *
  * @method static void booted()                    Perform any actions required after the model boots.
  * @method \Spatie\SchemaOrg\WebPage toSchemaOrg() Set micro data.
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * Get Activities of the Static page (morph-to-many relationship).
  */
 class StaticPage extends Model
 {
@@ -76,11 +79,9 @@ class StaticPage extends Model
     {
         return Schema::WebPage()
             ->inLanguage(config('app.locale'))
-            // @phpstan-ignore-next-line
             ->relatedLink(route($this->type->routeName()))
             ->isAccessibleForFree(true)
             ->headline($this->seo_description)
-            // @phpstan-ignore-next-line
             ->mainEntityOfPage(route($this->type->routeName()))
             ->publisher($this->toPersonSchema())
             ->author($this->toPersonSchema());
