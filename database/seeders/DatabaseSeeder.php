@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             FolderSeeder::class,
             GameSeeder::class,
+            PictureSeeder::class,
             RankSeeder::class,
+            RatingSeeder::class,
             UserSeeder::class,
             StaticPageSeeder::class
         ]);

@@ -4,12 +4,11 @@ namespace Database\Factories;
 
 use App\Models\Game;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\DB;
 
 /**
- * @extends Factory<\App\Models\Rank>
+ * @extends Factory<\App\Models\Rating>
  */
-final class RankFactory extends Factory
+final class PictureFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +17,11 @@ final class RankFactory extends Factory
      */
     public function definition(): array
     {
-        $gamesUnrank = Game::query()->whereNotIn('id', DB::table('ranks')->pluck('game_id'))->get();
         return [
-            'game_id' => (count($gamesUnrank)) ? $gamesUnrank->random()->getKey() : null,
+            'uuid'      => fake()->uuid(),
+            'label'     => "Picture",
+            'game_id'   => Game::query()->where('published', true)->get()->random(),
+            'published' => true,
         ];
     }
 }

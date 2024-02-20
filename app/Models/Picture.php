@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,8 @@ use Illuminate\Support\Facades\Storage;
  */
 class Picture extends Model
 {
+    use HasFactory;
+
     /**
      * The relationships that should always be loaded.
      *
