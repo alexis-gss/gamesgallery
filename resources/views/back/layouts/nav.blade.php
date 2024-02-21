@@ -13,12 +13,12 @@
         @endauth
 
         <div class="navbar-collapse collapse" id="navbarCollapse">
-            <!-- Left Side Of Navbar -->
+            {{-- Left Side Of Navbar --}}
             @include('back.layouts.nav-list')
 
-            <!-- Right Side Of Navbar -->
+            {{-- Right Side Of Navbar --}}
             <ul class="navbar-nav ms-auto">
-                <!-- Bootstrap themes -->
+                {{-- Bootstrap themes --}}
                 <li class="nav-item dropdown border-xl-end">
                     <button
                         class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 pe-xl-3 flex-row border-0"
@@ -44,14 +44,14 @@
                         @foreach (\App\Enums\Theme\BootstrapThemeEnum::toArray() as $key => $bootstrapTheme)
                             <input class="btn-check" id="theme{{ $key }}" name="theme" type="radio"
                                 value="{{ $bootstrapTheme->value }}">
-                            <label class="dropdown-item btn btn-secondary @if ($bootstrapTheme->value === intval(Cache::get('theme'))) active @endif py-2"
+                            <label class="dropdown-item btn btn-secondary @if ($bootstrapTheme->value === intval(Cache::get('theme')) ?: \App\Enums\Theme\BootstrapThemeEnum::light->value) active @endif py-2"
                                 for="theme{{ $key }}">
                                 {{ Str::of($bootstrapTheme->label)->ucFirst() }}
                             </label>
                         @endforeach
                     </form>
                 </li>
-                <!-- Lang switchs -->
+                {{-- Lang switchs --}}
                 <li class="nav-item dropdown @auth border-xl-end @endauth">
                     <button
                         class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 px-xl-3 flex-row border-0 px-0"
@@ -84,8 +84,8 @@
                         @endforeach
                     </form>
                 </li>
+                {{-- Authentication Links --}}
                 @auth
-                    <!-- Authentication Links -->
                     <li class="nav-item dropdown">
                         <button
                             class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 ps-xl-3 flex-row border-0"
@@ -102,7 +102,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end m-0 p-1 text-center" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item w-100 text-decoration-none p-2" data-bs-tooltip="tooltip" data-bs-placement="left"
-                                href="{{ route('bo.users.edit',auth('backend')->user()->getKey()) }}"
+                                href="{{ route('bo.users.edit', auth('backend')->user()->getKey()) }}"
                                 title="{{ __('bo_tooltip_to_edit_profile') }}">
                                 {{ __('bo_other_edit_profile') }}
                             </a>
