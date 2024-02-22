@@ -70,8 +70,8 @@
                             @endif
                             <td class="text-end align-middle">
                                 @canAny(['delete', 'duplicate', 'update', 'view'], $gameModel)
-                                    <form class="btn-group confirmDeleteTS" action="{{ route('bo.games.destroy', $gameModel) }}" method="POST"
-                                        novalidate>
+                                    <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                        action="{{ route('bo.games.destroy', $gameModel) }}" method="POST" novalidate>
                                         @if ($gameModel->published)
                                             @can('view', $gameModel)
                                                 <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"

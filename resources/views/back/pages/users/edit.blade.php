@@ -16,7 +16,8 @@
         </div>
         <div class="btn-group mb-md-0 mb-2">
             @can('resetPassword', $userModel)
-                <form method="POST" action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
+                <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.send_email') }}" method="POST"
+                    action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                     @csrf
                     <button class="btn btn-warning rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
                         title="{{ Str::ucfirst(__('crud.other.reset_password')) }}">
@@ -25,7 +26,8 @@
                 </form>
             @endcan
             @canAny(['delete', 'duplicate', 'update'], $userModel)
-                <form class="confirmDeleteTS" action="{{ route('bo.users.destroy', $userModel) }}" method="POST">
+                <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                    action="{{ route('bo.users.destroy', $userModel) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="btn-group" role="group">

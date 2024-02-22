@@ -62,8 +62,8 @@
                             @endif
                             <td class="text-end align-middle">
                                 @canAny(['delete', 'duplicate', 'update'], $userModel)
-                                    <form class="btn-group confirmDeleteTS" action="{{ route('bo.users.destroy', $userModel->id) }}" method="POST"
-                                        novalidate>
+                                    <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                        action="{{ route('bo.users.destroy', $userModel->id) }}" method="POST" novalidate>
                                         @can('duplicate', $userModel)
                                             <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                                 href="{{ route('bo.users.duplicate', $userModel) }}"

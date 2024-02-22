@@ -16,7 +16,8 @@
         </div>
         <div class="mb-md-0 mb-2">
             @canAny(['delete', 'duplicate', 'update'], $tagModel)
-                <form class="confirmDeleteTS" action="{{ route('bo.tags.destroy', $tagModel) }}" method="POST">
+                <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}" action="{{ route('bo.tags.destroy', $tagModel) }}"
+                    method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="btn-group" role="group">

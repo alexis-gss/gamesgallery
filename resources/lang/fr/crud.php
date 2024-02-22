@@ -57,6 +57,7 @@ return [
         'cancel'       => 'Annuler',
         'are_you_sure' => 'Êtes-vous sûr ?',
         'data_lost'    => 'Toutes les données seront perdues.',
+        'send_email'   => 'L\'utilisateur recevra un e-mail de réinitialisation du mot de passe.',
     ],
 
     'meta' => [

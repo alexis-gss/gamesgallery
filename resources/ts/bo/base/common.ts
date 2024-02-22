@@ -1,15 +1,15 @@
-import type { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
+import type { SweetAlertResult } from "sweetalert2";
 import sweetalert from "../../modules/sweetalert";
 import * as trans from "../../modules/trans";
 
 window.addEventListener("DOMContentLoaded", () => {
     /**
-     * Popup delete item.
+     * Popup action item.
      */
-    let elements = document.getElementsByClassName(
-        "confirmDeleteTS"
+    const elementsAction = document.getElementsByClassName(
+        "confirmActionTS"
     ) as HTMLCollectionOf<Element>;
-    for (const element of elements) {
+    for (const element of elementsAction) {
         element.addEventListener("submit", function (e) {
             e.preventDefault();
             const el = e.target;
@@ -20,11 +20,11 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             sweetalert.methods.confirm(
                 trans.default.methods.__("crud.sweetalert.are_you_sure"),
-                trans.default.methods.__("crud.sweetalert.data_lost"),
-                el as HTMLFormElement,
+                el.getAttribute("data-message") ?? undefined,
+                el,
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 function (response: SweetAlertResult<any>) {
-                    (el as HTMLFormElement).submit();
+                    el.submit();
                 },
                 { icon: "warning" }
             );
@@ -32,41 +32,9 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
     /**
-     * Popup confim.
-     */
-    elements = document.getElementsByClassName(
-        "confirmJS"
-    ) as HTMLCollectionOf<Element>;
-    for (const element of elements) {
-        if (!element.getAttribute("confirmJS")) {
-            const el = element;
-            if (!el || !(el instanceof HTMLElement)) {
-                throw new Error(
-                    "confirmJS can only be executed on a html element"
-                );
-            }
-            (async () => {
-                const promise = new Promise(
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (resolve: (value: boolean) => void, reject) => {
-                        sweetalert.methods.message(el.dataset.value, el, {
-                            icon: el.dataset.icon as SweetAlertIcon,
-                        });
-                        return false;
-                    }
-                );
-                if (await promise) {
-                    element.setAttribute("confirmJS", "true");
-                    el.click();
-                    element.removeAttribute("confirmJS");
-                }
-            })();
-        }
-    }
-    /**
      * Show/hide password.
      */
-    elements = document.getElementsByClassName(
+    const elements = document.getElementsByClassName(
         "password-btn"
     ) as HTMLCollectionOf<Element>;
     const inputPassword = document.getElementsByClassName(

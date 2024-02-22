@@ -55,8 +55,8 @@
                             @endif
                             <td class="text-end align-middle">
                                 @canAny(['delete', 'duplicate', 'update'], $folderModel)
-                                    <form class="btn-group confirmDeleteTS" action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST"
-                                        novalidate>
+                                    <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                        action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST" novalidate>
                                         @can('duplicate', $folderModel)
                                             <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                                 href="{{ route('bo.folders.duplicate', ['folder' => $folderModel]) }}"
