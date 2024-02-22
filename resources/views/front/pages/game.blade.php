@@ -2,8 +2,7 @@
 
 @section('title', $gameModel->name ?? __('fo_home_title'))
 @section('description', __('fo_description', ['game' => $gameModel->name]) ?? __('fo_home_description'))
-@section('breadcrumb',
-    request()->route()->getName())
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <main class="main-page row">
@@ -50,5 +49,5 @@
 @endsection
 
 @push('scripts')
-{!! $gameModel->toSchemaOrg()->toScript() !!}
+    {!! $gameModel->toSchemaOrg()->toScript() !!}
 @endpush

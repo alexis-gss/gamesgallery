@@ -1,4 +1,3 @@
-{{-- blade-formatter-disable --}}
 {{-- GET ACTUAL PAGINATION --}}
 @php $pagination = intval(Cache::get('pagination.' . Str::of(request()->route()->getName())->slug())); @endphp
 {{-- blade-formatter-enable --}}
@@ -87,8 +86,7 @@
                     @if ($paginator->currentPage() < $paginator->lastPage() - 2)
                         <li class="page-item d-none d-sm-block" data-bs-tooltip="tooltip" data-bs-placement="top"
                             title="{{ __('pagination.specific_page', ['id' => $paginator->lastPage()]) }}">
-                            <a class="page-link"
-                                href="{{ request()->fullUrlWithQuery(['page' => $paginator->lastPage()]) }}">
+                            <a class="page-link" href="{{ request()->fullUrlWithQuery(['page' => $paginator->lastPage()]) }}">
                                 {{ $paginator->lastPage() }}
                             </a>
                         </li>

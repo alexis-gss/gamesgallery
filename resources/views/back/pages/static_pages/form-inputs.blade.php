@@ -11,8 +11,8 @@
                         </span>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'seo_title'])'></div>
-                    <input class="form-control @error('seo_title') is-invalid @enderror" id="seo_title" name="seo_title"
-                        value="{{ old('seo_title', $staticPageModel->seo_title ?? '') }}" type="text"
+                    <input class="form-control @error('seo_title') is-invalid @enderror" id="seo_title" name="seo_title" type="text"
+                        value="{{ old('seo_title', $staticPageModel->seo_title ?? '') }}"
                         placeholder="{{ __('validation.custom.seo_title') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
@@ -32,7 +32,7 @@
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'seo_description'])'></div>
                     <input class="form-control @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
-                        value="{{ old('seo_description', $staticPageModel->seo_description ?? '') }}" type="text"
+                        type="text" value="{{ old('seo_description', $staticPageModel->seo_description ?? '') }}"
                         placeholder="{{ __('validation.custom.seo_description') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [

@@ -2,8 +2,7 @@
 
 @section('title', $staticPageModel->seo_title ?? __('fo_ranking_title'))
 @section('description', $staticPageModel->seo_description ?? __('fo_ranking_description'))
-@section('breadcrumb',
-    request()->route()->getName())
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <main class="main-page mx-md-5 px-md-5 m-0 p-0">

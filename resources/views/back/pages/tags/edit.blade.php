@@ -2,8 +2,7 @@
 
 @section('title', __('crud.meta.edition_model', ['model' => __('models.tag')]))
 @section('description', __('crud.meta.edition_model_desc', ['model' => __('models.tag')]))
-@section('breadcrumb',
-    request()->route()->getName())
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">

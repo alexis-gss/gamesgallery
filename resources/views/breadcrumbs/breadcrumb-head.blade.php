@@ -7,6 +7,6 @@
     @endif
 @elseif(request()->route() != null)
     @if (Breadcrumbs::exists(request()->route()->getName()))
-        {{ Breadcrumbs::view('breadcrumbs::json-ld',request()->route()->getName()) }}
+        {{ Breadcrumbs::view('breadcrumbs::json-ld', request()->route()->getName()) }}
     @endif
 @endif

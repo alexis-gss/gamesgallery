@@ -2,8 +2,7 @@
 
 @section('title', __('crud.meta.creation_model', ['model' => Str::of(__('models.tags'))->singular()]))
 @section('description', __('crud.meta.creation_model_desc', ['model' => Str::of(__('models.tags'))->singular()]))
-@section('breadcrumb',
-    request()->route()->getName())
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">

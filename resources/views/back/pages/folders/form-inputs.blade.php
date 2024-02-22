@@ -36,7 +36,7 @@
                             'value' => old('color', $folderModel->color ?? ''),
                             'rgbaMode' => $rgbaMode ?? true,
                             'nullable' => $nullable ?? false,
-                            'ariaDescribedby' => "folderColorHelp"
+                            'ariaDescribedby' => 'folderColorHelp',
                         ];
                     @endphp
                     <div class="color-picker" data-json='@json($data)'></div>

@@ -52,9 +52,7 @@
                             <td class="text-center align-middle">
                                 <span class="badge bg-secondary">{{ $userModel->updated_at->isoFormat('LLLL') }}</span>
                             </td>
-                            {{-- blade-formatter-disable --}}
                             @php $routeName = request()->route()->getName(); @endphp
-                            {{-- blade-formatter-enable --}}
                             @if (empty(request()->search) && Session::get("$routeName.sort_col") === 'order')
                                 @include('back.modules.change-model-order', [
                                     'routeName' => 'users',

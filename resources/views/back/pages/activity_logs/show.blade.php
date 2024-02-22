@@ -2,8 +2,7 @@
 
 @section('title', __('Édition d\'un :model', ['model' => __('models.activity_logs')]))
 @section('description', __('Édition d\'un :model déjà existant', ['model' => __('models.activity_logs')]))
-@section('breadcrumb',
-    request()->route()->getName())
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">

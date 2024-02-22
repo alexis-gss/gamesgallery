@@ -66,16 +66,11 @@
                         </span>
                     </label>
                     <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" role="button">
-                        {{-- blade-formatter-disable --}}
-                        @foreach (Arr::where(
-                                \App\Enums\Users\RoleEnum::toArray(),
-                                fn(object $role) => $role->value >= auth('backend')->user()->role->value()
-                            ) as $associatedModel)
-                            <option value="{{ $associatedModel->value }}" @if (old('role', $userModel->role->value ?? 1) === $associatedModel->value) selected @endif>
-                                {{ $associatedModel->label }}
+                        @foreach (Arr::where(\App\Enums\Users\RoleEnum::toArray(), fn(object $role) => $role->value >= auth('backend')->user()->role->value()) as $associatedModel)
+                            <option value="{{ $associatedModel->value }}" @if (old('role', $userModel->role->value() ?? 1) === $associatedModel->value) selected @endif>
+                                {{ Str::of($associatedModel->label)->ucFirst() }}
                             </option>
                         @endforeach
-                        {{-- blade-formatter-enable --}}
                     </select>
                     <small class="text-body-secondary">
                         {{ __('validation.rule.select-single', ['entity' => __('validation.attributes.role')]) }}
