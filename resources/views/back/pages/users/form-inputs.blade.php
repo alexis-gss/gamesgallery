@@ -113,15 +113,14 @@
                         </span>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'password'])'></div>
-                    <div class="input-group">
-                        <input class="form-control password-input @error('password') is-invalid @enderror" id="password" name="password"
-                            type="password" value="{{ old('password') }}" aria-describedby="btn-password"
-                            placeholder="{{ __('validation.attributes.password') }}" autocomplete="new-password">
-                        <button class="btn btn-primary password-btn" id="btn-password" data-bs-tooltip="tooltip" type="button"
-                            title="{{ __('bo_tooltip_password_show_hide') }}">
-                            <i class="fa-solid fa-eye"></i>
-                            <i class="fa-solid fa-eye-slash d-none"></i>
-                        </button>
+                    <div class="col-12 input-group d-flex w-100 justify-content-center">
+                        <input class="form-control @error('password') is-invalid @enderror" id="password" id="password" name="password"
+                            type="password" value="{{ old('password') }}" aria-describedby="passwordHelp"
+                            placeholder="{{ __('validation.attributes.password') }}" autocomplete="current-password">
+                        @php $dataPassword = ['inputId' => 'password']; @endphp
+                        <span class="btn btn-primary password-visibility d-flex justify-content-center align-items-center w-fit p-0"
+                            data-json='@json($dataPassword)'>
+                        </span>
                     </div>
                     <small class="text-body-secondary">
                         {{ __('validation.min.string', [
@@ -139,17 +138,15 @@
                         </span>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'password_confirmation'])'></div>
-                    <div class="input-group">
-                        <input class="form-control password-input @error('password_confirmation') is-invalid @enderror"
+                    <div class="col-12 input-group d-flex w-100 justify-content-center">
+                        <input class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation"
                             id="password_confirmation" name="password_confirmation" type="password"
-                            value="{{ old('password_confirmation', $userModel->password_confirmation ?? '') }}"
-                            aria-describedby="btn-password-confirm" placeholder="{{ __('validation.attributes.password_confirmation') }}"
-                            autocomplete="new-password">
-                        <button class="btn btn-primary password-btn" id="btn-password-confirm" data-bs-tooltip="tooltip" type="button"
-                            title="{{ __('bo_tooltip_password_show_hide') }}">
-                            <i class="fa-solid fa-eye"></i>
-                            <i class="fa-solid fa-eye-slash d-none"></i>
-                        </button>
+                            value="{{ old('password_confirmation') }}" aria-describedby="passwordConfirmationHelp"
+                            placeholder="{{ __('validation.attributes.password_confirmation') }}" autocomplete="current-password">
+                        @php $dataPassword = ['inputId' => 'password_confirmation']; @endphp
+                        <span class="btn btn-primary password-visibility d-flex justify-content-center align-items-center w-fit p-0"
+                            data-json='@json($dataPassword)'>
+                        </span>
                     </div>
                     <small class="text-body-secondary">
                         {{ __('validation.min.string', [
