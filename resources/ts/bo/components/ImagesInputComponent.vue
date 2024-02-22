@@ -1,5 +1,8 @@
 <template>
-  <div :class="`container images-input images-input-${intId} p-0`">
+  <div
+    ref="imagesInput"
+    :class="`container images-input images-input-${intId} p-0`"
+  >
     <!-- Main buttons -->
     <div class="row">
       <div class="col-12 d-flex form-group">
@@ -38,7 +41,7 @@
             data-bs-tooltip="tooltip"
             :aria-describedby="`Help${intId}`"
             :disabled="intValues.length >= itemLimit[1]"
-            accept="image/png, image/jpg, image/jpeg"
+            role="button"
             readonly
           >
           <button
@@ -122,13 +125,13 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { defineComponent } from "vue";
 import error from "./../../modules/error";
-import tooltip from "./../../modules/tooltip";
+import { Tooltips } from "./../../modules/tooltip";
 import trans from "./../../modules/trans";
 import HeavyDocumentInputComponent from "./HeavyDocumentInputComponent.vue";
 
 export default defineComponent({
   name: "ImagesInputComponent",
-  mixins: [error, tooltip, trans],
+  mixins: [error, trans],
   components: {
     FontAwesomeIcon,
     HeavyDocumentInputComponent,
@@ -149,6 +152,7 @@ export default defineComponent({
     intCsrf: string;
     intMessage: string | null;
     allErrors: Record<string, string[]>;
+    tooltips: Tooltips | null;
   } {
     return {
       intId: "",
@@ -166,6 +170,7 @@ export default defineComponent({
       intCsrf: "",
       intMessage: null,
       allErrors: {},
+      tooltips: null
     };
   },
   mounted() {
@@ -183,7 +188,11 @@ export default defineComponent({
     this.allErrors = data.errors ?? {};
     this.$nextTick(() => {
       this.initComponent();
-      this.setBootstrapTooltip();
+      this.tooltips = Tooltips.make({
+        type: "dom",
+        elements: (this.$refs.imagesInput as HTMLDivElement)
+          .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+      });
     });
   },
   methods: {
@@ -231,7 +240,7 @@ export default defineComponent({
         ? (this.intHasImages = true)
         : (this.intHasImages = false);
       this.allErrors = {};
-      this.closeBootstrapTooltip();
+      this.tooltips?.refreshTooltips();
     },
     /**
      * Add images to exists image(s).
@@ -252,6 +261,7 @@ export default defineComponent({
       if (this.intBtnCollapse?.classList.contains("collapsed")) {
         this.intBtnCollapse?.click();
       }
+      this.tooltips?.refreshTooltips();
     },
     /**
      * Update inputs file.
@@ -276,7 +286,12 @@ export default defineComponent({
           this.setErrorMessage("Pictures download limit exceeded");
         }
       } else {
-        this.setBootstrapTooltip();
+        this.tooltips?.closeBootstrapTooltip();
+        this.tooltips = Tooltips.make({
+          type: "dom",
+          elements: (this.$refs.imagesInput as HTMLDivElement)
+            .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+        });
         this.intLoopLoadImages = this.intValues.length;
       }
     },

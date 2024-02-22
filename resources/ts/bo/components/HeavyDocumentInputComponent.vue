@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="imageHeavyInput"
     :class="`image-heavy-input image-heavy-input-${intId} row w-100 mx-auto`"
   >
     <!-- CHOOSE FILE -->
@@ -161,12 +162,12 @@ import Resumable from "resumablejs";
 import type { PropType } from "vue";
 import { defineComponent } from "vue";
 import route from "./../../modules/route";
-import tooltip from "./../../modules/tooltip";
+import { Tooltips } from "./../../modules/tooltip";
 import trans from "./../../modules/trans";
 
 export default defineComponent({
   name: "HeavyDocumentInputComponent",
-  mixins: [route, tooltip, trans],
+  mixins: [route, trans],
   components: {
     FontAwesomeIcon,
   },
@@ -217,6 +218,7 @@ export default defineComponent({
     intDocumentLoaded: boolean;
     intInputUuid: HTMLInputElement | null;
     intInputLabel: HTMLInputElement | null;
+    tooltips: Tooltips | null;
   } {
     return {
       intId: "",
@@ -235,6 +237,7 @@ export default defineComponent({
       intDocumentLoaded: false,
       intInputUuid: null,
       intInputLabel: null,
+      tooltips: null
     };
   },
   mounted() {
@@ -257,7 +260,11 @@ export default defineComponent({
     }
     this.$nextTick(() => {
       this.getInputsAttribute();
-      this.setBootstrapTooltip();
+      this.tooltips = Tooltips.make({
+        type: "dom",
+        elements: (this.$refs.imageHeavyInput as HTMLDivElement)
+          .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+      });
     });
   },
   methods: {
@@ -316,7 +323,7 @@ export default defineComponent({
         this.intProgressbar = this.$refs.progressBar as HTMLDivElement;
         this.intProgressbar.style.width = this.intFilePercent + "%";
       }, 10);
-      this.closeBootstrapTooltip();
+      this.tooltips?.closeBootstrapTooltip();
       if (this.intR !== null) this.intR.upload();
     },
     /**
@@ -337,7 +344,12 @@ export default defineComponent({
         this.intIsUploading = false;
         this.$nextTick(() => {
           this.editImageAttribute();
-          this.setBootstrapTooltip();
+          this.tooltips?.closeBootstrapTooltip();
+          this.tooltips = Tooltips.make({
+            type: "dom",
+            elements: (this.$refs.imageHeavyInput as HTMLDivElement)
+              .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+          });
         });
       }, 800);
     },

@@ -1,9 +1,9 @@
 <template>
   <div
+    ref="colorPicker"
     :class="`input-group color-picker-component ${
       intRgbaMode ? '' : 'no-transparent'
     }`"
-    ref="colorpicker"
   >
     <div
       :id="`colorPickerFakeInput${intId}`"
@@ -46,7 +46,7 @@
           :id="`checkbox${intId}`"
           class="form-check-input me-1"
           type="checkbox"
-          data-bs-toggle="tooltip"
+          data-bs-tooltip="tooltip"
           :title="__('Rendre la couleur transparente ?')"
           :checked="intValue === null ? true : false"
           @change="updateValue"
@@ -68,8 +68,8 @@
 import { defineComponent, type PropType } from "vue";
 // @ts-ignore
 import { Chrome } from "@ckpack/vue-color";
-import Tooltip from "bootstrap/js/dist/tooltip";
 import trans from "../../modules/trans";
+import { Tooltips } from "./../../modules/tooltip";
 
 export default defineComponent({
   name: "ColorPickerComponent",
@@ -111,17 +111,15 @@ export default defineComponent({
     intNullable: boolean;
     intRgbaMode: boolean;
     intAriaDescribedby: string;
-
     intInternalValue:
       | string
       | { hex: string; rgba: { a: string; b: string; g: string; r: string } };
     intInternalHex: string;
-
     intDisplayPicker: boolean;
-
     intNullableInput: HTMLInputElement | null;
     intColorPickerFakeInput: HTMLElement | null;
     intPicker: typeof Chrome | null;
+    tooltips: Tooltips | null;
   } {
     return {
       intId: "",
@@ -130,15 +128,13 @@ export default defineComponent({
       intNullable: false,
       intRgbaMode: false,
       intAriaDescribedby: "",
-
       intInternalValue: "",
       intInternalHex: "",
-
       intDisplayPicker: false,
-
       intNullableInput: null,
       intColorPickerFakeInput: null,
       intPicker: null,
+      tooltips: null
     };
   },
   mounted() {
@@ -177,7 +173,11 @@ export default defineComponent({
     }
     this.$nextTick(() => {
       this.intInternalHex = this.intPicker?.$data.val.hex;
-      this.initTooltips();
+      this.tooltips = Tooltips.make({
+        type: "dom",
+        elements: (this.$refs.colorPicker as HTMLDivElement)
+          .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+      });
     });
   },
   watch: {
@@ -245,19 +245,6 @@ export default defineComponent({
       ) {
         this.hidePicker();
       }
-    },
-    initTooltips() {
-      // * INIT Bootstrap tooltips
-      let tooltipTriggerList = [].slice.call(
-        document.querySelectorAll(
-          ".color-picker-component [data-bs-toggle=\"tooltip\"]"
-        )
-      );
-      tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new Tooltip(tooltipTriggerEl, {
-          delay: { show: 1000, hide: 300 },
-        });
-      });
     },
   },
 });

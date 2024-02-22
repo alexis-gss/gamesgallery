@@ -1,10 +1,14 @@
 <template>
-  <div :class="`image-input image-input-${intId} p-0`">
+  <div
+    ref="imageInput"
+    class="container image-input-vue p-0"
+  >
     <div class="row">
-      <div :class="`col-12 col-md-6 form-group`">
+      <div :class="`col-12 ${intPreview ? 'col-md-6' : ''} form-group`">
         <label
+          v-if="intPreview && showLabels"
           :for="intId"
-          class="col-form-label fw-bold"
+          class="col-form-label"
         >
           {{ __("bo_label_choose_picture") }}
           <span
@@ -17,12 +21,12 @@
         <div class="input-group">
           <button
             @click.prevent="chooseAFile"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary"
             type="button"
             :title="__('bo_tooltip_image_input_modify_source')"
             data-bs-tooltip="tooltip"
           >
-            <i class="fa-solid fa-folder-open" />
+            <FontAwesomeIcon icon="fa-solid fa-folder-open" />
           </button>
           <input
             :id="intId"
@@ -35,11 +39,11 @@
             :aria-describedby="`Help${intId}`"
           >
           <input
-            v-if="typeof intValue === 'string'"
+            v-if="intValue.indexOf('data:image/png;base64') !== 0"
             class="d-none"
             :name="intName"
             type="text"
-            :value="intValue"
+            :value="submitIntValue"
           >
           <input
             @click.prevent="chooseAFile"
@@ -49,15 +53,32 @@
             :title="__('bo_tooltip_image_input_modify_source')"
             data-bs-tooltip="tooltip"
             :aria-describedby="`Help${intId}`"
+            role="button"
             readonly
           >
           <button
-            v-if="!intRequired"
+            v-if="!intRequired && intHasImage"
             @click.prevent="removeFile"
             class="btn btn-outline-danger"
             type="button"
+            data-bs-tooltip="tooltip"
+            :title="__('bo_tooltip_image_input_remove_picture')"
           >
-            <i class="fas fa-eraser" />
+            <FontAwesomeIcon icon="fa-solid fa-eraser" />
+          </button>
+          <button
+            v-if="!intPreview && intValue"
+            class="btn btn-warning"
+            type="button"
+            data-bs-toggle="modal"
+            :data-bs-target="`#ModalPreview${intId}`"
+          >
+            <span
+              data-bs-tooltip="tooltip"
+              :title="__('vue.ImageInputComponent.view_source_picture')"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-eye" />
+            </span>
           </button>
           <button
             @click.prevent="prepareImageEditor($event)"
@@ -69,7 +90,7 @@
             data-bs-toggle="modal"
             :data-bs-target="`#Modal${intId}`"
           >
-            <i class="fa-solid fa-crop" />
+            <FontAwesomeIcon icon="fa-solid fa-crop" />
           </button>
           <span
             v-if="intHasModdedImage"
@@ -77,7 +98,7 @@
             :title="__('bo_tooltip_image_input_image_resized')"
             data-bs-tooltip="tooltip"
           >
-            <i class="fa-solid fa-wand-magic" />
+            <FontAwesomeIcon icon="fa-solid fa-wand-magic" />
           </span>
         </div>
         <small
@@ -87,36 +108,37 @@
           {{ intHelper }}
         </small>
       </div>
-      <div :class="`col-12 col-md-6 form-group`">
+      <div
+        v-if="intPreview"
+        :class="`col-12 ${intPreview ? 'col-md-6' : ''} form-group d-flex flex-column`"
+      >
         <label
-          v-if="intValue"
-          class="col-form-label w-100 fw-bold w-100"
+          v-if="intValue && showLabels"
+          :id="`PreviewHelp${intId}`"
+          class="col-form-label fw-bold m-0"
         >
           {{ __("bo_label_preview_image") }}
           <span
             :title="__('bo_tooltip_image_input_preview_image')"
             data-bs-tooltip="tooltip"
           >
-            <i class="fa-solid fa-circle-info" />
+            <FontAwesomeIcon icon="fa-solid fa-circle-info" />
           </span>
         </label>
         <img
           v-if="intValue"
-          class="img-fluid"
+          class="img-fluid w-fit"
           :src="intValue"
           :alt="__('bo_other_preview_image_placeholder')"
           :aria-describedby="`PreviewHelp${intId}`"
         >
         <small
-          v-if="intValue"
-          :id="`PreviewHelp${intId}`"
-          class="form-text text-body-secondary d-block m-0"
+          v-if="intOriginalFile"
+          class="form-text text-body-secondary"
         >
-          <span v-if="intOriginalFile">
-            {{ humanFileSize(intOriginalFile.size) }}
-            {{ `largeur ${intOriginalFileDimensions.width}px` }}
-            {{ `hauteur ${intOriginalFileDimensions.height}px` }}.
-          </span>
+          {{ humanFileSize(intOriginalFile.size) }}
+          {{ `hauteur ${intOriginalFileDimensions.height}px` }}
+          {{ `largeur ${intOriginalFileDimensions.width}px` }}
         </small>
       </div>
     </div>
@@ -127,9 +149,13 @@
       role="dialog"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
+      @mousedown="preventMouseDown"
+      @dragstart.prevent="() => false"
+      @ondrop.prevent="() => false"
+      @dragover.prevent="() => false"
     >
       <div
-        class="modal-dialog modal-xl d-flex align-items-center h-100 my-0"
+        class="modal-dialog modal-xl"
         role="document"
       >
         <div class="modal-content">
@@ -156,7 +182,7 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="reset()"
                     >
-                      <i class="fa fa-sync-alt" />
+                      <FontAwesomeIcon icon="fa-solid fa-sync-alt" />
                     </button>
                   </div>
                   <div class="btn-group me-4 mt-2">
@@ -166,7 +192,7 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="zoom(0.1)"
                     >
-                      <i class="fa fa-search-plus" />
+                      <FontAwesomeIcon icon="fa-solid fa-search-plus" />
                     </button>
                     <a
                       class="btn btn-primary"
@@ -174,7 +200,7 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="zoom(-0.1)"
                     >
-                      <i class="fa fa-search-minus" />
+                      <FontAwesomeIcon icon="fa-solid fa-search-minus" />
                     </a>
                   </div>
                   <div class="btn-group me-4 mt-2">
@@ -184,7 +210,7 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(-10, 0)"
                     >
-                      <i class="fa fa-arrow-left" />
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
                     </a>
                     <a
                       class="btn btn-primary"
@@ -192,7 +218,7 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(10, 0)"
                     >
-                      <i class="fa fa-arrow-right" />
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-right" />
                     </a>
                     <a
                       class="btn btn-primary"
@@ -200,7 +226,7 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(0, -10)"
                     >
-                      <i class="fa fa-arrow-up" />
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-up" />
                     </a>
                     <a
                       class="btn btn-primary"
@@ -208,29 +234,25 @@
                       data-bs-tooltip="tooltip"
                       @click.prevent="move(0, 10)"
                     >
-                      <i class="fa fa-arrow-down" />
+                      <FontAwesomeIcon icon="fa-solid fa-arrow-down" />
                     </a>
                   </div>
                   <div class="btn-group me-4 mt-2">
                     <a
                       class="btn btn-primary"
-                      :title="
-                        __('bo_tooltip_image_input_mirror_horizontal')
-                      "
+                      :title="__('bo_tooltip_image_input_mirror_horizontal')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="scale(true)"
                     >
-                      <i class="fa fa-arrows-alt-h" />
+                      <FontAwesomeIcon icon="fa-solid fa-arrows-alt-h" />
                     </a>
                     <a
                       class="btn btn-primary"
-                      :title="
-                        __('bo_tooltip_image_input_mirror_vertical')
-                      "
+                      :title="__('bo_tooltip_image_mirror_vertical')"
                       data-bs-tooltip="tooltip"
                       @click.prevent="scale(false)"
                     >
-                      <i class="fa fa-arrows-alt-v" />
+                      <FontAwesomeIcon icon="fa-solid fa-arrows-alt-v" />
                     </a>
                   </div>
                 </div>
@@ -242,13 +264,11 @@
                       <div class="btn-group mt-1">
                         <a
                           class="btn btn-primary"
-                          :title="
-                            __('bo_tooltip_image_input_counterclockwise')
-                          "
+                          :title="__('bo_tooltip_image_input_counterclockwise')"
                           data-bs-tooltip="tooltip"
                           @click.prevent="rotate(-45)"
                         >
-                          <i class="fa fa-undo-alt" />
+                          <FontAwesomeIcon icon="fa-solid fa-undo-alt" />
                         </a>
                         <a
                           class="btn btn-primary"
@@ -256,7 +276,7 @@
                           data-bs-tooltip="tooltip"
                           @click.prevent="rotate(45)"
                         >
-                          <i class="fa fa-redo-alt" />
+                          <FontAwesomeIcon icon="fa-solid fa-redo-alt" />
                         </a>
                       </div>
                     </div>
@@ -273,7 +293,7 @@
                       </label>
                       <input
                         ref="rotationSlider"
-                        @input.stop="rotationChange($event as Event)"
+                        @input.stop="rotationChange"
                         @change.stop="
                           rotateTo(
                             Number.parseInt(
@@ -302,7 +322,7 @@
                 </div>
                 <div
                   ref="previewBox"
-                  class="col-12 col-md-6 p-0 bg-body-tertiary preview-image"
+                  class="col-12 col-md-6 p-0 preview-img"
                 >
                   <div
                     :id="`Preview${intId}`"
@@ -317,24 +337,20 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-              :title="
-                __('bo_tooltip_image_input_modal_close_without_saving')
-              "
               data-bs-tooltip="tooltip"
+              :title="__('bo_tooltip_image_input_modal_close_without_saving')"
             >
               {{ __("bo_other_close") }}
             </button>
             <button
-              @click.prevent="exportToBlob"
+              @click.prevent="exportCropperFile"
               type="button"
               class="btn btn-primary"
-              :title="
-                __('bo_tooltip_image_input_modal_close_with_saving')
-              "
-              data-bs-tooltip="tooltip"
               data-bs-dismiss="modal"
+              :title="__('bo_tooltip_image_input_modal_close_with_saving')"
+              data-bs-tooltip="tooltip"
             >
-              {{ __("crud.actions.save") }}
+              {{ __("crud.actions.save")[0].toUpperCase() + __("crud.actions.save").slice(1) }}
             </button>
           </div>
         </div>
@@ -344,9 +360,10 @@
 </template>
 
 <script lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Cropper from "cropperjs";
 import { defineComponent } from "vue";
-import tooltip from "./../../modules/tooltip";
+import { Tooltips } from "./../../modules/tooltip";
 import trans from "./../../modules/trans";
 
 const UNITS = [
@@ -361,12 +378,60 @@ const BYTES_PER_KB = 1024;
 
 export default defineComponent({
   name: "ImageInputComponent",
-  mixins: [tooltip, trans],
-  emits: ["browseFile"],
+  components: {
+    FontAwesomeIcon,
+  },
+  mixins: [trans],
+  emits: {
+    browseFile: (intId: string) => {
+      intId;
+      return true;
+    },
+    imageFile: (file: File | null) => {
+      file;
+      return true;
+    },
+  },
   props: {
+    id: {
+      type: String,
+      default: String(Math.pow(10, 16) / Math.random()),
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    showLabels: {
+      type: Boolean,
+      default: true,
+    },
+    name: {
+      type: String,
+      default: "",
+    },
+    helper: {
+      type: String,
+      default: "",
+    },
+    width: {
+      type: Number,
+      default: 0,
+    },
+    height: {
+      type: Number,
+      default: 0,
+    },
     value: {
       type: String,
       default: "",
+    },
+    preview: {
+      type: Boolean,
+      default: true,
+    },
+    browseEvent: {
+      type: Boolean,
+      default: false,
     },
   },
   data(): {
@@ -378,6 +443,7 @@ export default defineComponent({
     intRequired: boolean;
     intWidth: number;
     intHeight: number;
+    intPreview: boolean;
 
     intBrowseEvent: boolean;
 
@@ -396,16 +462,18 @@ export default defineComponent({
     };
     intOriginalFileName: string;
     intPreviewStyle: string;
+    tooltips: Tooltips | null;
   } {
     return {
       intId: "",
       intValue: "",
-      intValueFileName: this.__("Sélectionnez une image"),
+      intValueFileName: this.__("bo_tooltip_image_input_placeholder"),
       intHelper: "",
       intName: "",
       intRequired: true,
       intWidth: 0,
       intHeight: 0,
+      intPreview: true,
 
       intBrowseEvent: false,
 
@@ -424,31 +492,60 @@ export default defineComponent({
       },
       intOriginalFileName: "",
       intPreviewStyle: "",
+      tooltips: null
     };
   },
   mounted() {
     const json = String(this.$attrs.json ?? "");
-    const data = JSON.parse(json);
-    this.intId = data.id;
-    this.intName = data.name;
-    this.intHelper = data.helper ?? "";
-    this.intWidth = data.width;
-    this.intHeight = data.height;
-    this.intValue = String(data.value);
-    if (this.intValue.length) {
-      this.intValueFileName = this.intValue;
-      this.intValue = this.intValue.replace(/^\/|^/, "/");
+    if (json.length) {
+      // * Init uppon Laravel Blade
+      const data = JSON.parse(json);
+      this.intId = data.id;
+      this.intName = data.name;
+      this.intHelper = data.helper ?? "";
+      this.intWidth = Number.parseInt(String(data.width));
+      this.intHeight = Number.parseInt(String(data.height));
+      this.intValue = String(data.value);
+      if (this.intValue.length) {
+        this.intValueFileName = this.intValue.replace(/^\/|^/, "");
+        this.intValue = this.intValue.replace(/^\/|^/, "/");
+      }
+      if (data.preview !== undefined) {
+        this.intPreview = data.preview ? true : false;
+      }
+      if (data.required !== undefined) {
+        this.intRequired = data.required ? true : false;
+      }
+      if (data.browseEvent !== undefined) {
+        this.intBrowseEvent = data.browseEvent ? true : false;
+      }
+      this.intHasImage = false;
+      if (this.intValue.length) {
+        this.fetchPictureFromPath(`${this.intValue}`);
+      }
+    } else {
+      // * Init Uppon Vue component
+      this.intId = this.id;
+      this.intName = this.name;
+      this.intHelper = this.helper;
+      this.intWidth = this.width;
+      this.intHeight = this.height;
+      this.intValue = this.value;
+      if (this.intValue.length) {
+        this.intValueFileName = this.intValue.replace(/^\/|^/, "");
+        this.intValue = this.intValue.replace(/^\/|^/, "/");
+      }
+      this.intPreview = this.preview;
+      this.intRequired = this.required;
+      this.intBrowseEvent = this.browseEvent;
     }
-    if (data.required !== undefined) {
-      this.intRequired = data.required ? true : false;
-    }
-    if (data.browseEvent !== undefined) {
-      this.intBrowseEvent = data.browseEvent ? true : false;
-    }
-    this.intHasImage = false;
-    this.$nextTick(() => {
-      this.setBootstrapTooltip();
-    });
+    setTimeout(() => {
+      this.tooltips = Tooltips.make({
+        type: "dom",
+        elements: (this.$refs.imageInput as HTMLDivElement)
+          .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+      });
+    }, 500);
   },
   computed: {
     imageRatio() {
@@ -474,11 +571,15 @@ export default defineComponent({
         preview: `#Preview${this.intId}`,
       };
     },
+    /** Removes prepended slash */
+    submitIntValue(): string {
+      return this.intValue.replace(/^\/|^/, "");
+    },
   },
   watch: {
-    intRotationValue(value) {
-      if (!(this.intCropper instanceof Cropper)) {
-        throw new Error("cropped not initialized");
+    intRotationValue(value: number) {
+      if (!this.intCropper) {
+        return;
       }
       this.intCropper.rotateTo(value);
     },
@@ -486,16 +587,49 @@ export default defineComponent({
       if (this.intBrowseEvent) {
         this.intHasImage = true;
       }
+      setTimeout(() => {
+        this.tooltips?.closeBootstrapTooltip();
+        this.tooltips = Tooltips.make({
+          type: "dom",
+          elements: (this.$refs.imageInput as HTMLDivElement)
+            .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+        });
+      }, 500);
     },
-    value() {
-      this.intValue = this.value.replace(/^\/|^/, "/");
-      this.intValueFileName = this.value;
+    value: {
+      deep: true,
+      immediate: true,
+      handler(value: string) {
+        // * Ignore non prop usage.
+        if (String(this.$attrs.json ?? "").length) {
+          return;
+        }
+        if (!value.length) {
+          this.removeFile();
+          return;
+        } else {
+          this.intHasImage = true;
+        }
+        // * Using browse event, If user changed image recompile blob (File Upload storage strategy)
+        if (this.browseEvent && this.intHasImage) {
+          this.$nextTick(() => this.fetchPictureFromPath(value));
+        } else {
+          this.intValue = value;
+          if (this.intValue.length) {
+            this.intValueFileName = this.intValue.replace(/^\/|^/, "");
+            this.intValue = this.intValue.replace(/^\/|^/, "/");
+          }
+        }
+      },
     },
   },
   methods: {
-    /**
-     * Cropper preview style.
-     */
+    preventMouseDown(e: MouseEvent) {
+      if ((e.target as HTMLElement)?.id !== "range") {
+        e.preventDefault();
+        return false;
+      }
+    },
     previewStyleCompute() {
       const previewBox = this.$refs.previewBox as HTMLElement,
             style = window.getComputedStyle(previewBox),
@@ -508,38 +642,26 @@ export default defineComponent({
         3
       )}px;height:${targetHeight.toFixed(3)}px;`;
     },
-    /**
-     * Cropper reset.
-     */
     reset() {
-      if (!(this.intCropper instanceof Cropper)) {
+      if (!this.intCropper) {
         return;
       }
       this.intCropper.reset();
     },
-    /**
-     * Cropper zoom.
-     */
     zoom(v: number) {
-      if (!(this.intCropper instanceof Cropper)) {
+      if (!this.intCropper) {
         return;
       }
       this.intCropper.zoom(v);
     },
-    /**
-     * Cropper move.
-     */
     move(x: number, y: number) {
-      if (!(this.intCropper instanceof Cropper)) {
+      if (!this.intCropper) {
         return;
       }
       this.intCropper.move(x, y);
     },
-    /**
-     * Cropper scale.
-     */
     scale(horizontal: boolean) {
-      if (!(this.intCropper instanceof Cropper)) {
+      if (!this.intCropper) {
         return;
       }
       if (horizontal) {
@@ -550,9 +672,6 @@ export default defineComponent({
         this.intCropper.scaleY(this.intScaleY);
       }
     },
-    /**
-     * Cropper rotate.
-     */
     rotate(value: number) {
       const rotationSlider = this.$refs.rotationSlider as HTMLInputElement;
       let res = this.intRotationValue + value;
@@ -562,18 +681,12 @@ export default defineComponent({
       this.intRotationText = this.intRotationValue;
       rotationSlider.value = String(this.intRotationValue);
     },
-    /**
-     * Cropper rotate to.
-     */
     rotateTo(value: number) {
       value = value < 0 ? 0 : value;
       value = value > 360 ? 360 : value;
       this.intRotationValue = value;
       this.intRotationText = this.intRotationValue;
     },
-    /**
-     * Cropper rotation input.
-     */
     rotationChange(e: Event) {
       const el = e.target;
       if (!el || !(el instanceof HTMLInputElement)) {
@@ -581,9 +694,6 @@ export default defineComponent({
       }
       this.rotateTo(Number.parseFloat(el.value));
     },
-    /**
-     * Link button change image to the input file image.
-     */
     chooseAFile() {
       const actualImage = this.$refs.actualImage as HTMLInputElement;
       if (this.intBrowseEvent) {
@@ -592,81 +702,116 @@ export default defineComponent({
       }
       actualImage.click();
     },
-    /**
-     * Remove one specific image.
-     */
     removeFile() {
+      if (!this.$refs.actualImage) {
+        return;
+      }
       const actualImage = this.$refs.actualImage as HTMLInputElement;
       actualImage.value = "";
-      this.intValueFileName = this.__("Sélectionnez une image");
+      this.intValueFileName = this.__("bo_tooltip_image_input_placeholder");
       this.intValue = "";
+      this.intOriginalFileName = "";
+      this.intOriginalFile = null;
+      this.intHasModdedImage = false;
+      this.intOriginalFileDimensions = {
+        height: 0,
+        width: 0,
+      };
+      // * To overload watcher for intValue
+      this.$nextTick(() => (this.intHasImage = false));
+      this.$emit("imageFile", null);
     },
-    /**
-     * Change one specific image.
-     */
-    changedImage(e: Event) {
-      const self = this,
-            reader = new FileReader();
-      const el = e.target;
-      if (!el || !(el instanceof HTMLInputElement)) {
-        throw new Error(
-          "confirmDoneJS can only be executed on an exising form"
-        );
+    fetchPictureFromPath(value: string): void {
+      const actualImage: HTMLInputElement = this.$refs.actualImage as HTMLInputElement,
+            container: DataTransfer = new DataTransfer();
+
+      this.$nextTick(() => {
+        const stringValue: string = value.replace(/^\/|^/, "/"),
+              stringFileName: string = stringValue.substring(stringValue.lastIndexOf("/")).replace(/^\/|^/, "");
+
+        fetch(stringValue)
+          .then((response) => {
+            this.intOriginalFileName = decodeURI(response.url.substring(
+              response.url.lastIndexOf("/") + 1
+            ));
+            return response.blob();
+          })
+          .then((blob: Blob) => {
+            if (!actualImage.files) {
+              throw new Error("3- missing files list");
+            }
+            this.fetchDataUrlImageSizes(stringValue);
+            const file = new File([blob], stringFileName, {
+              type: "image/png",
+              lastModified: new Date().getTime(),
+            });
+
+            this.intValue = stringValue;
+            this.intValueFileName = stringFileName;
+            this.intHasImage = true;
+            this.intOriginalFile = file;
+            this.$emit("imageFile", file);
+            container.items.add(file);
+            actualImage.files = container.files;
+            this.changedImage();
+          });
+      });
+    },
+    changedImage() {
+      const reader = new FileReader(),
+            actualImage = this.$refs.actualImage as HTMLInputElement;
+      if (!actualImage.files) {
+        throw new Error("missing files list");
       }
-      if (!el.files) {
-        throw new Error();
-      }
-      self.intHasImage = true;
+      this.intHasImage = true;
       reader.addEventListener(
         "load",
         () => {
           // On convertit l'image en une chaîne de caractères base64.
-          self.intValue = String(reader.result);
+          this.intValue = String(reader.result);
         },
         false
       );
-      if (el.files[0]) {
-        self.intOriginalFile = el.files[0];
-        reader.readAsDataURL(el.files[0]);
+
+      if (actualImage.files[0]) {
+        this.intOriginalFile = actualImage.files[0];
+        this.intOriginalFileName = actualImage.files[0].name;
+        reader.readAsDataURL(actualImage.files[0]);
         reader.onloadend = () => {
-          this.intHasModdedImage = false;
           this.fetchDataUrlImageSizes(String(reader.result));
+          this.exportToBlob();
         };
-        this.intValueFileName = el.files[0].name;
+        this.intValueFileName = actualImage.files[0].name;
       }
     },
-    /**
-     * Set cropper to edit a specific image.
-     */
     prepareImageEditor(e: Event) {
-      const self = this,
-            actualImage = this.$refs.actualImage as HTMLInputElement,
+      const actualImage = this.$refs.actualImage as HTMLInputElement,
             imgEditor = this.$refs.imgEditor as HTMLImageElement,
             createCropper = () => {
-              if (self.intCropper) {
-                self.intCropper.destroy();
+              if (this.intCropper) {
+                this.intCropper.destroy();
               }
-              self.intCropper = new Cropper(imgEditor, self.cropperOption);
+              this.intCropper = new Cropper(imgEditor, this.cropperOption);
             };
 
-      if (!self.browseEvent) {
+      if (!this.browseEvent) {
         if (!actualImage || !actualImage.files) {
           throw new Error("actualImage is not defined");
         }
-        self.intOriginalFile = actualImage.files[0];
-        self.intOriginalFileName = actualImage.files[0].name;
+        this.intOriginalFile = actualImage.files[0];
+        this.intOriginalFileName = actualImage.files[0].name;
         imgEditor.src = URL.createObjectURL(actualImage.files[0]);
 
-        self.previewStyleCompute();
+        this.previewStyleCompute();
         this.$nextTick(() => createCropper());
         return;
       }
 
       e.preventDefault();
       this.$nextTick(() => {
-        fetch(self.value.replace(/^\/|^/, "/"))
+        fetch(this.value.replace(/^\/|^/, "/"))
           .then((response) => {
-            self.intOriginalFileName = response.url.substring(
+            this.intOriginalFileName = response.url.substring(
               response.url.lastIndexOf("/") + 1
             );
             return response.blob();
@@ -674,14 +819,11 @@ export default defineComponent({
           .then((blob: Blob) => {
             imgEditor.src = URL.createObjectURL(blob);
 
-            self.previewStyleCompute();
-            self.$nextTick(() => createCropper());
+            this.previewStyleCompute();
+            this.$nextTick(createCropper);
           });
       });
     },
-    /**
-     * Create a Blob from a specific url.
-     */
     dataURLtoBlob(dataUrl: string) {
       const arr = dataUrl.split(",");
       if (!arr[0] || !arr[1]) {
@@ -699,39 +841,24 @@ export default defineComponent({
       }
       return new Blob([u8arr], { type: mime[1] });
     },
-    /**
-     * Update image sizes.
-     */
     fetchDataUrlImageSizes(dataUrl: string) {
-      const img = new Image(),
-            self = this;
+      const img = new Image();
       try {
         img.onload = () => {
-          self.intOriginalFileDimensions.width = img.width;
-          self.intOriginalFileDimensions.height = img.height;
+          this.intOriginalFileDimensions.width = img.width;
+          this.intOriginalFileDimensions.height = img.height;
         };
         img.src = dataUrl;
       } catch (e) {
-        self.intOriginalFileDimensions.width = img.width;
-        self.intOriginalFileDimensions.height = img.height;
+        this.intOriginalFileDimensions.width = img.width;
+        this.intOriginalFileDimensions.height = img.height;
       }
     },
-    /**
-     * Set image after the edit in cropper.
-     */
-    exportToBlob() {
-      const actualImage = this.$refs.actualImage as HTMLInputElement,
-            container = new DataTransfer();
-      if (!(this.intCropper instanceof Cropper)) {
+    exportCropperFile() {
+      this.intHasModdedImage = true;
+      if (!this.intCropper) {
         return;
       }
-      if (!actualImage.files) {
-        throw new Error();
-      }
-      this.intHasModdedImage = true;
-      this.$nextTick(() => {
-        this.setBootstrapTooltip();
-      });
       this.intValue = this.intCropper
         .getCroppedCanvas({
           fillColor: "rgba(0, 0, 0, 0)",
@@ -741,6 +868,14 @@ export default defineComponent({
           imageSmoothingQuality: "high",
         })
         .toDataURL("image/png");
+      this.exportToBlob();
+    },
+    exportToBlob() {
+      const actualImage = this.$refs.actualImage as HTMLInputElement,
+            container = new DataTransfer();
+      if (!actualImage.files) {
+        throw new Error("2- missing files list");
+      }
       this.fetchDataUrlImageSizes(this.intValue);
       const file = new File(
         [this.dataURLtoBlob(this.intValue)],
@@ -751,12 +886,10 @@ export default defineComponent({
         }
       );
       this.intOriginalFile = file;
+      this.$emit("imageFile", file);
       container.items.add(file);
       actualImage.files = container.files;
     },
-    /**
-     * Get size of a file.
-     */
     humanFileSize(sizeBytes: number | bigint): string {
       let size = Math.abs(Number(sizeBytes));
 
@@ -777,11 +910,15 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scopped>
 @import "cropperjs/dist/cropper.css";
-.image-input {
+
+.image-input-vue {
+  /* Ensure the size of the image fit the container perfectly */
   .image-modification {
     display: block;
+
+    /* This rule is very important, please don't ignore this */
     max-width: 100%;
   }
   .rotate-button {
@@ -790,28 +927,29 @@ export default defineComponent({
   }
   .rotate-drag {
     display: flex;
-    width: 100%;
     flex-direction: column-reverse;
-    input {
+    width: 100%;
+    & > input {
       width: 100%;
     }
   }
-  .preview-image {
+  .preview-img {
     position: relative;
-    div {
+    & > div {
       position: relative;
+      overflow: hidden;
+      border: 1px solid black;
       top: 50%;
       left: 50%;
-      overflow: hidden;
-      border: 1px solid #000;
       transform: translateX(-50%) translateY(-50%);
     }
   }
-  .right-aligned {
-    overflow: hidden !important;
+  input.right-aligned {
     direction: ltr !important;
+    overflow: hidden !important;
   }
-  .right-aligned:not(:focus) {
+  input.right-aligned :not(:focus) {
+    direction: rtl !important;
     text-align: left !important;
     text-overflow: ellipsis !important;
   }

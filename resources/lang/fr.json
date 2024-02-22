@@ -61,6 +61,8 @@
     "bo_tooltip_image_input_close_without_saving": "Fermer la fenêtre modale sans enregistrer le contenu",
     "bo_tooltip_image_input_modal_close_without_saving": "Fermer la fenêtre modale sans enregistrer",
     "bo_tooltip_image_input_modal_close_with_saving": "Enregistrer et fermer la fenêtre modale",
+    "bo_tooltip_image_input_remove_picture": "Supprimer l'image",
+    "bo_tooltip_image_input_placeholder": "Sélectionnez une image",
     "bo_tooltip_ranking_see_game": "Voir le jeu",
     "bo_tooltip_ranking_add_game": "Ajouter un ou plusieurs jeu(x)",
     "bo_tooltip_ranking_update_game": "Éditer le jeu",

@@ -13,7 +13,8 @@
             <div
               v-for="(pictureValue, pictureIndex) in templateValue"
               :key="pictureValue"
-              :class="`glightbox-wrapper position-relative col-12 col-sm-6 col-lg-${gameItems / templateValue} p-1`"
+              class="glightbox-wrapper position-relative col-12 p-1"
+              :class="((templateValue % 2 === 0) ? `col-sm-6` : `col-sm-12`) + ` col-lg-${gameItems / templateValue}`"
               data-aos="fade-up"
             >
               <template v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]">

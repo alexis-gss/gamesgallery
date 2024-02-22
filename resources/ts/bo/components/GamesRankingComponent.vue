@@ -1,5 +1,8 @@
 <template>
-  <div :class="`ranks-${intId} position-relative`">
+  <div
+    ref="gamesRanking"
+    :class="`ranks-${intId} position-relative`"
+  >
     <Transition name="fade">
       <p
         v-if="intMessage"
@@ -92,7 +95,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { defineComponent } from "vue";
 import { VueNestable, VueNestableHandle } from "vue3-nestable";
 import route from "./../../modules/route";
-import tooltip from "./../../modules/tooltip";
+import { Tooltips } from "./../../modules/tooltip";
 import error from "././../../modules/error";
 import sweetalert from "././../../modules/sweetalert";
 import trans from "././../../modules/trans";
@@ -104,7 +107,7 @@ export default defineComponent({
     VueNestableHandle,
     FontAwesomeIcon,
   },
-  mixins: [error, route, sweetalert, tooltip, trans],
+  mixins: [error, route, sweetalert, trans],
   data(): {
     intCsrf: string | null | undefined;
     intId: String;
@@ -112,6 +115,7 @@ export default defineComponent({
     intGames: LaravelModel[];
     intMessage: object | object[] | null;
     intLoading: boolean;
+    tooltips: Tooltips | null;
   } {
     return {
       intCsrf: document
@@ -122,6 +126,7 @@ export default defineComponent({
       intGames: [],
       intMessage: null,
       intLoading: false,
+      tooltips: null
     };
   },
   mounted() {
@@ -130,7 +135,11 @@ export default defineComponent({
     this.intId = data.id;
     this.intRanks = data.rankModels;
     this.$nextTick(() => {
-      this.setBootstrapTooltip();
+      this.tooltips = Tooltips.make({
+        type: "dom",
+        elements: (this.$refs.gamesRanking as HTMLDivElement)
+          .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+      });
     });
   },
   methods: {
@@ -154,7 +163,7 @@ export default defineComponent({
       }
       window.axios.post(route, { ranks: newOrder }).catch(this.ajaxErrorHandler);
       this.$nextTick(() => {
-        this.setBootstrapTooltip();
+        this.tooltips?.refreshTooltips();
       });
     },
     /** Assign the new order and parent id to each rank. */
@@ -223,13 +232,13 @@ export default defineComponent({
                 setTimeout(() => {
                   this.intMessage = null;
                   this.$nextTick(() => {
-                    this.setBootstrapTooltip();
+                    this.tooltips?.refreshTooltips();
                   });
                 }, 6000);
               }
               this.intLoading = false;
               this.$nextTick(() => {
-                this.setBootstrapTooltip();
+                this.tooltips?.refreshTooltips();
               });
             })
             .catch(this.ajaxErrorHandler);
