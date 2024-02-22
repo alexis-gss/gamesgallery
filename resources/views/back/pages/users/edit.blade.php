@@ -20,7 +20,7 @@
                     action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                     @csrf
                     <button class="btn btn-warning rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
-                        title="{{ Str::ucfirst(__('crud.other.reset_password')) }}">
+                        title="{{ Str::ucfirst(__('auth.reset_password_send')) }}">
                         <i class="fa-solid fa-key"></i>
                     </button>
                 </form>

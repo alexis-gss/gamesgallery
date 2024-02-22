@@ -77,8 +77,5 @@ return [
         'publish'                 => 'Publier',
         'unpublish'               => 'Dépublier',
         'required_fields'         => '* Champs obligatoires',
-        'reset_password'          => 'Envoyer un e-mail de réinitialisation du mot de passe à l\'utilisateur',
-        'reset_password_email'    => 'Procédure de ré-initialisation du mot de passe envoyé à l\'utilisateur',
-        'reset_password_complete' => 'Procédure de ré-initialisation du mot de passe terminée',
     ],
 ];

@@ -56,6 +56,7 @@ return [
         'cancel'       => 'Cancel',
         'are_you_sure' => 'Are you sure ?',
         'data_lost'    => 'All data will be lost.',
+        'send_email'   => 'The user will receive a password reset e-mail.',
     ],
 
     'meta' => [

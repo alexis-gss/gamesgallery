@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
 
             Mail::to($fields['email'])->send(new LinkResetPassword((object)$fields));
 
-            return redirect()->back()->with('success', trans('crud.other.reset_password_email'));
+            return redirect()->back()->with('success', trans('auth.reset_password_email'));
         });
     }
 }

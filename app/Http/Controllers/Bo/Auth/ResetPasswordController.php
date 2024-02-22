@@ -69,7 +69,7 @@ class ResetPasswordController extends Controller
 
             $passwordReset->delete();
 
-            return redirect()->route('bo.login')->with('success', trans('auth.other.reset_password_complete'));
+            return redirect()->route('bo.login')->with('success', trans('auth.reset_password_complete'));
         });
     }
 }
