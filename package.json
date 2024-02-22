@@ -2,8 +2,8 @@
     "private": true,
     "scripts": {
         "prod": "vite build --mode production",
-        "dev": "NODE_ENV=development vite build -d --mode development",
-        "watch": "NODE_ENV=development vite build --mode development --watch",
+        "dev": "vite build --mode development -d",
+        "watch": "vite build --mode development --watch",
         "eslint": "node ./node_modules/.bin/eslint --max-warnings 0 -c .eslintrc.json ./resources",
         "eslint-fix": "node ./node_modules/.bin/eslint --fix --max-warnings 0 -c .eslintrc.json ./resources",
         "eslint-ci": "node ./node_modules/.bin/eslint --max-warnings 0 -c .eslintrc.json ./resources -f junit",
@@ -16,6 +16,7 @@
         "@babel/types": "^7.21.2",
         "@ckpack/vue-color": "^1.1.9",
         "@eastdesire/jscolor": "^2.5.1",
+        "@erbelion/vite-plugin-laravel-purgecss": "^0.2.3",
         "@fortawesome/fontawesome-svg-core": "^6.5.1",
         "@fortawesome/free-brands-svg-icons": "^6.5.1",
         "@fortawesome/free-regular-svg-icons": "^6.5.1",

@@ -72,66 +72,68 @@
         </select>
       </div>
     </div>
-    <!-- List of games -->
-    <Simplebar
-      class="nav-games-list"
-      data-simplebar-auto-hide="false"
-    >
-      <div
-        v-if="gameLoading"
-        class="d-flex justify-content-center align-items-center h-100"
+    <div class="position-relative">
+      <!-- List of games -->
+      <Simplebar
+        class="nav-games-list"
+        data-simplebar-auto-hide="false"
       >
         <div
-          class="spinner-border text-white"
-          role="status"
+          v-if="gameLoading"
+          class="d-flex justify-content-center align-items-center h-100"
         >
-          <span class="visually-hidden">{{ __("fo_text_loading") }}</span>
-        </div>
-      </div>
-      <ul
-        v-else
-        class="list-group rounded-0 pe-2"
-        id="collapseGroup"
-      >
-        <template v-if="filterGames().length > 0">
-          <li
-            v-for="(game, key) in filterGames()"
-            :key="key"
-            class="list-group-item border-0 rounded-2 bg-transparent p-0 px-1"
+          <div
+            class="spinner-border text-white"
+            role="status"
           >
-            <a
-              :href="getGameRoute(game.slug)"
-              class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-white text-decoration-none w-100 p-2"
-            >
-              <div
-                class="d-flex flex-row justify-content-start align-items-center"
-              >
-                <template
-                  v-for="(folder, folderIndex) in allFolders"
-                  :key="folderIndex"
-                >
-                  <span
-                    v-if="folder.id === game.folder_id"
-                    class="list-group-item-span"
-                    :style="`background-color:${folder.color}`"
-                  />
-                </template>
-                <span>{{ game.name }}</span>
-              </div>
-              <span>{{ game.countpictures }}</span>
-            </a>
-          </li>
-        </template>
-        <li
+            <span class="visually-hidden">{{ __("fo_text_loading") }}</span>
+          </div>
+        </div>
+        <ul
           v-else
-          class="list-group-item border-0 bg-transparent text-white p-0"
+          class="list-group rounded-0 pe-2"
+          id="collapseGroup"
         >
-          <p class="text-decoration-none m-0 p-2">
-            {{ __("fo_no_result") }}
-          </p>
-        </li>
-      </ul>
-    </Simplebar>
+          <template v-if="filterGames().length > 0">
+            <li
+              v-for="(game, key) in filterGames()"
+              :key="key"
+              class="list-group-item border-0 rounded-2 bg-transparent p-0 px-1"
+            >
+              <a
+                :href="getGameRoute(game.slug)"
+                class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-white text-decoration-none w-100 p-2"
+              >
+                <div
+                  class="d-flex flex-row justify-content-start align-items-center"
+                >
+                  <template
+                    v-for="(folder, folderIndex) in allFolders"
+                    :key="folderIndex"
+                  >
+                    <span
+                      v-if="folder.id === game.folder_id"
+                      class="list-group-item-span"
+                      :style="`background-color:${folder.color}`"
+                    />
+                  </template>
+                  <span>{{ game.name }}</span>
+                </div>
+                <span>{{ game.countpictures }}</span>
+              </a>
+            </li>
+          </template>
+          <li
+            v-else
+            class="list-group-item border-0 bg-transparent text-white p-0"
+          >
+            <p class="text-decoration-none m-0 p-2">
+              {{ __("fo_no_result") }}
+            </p>
+          </li>
+        </ul>
+      </Simplebar>
+    </div>
   </div>
 </template>
 
