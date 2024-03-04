@@ -136,9 +136,10 @@ class UserPolicy
      */
     public function changePublished(User $authUser, User $user): bool
     {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
+        return ($user->getRouteKey()) ? $authUser->getRouteKey() !== $user->getRouteKey() and
+            UserStaticRules::atLeastRole($authUser, RoleEnum::admin) and
+            UserStaticRules::atLeastRole($authUser, $user->role) :
+            UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
     }
 
     /**

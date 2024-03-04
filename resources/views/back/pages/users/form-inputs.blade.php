@@ -67,7 +67,7 @@
                     </label>
                     <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" role="button">
                         @foreach (Arr::where(\App\Enums\Users\RoleEnum::toArray(), fn(object $role) => $role->value >= auth('backend')->user()->role->value()) as $associatedModel)
-                            <option value="{{ $associatedModel->value }}" @if (old('role', $userModel->role->value() ?? 1) === $associatedModel->value) selected @endif>
+                            <option value="{{ $associatedModel->value }}" @if ((isset($userModel->role) && old('role', $userModel->role->value()) ?? 1) === $associatedModel->value) selected @endif>
                                 {{ Str::of($associatedModel->label)->ucFirst() }}
                             </option>
                         @endforeach

@@ -31,9 +31,11 @@ class StoreUserRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
+        $this->merge([
+            'published' => $this->boolean('published')
+        ]);
         $this->mergePicture('picture');
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -55,6 +57,7 @@ class StoreUserRequest extends FormRequest
                     ->symbols()
                     ->uncompromised()
             ],
+            'published'  => 'required|boolean'
         ];
         return \array_merge(
             $rules,
@@ -75,7 +78,8 @@ class StoreUserRequest extends FormRequest
             'email'      => trans('email of the user'),
             'role'       => trans('role of the user'),
             'picture'    => trans('picture of the user'),
-            'password'   => trans('password of the user')
+            'password'   => trans('password of the user'),
+            'published'  => trans('published status of the user')
         ];
     }
 }

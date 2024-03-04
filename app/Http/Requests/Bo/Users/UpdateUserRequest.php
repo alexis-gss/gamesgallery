@@ -18,17 +18,36 @@ class UpdateUserRequest extends StoreUserRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation(): void
+    {
+        /** @var \App\Models\User $userModel */
+        $userModel = request()->route()->parameter('user');
+        $this->merge([
+            'published' => auth('backend')->user()->getKey() !== $userModel->getKey() ?
+                $this->boolean('published') :
+                true
+        ]);
+        $this->mergePicture('picture');
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
     public function rules(): array
     {
-        $rules = [
+        /** @var \App\Models\User $userModel */
+        $userModel = request()->route()->parameter('user');
+        $rules     = [
             'email'    => [
                 'required',
                 'string',
-                'unique:users,email,' . request()->user->getKey(),
+                'unique:users,email,' . $userModel->getKey(),
                 'email:rfc,strict,dns,spoof,filter',
                 'max:255'
             ],
