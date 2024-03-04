@@ -1,4 +1,5 @@
 import purge from "@erbelion/vite-plugin-laravel-purgecss";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import vue from "@vitejs/plugin-vue";
 import autoprefixer from "autoprefixer";
 import laravel from "laravel-vite-plugin";
@@ -19,7 +20,7 @@ const purgePlugin = purge({
     safelist: [
         // Bootstrap
         /^cropper-/, /^offcanvas-/, /^tooltip/, /^bs-tooltip/, /^data-popper/, /.*\[data-popper-placement].*/,
-        /^bs-popover/, /^popover/, /^modal-/, /^bg-*/, /^collapsing/, /^showing/, /^col-.*/,
+        /^bs-popover/, /^popover/, /^modal-/, /^bg-*/, /^collapsing/, /^showing/, /^col-.*/, /^data-bs-.*/,
         // Vue
         /-(leave|enter|appear)(|-(to|from|active))$/, /^(?!(|.*?:)cursor-move).+-move$/, /^router-link(|-exact)-active$/, /data-v-.*/,
         // Other libraries
@@ -55,6 +56,11 @@ export default defineConfig({
         sourcemap: process.env.NODE_ENV === "local" ? "inline" : false,
     },
     css: {
+        preprocessorOptions: {
+            scss: {
+                quietDeps: true
+            }
+        },
         devSourcemap: process.env.NODE_ENV === "local" ? true : false,
         postcss: {
             map: {
@@ -69,6 +75,7 @@ export default defineConfig({
         },
     },
     plugins: [
+        basicSsl(),
         checker({
             enableBuild: true,
             vueTsc: {
@@ -119,7 +126,7 @@ export default defineConfig({
             emitWarning: true,
             emitError: true,
             failOnWarning: false,
-            failOnError: false,
+            failOnError: true,
         }),
         babel(),
         vue({
