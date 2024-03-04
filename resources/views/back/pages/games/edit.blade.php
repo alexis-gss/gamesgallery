@@ -21,13 +21,15 @@
                     @csrf
                     @method('DELETE')
                     <div class="btn-group" role="group">
-                        @can('view', $gameModel)
-                            <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                href="{{ route('fo.games.show', $gameModel->slug) }}"
-                                title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                        @endcan
+                        @if ($gameModel->published)
+                            @can('view', $gameModel)
+                                <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                    href="{{ route('fo.games.show', $gameModel->slug) }}"
+                                    title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            @endcan
+                        @endif
                         @can('duplicate', $gameModel)
                             <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                 href="{{ route('bo.games.duplicate', ['game' => $gameModel]) }}"
