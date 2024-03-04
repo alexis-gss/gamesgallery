@@ -25,7 +25,7 @@
                         </p>
                     </div>
                 </div>
-                @if (isset($rankModels))
+                @if (count($rankModels))
                     <ul class="bg-secondary rounded p-2">
                         @foreach ($rankModels as $key => $rankModel)
                             <li class="list-group-item rounded-2 border-0 bg-transparent p-0">
@@ -44,6 +44,8 @@
                             </li>
                         @endforeach
                     </ul>
+                @else
+                    <p class="m-0">{{ __('fo_ranking_no_games') }}</p>
                 @endif
             </div>
         </div>

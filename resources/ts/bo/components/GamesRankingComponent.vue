@@ -224,18 +224,7 @@ export default defineComponent({
           window.axios
             .post(route, { id: model.id, _method: "DELETE" })
             .then((reponse) => {
-              if (reponse.data[0] !== undefined) {
-                this.intRanks = reponse.data;
-                this.updateRank();
-              } else {
-                this.intMessage = reponse.data;
-                setTimeout(() => {
-                  this.intMessage = null;
-                  this.$nextTick(() => {
-                    this.tooltips?.refreshTooltips();
-                  });
-                }, 6000);
-              }
+              this.intRanks = reponse.data;
               this.intLoading = false;
               this.$nextTick(() => {
                 this.tooltips?.refreshTooltips();
