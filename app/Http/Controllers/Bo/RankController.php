@@ -38,7 +38,9 @@ class RankController extends Controller
         /** @var \Illuminate\Database\Eloquent\Collection $gameModels */
         $gameModels = $this->getPublishedGamesInNotRanking();
 
-        return view('back.pages.ranks.index', compact('rankModels', 'gameModels'));
+        $searchFields = trans('validation.attributes.name');
+
+        return view('back.pages.ranks.index', compact('rankModels', 'gameModels', 'searchFields'));
     }
 
     /**

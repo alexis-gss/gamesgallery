@@ -8,7 +8,6 @@ use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 
 class ActivityLogsController extends Controller
 {
@@ -47,9 +46,7 @@ class ActivityLogsController extends Controller
                 'model_class',
             );
         }
-        $searchFields = \implode(', ', [
-            Str::of(__('validation.custom.model'))->ucFirst(),
-        ]);
+        $searchFields = trans('validation.custom.model');
 
         /** Sort columns with a query */
         $this->sortQuery($query);

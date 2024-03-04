@@ -12,8 +12,9 @@
             <div class="col-12 form-group">
                 <form class="d-flex justify-content-center align-items-center border-bottom flex-row pb-3" action="{{ route('bo.ranks.store') }}"
                     method="POST">
-                    <span
-                        class="input-group-text rounded-0 rounded-start border-end-0 border">{{ Str::of(__('validation.attributes.name'))->value() }}</span>
+                    <span class="input-group-text rounded-0 rounded-start border-end-0 border">
+                        {{ __('crud.search.label', ['elements' => $searchFields]) }}
+                    </span>
                     @csrf
                     @php
                         $data = [

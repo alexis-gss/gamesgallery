@@ -46,9 +46,7 @@ class TagController extends Controller
                 'name',
             );
         }
-        $searchFields = \implode(', ', [
-            trans('validation.attributes.name'),
-        ]);
+        $searchFields = trans('validation.attributes.name');
 
         /** Sort columns with a query */
         $this->sortQuery($query);

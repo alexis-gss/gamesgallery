@@ -52,7 +52,7 @@
         @canAny(['isConceptor', 'viewAny'], \App\Models\ActivityLog::class)
             <li class="nav-item dropdown">
                 <button
-                    class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 rounded-0 @if (request()->routeIs('bo.activity_logs.*') || request()->routeIs('bo.users.*')) fw-bold @endif flex-row border-0"
+                    class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 rounded-0 @if (request()->routeIs('bo.static_pages.*') || request()->routeIs('bo.activity_logs.*') || request()->routeIs('bo.users.*')) fw-bold @endif flex-row border-0"
                     id="navbarDropdownAdmin" data-bs-toggle="dropdown" type="button">
                     {{ __('bo_other_admin') }}
                 </button>

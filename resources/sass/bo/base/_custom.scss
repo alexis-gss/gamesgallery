@@ -40,6 +40,42 @@ svg {
     }
 }
 
+#search {
+    .input-group-text {
+        border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0 !important;
+        border-bottom: 0;
+
+        @include media-breakpoint-up(sm) {
+            border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius) !important;
+            border-bottom: var(--bs-border-width) solid var(--bs-border-color) !important;
+        }
+    }
+
+    .form-control {
+        @include media-breakpoint-up(sm) {
+            width: 1% !important;
+        }
+    }
+
+    .btn {
+        &-primary {
+            border-radius: 0 0 0 var(--bs-border-radius) !important;
+
+            @include media-breakpoint-up(sm) {
+                border-radius: 0 !important;
+            }
+        }
+
+        &-danger {
+            border-radius: 0 0 var(--bs-border-radius) 0 !important;
+
+            @include media-breakpoint-up(sm) {
+                border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0 !important;
+            }
+        }
+    }
+}
+
 .profile-picture {
     width: 2rem;
     height: 2rem;
