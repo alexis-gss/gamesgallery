@@ -28,9 +28,11 @@ return [
         le voyez pas, copiez ou cliquez sur le lien suivant :",
     "email_reset_complete"         => "La réinitialisation du mot de passe associé à votre compte a bien été
         effectuée.",
+    "email_new_connection"         => "Vous pouvez désormais vour connecter avec votre nouvel identifiant et
+        mot de passe en cliquant sur le bouton suivant :",
     "email_title_reset_password"   => "Réinitialisation du mot de passe",
     "email_title_reset_complete"   => "Mot de passe modifié",
     'reset_password_send'          => 'Envoyer un e-mail de réinitialisation du mot de passe',
-    'reset_password_email'         => 'Procédure de ré-initialisation du mot de passe envoyé à l\'utilisateur',
-    'reset_password_complete'      => 'Procédure de ré-initialisation du mot de passe terminée',
+    'reset_password_email'         => 'Procédure de ré-initialisation du mot de passe envoyé à l\'utilisateur !',
+    'reset_password_complete'      => 'Procédure de ré-initialisation du mot de passe terminée !',
 ];

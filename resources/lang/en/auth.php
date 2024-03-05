@@ -26,9 +26,11 @@ return [
     "email_cant_visualise"         => "If you have trouble clicking on the ':actionText' button or do not see it,
         copy or click on the following link :",
     "email_reset_complete"         => "The password associated with your account has been reset.",
+    "email_new_connection"         => "You can now log in with your new login and password by clicking on
+        the following button :",
     "email_title_reset_password"   => "Password reset",
     "email_title_reset_complete"   => "Password changed",
     'reset_password_send'          => 'Send a password reset e-mail',
-    'reset_password_email'         => 'Procedure for resetting the password sent to the user',
-    'reset_password_complete'      => 'Password reset procedure completed',
+    'reset_password_email'         => 'Procedure for resetting the password sent to the user !',
+    'reset_password_complete'      => 'Password reset procedure completed !',
 ];
