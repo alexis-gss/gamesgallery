@@ -10,11 +10,13 @@
     <div class="row my-3">
         @can('update', \App\Models\Rank::class)
             <div class="col-12 form-group">
-                <form class="d-flex justify-content-center align-items-center border-bottom flex-row pb-3" action="{{ route('bo.ranks.store') }}"
-                    method="POST">
-                    <span class="input-group-text rounded-0 rounded-start border-end-0 border">
-                        {{ __('crud.search.label', ['elements' => $searchFields]) }}
-                    </span>
+                <form class="d-flex flex-column flex-sm-row justify-content-center align-items-center border-bottom input-group flex-row pb-3"
+                    id="search" action="{{ route('bo.ranks.store') }}" method="POST">
+                    <label class="input-group-text w-100 w-sm-fit" for="search-field">
+                        <span class="text-truncate">
+                            {{ __('crud.search.label', ['elements' => $searchFields]) }}
+                        </span>
+                    </label>
                     @csrf
                     @php
                         $data = [
@@ -25,9 +27,9 @@
                             'placeholder' => __('bo_other_rank_add'),
                         ];
                     @endphp
-                    <div class="w-100" id="belongs-to-many-dropdown" data-json='@json($data)'></div>
+                    <div class="form-control w-100 border-0 p-0" id="belongs-to-many-dropdown" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'tags'])
-                    <button class="btn btn-primary rounded-0 rounded-end" data-bs-tooltip="tooltip" type="submit"
+                    <button class="btn btn-primary w-100 w-sm-fit m-0" id="search-ranking-btn" data-bs-tooltip="tooltip" type="submit"
                         title="{{ __('bo_tooltip_ranking_add_game') }}">
                         <i class="fa-solid fa-plus"></i>
                     </button>

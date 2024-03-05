@@ -42,12 +42,12 @@ svg {
 
 #search {
     .input-group-text {
-        border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0 !important;
+        border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
         border-bottom: 0;
 
         @include media-breakpoint-up(sm) {
-            border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius) !important;
-            border-bottom: var(--bs-border-width) solid var(--bs-border-color) !important;
+            border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius);
+            border-bottom: var(--bs-border-width) solid var(--bs-border-color);
         }
     }
 
@@ -59,20 +59,29 @@ svg {
 
     .btn {
         &-primary {
-            border-radius: 0 0 0 var(--bs-border-radius) !important;
+            border-radius: 0 0 0 var(--bs-border-radius);
 
             @include media-breakpoint-up(sm) {
-                border-radius: 0 !important;
+                border-radius: 0;
             }
         }
 
         &-danger {
-            border-radius: 0 0 var(--bs-border-radius) 0 !important;
+            border-radius: 0 0 var(--bs-border-radius) 0;
 
             @include media-breakpoint-up(sm) {
-                border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0 !important;
+                border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
             }
         }
+    }
+
+    &-ranking-btn {
+        border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius) !important;
+
+        @include media-breakpoint-up(sm) {
+            border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0 !important;
+        }
+
     }
 }
 
