@@ -30,7 +30,15 @@
                 <tbody>
                     @foreach ($tagModels as $tagModel)
                         <tr class="border-bottom">
-                            <td class="text-center align-middle">{{ $tagModel->name }}</td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    @foreach (config('app.locales') as $locale)
+                                        <span @if ($locale !== config('app.fallback_locale')) class="fst-italic text-body-secondary" @endif>
+                                            {{ $tagModel->getTranslation('name', $locale) }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </td>
                             @include('back.modules.change-published-status', [
                                 'routeName' => 'tags',
                                 'model' => $tagModel,

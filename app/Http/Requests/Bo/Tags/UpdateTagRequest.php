@@ -24,11 +24,22 @@ class UpdateTagRequest extends StoreTagRequest
     public function rules(): array
     {
         $rules = [
-            'slug' => [
-                'required',
-                'string',
-                'unique:tags,slug,' . request()->tag->getKey(),
-                'max:255'
+            'name' => [
+                'required', 'string', 'min:2', 'max:25',
+                // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
+                function ($attribute, string $value, $fail) {
+                    /** @var \App\Models\Tag $tagModel */
+                    $tagModel = request()->route()->parameter('tag');
+                    if (
+                        $this->boolean('published') &&
+                        config('app.locale') !== config('app.fallback_locale') &&
+                        empty($tagModel->getTranslation('name', config('app.fallback_locale')))
+                    ) {
+                        $fail(trans('crud.messages.translation_default_required', [
+                            'fallbackLocale' => config('app.fallback_locale')
+                        ]));
+                    }
+                }
             ],
         ];
         return \array_merge(parent::rules(), $rules);

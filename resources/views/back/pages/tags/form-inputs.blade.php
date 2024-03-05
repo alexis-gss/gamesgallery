@@ -11,6 +11,18 @@
                         </span>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'name'])'></div>
+                    @if (config('app.locale') !== config('app.fallback_locale'))
+                        <div class="default-translation-value">
+                            {!! nl2br(
+                                __('validation.rule.default_field', [
+                                    'field' => Str::of(__('validation.attributes.name'))->ucFirst(),
+                                    'value' => empty(!$tagModel->getTranslation('name', config('app.fallback_locale')))
+                                        ? $tagModel->getTranslation('name', config('app.fallback_locale'))
+                                        : '...',
+                                ]),
+                            ) !!}
+                        </div>
+                    @endif
                     <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text"
                         value="{{ old('name', $tagModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}*">
                     <small class="text-body-secondary">

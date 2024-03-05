@@ -5,7 +5,6 @@ namespace App\Http\Requests\Bo\Tags;
 use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 
 class StoreTagRequest extends FormRequest
 {
@@ -27,7 +26,6 @@ class StoreTagRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug'      => Str::of($this->name)->slug()->value(),
             'published' => $this->boolean('published')
         ]);
     }
@@ -40,8 +38,20 @@ class StoreTagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug'      => 'required|string|unique:tags,slug|max:255',
-            'name'      => 'required|string|min:2|max:25',
+            'name'      => [
+                'required', 'string', 'min:2', 'max:25',
+                // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
+                function ($attribute, string $value, $fail) {
+                    if (
+                        $this->boolean('published') &&
+                        config('app.locale') !== config('app.fallback_locale')
+                    ) {
+                        $fail(trans('crud.messages.translation_default_required', [
+                            'fallbackLocale' => config('app.fallback_locale')
+                        ]));
+                    }
+                }
+            ],
             'published' => 'required|boolean'
         ];
     }
@@ -55,7 +65,6 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'name'      => trans('name of the tag'),
-            'slug'      => trans('slug of the tag'),
             'published' => trans('published status of the tag')
         ];
     }

@@ -7,7 +7,6 @@ use App\Http\Requests\Bo\Tags\StoreTagRequest;
 use App\Http\Requests\Bo\Tags\UpdateTagRequest;
 use App\Models\Tag;
 use App\Traits\Controllers\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,7 +14,6 @@ use Illuminate\Support\Str;
 class TagController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelPublished;
 
     /**
      * Create the controller instance.
@@ -180,5 +178,23 @@ class TagController extends Controller
     public function duplicate(Tag $tag): \Illuminate\Contracts\View\View
     {
         return $this->create($tag->replicate());
+    }
+
+    /**
+     * Change tag published.
+     *
+     * @param \App\Models\Tag $tag
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePublished(Tag $tag): \Illuminate\Http\RedirectResponse
+    {
+        if ($tag->getTranslation('name', config('app.fallback_locale'))) {
+            $tag->update(['published' => !$tag->getOriginal('published')]);
+            return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
+        } else {
+            return redirect()->back()->with('error', trans(__('crud.messages.translation_default_required', [
+                'fallbackLocale' => config('app.fallback_locale')
+            ])));
+        }
     }
 }

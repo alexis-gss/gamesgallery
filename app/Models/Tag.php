@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Lib\Helpers\ToolboxHelper;
 use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * @property integer                         $id           Id.
@@ -76,10 +78,12 @@ class Tag extends Model
     protected static function booted(): void
     {
         static::creating(function (self $tag) {
+            self::setSlug($tag);
             self::setOrder($tag);
             self::setPublishedDate($tag);
         });
         static::updating(function (self $tag) {
+            self::setSlug($tag);
             self::setPublishedDate($tag);
         });
         static::deleting(function (self $tag) {
@@ -88,6 +92,24 @@ class Tag extends Model
     }
 
     // * METHODS
+
+    /**
+     * Set model's slug.
+     *
+     * @param self $tag
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException If a tag name already exists.
+     */
+    private static function setSlug(self $tag)
+    {
+        $table = (new self())->getTable();
+        $slug  = Str::slug($tag->getTranslation('name', config('app.fallback_locale')) ?
+            $tag->getTranslation('name', config('app.fallback_locale')) :
+            $tag->name);
+        ToolboxHelper::assertFieldIsUnique($table, 'name', $tag->name, $tag->id);
+        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $tag->id);
+        $tag->slug = $slug;
+    }
 
     /**
      * Set model's published date.
