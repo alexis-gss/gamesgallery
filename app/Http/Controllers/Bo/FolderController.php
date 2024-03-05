@@ -7,7 +7,6 @@ use App\Http\Requests\Bo\Folders\StoreFolderRequest;
 use App\Http\Requests\Bo\Folders\UpdateFolderRequest;
 use App\Models\Folder;
 use App\Traits\Controllers\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,7 +14,6 @@ use Illuminate\Support\Str;
 class FolderController extends Controller
 {
     use ChangesModelOrder;
-    use UpdateModelPublished;
 
     /**
      * Create the controller instance.
@@ -172,5 +170,28 @@ class FolderController extends Controller
     public function duplicate(Folder $folder): \Illuminate\Contracts\View\View
     {
         return $this->create($folder->replicate());
+    }
+
+    /**
+     * Change folder published.
+     *
+     * @param \App\Models\Folder $folder
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePublished(Folder $folder): \Illuminate\Http\RedirectResponse
+    {
+        if ($folder->mandatory) {
+            if ($folder->getTranslation('name', config('app.fallback_locale'))) {
+                $folder->update(['published' => !$folder->getOriginal('published')]);
+                return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
+            } else {
+                return redirect()->back()->with('error', trans(__('crud.messages.translation_default_required', [
+                    'fallbackLocale' => config('app.fallback_locale')
+                ])));
+            }
+        } else {
+            $folder->update(['published' => !$folder->getOriginal('published')]);
+            return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
+        }
     }
 }

@@ -47,6 +47,7 @@ class Controller extends BaseController
             })->with('pictures')->get();
         $this->folderModels = Folder::query()
             ->where('published', true)
+            ->orderBy('mandatory', 'DESC')
             ->orderBy('slug', 'ASC')
             ->get()
             ->map(function ($gameModel) {

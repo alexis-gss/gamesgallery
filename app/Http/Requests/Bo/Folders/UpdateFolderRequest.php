@@ -24,11 +24,22 @@ class UpdateFolderRequest extends StoreFolderRequest
     public function rules(): array
     {
         $rules = [
-            'slug' => [
-                'required',
-                'string',
-                'unique:folders,slug,' . request()->folder->getKey(),
-                'max:255'
+            'name' => [
+                'required', 'string', 'min:2', 'max:255',
+                // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
+                function ($attribute, string $value, $fail) {
+                    /** @var \App\Models\Folder $folderModel */
+                    $folderModel = request()->route()->parameter('folder');
+                    if (
+                        $this->boolean('published') &&
+                        config('app.locale') !== config('app.fallback_locale') &&
+                        empty($folderModel->getTranslation('name', config('app.fallback_locale')))
+                    ) {
+                        $fail(trans('crud.messages.translation_default_required', [
+                            'fallbackLocale' => config('app.fallback_locale')
+                        ]));
+                    }
+                }
             ],
         ];
         return \array_merge(parent::rules(), $rules);

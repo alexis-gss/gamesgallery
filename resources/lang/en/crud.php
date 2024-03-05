@@ -22,6 +22,12 @@ return [
         'list_all'  => 'List all :model',
     ],
 
+    'libs'       => [
+        'toolbox' => [
+            'assertFieldIsUnique' => 'The :value for the :attribute field is already in use',
+        ]
+    ],
+
     'messages'   => [
         'has_been_created'                => ':model has been created',
         'cannot_be_created'               => ':model cannot be created',
@@ -36,6 +42,8 @@ return [
         'right'                           => 'You don\'t have the rights to access this part !',
         'theme_updated'                   => 'The theme has been updated !',
         'lang_updated'                    => 'The lang has been updated !',
+        'translation_default_required'    => 'The default translation (:fallbackLocale) is mandatory on publication !',
+        'translation_restrict'            => 'Translation restricted to mandatory folders !',
     ],
 
     'search' => [

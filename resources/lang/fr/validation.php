@@ -220,6 +220,7 @@ return [
         "order"             => "ordre",
         "publishment"       => "état de publication",
         'folder_associated' => 'dossier associé',
+        'folder_mandatory'  => 'dossier obligatoire',
         'model'             => 'élément ciblé',
         'event'             => 'évènement',
         'date_start'        => 'date de début',
@@ -229,12 +230,13 @@ return [
         'seo_description'   => 'description SEO',
     ],
     "rule"                 => [
-        'select-single'      => 'Sélectionner un :entity parmis la liste.',
-        'select-multiple'    => 'Sélectionner un ou plusieurs :entity parmis la liste.',
-        'images_label'       => 'Doît respecter le format (:format) ainsi que les dimensions (max):
+        'select-single'       => 'Sélectionner un :entity parmis la liste.',
+        'select-multiple'     => 'Sélectionner un ou plusieurs :entity parmis la liste.',
+        'images_label'        => 'Doît respecter le format (:format) ainsi que les dimensions (max):
             :widthpx (largeur) x :heightpx (hauteur).',
-        'password_empty'     => 'Laisser le champs vide pour garder le mot de passe actuel.',
-        'confirmation_label' => 'Doît être identique au mot de passe.',
-        'color_label'        => 'Doît être une couleur au format hexadecimal.',
+        'password_empty'      => 'Laisser le champs vide pour garder le mot de passe actuel.',
+        'confirmation_label'  => 'Doît être identique au mot de passe.',
+        'color_label'         => 'Doît être une couleur au format hexadecimal.',
+        'default_field'       => ':field par défaut: <strong>:value</strong>',
     ],
 ];

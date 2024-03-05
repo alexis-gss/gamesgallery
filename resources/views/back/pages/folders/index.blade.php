@@ -31,7 +31,19 @@
                 <tbody>
                     @foreach ($folderModels as $folderModel)
                         <tr class="border-bottom">
-                            <td class="text-center align-middle">{{ $folderModel->name }}</td>
+                            <td class="text-center align-middle">
+                                @if ($folderModel->mandatory)
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        @foreach (config('app.locales') as $locale)
+                                            <span @if ($locale !== config('app.fallback_locale')) class="fst-italic text-body-secondary" @endif>
+                                                {{ $folderModel->getTranslation('name', $locale) }}
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    {{ $folderModel->name }}
+                                @endif
+                            </td>
                             <td class="text-center align-middle">
                                 <div class="btn-sm preview-color mx-auto">
                                     <span class="d-block w-100 h-100 rounded-1" tabindex="0"

@@ -5,7 +5,6 @@ namespace App\Http\Requests\Bo\Folders;
 use App\Models\Folder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 
 class StoreFolderRequest extends FormRequest
 {
@@ -27,7 +26,7 @@ class StoreFolderRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug'      => Str::of(strip_tags($this->name))->slug()->value(),
+            'mandatory' => $this->boolean('mandatory'),
             'published' => $this->boolean('published'),
         ]);
     }
@@ -40,8 +39,21 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug'      => 'required|string|unique:folders,slug|max:255',
-            'name'      => 'required|string|min:2|max:255',
+            'name'      => [
+                'required', 'string', 'min:2', 'max:255',
+                // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
+                function ($attribute, string $value, $fail) {
+                    if (
+                        $this->boolean('published') &&
+                        config('app.locale') !== config('app.fallback_locale')
+                    ) {
+                        $fail(trans('crud.messages.translation_default_required', [
+                            'fallbackLocale' => config('app.fallback_locale')
+                        ]));
+                    }
+                }
+            ],
+            'mandatory' => 'required|boolean',
             'published' => 'required|boolean',
             'color'     => 'required|color_rgba',
         ];
@@ -56,8 +68,9 @@ class StoreFolderRequest extends FormRequest
     {
         return [
             'name'      => trans('name of the folder'),
-            'slug'      => trans('slug of the folder'),
-            'published' => trans('published status of the folder')
+            'mandatory' => trans('mandatory status of the folder'),
+            'published' => trans('published status of the folder'),
+            'color'     => trans('color of the folder')
         ];
     }
 }

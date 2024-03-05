@@ -193,6 +193,7 @@ return [
         "order"             => "order",
         "publishment"       => "publishment",
         'folder_associated' => 'folder associated',
+        'folder_mandatory'  => 'mandatory folder',
         'model'             => 'target element',
         'event'             => 'event',
         'date_start'        => 'start date',
@@ -202,12 +203,13 @@ return [
         'seo_description'   => 'SEO description',
     ],
     "rule"                 => [
-        'select-single'      => 'Choose a :entity among the list.',
-        'select-multiple'    => 'Choose one or multiple :entity among the list.',
-        'images_label'       => 'Respect the format (:format) and dimensions (max):
+        'select-single'       => 'Choose a :entity among the list.',
+        'select-multiple'     => 'Choose one or multiple :entity among the list.',
+        'images_label'        => 'Respect the format (:format) and dimensions (max):
             :widthpx (width) x :heightpx (height).',
-        'password_empty'     => 'Leave the field empty to keep the actual password.',
-        'confirmation_label' => 'Must be identical to the password.',
-        'color_label'        => 'Must be a color in hexadecimal format.',
+        'password_empty'      => 'Leave the field empty to keep the actual password.',
+        'confirmation_label'  => 'Must be identical to the password.',
+        'color_label'         => 'Must be a color in hexadecimal format.',
+        'default_field'       => ':field by default: <strong>:value</strong>',
     ],
 ];

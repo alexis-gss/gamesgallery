@@ -3,19 +3,22 @@
 namespace App\Models;
 
 use App\Casts\RgbaColor;
+use App\Lib\Helpers\ToolboxHelper;
 use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @property integer                         $id           Id.
  * @property string                          $slug         Slug of the name.
  * @property string                          $name         Name.
  * @property integer                         $color        Color.
+ * @property integer                         $order        Order.
+ * @property boolean                         $mandatory    Mandatory status.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon      $published_at Published date update.
- * @property integer                         $order        Order.
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
@@ -43,9 +46,10 @@ class Folder extends Model
         'slug',
         'name',
         'color',
+        'order',
+        'mandatory',
         'published',
         'published_at',
-        'order',
     ];
 
     /**
@@ -55,6 +59,7 @@ class Folder extends Model
      */
     protected $casts = [
         'color'        => RgbaColor::class,
+        'mandatory'    => 'bool',
         'published'    => 'bool',
         'published_at' => 'datetime'
     ];
@@ -76,15 +81,59 @@ class Folder extends Model
     protected static function booted(): void
     {
         static::creating(function (self $folder) {
+            self::setSlug($folder);
             self::setOrder($folder);
             self::setPublishedDate($folder);
+            self::setDefaultTranslation($folder);
         });
         static::updating(function (self $folder) {
+            self::setSlug($folder);
             self::setPublishedDate($folder);
+            self::setDefaultTranslation($folder);
         });
     }
 
     // * METHODS
+
+    /**
+     * Set model's slug.
+     *
+     * @param self $folder
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException If a folder name already exists.
+     */
+    private static function setSlug(self $folder)
+    {
+        $table = (new self())->getTable();
+        $slug  = Str::slug($folder->mandatory && $folder->getTranslation('name', config('app.fallback_locale')) ?
+            $folder->getTranslation('name', config('app.fallback_locale')) :
+            $folder->name);
+        ToolboxHelper::assertFieldIsUnique($table, 'name', $folder->name, $folder->id);
+        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $folder->id);
+        $folder->slug = $slug;
+    }
+
+    /**
+     * Set model's default translation.
+     *
+     * @param self $folder
+     *
+     * @return void
+     */
+    private static function setDefaultTranslation(self $folder): void
+    {
+        if (!$folder->mandatory) {
+            if (config('app.locale') !== config('app.fallback_locale')) {
+                $folder->setTranslation('name', config('app.fallback_locale'), $folder->name);
+            }
+            $locales          = config('app.locales');
+            $fallbelLocaleKey = array_search(config('app.fallback_locale'), config('app.locales'));
+            unset($locales[$fallbelLocaleKey]);
+            foreach ($locales as $locale) {
+                $folder->forgetTranslation('name', $locale);
+            }
+        }
+    }
 
     /**
      * Set model's published date.

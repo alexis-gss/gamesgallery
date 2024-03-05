@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
 
@@ -244,5 +245,42 @@ class ToolboxHelper
                 "JSON_EXTRACT({$column}, '$.{$locale}') = '{$value}'"
             ));
         });
+    }
+
+    /**
+     * Asserts that the field is unique
+     *
+     * @param string                                  $table
+     * @param string                                  $field
+     * @param string|integer|float|boolean|null|array $value
+     * @param integer|null                            $id
+     * @param callable|null                           $query
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException If the field is not unique.
+     */
+    public static function assertFieldIsUnique(
+        string $table,
+        string $field,
+        string|int|float|bool|null|array $value,
+        ?int $id = null,
+        ?callable $query = null
+    ) {
+        if (!$query) {
+            Validator::make([$field => $value], [
+                self::mbReplace('.', '\.', $field) => Rule::unique($table, $field)->ignore($id),
+            ], [
+                self::mbReplace('.', '\.', "{$field}.unique")
+                => trans('crud.libs.toolbox.assertFieldIsUnique', ['attribute' => $field, 'value' => $value])
+            ])->validate();
+            return;
+        }
+        Validator::make([$field => $value], [
+            $field => Rule::unique($table)->where($query)->ignore($id),
+        ], [
+            $field . '.unique' => trans(
+                'crud.libs.toolbox.assertFieldIsUnique',
+                ['attribute' => $field, 'value' => $value]
+            )
+        ])->validate();
     }
 }

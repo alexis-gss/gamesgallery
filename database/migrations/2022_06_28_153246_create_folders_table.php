@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique()->comment('Slugify the name of the folder.');
             $table->unsignedBigInteger('color')->comment('Color of the folder.');
             $table->integer('order')->comment('Order of this folder.');
+            $table->boolean('mandatory')->comment('The folder is a mandatory folder or not.');
             $table->boolean('published')->comment('The folder is published or not.');
             $table->timestamp('published_at')->nullable()->comment('The date on which the folder was published.');
             $table->timestamps();

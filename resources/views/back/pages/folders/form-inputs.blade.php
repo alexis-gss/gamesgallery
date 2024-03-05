@@ -11,6 +11,18 @@
                         </span>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'name'])'></div>
+                    @if ($folderModel->mandatory && config('app.locale') !== config('app.fallback_locale'))
+                        <div class="default-translation-value">
+                            {!! nl2br(
+                                __('validation.rule.default_field', [
+                                    'field' => Str::of(__('validation.attributes.name'))->ucFirst(),
+                                    'value' => empty(!$folderModel->getTranslation('name', config('app.fallback_locale')))
+                                        ? $folderModel->getTranslation('name', config('app.fallback_locale'))
+                                        : '...',
+                                ]),
+                            ) !!}
+                        </div>
+                    @endif
                     <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text"
                         value="{{ old('name', $folderModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}*">
                     <small class="text-body-secondary">
@@ -54,9 +66,9 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
-                        <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
+                        <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckPublished"
                             name="published" type="checkbox" value="1" role="button" @if (old('published', $folderModel->published ?? '')) checked @endif>
-                        <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
+                        <label class="form-check-label" for="flexSwitchCheckPublished" role="button">
                             <b>{{ Str::of(__('validation.custom.publishment'))->ucFirst() }}</b>
                         </label>
                         <br>
@@ -65,6 +77,20 @@
                         </small>
                     </div>
                     @include('back.modules.input-error', ['inputName' => 'published'])
+                </div>
+                <div class="col-12 col-md-6 form-check form-switch">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input @error('mandatory') is-invalid @enderror" id="flexSwitchCheckMandatory"
+                            name="mandatory" type="checkbox" value="1" role="button" @if (old('mandatory', $folderModel->mandatory ?? '')) checked @endif>
+                        <label class="form-check-label" for="flexSwitchCheckMandatory" role="button">
+                            <b>{{ Str::of(__('validation.custom.folder_mandatory'))->ucFirst() }}</b>
+                        </label>
+                        <br>
+                        <small class="form-text text-body-secondary">
+                            {{ __('validation.boolean', ['attribute' => __('validation.custom.folder_mandatory')]) }}
+                        </small>
+                    </div>
+                    @include('back.modules.input-error', ['inputName' => 'mandatory'])
                 </div>
             </div>
         </fieldset>

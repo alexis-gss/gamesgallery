@@ -22,6 +22,12 @@ return [
         'list_all'  => 'Lister l\'intégralité des :model',
     ],
 
+    'libs' => [
+        'toolbox' => [
+            'assertFieldIsUnique' => 'La :valeur du champ :attribut est déjà utilisée',
+        ]
+    ],
+
     'messages'   => [
         'has_been_created'                => ':model a été créé',
         'cannot_be_created'               => ':model n\'a pas été créé',
@@ -37,6 +43,9 @@ return [
         'right'                           => 'Vous n\'avez pas les droits d\'accès à cette partie !',
         'theme_updated'                   => 'Le thème a été mis à jour !',
         'lang_updated'                    => 'La langue a été mis à jour !',
+        'translation_default_required'    => 'La traduction par défaut (:fallbackLocale) est obligatoire
+            lors de la publication !',
+        'translation_restrict'            => 'Traduction restreinte aux dossiers obligatoires !',
     ],
 
     'search' => [
