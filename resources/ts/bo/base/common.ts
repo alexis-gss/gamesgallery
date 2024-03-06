@@ -31,25 +31,4 @@ window.addEventListener("DOMContentLoaded", () => {
             return false;
         });
     }
-    /**
-     * Show/hide password.
-     */
-    const elements = document.getElementsByClassName(
-        "password-btn"
-    ) as HTMLCollectionOf<Element>;
-    const inputPassword = document.getElementsByClassName(
-        "password-input"
-    ) as HTMLCollectionOf<HTMLInputElement>;
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].addEventListener("click", function () {
-            for (const item of elements[i].children) {
-                item.classList.toggle("d-none");
-            }
-            if (inputPassword[i].type === "password") {
-                inputPassword[i].type = "text";
-            } else {
-                inputPassword[i].type = "password";
-            }
-        });
-    }
 });

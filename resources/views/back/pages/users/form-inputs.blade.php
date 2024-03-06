@@ -118,8 +118,7 @@
                             type="password" value="{{ old('password') }}" aria-describedby="passwordHelp"
                             placeholder="{{ __('validation.attributes.password') }}" autocomplete="current-password">
                         @php $dataPassword = ['inputId' => 'password']; @endphp
-                        <span class="btn btn-primary password-visibility d-flex justify-content-center align-items-center w-fit p-0"
-                            data-json='@json($dataPassword)'>
+                        <span class="password-visibility" data-json='@json($dataPassword)'>
                         </span>
                     </div>
                     <small class="text-body-secondary">
@@ -144,8 +143,7 @@
                             value="{{ old('password_confirmation') }}" aria-describedby="passwordConfirmationHelp"
                             placeholder="{{ __('validation.attributes.password_confirmation') }}" autocomplete="current-password">
                         @php $dataPassword = ['inputId' => 'password_confirmation']; @endphp
-                        <span class="btn btn-primary password-visibility d-flex justify-content-center align-items-center w-fit p-0"
-                            data-json='@json($dataPassword)'>
+                        <span class="password-visibility" data-json='@json($dataPassword)'>
                         </span>
                     </div>
                     <small class="text-body-secondary">

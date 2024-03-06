@@ -3,7 +3,7 @@
     ref="passwordVisibility"
     @click.prevent="toggleVisibility()"
     @keydown="keydown"
-    :class="`btn btn-primary rounded-0 rounded-end password-visibility-${inputId} h-100`"
+    :class="`btn btn-primary rounded-0 password-visibility-${inputId} h-100`"
     :aria-pressed="visible"
   >
     <span
@@ -115,7 +115,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.reveal {
-  width: 52px;
+.password-visibility {
+  .btn-primary {
+    border-bottom-right-radius: var(--bs-border-radius) !important;
+  }
+  .reveal {
+    width: 52px;
+  }
 }
 </style>
