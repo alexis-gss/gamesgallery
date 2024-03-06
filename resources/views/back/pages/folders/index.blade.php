@@ -45,9 +45,13 @@
                                 @endif
                             </td>
                             <td class="text-center align-middle">
-                                <div class="btn-sm preview-color mx-auto">
-                                    <span class="d-block w-100 h-100 rounded-1" tabindex="0"
-                                        style="background-color:{{ $folderModel->color }}"></span>
+                                <div class="d-flex justify-content-center align-items-center flex-row">
+                                    <p class="m-0">
+                                        {{ $folderModel->color }}
+                                    </p>
+                                    <span class="border-secondary rounded-circle ms-2 border p-2"
+                                        style="background-color:{{ $folderModel->color }}">
+                                    </span>
                                 </div>
                             </td>
                             @include('back.modules.change-published-status', [

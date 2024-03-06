@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Casts\RgbaColor;
+use App\Casts\HtmlColor;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
  * @property integer                         $id           Id.
  * @property string                          $slug         Slug of the name.
  * @property string                          $name         Name.
- * @property integer                         $color        Color.
+ * @property \App\Casts\HtmlColor            $color        Color.
  * @property integer                         $order        Order.
  * @property boolean                         $mandatory    Mandatory status.
  * @property boolean                         $published    Published status.
@@ -58,7 +58,7 @@ class Folder extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'color'        => RgbaColor::class,
+        'color'        => HtmlColor::class,
         'mandatory'    => 'bool',
         'published'    => 'bool',
         'published_at' => 'datetime'

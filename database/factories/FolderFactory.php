@@ -23,7 +23,7 @@ final class FolderFactory extends Factory
         return [
             'name'         => $name,
             'slug'         => Str::of($name)->slug(),
-            'color'        => fake()->unique()->rgbCssColor(),
+            'color'        => fake()->unique()->safeHexColor(),
             'mandatory'    => $mandatory,
             'published'    => $published,
             'published_at' => ($published) ? now() : null,

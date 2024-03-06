@@ -46,8 +46,8 @@
                             'id' => 'folderColor',
                             'name' => 'color',
                             'value' => old('color', $folderModel->color ?? ''),
-                            'rgbaMode' => $rgbaMode ?? true,
-                            'nullable' => $nullable ?? false,
+                            'rgbaMode' => false,
+                            'nullable' => false,
                             'ariaDescribedby' => 'folderColorHelp',
                         ];
                     @endphp

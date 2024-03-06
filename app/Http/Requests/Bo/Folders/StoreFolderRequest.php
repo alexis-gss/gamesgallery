@@ -5,6 +5,7 @@ namespace App\Http\Requests\Bo\Folders;
 use App\Models\Folder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use LVR\Colour\Hex;
 
 class StoreFolderRequest extends FormRequest
 {
@@ -55,7 +56,7 @@ class StoreFolderRequest extends FormRequest
             ],
             'mandatory' => 'required|boolean',
             'published' => 'required|boolean',
-            'color'     => 'required|color_rgba',
+            'color'     => ['required', new Hex()],
         ];
     }
 
