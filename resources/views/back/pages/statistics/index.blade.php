@@ -54,8 +54,9 @@
                                                     {{ Str::of(__('validation.attributes.updated_at'))->ucfirst() }}
                                                 </td>
                                                 <td class="border-0 bg-transparent text-center align-middle">
-                                                    <span
-                                                        class="badge bg-secondary">{{ $navLink['model']->updated_at->isoFormat('LLLL') }}</span>
+                                                    <span class="badge rounded-pill bg-secondary">
+                                                        {{ $navLink['model']->updated_at->isoFormat('LLLL') }}
+                                                    </span>
                                                 </td>
                                             </tr>
                                         </tbody>

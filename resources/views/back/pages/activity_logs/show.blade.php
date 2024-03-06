@@ -69,7 +69,9 @@
                                         <td class="w-50 fw-bold text-center align-middle">
                                             {{ Str::of(__('validation.attributes.created_at'))->ucFirst() }}</td>
                                         <td class="w-50 text-center align-middle">
-                                            <span class="badge bg-secondary">{{ $activitylogModel->created_at->isoFormat('LLLL') }}</span>
+                                            <span class="badge rounded-pill bg-secondary">
+                                                {{ $activitylogModel->created_at->isoFormat('LLLL') }}
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>

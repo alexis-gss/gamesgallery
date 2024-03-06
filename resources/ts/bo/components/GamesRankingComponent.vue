@@ -30,7 +30,7 @@
               <FontAwesomeIcon icon="fa-solid fa-grip-vertical" />
             </button>
             <p class="m-0">
-              <span class="badge bg-secondary">
+              <span class="badge rounded-pill bg-secondary">
                 {{ item.rank }}
               </span>
             </p>

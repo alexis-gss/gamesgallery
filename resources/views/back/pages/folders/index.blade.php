@@ -59,7 +59,7 @@
                                 'model' => $folderModel,
                             ])
                             <td class="text-center align-middle">
-                                <span class="badge bg-secondary">{{ $folderModel->updated_at->isoFormat('LLLL') }}</span>
+                                <span class="badge rounded-pill bg-secondary">{{ $folderModel->updated_at->isoFormat('LLLL') }}</span>
                             </td>
                             @php $routeName = request()->route()->getName(); @endphp
                             @if (empty(request()->search) && Session::get("$routeName.sort_col") === 'order')

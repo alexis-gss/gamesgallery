@@ -44,7 +44,9 @@
                                 @endif
                             </td>
                             @php
-                                $targetModel = $activitylogModel->model_class::where((new $activitylogModel->model_class())->getRouteKeyName(), $activitylogModel->model_id)->first();
+                                $targetModel = $activitylogModel->model_class
+                                    ::where((new $activitylogModel->model_class())->getRouteKeyName(), $activitylogModel->model_id)
+                                    ->first();
                                 $editRouteName = 'bo.' . optional($targetModel)->getTable() . '.edit';
                             @endphp
                             <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
@@ -59,7 +61,7 @@
                                 @endif
                             </td>
                             <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
-                                <span class="badge bg-secondary">
+                                <span class="badge rounded-pill bg-secondary">
                                     {{ $activitylogModel->created_at->isoFormat('LLLL') }}
                                 </span>
                             </td>

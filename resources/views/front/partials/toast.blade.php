@@ -3,7 +3,7 @@
     <div class="toast text-bg-secondary fade hide border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto">
-                <span class="badge rounded-2 m-0 px-2 py-0 text-white"></span>
+                <span class="badge rounded-pill rounded-2 m-0 px-2 py-0 text-white"></span>
                 <span class="toast-action">Like ajouté</span>
             </strong>
             <small class="text-body-secondary">{{ __('fo_toast_time') }}</small>

@@ -15,7 +15,7 @@
                     'game' => $pictureRating->picture->game->name,
                 ]) }}
             </button>
-            <span class="badge bg-secondary rounded-pill">{{ $pictureRating->ratings_count }}</span>
+            <span class="badge rounded-pill bg-secondary">{{ $pictureRating->ratings_count }}</span>
             <div class="modal" id="ModalViewPicture" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" tabindex="-1">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="modal-dialog modal-xl" role="document">
