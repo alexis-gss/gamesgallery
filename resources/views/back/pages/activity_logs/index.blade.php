@@ -36,7 +36,7 @@
                                         {{ $activitylogModel->user->last_name }}&nbsp;{{ $activitylogModel->user->first_name }}
                                     </a>
                                 @elseif($activitylogModel->is_console)
-                                    {{ __('Utilisateur dans la console') }}
+                                    {{ __('bo_other_user_console') }}
                                 @elseif($activitylogModel->is_anonymous)
                                     {{ __('bo_other_user_anonym') }}
                                 @else

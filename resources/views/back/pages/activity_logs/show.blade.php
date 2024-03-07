@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 @if (isset($activitylogModel->data)) border-bottom @endif mb-3">
+        <div class="col-12 @if (isset($activitylogModel->data) && count($activitylogModel->data)) border-bottom @endif mb-3">
             <fieldset class="p-3">
                 <legend>{{ __('bo_title_general_informations') }}</legend>
                 <div class="row">
@@ -33,6 +33,8 @@
                                                     title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}">
                                                     {{ $activitylogModel->user->last_name }}&nbsp;{{ $activitylogModel->user->first_name }}
                                                 </a>
+                                            @elseif($activitylogModel->is_console)
+                                                {{ __('bo_other_user_console') }}
                                             @elseif($activitylogModel->is_anonymous)
                                                 {{ __('bo_other_user_anonym') }}
                                             @else
@@ -81,7 +83,7 @@
                 </div>
             </fieldset>
         </div>
-        @if (isset($activitylogModel->data))
+        @if (isset($activitylogModel->data) && count($activitylogModel->data))
             <div class="col-12 mb-3">
                 <fieldset class="p-3">
                     <legend>{{ __('bo_title_changes_made') }}</legend>
