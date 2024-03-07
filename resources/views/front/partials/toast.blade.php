@@ -1,4 +1,4 @@
-<div class="toast-container position-fixed end-0 top-0 p-3">
+<div class="toast-container position-fixed top-0 p-3">
     {{-- TOASTS TEMPLATE --}}
     <div class="toast text-bg-secondary fade hide border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
