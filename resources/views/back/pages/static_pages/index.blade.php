@@ -32,13 +32,34 @@
                     @foreach ($staticPageModels as $staticPageModel)
                         <tr class="border-bottom">
                             <td class="text-center align-middle">
-                                <p class="col-10 text-truncate m-0">{{ $staticPageModel->seo_title }}</p>
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    @foreach (config('app.locales') as $locale)
+                                        <p
+                                            class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif col-10 text-truncate m-0">
+                                            {{ $staticPageModel->getTranslation('seo_title', $locale) }}
+                                        </p>
+                                    @endforeach
+                                </div>
                             </td>
                             <td class="text-center align-middle">
-                                <p class="col-10 text-truncate m-0">{{ $staticPageModel->seo_description }}</p>
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    @foreach (config('app.locales') as $locale)
+                                        <p
+                                            class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif col-10 text-truncate m-0">
+                                            {{ $staticPageModel->getTranslation('seo_description', $locale) }}
+                                        </p>
+                                    @endforeach
+                                </div>
                             </td>
                             <td class="text-center align-middle">
-                                <p class="col-10 text-truncate m-0">{{ $staticPageModel->title }}</p>
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    @foreach (config('app.locales') as $locale)
+                                        <p
+                                            class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif col-10 text-truncate m-0">
+                                            {{ $staticPageModel->getTranslation('title', $locale) }}
+                                        </p>
+                                    @endforeach
+                                </div>
                             </td>
                             <td class="text-center align-middle">
                                 <span class="badge rounded-pill bg-secondary">{{ $staticPageModel->updated_at->isoFormat('LLLL') }}</span>
