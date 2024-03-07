@@ -73,12 +73,16 @@ body {
 }
 
 .breadcrumb {
-    &-resize {
-        width: calc(100% - calc(2 * 46px)) !important;
-    }
-
     &-item + &-item::before {
         color: $color-light !important;
+    }
+
+    &-resize {
+        left: 1.5rem;
+        width: calc(100% - 2rem) !important;
+        margin: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 

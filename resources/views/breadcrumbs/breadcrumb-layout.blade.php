@@ -11,8 +11,10 @@
                 </li>
             @else
                 <li
-                    class="breadcrumb-item btn-games d-flex align-items-center flex-grow-1 active @if (Request::is('bo/*')) h2 m-0 fw-bold @else text-white @endif">
-                    {{ $breadcrumb->title }}
+                    class="breadcrumb-item btn-games position-relative d-flex align-items-center flex-grow-1 active @if (Request::is('bo/*')) h2 m-0 fw-bold @else text-white @endif">
+                    <p class="@if (!Request::is('bo/*')) breadcrumb-resize position-absolute overflow-hidden text-start @endif m-0">
+                        {{ $breadcrumb->title }}
+                    </p>
                 </li>
             @endif
         @endforeach

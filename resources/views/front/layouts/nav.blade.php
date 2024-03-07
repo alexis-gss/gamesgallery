@@ -5,7 +5,8 @@
         @include('front.partials.games-list')
     </div>
     <!-- Buttons -->
-    <button class="btn d-flex justify-content-start align-items-center bg-primary rounded-2 text-light w-100 mt-2 flex-row border-0 p-0">
+    <button
+        class="btn d-flex justify-content-start align-items-center bg-primary rounded-2 text-light w-100 mt-2 flex-row overflow-hidden border-0 p-0">
         <span class="btn-games p-3">
             <i class="fa-solid fa-bars"></i>
         </span>
