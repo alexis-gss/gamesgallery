@@ -75,7 +75,7 @@ class GameController extends Controller
         $selectedTagId    = intval($request->filters_id[0] ?? 0);
         $selectedFolderId = intval($request->filters_id[1] ?? 0);
         /** @var \Illuminate\Support\Collection $gamesFiltered */
-        $gamesFiltered = Game::query()->where('published', true)
+        $gamesFiltered = Game::query()->with('pictures')->where('published', true)
             ->when($selectedTagId, function ($query) use ($selectedTagId) {
                 $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
                     $query->where('id', $selectedTagId);

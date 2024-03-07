@@ -1,9 +1,6 @@
 @php
     $dataGame = [
-        'games' => $gameModels->map(function ($game) {
-            $game['countpictures'] = count($game->pictures);
-            return $game;
-        }),
+        'games' => $gameModels,
         'gamesCount' => count($gameModels),
         'allFolders' => $folderModels,
         'allTags' => $tagModels,

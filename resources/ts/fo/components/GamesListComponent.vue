@@ -119,7 +119,7 @@
                   </template>
                   <span>{{ game.name }}</span>
                 </div>
-                <span>{{ game.countpictures }}</span>
+                <span>{{ game.pictures.length }}</span>
               </a>
             </li>
           </template>
@@ -158,7 +158,7 @@ export default defineComponent({
         folder_id: number;
         slug: string;
         name: string;
-        countpictures: number;
+        pictures: Object[];
       }
     ];
     gamesCount: number;
@@ -177,7 +177,7 @@ export default defineComponent({
           folder_id: 0,
           slug: "",
           name: "",
-          countpictures: 0,
+          pictures: [],
         },
       ],
       gamesCount: 0,
@@ -206,12 +206,12 @@ export default defineComponent({
     clearInputSearch() {
       if (this.searchInput) this.searchInput.value = "";
       this.search = "";
-      this.ajaxGamesFiltered([]);
       document
         .querySelectorAll("select")
         .forEach((element: HTMLSelectElement) => {
           element.value = "0";
         });
+      this.ajaxGamesFiltered([]);
     },
     /**
      * Return a list of games which corresponds to the search from input text.
