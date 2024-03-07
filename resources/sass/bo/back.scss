@@ -8,8 +8,9 @@
 @import "./libs/vue-nestable";
 
 // * BASE.
-@import './base/custom';
+@import './base/common';
 @import './base/fonts';
 
 // * PAGES.
+@import './pages/home';
 @import './pages/statistics';

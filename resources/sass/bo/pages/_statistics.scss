@@ -1,6 +1,16 @@
-#tab-latest-data-updated {
-    .nav-item .active {
-        border-bottom-color: rgba(#{var(--bs-tertiary-bg-rgb)}, 1);
-        background-color: rgba(#{var(--bs-tertiary-bg-rgb)}, 1);
+#statistics {
+    #tab-latest-data-updated {
+        .nav-item .active {
+            border-bottom-color: rgba(#{var(--bs-tertiary-bg-rgb)}, 1);
+            background-color: rgba(#{var(--bs-tertiary-bg-rgb)}, 1);
+        }
+    }
+
+    .charts-sm {
+        height: 300px;
+    }
+
+    .charts-md {
+        height: 500px;
     }
 }

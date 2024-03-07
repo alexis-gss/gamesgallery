@@ -1,7 +1,20 @@
 @use "sass:list";
 @import "mixins";
 
-// SET SOME CLASSES WITH BOOTSTRAP BREAKPOINTS
+// * OTHERS VARIABLES
+.w-fit {
+    width: fit-content;
+}
+
+.btn-md {
+    height: 38px;
+}
+
+.btn-sm {
+    height: 31px;
+}
+
+// * RESPONSIVE VARIABLES
 @each $breakpoint in map-keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);

@@ -19,3 +19,6 @@ $theme-colors: (
     dark: $dark,
     "white": $white,
 );
+
+// * OVERRIDE BOOTSTRAP VARS.
+$font-family-base: $font-default-family-base;

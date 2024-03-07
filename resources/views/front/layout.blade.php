@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <div class="position-relative text-font-regular">
+    <div class="position-relative">
         <div class="container">
             @include('front.partials.btn-github')
 

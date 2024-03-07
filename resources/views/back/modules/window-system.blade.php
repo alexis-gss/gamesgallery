@@ -8,11 +8,6 @@
         window.__SYSTEM._routes = {}
     }
     window.__SYSTEM._routes = {
-        fo: {
-            games: {
-                show: "{{ route('fo.games.show', ['slug' => 'SLUG']) }}",
-            },
-        },
         bo: {
             tags: {
                 store: "{{ route('bo.tags.store') }}",
@@ -29,6 +24,11 @@
                 games: "{{ route('bo.ranks.games') }}",
                 saveOrder: "{{ route('bo.ranks.save-order', 'RANKS') }}",
                 destroy: "{{ route('bo.ranks.destroy', 'ID') }}",
+            },
+        },
+        fo: {
+            games: {
+                show: "{{ route('fo.games.show', ['slug' => 'SLUG']) }}",
             },
         }
     }

@@ -13,6 +13,7 @@ body {
 
     > main {
         min-height: calc(100vh - #{$bo-header-height} - #{$bo-footer-height});
+        margin-top: $bo-header-height !important;
     }
 
     > footer {
@@ -21,22 +22,19 @@ body {
     }
 }
 
-svg {
-    vertical-align: sub !important;
-}
-
-.container-fluid {
-    margin-top: #{$bo-header-height};
-}
-
 #navbar {
     overflow: auto;
-    min-height: #{$bo-header-height};
+    min-height: $bo-header-height;
     max-height: 100vh;
 
     @include media-breakpoint-up(xl) {
         overflow: visible;
-        height: #{$bo-header-height};
+        height: $bo-header-height;
+    }
+
+    .profile-picture {
+        width: 2rem;
+        height: 2rem;
     }
 }
 
@@ -85,27 +83,6 @@ svg {
     }
 }
 
-.profile-picture {
-    width: 2rem;
-    height: 2rem;
-}
-
-.password-btn {
-    width: 2.9rem;
-}
-
-.btn-md {
-    height: 38px;
-}
-
-.btn-sm {
-    height: 31px;
-}
-
-.preview-color {
-    width: 32px;
-}
-
 .navbar .dropdown-menu-custom,
 .pagination-custom .dropdown-menu {
     overflow: auto;
@@ -131,10 +108,6 @@ svg {
     }
 }
 
-.changelog {
-    height: 48vh;
-}
-
 .card {
     .flex-fill {
         min-width: 50%;
@@ -156,37 +129,25 @@ svg {
     }
 }
 
-.charts-sm {
-    height: 300px;
-}
-
-.charts-md {
-    height: 500px;
-}
-
 .title-font-regular {
-    font-family: #{$font-default-title};
-}
+    font-family: $font-default-title;
 
-.angles {
-    position: absolute;
-    z-index: 0;
-    background:
-        linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 0,
-        linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 0 0,
-        linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 0,
-        linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 100% 0,
-        linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
-        linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
-        linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 100%,
-        linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 0 100%;
-    background-repeat: no-repeat;
-    background-size: 7px 7px;
-    inset: 0;
-}
-
-.w-fit {
-    width: fit-content;
+    .angles {
+        position: absolute;
+        z-index: 0;
+        background:
+            linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 0,
+            linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 0 0,
+            linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 0,
+            linear-gradient(to bottom, #{$color-tertiary} 2px, transparent 2px) 100% 0,
+            linear-gradient(to left, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
+            linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 100% 100%,
+            linear-gradient(to right, #{$color-tertiary} 2px, transparent 2px) 0 100%,
+            linear-gradient(to top, #{$color-tertiary} 2px, transparent 2px) 0 100%;
+        background-repeat: no-repeat;
+        background-size: 7px 7px;
+        inset: 0;
+    }
 }
 
 .default-translation-value {

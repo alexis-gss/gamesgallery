@@ -1,26 +1,14 @@
 .nav {
-    z-index: #{$zindex-fixed};
+    z-index: $zindex-fixed;
     bottom: 1rem;
     width: 30rem !important;
     max-width: calc(100% - 2rem);
 
-    .game-selected {
-        font-style: italic;
-
-        svg {
-            width: 16px;
-        }
-    }
-
-    .simplebar-content {
-        height: 100%;
-    }
-
     &-modal {
         overflow: hidden;
         max-width: 100%;
-        max-height: #{$fo-menu-height};
-        transition: #{$time-transition-global};
+        max-height: $fo-menu-height;
+        transition: $time-transition-global;
 
         &-hidden {
             overflow: hidden;
@@ -31,12 +19,12 @@
 
     &-games {
         &-list {
-            height: calc(#{$fo-menu-height} - 8rem);
+            height: calc(#{$fo-menu-height} - 10rem);
             overflow-y: auto;
-        }
 
-        a:hover svg {
-            width: 16px;
+            @include media-breakpoint-up(xl) {
+                height: calc(#{$fo-menu-height} - 8rem);
+            }
         }
     }
 

@@ -16,13 +16,13 @@
             @if (!auth('backend')->user())
                 <div class="d-flex flex-column align-items-center justify-content-center h-100 pb-5">
             @else
-                <!-- Show a message when an action is performed -->
+                {{-- Show a message when an action is performed --}}
                 @include('back.modules.flash-messages')
-            @endauth
+            @endif
             @yield('content')
             @if (!auth('backend')->user())
                 </div>
-            @endauth
+            @endif
         </div>
     </main>
 

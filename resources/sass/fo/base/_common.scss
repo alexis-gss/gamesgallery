@@ -1,46 +1,50 @@
 body {
     min-height: 100vh;
-}
 
-.main {
-    &-home {
-        min-height: calc(100vh - 2rem);
+    .main {
+        &-home {
+            min-height: calc(100vh - 2rem);
 
-        &-latest {
-            width: 100%;
-            height: 2rem;
+            &-latest {
+                width: 100%;
+                height: 2rem;
 
-            .fw-bold {
-                min-width: 10.4rem;
+                .fw-bold {
+                    min-width: 10.4rem;
+                }
             }
         }
-    }
 
-    &-page {
-        min-height: calc(100vh - 10rem - 3rem);
+        &-page {
+            min-height: calc(100vh - 10rem - 3rem);
+        }
     }
 }
 
-.angles {
-    position: absolute;
-    z-index: 0;
-    background:
-        linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 0,
-        linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 0 0,
-        linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 0,
-        linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 100% 0,
-        linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 100%,
-        linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 100% 100%,
-        linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 100%,
-        linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 0 100%;
-    background-repeat: no-repeat;
-    background-size: 7px 7px;
-    inset: 0;
+.title-font-regular {
+    font-family: $font-default-title;
+
+    .angles {
+        position: absolute;
+        z-index: 0;
+        background:
+            linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 0,
+            linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 0 0,
+            linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 0,
+            linear-gradient(to bottom, #{$color-primary} 2px, transparent 2px) 100% 0,
+            linear-gradient(to left, #{$color-primary} 2px, transparent 2px) 100% 100%,
+            linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 100% 100%,
+            linear-gradient(to right, #{$color-primary} 2px, transparent 2px) 0 100%,
+            linear-gradient(to top, #{$color-primary} 2px, transparent 2px) 0 100%;
+        background-repeat: no-repeat;
+        background-size: 7px 7px;
+        inset: 0;
+    }
 }
 
 .github-icon {
     position: absolute;
-    z-index: #{$zindex-fixed};
+    z-index: $zindex-fixed;
     width: 10rem;
     height: 2rem;
     transform: translate(-3rem, 1rem) rotate(-45deg);
@@ -52,7 +56,7 @@ body {
 
 .btn {
     &-scroll {
-        z-index: #{$zindex-fixed};
+        z-index: $zindex-fixed;
         right: 4.5rem;
         bottom: 1rem;
         overflow: hidden;
@@ -74,7 +78,7 @@ body {
     }
 
     &-item + &-item::before {
-        color: #{$color-light} !important;
+        color: $color-light !important;
     }
 }
 
