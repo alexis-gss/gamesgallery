@@ -112,7 +112,7 @@ Breadcrumbs::for('bo.users.duplicate', function (Generator $trail) {
 // * ACTIVITY_LOGS
 Breadcrumbs::for('bo.activity_logs.index', function (Generator $trail) {
     $trail->push(
-        Str::of(trans_choice('models.activity_log', '*'))->ucfirst(),
+        Str::of(trans_choice('models.activity_log', 2))->ucfirst(),
         route('bo.activity_logs.index')
     );
 });

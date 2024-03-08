@@ -226,6 +226,7 @@ export default defineComponent({
             .then((reponse) => {
               this.intRanks = reponse.data;
               this.intLoading = false;
+              this.updateRank();
               this.$nextTick(() => {
                 this.tooltips?.refreshTooltips();
               });

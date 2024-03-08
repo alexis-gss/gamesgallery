@@ -25,6 +25,7 @@
                             'value' => [],
                             'items' => $gameModels,
                             'placeholder' => __('bo_other_rank_add'),
+                            'ranking' => true,
                         ];
                     @endphp
                     <div class="form-control w-100 border-0 p-0" id="belongs-to-many-dropdown" data-json='@json($data)'></div>

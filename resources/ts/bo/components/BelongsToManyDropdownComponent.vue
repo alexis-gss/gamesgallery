@@ -120,7 +120,7 @@ export default defineComponent({
     this.intTags = this.parseTags(this.value ?? data.value ?? []);
     this.allItems = this.parseTags(this.items ?? data.items ?? []);
     this.allErrors = data.errors;
-    this.intRanking = this.ranking ?? data.ranking;
+    this.intRanking = (this.ranking) ? this.ranking : data.ranking;
     if (this.intRanking) {
       this.$nextTick(() => {
         const component = document.querySelector(".taggable-" + this.intId);

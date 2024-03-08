@@ -40,7 +40,7 @@ class StoreRankRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ranks'   => 'sometimes|array',
+            'ranks'   => 'present|array|min:1',
             'ranks.*' => 'required|numeric|exists:games,id|distinct',
         ];
     }

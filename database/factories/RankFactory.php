@@ -18,7 +18,11 @@ final class RankFactory extends Factory
      */
     public function definition(): array
     {
-        $gamesUnrank = Game::query()->whereNotIn('id', DB::table('ranks')->pluck('game_id'))->get();
+        $gamesUnrank = Game::query()
+            ->where('published', true)
+            ->whereNotIn('id', DB::table('ranks')
+            ->pluck('game_id'))
+            ->get();
         return [
             'game_id' => (count($gamesUnrank)) ? $gamesUnrank->random()->getKey() : null,
         ];
