@@ -1,3 +1,15 @@
+#### **08.03.24 ► v4.2.0**
+
+-   Add mandatory folders
+-   Add pictures/ratings seeder
+-   Add on update/on delete action on foreign keys
+-   Add administrable translations fields
+-   Add vite plugin purge css
+-   Add warning sweetalert popup on action event
+-   Fix responsive front
+-   Remove unused opacity on folder color (rgba to hex)
+-   Clean blades/sass files
+
 #### **15.02.24 ► v4.1.1**
 
 -   Add previous query when redirect on delete model
