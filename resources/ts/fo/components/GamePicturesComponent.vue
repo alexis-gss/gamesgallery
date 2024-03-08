@@ -13,11 +13,14 @@
             <div
               v-for="(pictureValue, pictureIndex) in templateValue"
               :key="pictureValue"
-              class="glightbox-wrapper position-relative col-12 p-1"
+              class="glightbox-wrapper position-relative col-12 p-0"
               :class="((templateValue % 2 === 0) ? `col-sm-6` : `col-sm-12`) + ` col-lg-${gameItems / templateValue}`"
               data-aos="fade-up"
             >
-              <template v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]">
+              <div
+                class="p-1"
+                v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]"
+              >
                 <a
                   :href="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
                   class="glightbox"
@@ -71,7 +74,7 @@
                     :class="(!picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
                   />
                 </button>
-              </template>
+              </div>
             </div>
           </div>
         </template>
