@@ -81,7 +81,14 @@ class GameController extends Controller
         $folderModels = Folder::query()->where('published', true)->get();
 
         /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
-        $tagModels = Tag::select(['id', 'name', 'slug'])->where('published', true)->get();
+        $tagModels = Tag::select(['id', 'name', 'slug'])
+            ->where('published', true)
+            ->get()
+            ->map(function ($tagModel) {
+                // @phpstan-ignore-next-line
+                $tagModel->nameLocale = $tagModel->name;
+                return $tagModel;
+            });
 
         return view('back.pages.games.create', [
             'gameModel'    => $game,
