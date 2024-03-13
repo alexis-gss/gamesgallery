@@ -1,7 +1,7 @@
 <template>
   <div
     ref="imagesInput"
-    :class="`container images-input images-input-${intId} p-0`"
+    :class="`images-input images-input-${intId} p-0`"
   >
     <!-- Main buttons -->
     <div class="row">
