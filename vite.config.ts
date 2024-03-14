@@ -11,21 +11,12 @@ import babel from "vite-plugin-babel";
 import checker from "vite-plugin-checker";
 import eslint from "vite-plugin-eslint";
 import stylelint from "vite-plugin-stylelint";
+import { sassSafelist } from "./resources/ts/utilities/sass-safelist";
 
 const purgePlugin = purge({
     templates: ["blade"],
-    paths: [
-        "resources/{js,ts,views}/**/*.{ts,js,vue}"
-    ],
-    safelist: [
-        // Bootstrap
-        /^cropper-/, /^offcanvas-/, /^tooltip/, /^bs-tooltip/, /^data-popper/, /.*\[data-popper-placement].*/,
-        /^bs-popover/, /^popover/, /^modal-/, /^bg-*/, /^collapsing/, /^showing/, /^col-.*/, /^data-bs-.*/,
-        // Vue
-        /-(leave|enter|appear)(|-(to|from|active))$/, /^(?!(|.*?:)cursor-move).+-move$/, /^router-link(|-exact)-active$/, /data-v-.*/,
-        // Other libraries
-        /^aos-.*/, /^simplebar-.*/, /^g.*/
-    ],
+    paths: ["resources/{js,ts,views}/**/*.{ts,js,vue}"],
+    safelist: sassSafelist,
 });
 purgePlugin.apply = (config: UserConfig, env: ConfigEnv) => env.mode === "production";
 
