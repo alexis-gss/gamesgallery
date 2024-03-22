@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
  * @property string                                        $model_id    Id of the target model.
  * @property \App\Enums\ActivityLogs\ActivityLogsEventEnum $event       Event of this activity (ActivityLogsEventEnum).
  * @property array                                         $data        Changes.
- * @property-read \Illuminate\Support\Carbon               $created_at  Created date.
+ * @property \Illuminate\Support\Carbon                    $created_at  Created date.
  *
  * @property-read \App\Models\Folder     $folder Get Folder that owns the Activity log (belongs-to relationship).
  * @property-read \App\Models\Game       $game Get Game that owns the Activity log (belongs-to relationship).
@@ -80,8 +80,7 @@ class ActivityLog extends Model
         $activity->model_id     = $model->getKey();
         $activity->event        = $eventEnum;
         $activity->data         = static::getChangedColumns($activity, $model, $eventEnum);
-        // @phpstan-ignore-next-line
-        $activity->created_at = now();
+        $activity->created_at   = now();
         $activity->saveOrFail();
     }
 
@@ -110,14 +109,18 @@ class ActivityLog extends Model
             ->map(fn ($value) => self::getValueType($value))
             ->toArray();
         /** Return old, new and type of values changed */
-        return ($eventEnum === ActivityLogsEventEnum::updated) ?
-            array_intersect_key($targetModelTypes, $model->getChanges()) : [];
+        return match ($eventEnum) {
+            ActivityLogsEventEnum::created    => array_intersect_key($targetModelTypes, $model->toArray()),
+            ActivityLogsEventEnum::duplicated => array_intersect_key($targetModelTypes, $model->toArray()),
+            ActivityLogsEventEnum::updated    => array_intersect_key($targetModelTypes, $model->getChanges()),
+            default => []
+        };
     }
 
 
     /**
      * Get a value type as a string
-     * ! Use this for display purpose only
+     * ! Use this for display purpose only.
      *
      * @param mixed $value
      * @return string
@@ -129,18 +132,15 @@ class ActivityLog extends Model
         // phpcs:enable
         $type = \gettype($value);
         switch ($type) {
-                // phpcs:ignore PSR2.ControlStructures.SwitchDeclaration.TerminatingComment
             case 'string':
                 return match (true) {
-                    Str::length(\strip_tags($value)) !== Str::length($value) => 'html',
-                    Str::startsWith($value, 'storage/modelfiles') => 'file',
-                    Str::isUuid($value) => 'uuid',
-                    Str::isUlid($value) => 'ulid',
-                    Str::isUrl($value) => 'url',
-                    Str::isMatch('/^[0-9A-Za-z_-]{10}[048AEIMQUYcgkosw]$/', $value) => 'youtube_video_id',
-                    \is_numeric($value) => 'numeric',
-                    Str::isJson($value) and
-                        (Str::startsWith($value, '[') or Str::startsWith($value, '{')) => 'json',
+                    Str::length(\strip_tags($value)) !== Str::length($value)           => 'html',
+                    Str::startsWith($value, 'storage/modelfiles')                      => 'file',
+                    Str::isUuid($value)                                                => 'uuid',
+                    Str::isUlid($value)                                                => 'ulid',
+                    Str::isUrl($value)                                                 => 'url',
+                    \is_numeric($value)                                                => 'numeric',
+                    Str::isJson($value) and (Str::startsWith($value, '[') or Str::startsWith($value, '{')) => 'json',
                     default => 'string'
                 };
             case 'NULL':
