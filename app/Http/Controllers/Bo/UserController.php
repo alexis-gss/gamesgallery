@@ -71,6 +71,17 @@ class UserController extends Controller
      * @param \App\Models\User $user
      * @return \Illuminate\Contracts\View\View
      */
+    public function show(User $user): \Illuminate\Contracts\View\View
+    {
+        return view('back.pages.users.show', ['userModel' => $user]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param \App\Models\User $user
+     * @return \Illuminate\Contracts\View\View
+     */
     public function create(User $user): \Illuminate\Contracts\View\View
     {
         return view('back.pages.users.create', ['userModel' => $user]);

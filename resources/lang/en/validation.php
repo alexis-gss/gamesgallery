@@ -195,6 +195,7 @@ return [
         'folder_associated' => 'folder associated',
         'folder_mandatory'  => 'mandatory folder',
         'model'             => 'target element',
+        'published_at'      => 'published at',
         'event'             => 'event',
         'date_start'        => 'start date',
         'date_end'          => 'end date',

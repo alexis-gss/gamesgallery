@@ -36,6 +36,10 @@ Breadcrumbs::for('bo.games.index', function (Generator $trail) {
         route('bo.games.index')
     );
 });
+Breadcrumbs::for('bo.games.show', function (Generator $trail, Game $game) {
+    $trail->parent('bo.games.index');
+    $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.games.show', $game));
+});
 Breadcrumbs::for('bo.games.create', function (Generator $trail) {
     $trail->parent('bo.games.index');
     $trail->push(Str::of(trans('crud.actions.create'))->ucfirst(), route('bo.games.create'));
@@ -55,6 +59,10 @@ Breadcrumbs::for('bo.folders.index', function (Generator $trail) {
         Str::of(trans('models.folder'))->plural()->ucfirst(),
         route('bo.folders.index')
     );
+});
+Breadcrumbs::for('bo.folders.show', function (Generator $trail, Folder $folder) {
+    $trail->parent('bo.folders.index');
+    $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.folders.show', $folder));
 });
 Breadcrumbs::for('bo.folders.create', function (Generator $trail) {
     $trail->parent('bo.folders.index');
@@ -76,6 +84,10 @@ Breadcrumbs::for('bo.tags.index', function (Generator $trail) {
         route('bo.tags.index')
     );
 });
+Breadcrumbs::for('bo.tags.show', function (Generator $trail, Tag $tag) {
+    $trail->parent('bo.tags.index');
+    $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.tags.show', $tag));
+});
 Breadcrumbs::for('bo.tags.create', function (Generator $trail) {
     $trail->parent('bo.tags.index');
     $trail->push(Str::of(trans('crud.actions.create'))->ucfirst(), route('bo.tags.create'));
@@ -95,6 +107,10 @@ Breadcrumbs::for('bo.users.index', function (Generator $trail) {
         Str::of(trans('models.user'))->plural()->ucfirst(),
         route('bo.users.index')
     );
+});
+Breadcrumbs::for('bo.users.show', function (Generator $trail, User $user) {
+    $trail->parent('bo.users.index');
+    $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.users.show', $user));
 });
 Breadcrumbs::for('bo.users.create', function (Generator $trail) {
     $trail->parent('bo.users.index');
@@ -136,9 +152,9 @@ Breadcrumbs::for('bo.static_pages.index', function (Generator $trail) {
         route('bo.static_pages.index')
     );
 });
-Breadcrumbs::for('bo.static_pages.create', function (Generator $trail) {
+Breadcrumbs::for('bo.static_pages.show', function (Generator $trail, StaticPage $static_page) {
     $trail->parent('bo.static_pages.index');
-    $trail->push(Str::of(trans('crud.actions.create'))->ucfirst(), route('bo.static_pages.create'));
+    $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.static_pages.show', $static_page));
 });
 Breadcrumbs::for('bo.static_pages.edit', function (Generator $trail, StaticPage $static_page) {
     $trail->parent('bo.static_pages.index');

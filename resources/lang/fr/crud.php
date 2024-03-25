@@ -11,7 +11,6 @@ return [
         'create'    => 'créer',
         'duplicate' => 'dupliquer',
     ],
-
     'actions_model' => [
         'show'      => 'Voir :model',
         'edit'      => 'Éditer :model',
@@ -21,13 +20,11 @@ return [
         'duplicate' => 'Dupliquer :model',
         'list_all'  => 'Lister l\'intégralité des :model',
     ],
-
     'libs' => [
         'toolbox' => [
             'assertFieldIsUnique' => 'La :valeur du champ :attribut est déjà utilisée',
         ]
     ],
-
     'messages'   => [
         'has_been_created'                => ':model a été créé',
         'cannot_be_created'               => ':model n\'a pas été créé',
@@ -47,21 +44,18 @@ return [
             lors de la publication !',
         'translation_restrict'            => 'Traduction restreinte aux dossiers obligatoires !',
     ],
-
     'search' => [
         'label'         => 'Rechercher :elements',
         'keywords'      => 'Vos mots-clés ici...',
         'apply_search'  => 'Appliquer une recherche',
         'remove_search' => 'Supprimer la recherche'
     ],
-
     'filter' => [
         'sort_ascending'  => 'Trier :name dans l\'ordre croissant',
         'sort_descending' => 'Trier :name dans l\'ordre décroissant',
         'sort_delete'     => 'Supprimer le tri',
         'sort_arrow'      => 'Ici, les flèches sont utilisées pour trier et non pour filtrer',
     ],
-
     'sweetalert' => [
         'confirm'      => 'Confirmer',
         'cancel'       => 'Annuler',
@@ -69,7 +63,6 @@ return [
         'data_lost'    => 'Toutes les données seront perdues.',
         'send_email'   => 'L\'utilisateur recevra un e-mail de réinitialisation du mot de passe.',
     ],
-
     'meta' => [
         'all_models'          => 'Intégralité des :model',
         'all_models_list'     => 'Lister l\'intégralité des :model.',
@@ -78,14 +71,14 @@ return [
         'edition_model'       => 'Édition :model',
         'edition_model_desc'  => 'Modification des informations :model précédemment enregistrées',
     ],
-
     'other' => [
-        'no_model_found'          => 'Aucun résultat (:model) trouvé',
-        'up'                      => 'Modifier l\'ordre d\'apparition vers le haut',
-        'down'                    => 'Modifier l\'ordre d\'apparition vers le bas',
-        'user-right'              => 'Vous n\'avez pas les droits',
-        'publish'                 => 'Publier',
-        'unpublish'               => 'Dépublier',
-        'required_fields'         => '* Champs obligatoires',
+        'no_model_found'  => 'Aucun résultat (:model) trouvé',
+        'up'              => 'Modifier l\'ordre d\'apparition vers le haut',
+        'down'            => 'Modifier l\'ordre d\'apparition vers le bas',
+        'user-right'      => 'Vous n\'avez pas les droits',
+        'publish'         => 'Publier',
+        'unpublish'       => 'Dépublier',
+        'required_fields' => '* Champs obligatoires',
+        'access_link'     => 'Ouvrir dans un nouvel onglet',
     ],
 ];

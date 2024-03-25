@@ -1,7 +1,7 @@
 @extends('back.layout', ['brParam' => $userModel])
 
-@section('title', __('crud.meta.creation_model', ['model' => str(__('models.tags'))->singular()]))
-@section('description', __('crud.meta.creation_model_desc', ['model' => str(__('models.tags'))->singular()]))
+@section('title', __('crud.meta.creation_model', ['model' => __('models.user')]))
+@section('description', __('crud.meta.creation_model_desc', ['model' => __('models.user')]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

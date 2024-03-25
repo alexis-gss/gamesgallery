@@ -15,7 +15,7 @@
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
         </div>
         <div class="mb-md-0 mb-2">
-            @canAny(['delete', 'duplicate', 'update'], $gameModel)
+            @canAny(['view', 'duplicate', 'update', 'delete'], $gameModel)
                 <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
                     action="{{ route('bo.games.destroy', $gameModel) }}" method="POST">
                     @csrf
@@ -23,13 +23,20 @@
                     <div class="btn-group" role="group">
                         @if ($gameModel->published)
                             @can('view', $gameModel)
-                                <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                <a class="btn btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"
                                     href="{{ route('fo.games.show', $gameModel->slug) }}"
                                     title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
-                                    <i class="fa-solid fa-eye"></i>
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                 </a>
                             @endcan
                         @endif
+                        @can('view', $gameModel)
+                            <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                href="{{ route('bo.games.show', ['game' => $gameModel]) }}"
+                                title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        @endcan
                         @can('duplicate', $gameModel)
                             <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                 href="{{ route('bo.games.duplicate', ['game' => $gameModel]) }}"

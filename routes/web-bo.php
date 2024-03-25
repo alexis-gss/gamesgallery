@@ -45,7 +45,7 @@ Route::prefix('bo')
                         ->name('statistics.update');
 
                     // * GAMES
-                    Route::resource('games', GameController::class)->except('show');
+                    Route::resource('games', GameController::class);
                     Route::patch('/games/{game}/change-order/{direction}', [GameController::class, 'changeOrder'])
                         ->where('direction', 'up|down')->name('games.change-order');
                     Route::patch('/games/{game}/change-published', [GameController::class, 'changePublished'])
@@ -58,7 +58,7 @@ Route::prefix('bo')
                         ->name('pictures.upload');
 
                     // * FOLDERS
-                    Route::resource('folders', FolderController::class)->except('show');
+                    Route::resource('folders', FolderController::class);
                     Route::patch('/folders/{folder}/change-order/{direction}', [FolderController::class, 'changeOrder'])
                         ->where('direction', 'up|down')
                         ->name('folders.change-order');
@@ -68,7 +68,7 @@ Route::prefix('bo')
                         ->name('folders.duplicate');
 
                     // * TAGS
-                    Route::resource('tags', TagController::class)->except('show');
+                    Route::resource('tags', TagController::class);
                     Route::patch('/tags/{tag}/change-order/{direction}', [TagController::class, 'changeOrder'])
                         ->where('direction', 'up|down')
                         ->name('tags.change-order');
@@ -88,13 +88,13 @@ Route::prefix('bo')
 
                     // * STATIC PAGES
                     Route::resource('static_pages', StaticPageController::class)
-                        ->only(['index', 'edit', 'update']);
+                        ->only(['index', 'show', 'edit', 'update']);
                     Route::patch('/static_pages/{static_page}/change-order/{direction}', [
                         StaticPageController::class, 'changeOrder'
                     ])->where('direction', 'up|down')->name('static_pages.change-order');
 
                     // * USERS
-                    Route::resource('users', UserController::class)->except('show');
+                    Route::resource('users', UserController::class);
                     Route::patch('/users/{user}/change-order/{direction}', [UserController::class, 'changeOrder'])
                         ->where('direction', 'up|down')->name('users.change-order');
                     Route::patch('/users/{user}/change-published', [UserController::class, 'changePublished'])

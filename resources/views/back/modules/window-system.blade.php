@@ -14,7 +14,7 @@
                 jsonStore: "{{ route('bo.tags.jsonStore') }}",
             },
             games: {
-                show: "{{ route('fo.games.show', 'ID') }}",
+                show: "{{ route('bo.games.show', 'ID') }}",
                 edit: "{{ route('bo.games.edit', 'ID') }}",
             },
             pictures: {

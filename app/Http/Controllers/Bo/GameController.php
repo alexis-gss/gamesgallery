@@ -69,6 +69,17 @@ class GameController extends Controller
     }
 
     /**
+     * Show the specified resource.
+     *
+     * @param \App\Models\Game $game
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function show(Game $game): \Illuminate\Contracts\View\View
+    {
+        return view('back.pages.games.show', ['gameModel' => $game]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @param \App\Models\Game $game

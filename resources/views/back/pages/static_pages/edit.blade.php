@@ -14,14 +14,19 @@
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $staticPageModel])
         </div>
-        <div class="mb-md-0 mb-2">
+        <div class="btn-group">
+            @can('view', $staticPageModel)
+                <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                    href="{{ route('bo.static_pages.show', ['static_page' => $staticPageModel]) }}"
+                    title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.static_page', 1)]) }}">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+            @endcan
             @canAny('update', $staticPageModel)
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                        title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.static_page', 1)]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
+                <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top"
+                    title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.static_page', 1)]) }}">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                </button>
             @endcan
         </div>
     </div>

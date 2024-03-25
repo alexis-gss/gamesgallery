@@ -55,9 +55,16 @@
                                 ])
                             @endif
                             <td class="text-end align-middle">
-                                @canAny(['delete', 'duplicate', 'update'], $tagModel)
+                                @canAny(['view', 'duplicate', 'update', 'delete'], $tagModel)
                                     <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
                                         action="{{ route('bo.tags.destroy', $tagModel) }}" method="POST" novalidate>
+                                        @can('view', $tagModel)
+                                            <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                                href="{{ route('bo.tags.show', $tagModel) }}"
+                                                title="{{ __('crud.actions_model.show', ['model' => __('models.tag')]) }}">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                        @endcan
                                         @can('duplicate', $tagModel)
                                             <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                                 href="{{ route('bo.tags.duplicate', ['tag' => $tagModel]) }}"

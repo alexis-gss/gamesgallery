@@ -14,36 +14,41 @@
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $tagModel])
         </div>
-        <div class="mb-md-0 mb-2">
-            @canAny(['delete', 'duplicate', 'update'], $tagModel)
-                <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}" action="{{ route('bo.tags.destroy', $tagModel) }}"
-                    method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="btn-group" role="group">
-                        @can('duplicate', $tagModel)
-                            <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                href="{{ route('bo.tags.duplicate', ['tag' => $tagModel]) }}"
-                                title="{{ __('crud.actions_model.duplicate', ['model' => __('models.tag')]) }}">
-                                <i class="fa-solid fa-copy"></i>
-                            </a>
-                        @endcan
-                        @can('update', $tagModel)
-                            <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                                title="{{ __('crud.actions_model.save', ['model' => __('models.tag')]) }}">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                            </button>
-                        @endcan
-                        @can('delete', $tagModel)
-                            <button class="btn btn-danger" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                                title="{{ __('crud.actions_model.delete', ['model' => __('models.tag')]) }}">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        @endcan
-                    </div>
-                </form>
-            @endcan
-        </div>
+        @canAny(['view', 'duplicate', 'update', 'delete'], $tagModel)
+            <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}" action="{{ route('bo.tags.destroy', $tagModel) }}"
+                method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="btn-group" role="group">
+                    @can('view', $tagModel)
+                        <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                            href="{{ route('bo.tags.show', ['tag' => $tagModel]) }}"
+                            title="{{ __('crud.actions_model.show', ['model' => __('models.tag')]) }}">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    @endcan
+                    @can('duplicate', $tagModel)
+                        <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
+                            href="{{ route('bo.tags.duplicate', ['tag' => $tagModel]) }}"
+                            title="{{ __('crud.actions_model.duplicate', ['model' => __('models.tag')]) }}">
+                            <i class="fa-solid fa-copy"></i>
+                        </a>
+                    @endcan
+                    @can('update', $tagModel)
+                        <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                            title="{{ __('crud.actions_model.save', ['model' => __('models.tag')]) }}">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                        </button>
+                    @endcan
+                    @can('delete', $tagModel)
+                        <button class="btn btn-danger" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                            title="{{ __('crud.actions_model.delete', ['model' => __('models.tag')]) }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    @endcan
+                </div>
+            </form>
+        @endcan
     </div>
     @can('update', $tagModel)
         <form action="{{ route('bo.tags.update', $tagModel) }}" method="POST" enctype="multipart/form-data">
