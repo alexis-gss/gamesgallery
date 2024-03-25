@@ -1,5 +1,5 @@
 @if (!request()->routeIs('login'))
-    @if ($message = Session::get('success', Session::get('bo.success')))
+    @if ($message = session()->get('success', session()->get('bo.success')))
         <div class="alert alert-success alert-dismissible fade show w-100 m-0 mb-3" role="alert">
             <i class="fa-solid fa-circle-check"></i>
             <strong>{!! nl2br(e($message)) !!}</strong>
@@ -7,7 +7,7 @@
         </div>
     @endif
 
-    @if ($message = Session::get('error', Session::get('bo.error')))
+    @if ($message = session()->get('error', session()->get('bo.error')))
         <div class="alert alert-danger alert-dismissible fade show w-100 m-0 mb-3" role="alert">
             <i class="fa-solid fa-circle-xmark"></i>
             <strong>{!! nl2br(e($message)) !!}</strong>
@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    @if ($message = Session::get('warning', Session::get('bo.warning')))
+    @if ($message = session()->get('warning', session()->get('bo.warning')))
         <div class="alert alert-warning alert-dismissible fade show w-100 m-0 mb-3" role="alert">
             <i class="fa-solid fa-circle-exclamation"></i>
             <strong>{!! nl2br(e($message)) !!}</strong>
@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    @if ($message = Session::get('info', Session::get('bo.info')))
+    @if ($message = session()->get('info', session()->get('bo.info')))
         <div class="alert alert-info alert-dismissible fade show w-100 m-0 mb-3" role="alert">
             <i class="fa-solid fa-circle-info"></i>
             <strong>{!! nl2br(e($message)) !!}</strong>

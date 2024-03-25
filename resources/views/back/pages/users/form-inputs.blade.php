@@ -68,7 +68,7 @@
                     <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" role="button">
                         @foreach (Arr::where(\App\Enums\Users\RoleEnum::toArray(), fn(object $role) => $role->value >= auth('backend')->user()->role->value()) as $associatedModel)
                             <option value="{{ $associatedModel->value }}" @if ((isset($userModel->role) && old('role', $userModel->role->value()) ?? 1) === $associatedModel->value) selected @endif>
-                                {{ Str::of($associatedModel->label)->ucFirst() }}
+                                {{ str($associatedModel->label)->ucFirst() }}
                             </option>
                         @endforeach
                     </select>
@@ -82,7 +82,7 @@
     </div>
     <div class="col-12 border-bottom">
         <fieldset class="p-3">
-            <legend>{{ Str::of(__('bo_title_visuals'))->singular() }}</legend>
+            <legend>{{ str(__('bo_title_visuals'))->singular() }}</legend>
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     @php
@@ -168,7 +168,7 @@
                                 name="published" type="checkbox" value="1" role="button"
                                 @if (old('published', $userModel->published ?? '')) checked @endif>
                             <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                                <b>{{ Str::of(__('validation.custom.publishment'))->ucFirst() }}</b>
+                                <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                             </label>
                             <br>
                             <small class="form-text text-body-secondary">

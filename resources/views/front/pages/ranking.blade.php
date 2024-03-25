@@ -21,7 +21,7 @@
                         </a>
                         <span class="mx-1">-</span>
                         <p class="bg-primary rounded-2 m-0 px-2 py-0 text-white">
-                            {{ Str::of(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
+                            {{ str(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
                         </p>
                     </div>
                 </div>

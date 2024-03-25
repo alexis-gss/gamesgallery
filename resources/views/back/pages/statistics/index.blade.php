@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => Str::of(__('models.statistic'))->plural()]))
-@section('description', __('crud.meta.all_models_list', ['model' => Str::of(__('models.statistic'))->plural()]))
+@section('title', __('crud.meta.all_models', ['model' => str(__('models.statistic'))->plural()]))
+@section('description', __('crud.meta.all_models_list', ['model' => str(__('models.statistic'))->plural()]))
 
 @section('content')
     <section id="statistics">
@@ -39,11 +39,11 @@
                                             <tbody>
                                                 <tr class="border-bottom">
                                                     <td class="bg-transparent text-center align-middle">
-                                                        {{ Str::of($navLink['field'])->ucfirst() }}
+                                                        {{ str($navLink['field'])->ucfirst() }}
                                                     </td>
                                                     <td class="bg-transparent text-center align-middle">
                                                         <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip"
-                                                            href="{{ route('bo.' . Str::of($navLink['name'])->plural . '.edit', $navLink['model']) }}"
+                                                            href="{{ route('bo.' . str($navLink['name'])->plural() . '.edit', $navLink['model']) }}"
                                                             title="{{ __('crud.actions_model.show', ['model' => $navLink['translation']]) }}"
                                                             target="_blank">
                                                             {{ $navLink['value'] }}
@@ -52,7 +52,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="border-0 bg-transparent text-center align-middle">
-                                                        {{ Str::of(__('validation.attributes.updated_at'))->ucfirst() }}
+                                                        {{ str(__('validation.attributes.updated_at'))->ucfirst() }}
                                                     </td>
                                                     <td class="border-0 bg-transparent text-center align-middle">
                                                         <span class="badge rounded-pill bg-secondary">

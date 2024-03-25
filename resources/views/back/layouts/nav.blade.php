@@ -49,7 +49,7 @@
                                     ? $bootstrapTheme->value === intval(Cache::get('theme'))
                                     : $bootstrapTheme->value === \App\Enums\Theme\BootstrapThemeEnum::light->value) active @endif py-2"
                                 for="theme{{ $key }}">
-                                {{ Str::of($bootstrapTheme->label)->ucFirst() }}
+                                {{ str($bootstrapTheme->label)->ucFirst() }}
                             </label>
                         @endforeach
                     </form>
@@ -82,7 +82,7 @@
                                 value="{{ $locale }}">
                             <label class="dropdown-item btn btn-secondary @if ($locale === app()->getLocale()) active @endif py-2"
                                 for="lang{{ $key }}">
-                                {{ Str::of($locale)->upper() }}
+                                {{ str($locale)->upper() }}
                             </label>
                         @endforeach
                     </form>
@@ -96,7 +96,7 @@
                             <div class="d-flex flex-column align-items-start align-items-xl-end lh-1">
                                 <span
                                     class="fw-bold">{{ auth('backend')->user()->first_name }}&nbsp;{{ auth('backend')->user()->last_name }}</span>
-                                <small class="text-secondary-body">{{ Str::of(auth('backend')->user()->role->label())->ucFirst() }}</small>
+                                <small class="text-secondary-body">{{ str(auth('backend')->user()->role->label())->ucFirst() }}</small>
                             </div>
                             <div class="profile-picture me-1 ms-2">
                                 <img class="w-100 h-100 rounded-circle" src="{{ asset(auth('backend')->user()->picture) }}"

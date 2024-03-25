@@ -54,7 +54,7 @@
                             <input class="btn-check" id="lang{{ $key }}" name="lang" type="radio" value="{{ $locale }}">
                             <label class="dropdown-item btn btn-secondary @if ($locale === app()->getLocale()) active @endif text-white"
                                 for="lang{{ $key }}">
-                                {{ Str::of($locale)->upper() }}
+                                {{ str($locale)->upper() }}
                             </label>
                         @endforeach
                     </form>

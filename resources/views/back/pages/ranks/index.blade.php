@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => Str::of(__('models.rank'))->plural()]))
-@section('description', __('crud.meta.all_models_list', ['model' => Str::of(__('models.rank'))->plural()]))
+@section('title', __('crud.meta.all_models', ['model' => str(__('models.rank'))->plural()]))
+@section('description', __('crud.meta.all_models_list', ['model' => str(__('models.rank'))->plural()]))
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">

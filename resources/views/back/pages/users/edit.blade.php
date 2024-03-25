@@ -9,7 +9,7 @@
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                title="{{ __('crud.actions_model.list_all', ['model' => Str::of(__('models.user'))->plural()]) }}">
+                title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.user'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
@@ -20,7 +20,7 @@
                     action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                     @csrf
                     <button class="btn btn-warning rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
-                        title="{{ Str::ucfirst(__('auth.reset_password_send')) }}">
+                        title="{{ str(__('auth.reset_password_send'))->ucfirst() }}">
                         <i class="fa-solid fa-key"></i>
                     </button>
                 </form>

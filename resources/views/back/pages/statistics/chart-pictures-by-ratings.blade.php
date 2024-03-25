@@ -1,9 +1,9 @@
 <p class="fs-5 fw-semibold mb-4 text-center">
-    {{ Str::of(__('models.rating'))->ucFirst()->value() .
+    {{ str(__('models.rating'))->ucFirst()->value() .
         "\u{00A0}" .
         __('bo_other_stats_by') .
         "\u{00A0}" .
-        Str::of(__('models.picture'))->ucFirst()->value() }}
+        str(__('models.picture'))->ucFirst()->value() }}
 </p>
 <ul class="list-group border-0">
     @foreach ($picturesRatings as $key => $pictureRating)
@@ -22,7 +22,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">
-                                    {{ Str::of(__('models.picture'))->ucFirst()->value() }}
+                                    {{ str(__('models.picture'))->ucFirst()->value() }}
                                 </h5>
                                 <button class="btn-close" data-bs-dismiss="modal" data-bs-tooltip="tooltip" type="button"
                                     aria-label="{{ __('bo_other_close') }}" :title="__('bo_other_close')" />

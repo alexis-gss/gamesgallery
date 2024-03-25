@@ -9,7 +9,7 @@
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.tags.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                title="{{ __('crud.actions_model.list_all', ['model' => Str::of(__('models.tag'))->plural()]) }}">
+                title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.tag'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $tagModel])

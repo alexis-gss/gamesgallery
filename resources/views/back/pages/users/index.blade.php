@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => Str::of(__('models.user'))->plural()]))
-@section('description', __('crud.meta.all_models_list', ['model' => Str::of(__('models.user'))->plural()]))
+@section('title', __('crud.meta.all_models', ['model' => str(__('models.user'))->plural()]))
+@section('description', __('crud.meta.all_models_list', ['model' => str(__('models.user'))->plural()]))
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">
@@ -20,13 +20,13 @@
                 <thead>
                     @include('back.modules.table-col-sorter', [
                         'cols' => [
-                            'first_name' => Str::of(__('validation.attributes.first_name'))->ucfirst(),
-                            'last_name' => Str::of(__('validation.attributes.last_name'))->ucfirst(),
-                            'email' => Str::of(__('validation.attributes.email'))->ucfirst(),
-                            'role' => Str::of(__('validation.attributes.role'))->ucfirst(),
-                            'published' => Str::of(__('validation.custom.publishment'))->ucfirst(),
-                            'updated_at' => Str::of(__('validation.attributes.updated_at'))->ucfirst(),
-                            'order' => Str::of(__('validation.custom.order'))->ucfirst(),
+                            'first_name' => str(__('validation.attributes.first_name'))->ucfirst(),
+                            'last_name' => str(__('validation.attributes.last_name'))->ucfirst(),
+                            'email' => str(__('validation.attributes.email'))->ucfirst(),
+                            'role' => str(__('validation.attributes.role'))->ucfirst(),
+                            'published' => str(__('validation.custom.publishment'))->ucfirst(),
+                            'updated_at' => str(__('validation.attributes.updated_at'))->ucfirst(),
+                            'order' => str(__('validation.custom.order'))->ucfirst(),
                         ],
                     ])
                 </thead>
@@ -53,7 +53,7 @@
                                 <span class="badge rounded-pill bg-secondary">{{ $userModel->updated_at->isoFormat('LLLL') }}</span>
                             </td>
                             @php $routeName = request()->route()->getName(); @endphp
-                            @if (empty(request()->search) && Session::get("$routeName.sort_col") === 'order')
+                            @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')
                                 @include('back.modules.change-model-order', [
                                     'routeName' => 'users',
                                     'models' => $userModels,

@@ -1,6 +1,5 @@
 {{-- GET ACTUAL PAGINATION --}}
-@php $pagination = intval(Cache::get('pagination.' . Str::of(request()->route()->getName())->slug())); @endphp
-{{-- blade-formatter-enable --}}
+@php $pagination = intval(Cache::get('pagination.' . str(request()->route()->getName())->slug())); @endphp
 @if ($paginator->items())
     <nav class="pagination-custom d-flex justify-content-between align-items-center">
         {{-- SELECT ITEMS PER PAGE --}}
