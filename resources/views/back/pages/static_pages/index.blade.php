@@ -75,11 +75,15 @@
                             <td class="text-end align-middle">
                                 @canAny(['update', 'view'], $staticPageModel)
                                     <div class="btn-group">
+                                        <a class="btn btn-sm btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                            href="{{ route($staticPageModel->type->routeName()) }}" title="{{ __('crud.other.access_link') }}"
+                                            target="_blank">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </a>
                                         @can('view', $staticPageModel)
                                             <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                                href="{{ route($staticPageModel->type->routeName()) }}"
-                                                title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.static_page', 1)]) }}"
-                                                target="_blank">
+                                                href="{{ route('bo.static_pages.show', ['static_page' => $staticPageModel]) }}"
+                                                title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.static_page', 1)]) }}">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
                                         @endcan

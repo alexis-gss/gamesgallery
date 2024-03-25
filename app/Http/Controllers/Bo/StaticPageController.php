@@ -61,6 +61,17 @@ class StaticPageController extends Controller
     }
 
     /**
+     * Show the specified resource.
+     *
+     * @param \App\Models\StaticPage $static_page
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function show(StaticPage $static_page): \Illuminate\Contracts\View\View
+    {
+        return view('back.pages.static_pages.show', ['staticPageModel' => $static_page]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\StaticPage $static_page

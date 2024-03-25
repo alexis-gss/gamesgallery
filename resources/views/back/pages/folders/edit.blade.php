@@ -15,12 +15,19 @@
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $folderModel])
         </div>
         <div class="mb-md-0 mb-2">
-            @canAny(['delete', 'duplicate', 'update'], $folderModel)
+            @canAny(['view', 'duplicate', 'update', 'delete'], $folderModel)
                 <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
                     action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="btn-group" role="group">
+                        @can('view', $folderModel)
+                            <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                href="{{ route('bo.folders.show', ['folder' => $folderModel]) }}"
+                                title="{{ __('crud.actions_model.show', ['model' => __('models.folder')]) }}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        @endcan
                         @can('duplicate', $folderModel)
                             <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                 href="{{ route('bo.folders.duplicate', ['folder' => $folderModel]) }}"

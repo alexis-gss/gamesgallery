@@ -6,6 +6,7 @@ import {
     faArrowRight,
     faArrowRightToBracket,
     faArrowUp,
+    faArrowUpRightFromSquare,
     faArrowsAltH,
     faArrowsAltV,
     faBan,
@@ -87,4 +88,5 @@ library.add(faPaintRoller);
 library.add(faGripVertical);
 library.add(faGlobe);
 library.add(faKey);
+library.add(faArrowUpRightFromSquare);
 dom.watch();

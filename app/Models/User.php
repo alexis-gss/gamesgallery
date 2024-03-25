@@ -73,6 +73,7 @@ class User extends Authenticatable
         'role'              => RoleEnum::class,
         'email_verified_at' => 'datetime',
         'published'         => 'boolean',
+        'published_at'      => 'datetime',
     ];
 
     /**

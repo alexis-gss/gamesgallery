@@ -70,9 +70,16 @@
                                 ])
                             @endif
                             <td class="text-end align-middle">
-                                @canAny(['delete', 'duplicate', 'update'], $folderModel)
+                                @canAny(['view', 'duplicate', 'update', 'delete'], $folderModel)
                                     <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
                                         action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST" novalidate>
+                                        @can('view', $folderModel)
+                                            <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                                href="{{ route('bo.folders.show', ['folder' => $folderModel]) }}"
+                                                title="{{ __('crud.actions_model.show', ['model' => __('models.folder')]) }}">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                        @endcan
                                         @can('duplicate', $folderModel)
                                             <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                                                 href="{{ route('bo.folders.duplicate', ['folder' => $folderModel]) }}"

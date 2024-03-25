@@ -56,6 +56,17 @@ class TagController extends Controller
     }
 
     /**
+     * Show the specified resource.
+     *
+     * @param \App\Models\Tag $tag
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function show(Tag $tag): \Illuminate\Contracts\View\View
+    {
+        return view('back.pages.tags.show', ['tagModel' => $tag]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @param \App\Models\Tag $tag

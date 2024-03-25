@@ -44,9 +44,17 @@
           >
             <div class="input-group">
               <a
-                :href="getShowGameRoute(item.game_slug)"
-                class="btn btn-sm btn-warning"
+                :href="getFrontShowGameRoute(item.game_slug)"
+                class="btn btn-sm btn-info"
                 target="_blank"
+                :title="__('crud.other.access_link')"
+                data-bs-tooltip="tooltip"
+              >
+                <FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" />
+              </a>
+              <a
+                :href="getShowGameRoute(item.game_id)"
+                class="btn btn-sm btn-warning"
                 :title="__('bo_tooltip_ranking_see_game')"
                 data-bs-tooltip="tooltip"
               >
@@ -173,13 +181,23 @@ export default defineComponent({
       });
       return ranks;
     },
-    /** Return show route for a game. */
-    getShowGameRoute(slug: string): string {
+    /** Return front show route for a game. */
+    getFrontShowGameRoute(slug: string): string {
       const route = this.route("fo.games.show", {
         SLUG: slug,
       });
       if (!route) {
         throw new Error("Undefined route fo.games.show");
+      }
+      return route;
+    },
+    /** Return show route for a game. */
+    getShowGameRoute(id: number): string {
+      const route = this.route("bo.games.show", {
+        ID: id,
+      });
+      if (!route) {
+        throw new Error("Undefined route bo.games.show");
       }
       return route;
     },

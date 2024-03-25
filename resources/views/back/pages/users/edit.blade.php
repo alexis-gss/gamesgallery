@@ -14,26 +14,33 @@
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
         </div>
-        <div class="btn-group mb-md-0 mb-2">
+        <div class="btn-group">
             @can('resetPassword', $userModel)
                 <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.send_email') }}" method="POST"
                     action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                     @csrf
-                    <button class="btn btn-warning rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
+                    <button class="btn btn-info rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
                         title="{{ str(__('auth.reset_password_send'))->ucfirst() }}">
                         <i class="fa-solid fa-key"></i>
                     </button>
                 </form>
             @endcan
-            @canAny(['delete', 'duplicate', 'update'], $userModel)
+            @canAny(['view', 'duplicate', 'update', 'delete'], $userModel)
                 <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
                     action="{{ route('bo.users.destroy', $userModel) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="btn-group" role="group">
+                        @can('view', $userModel)
+                            <a class="btn btn-warning @can('resetPassword', $userModel) rounded-start-0 @endcan" data-bs-tooltip="tooltip"
+                                data-bs-placement="top" href="{{ route('bo.users.show', ['user' => $userModel]) }}"
+                                title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        @endcan
                         @can('duplicate', $userModel)
-                            <a class="btn btn-secondary @can('resetPassword', $userModel) rounded-start-0 @endcan" data-bs-tooltip="tooltip"
-                                data-bs-placement="top" href="{{ route('bo.users.duplicate', ['user' => $userModel]) }}"
+                            <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                href="{{ route('bo.users.duplicate', ['user' => $userModel]) }}"
                                 title="{{ __('crud.actions_model.duplicate', ['model' => __('models.user')]) }}">
                                 <i class="fa-solid fa-copy"></i>
                             </a>

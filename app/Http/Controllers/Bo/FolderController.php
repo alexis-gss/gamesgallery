@@ -60,6 +60,17 @@ class FolderController extends Controller
     }
 
     /**
+     * Show the specified resource.
+     *
+     * @param \App\Models\Folder $folder
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function show(Folder $folder): \Illuminate\Contracts\View\View
+    {
+        return view('back.pages.folders.show', ['folderModel' => $folder]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @param \App\Models\Folder $folder

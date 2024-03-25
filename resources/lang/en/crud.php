@@ -11,7 +11,6 @@ return [
         'create'    => 'create',
         'duplicate' => 'duplicate',
     ],
-
     'actions_model' => [
         'show'      => 'Show this :model',
         'edit'      => 'Edit this :model',
@@ -21,13 +20,11 @@ return [
         'duplicate' => 'Duplicate this :model',
         'list_all'  => 'List all :model',
     ],
-
     'libs'       => [
         'toolbox' => [
             'assertFieldIsUnique' => 'The :value for the :attribute field is already in use',
         ]
     ],
-
     'messages'   => [
         'has_been_created'                => ':model has been created',
         'cannot_be_created'               => ':model cannot be created',
@@ -45,21 +42,18 @@ return [
         'translation_default_required'    => 'The default translation (:fallbackLocale) is mandatory on publication !',
         'translation_restrict'            => 'Translation restricted to mandatory folders !',
     ],
-
     'search' => [
         'label'         => 'Search :elements',
         'keywords'      => 'Your keywords here...',
         'apply_search'  => 'Apply a search',
         'remove_search' => 'Remove the search'
     ],
-
     'filter' => [
         'sort_ascending'  => 'Sort :name in ascending order',
         'sort_descending' => 'Sort :name in descending order',
         'sort_delete'     => 'Delete sorting',
         'sort_arrow'      => 'Here, the arrows are used to sort and not to filter',
     ],
-
     'sweetalert' => [
         'confirm'      => 'Confirm',
         'cancel'       => 'Cancel',
@@ -67,7 +61,6 @@ return [
         'data_lost'    => 'All data will be lost.',
         'send_email'   => 'The user will receive a password reset e-mail.',
     ],
-
     'meta' => [
         'all_models'          => 'All :model',
         'all_models_list'     => 'Listing of all :model.',
@@ -76,17 +69,14 @@ return [
         'edition_model'       => 'Editing a :model',
         'edition_model_desc'  => 'Editing information of a previously saved :model',
     ],
-
     'other' => [
-        'no_model_found'          => 'No :model found',
-        'up'                      => 'Change the order of appearance upwards',
-        'down'                    => 'Change the order of appearance downwards',
-        'user-right'              => 'You do not have the rights',
-        'publish'                 => 'Publish',
-        'unpublish'               => 'Unpublish',
-        'required_fields'         => '* Required fields',
-        'reset_password'          => 'Send a password reset e-mail to the user',
-        'reset_password_email'    => 'Procedure for resetting the password sent to the user',
-        'reset_password_complete' => 'Password reset procedure completed',
+        'no_model_found'  => 'No :model found',
+        'up'              => 'Change the order of appearance upwards',
+        'down'            => 'Change the order of appearance downwards',
+        'user-right'      => 'You do not have the rights',
+        'publish'         => 'Publish',
+        'unpublish'       => 'Unpublish',
+        'required_fields' => '* Required fields',
+        'access_link'     => 'Open in a new tab',
     ],
 ];
