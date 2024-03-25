@@ -15,7 +15,7 @@
                         <div class="default-translation-value">
                             {!! nl2br(
                                 __('validation.rule.default_field', [
-                                    'field' => Str::of(__('validation.custom.seo_title'))->ucFirst(),
+                                    'field' => str(__('validation.custom.seo_title'))->ucFirst(),
                                     'value' => empty(!$staticPageModel->getTranslation('seo_title', config('app.fallback_locale')))
                                         ? $staticPageModel->getTranslation('seo_title', config('app.fallback_locale'))
                                         : '...',
@@ -47,7 +47,7 @@
                         <div class="default-translation-value">
                             {!! nl2br(
                                 __('validation.rule.default_field', [
-                                    'field' => Str::of(__('validation.custom.seo_description'))->ucFirst(),
+                                    'field' => str(__('validation.custom.seo_description'))->ucFirst(),
                                     'value' => empty(!$staticPageModel->getTranslation('seo_description', config('app.fallback_locale')))
                                         ? $staticPageModel->getTranslation('seo_description', config('app.fallback_locale'))
                                         : '...',
@@ -81,7 +81,7 @@
                         <div class="default-translation-value">
                             {!! nl2br(
                                 __('validation.rule.default_field', [
-                                    'field' => Str::of(__('validation.attributes.title'))->ucFirst(),
+                                    'field' => str(__('validation.attributes.title'))->ucFirst(),
                                     'value' => empty(!$staticPageModel->getTranslation('title', config('app.fallback_locale')))
                                         ? $staticPageModel->getTranslation('title', config('app.fallback_locale'))
                                         : '...',
@@ -103,10 +103,7 @@
             </div>
         </fieldset>
     </div>
-</div>
-
-<div class="row">
-    <div class="col text-center">
-        <p><b>{{ __('* Champs obligatoires') }}</b></p>
+    <div class="col-12 text-center">
+        <p class="fw-bold m-0 p-0">{{ __('crud.other.required_fields') }}</p>
     </div>
 </div>

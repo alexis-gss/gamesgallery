@@ -20,12 +20,12 @@
                 <thead>
                     @include('back.modules.table-col-sorter', [
                         'cols' => [
-                            'name' => Str::of(__('validation.attributes.name'))->ucfirst(),
-                            'folder_id' => Str::of(__('validation.custom.folder_associated'))->ucfirst(),
-                            'pictures' => Str::of(__('validation.attributes.image'))->ucfirst(),
-                            'published' => Str::of(__('validation.custom.publishment'))->ucfirst(),
-                            'updated_at' => Str::of(__('validation.attributes.updated_at'))->ucfirst(),
-                            'order' => Str::of(__('validation.custom.order'))->ucfirst(),
+                            'name' => str(__('validation.attributes.name'))->ucfirst(),
+                            'folder_id' => str(__('validation.custom.folder_associated'))->ucfirst(),
+                            'pictures' => str(__('validation.attributes.image'))->ucfirst(),
+                            'published' => str(__('validation.custom.publishment'))->ucfirst(),
+                            'updated_at' => str(__('validation.attributes.updated_at'))->ucfirst(),
+                            'order' => str(__('validation.custom.order'))->ucfirst(),
                         ],
                         'ignore' => ['pictures'],
                     ])
@@ -61,7 +61,7 @@
                                 <span class="badge rounded-pill bg-secondary">{{ $gameModel->updated_at->isoFormat('LLLL') }}</span>
                             </td>
                             @php $routeName = request()->route()->getName(); @endphp
-                            @if (empty(request()->search) && Session::get("$routeName.sort_col") === 'order')
+                            @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')
                                 @include('back.modules.change-model-order', [
                                     'routeName' => 'games',
                                     'models' => $gameModels,

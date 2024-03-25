@@ -15,7 +15,7 @@
                         <div class="default-translation-value">
                             {!! nl2br(
                                 __('validation.rule.default_field', [
-                                    'field' => Str::of(__('validation.attributes.name'))->ucFirst(),
+                                    'field' => str(__('validation.attributes.name'))->ucFirst(),
                                     'value' => empty(!$folderModel->getTranslation('name', config('app.fallback_locale')))
                                         ? $folderModel->getTranslation('name', config('app.fallback_locale'))
                                         : '...',
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-12 col-md-6 form-group">
                     <label class="col-form-label" for="color">
-                        <b>{{ Str::of(__('validation.custom.color'))->ucFirst() }}</b>
+                        <b>{{ str(__('validation.custom.color'))->ucFirst() }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_color_picker') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
@@ -69,7 +69,7 @@
                         <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckPublished"
                             name="published" type="checkbox" value="1" role="button" @if (old('published', $folderModel->published ?? '')) checked @endif>
                         <label class="form-check-label" for="flexSwitchCheckPublished" role="button">
-                            <b>{{ Str::of(__('validation.custom.publishment'))->ucFirst() }}</b>
+                            <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                         </label>
                         <br>
                         <small class="form-text text-body-secondary">
@@ -83,7 +83,7 @@
                         <input class="form-check-input @error('mandatory') is-invalid @enderror" id="flexSwitchCheckMandatory"
                             name="mandatory" type="checkbox" value="1" role="button" @if (old('mandatory', $folderModel->mandatory ?? '')) checked @endif>
                         <label class="form-check-label" for="flexSwitchCheckMandatory" role="button">
-                            <b>{{ Str::of(__('validation.custom.folder_mandatory'))->ucFirst() }}</b>
+                            <b>{{ str(__('validation.custom.folder_mandatory'))->ucFirst() }}</b>
                         </label>
                         <br>
                         <small class="form-text text-body-secondary">

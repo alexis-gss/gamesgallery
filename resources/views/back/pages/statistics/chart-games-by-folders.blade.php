@@ -5,11 +5,11 @@
         var chartGamesByFolders = window.Echarts.init(document.getElementById('chart-games-by-folders'), 'royal');
         optionGamesByFolders = {
             title: {
-                text: @json(Str::of(trans_choice('models.game', 2))->ucFirst()->value() .
+                text: @json(str(trans_choice('models.game', 2))->ucFirst() .
                         "\u{00A0}" .
                         __('bo_other_stats_by') .
                         "\u{00A0}" .
-                        Str::of(__('models.folder'))->plural()->ucFirst()->value()),
+                        str(__('models.folder'))->plural()->ucFirst()),
                 left: 'center',
                 textStyle: {
                     fontSize: '16px',
@@ -62,7 +62,7 @@
                 containLabel: true
             },
             series: [{
-                name: @json(Str::of(trans_choice('models.game', 2))->ucFirst()->value()),
+                name: @json(str(trans_choice('models.game', 2))->ucFirst()),
                 type: 'pie',
                 radius: '70%',
                 label: {

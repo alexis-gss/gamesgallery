@@ -37,8 +37,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <small
-                        class="text-body-secondary">{{ __('validation.rule.select-single', ['entity' => Str::of(__('models.folder'))->value()]) }}</small>
+                    <small class="text-body-secondary">{{ __('validation.rule.select-single', ['entity' => __('models.folder')]) }}</small>
                     @include('back.modules.input-error', ['inputName' => 'folder_id'])
                 </div>
             </div>
@@ -81,7 +80,7 @@
             <div class="row mb-3">
                 <div class="col-12 form-group">
                     <label class="col-form-label" for="name">
-                        <b>{{ Str::of(__('models.tag'))->plural()->ucFirst()->value() }}</b>
+                        <b>{{ str(__('models.tag'))->plural()->ucFirst() }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top"
                             title="{{ __('bo_tooltip_tags', ['number' => count($tagModels)]) }}">
                             <i class="fa-solid fa-circle-info"></i>
@@ -104,7 +103,7 @@
                     @endphp
                     <div id="belongs-to-many-dropdown" data-json='@json($data)'></div>
                     <small class="text-body-secondary">
-                        {{ __('validation.rule.select-multiple', ['entity' => Str::of(__('models.tag'))->plural()->value()]) }}
+                        {{ __('validation.rule.select-multiple', ['entity' => str(__('models.tag'))->plural()]) }}
                     </small>
                     @include('back.modules.input-error', ['inputName' => 'tags'])
                 </div>
@@ -120,7 +119,7 @@
                         <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
                             name="published" type="checkbox" value="1" role="button" @if (old('published', $gameModel->published ?? '')) checked @endif>
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                            <b>{{ Str::of(__('validation.custom.publishment'))->ucFirst() }}</b>
+                            <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                         </label>
                         <br>
                         <small class="form-text text-body-secondary">

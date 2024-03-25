@@ -14,10 +14,10 @@
                 <thead>
                     @include('back.modules.table-col-sorter', [
                         'cols' => [
-                            'event' => Str::of(__('validation.custom.event'))->ucfirst(),
-                            'user' => Str::of(__('models.user'))->ucfirst(),
-                            'model' => Str::of(__('validation.custom.model'))->ucfirst(),
-                            'created_at' => Str::of(__('validation.attributes.created_at'))->ucfirst(),
+                            'event' => str(__('validation.custom.event'))->ucfirst(),
+                            'user' => str(__('models.user'))->ucfirst(),
+                            'model' => str(__('validation.custom.model'))->ucfirst(),
+                            'created_at' => str(__('validation.attributes.created_at'))->ucfirst(),
                         ],
                     ])
                 </thead>
@@ -26,7 +26,7 @@
                         <tr class="border-bottom">
                             <td
                                 class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-{{ $activitylogModel->event->bootstrapClass() }}-emphasis text-center align-middle">
-                                {{ Str::of($activitylogModel->event->label())->ucFirst() }}
+                                {{ str($activitylogModel->event->label())->ucFirst() }}
                             </td>
                             <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
                                 @if (isset($activitylogModel->user))
@@ -53,7 +53,7 @@
                                 @if (!empty($targetModel) and Route::has($editRouteName))
                                     <a class="btn btn-sm btn-primary text-decoration-none @if (!isset($targetModel)) disabled @endif"
                                         data-bs-tooltip="tooltip" href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel) }}"
-                                        title="{{ __('crud.actions_model.show', ['model' => __('models.' . Str::of($targetModel->getTable())->singular())]) }}">
+                                        title="{{ __('crud.actions_model.show', ['model' => __('models.' . str($targetModel->getTable())->singular())]) }}">
                                 @endif
                                 {{ $activitylogModel->model_class }}
                                 @if (!empty($targetModel) and Route::has($editRouteName))

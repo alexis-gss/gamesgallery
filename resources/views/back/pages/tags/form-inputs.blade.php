@@ -15,7 +15,7 @@
                         <div class="default-translation-value">
                             {!! nl2br(
                                 __('validation.rule.default_field', [
-                                    'field' => Str::of(__('validation.attributes.name'))->ucFirst(),
+                                    'field' => str(__('validation.attributes.name'))->ucFirst(),
                                     'value' => empty(!$tagModel->getTranslation('name', config('app.fallback_locale')))
                                         ? $tagModel->getTranslation('name', config('app.fallback_locale'))
                                         : '...',
@@ -46,7 +46,7 @@
                         <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
                             name="published" type="checkbox" value="1" role="button" @if (old('published', $tagModel->published ?? '')) checked @endif>
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
-                            <b>{{ Str::of(__('validation.custom.publishment'))->ucfirst() }}</b>
+                            <b>{{ str(__('validation.custom.publishment'))->ucfirst() }}</b>
                         </label>
                         <br>
                         <small class="form-text text-body-secondary">

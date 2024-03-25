@@ -1,9 +1,12 @@
 @php
     $route = request()->route();
     $routeName = $route->getName();
-    $rst = !is_null(request()->rst) || !Session::has("$routeName.sorted");
+    $rst = !is_null(request()->rst) || !session()->has("$routeName.sorted");
     $noOrder = !empty($noOrder);
-    $noOrder = $noOrder || (Session::get("$routeName.sort_col") !== 'order' and (Session::has("$routeName.sort_col") or Session::has("$routeName.sort_way")));
+    $noOrder =
+        $noOrder ||
+        (session()->get("$routeName.sort_col") !== 'order' and
+            (session()->has("$routeName.sort_col") or session()->has("$routeName.sort_way")));
     $noOrder = $noOrder || !empty(request()->search);
     $ignore = (isset($ignore) and is_array($ignore)) ? $ignore : [];
 @endphp
@@ -38,7 +41,7 @@
                         session("$routeName.sort_way") === 'desc' and session("$routeName.sort_col") === $col)
                     <a class="btn btn-sm btn-outline-secondary text-decoration-none ms-1" data-bs-tooltip="tooltip"
                         href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'asc', 'rst' => null])) }}"
-                        title="{{ __('crud.filter.sort_descending', ['name' => Str::of($colname)->lower()]) }}">
+                        title="{{ __('crud.filter.sort_descending', ['name' => str($colname)->lower()]) }}">
                         <i class="fas fa-arrow-down 2xs"></i>
                     </a>
                 @endif
@@ -48,7 +51,7 @@
                         session("$routeName.sort_way") === 'asc' and session("$routeName.sort_col") === $col)
                     <a class="btn btn-sm btn-outline-secondary text-decoration-none ms-1" data-bs-tooltip="tooltip"
                         href="{{ request()->fullUrlWithQuery(array_merge($iArgs, ['sort_way' => 'desc', 'rst' => null])) }}"
-                        title="{{ __('crud.filter.sort_ascending', ['name' => Str::of($colname)->lower()]) }}">
+                        title="{{ __('crud.filter.sort_ascending', ['name' => str($colname)->lower()]) }}">
                         <i class="fas fa-arrow-up 2xs"></i>
                     </a>
                 @endif

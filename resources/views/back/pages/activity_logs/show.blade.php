@@ -25,7 +25,7 @@
                             <table class="table-hover m-0 table">
                                 <tbody>
                                     <tr class="border-bottom">
-                                        <td class="w-50 fw-bold text-center align-middle">{{ Str::of(__('models.user'))->ucFirst() }}</td>
+                                        <td class="w-50 fw-bold text-center align-middle">{{ str(__('models.user'))->ucFirst() }}</td>
                                         <td class="w-50 text-center align-middle">
                                             @if (isset($activitylogModel->user))
                                                 <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip"
@@ -44,22 +44,22 @@
                                     </tr>
                                     <tr class="border-bottom">
                                         <td class="w-50 fw-bold text-center align-middle">
-                                            {{ Str::of(__('validation.custom.event'))->ucFirst() }}</td>
+                                            {{ str(__('validation.custom.event'))->ucFirst() }}</td>
                                         <td class="w-50 text-center align-middle">
                                             <span
                                                 class="text-{{ $activitylogModel->event->bootstrapClass() }}-emphasis bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle border-{{ $activitylogModel->event->bootstrapClass() }}-subtle rounded-3 border p-1">
-                                                {{ Str::of($activitylogModel->event->label())->ucFirst() }}
+                                                {{ str($activitylogModel->event->label())->ucFirst() }}
                                             </span>
                                         </td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td class="w-50 fw-bold text-center align-middle">
-                                            {{ Str::of(__('validation.custom.model'))->ucFirst() }}</td>
+                                            {{ str(__('validation.custom.model'))->ucFirst() }}</td>
                                         <td class="w-50 text-center align-middle">
                                             @if (isset($targetModel))
                                                 <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip"
                                                     href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel) }}"
-                                                    title="{{ __('crud.actions_model.show', ['model' => __('models.' . Str::of($targetModel->getTable())->singular())]) }}">
+                                                    title="{{ __('crud.actions_model.show', ['model' => __('models.' . str($targetModel->getTable())->singular())]) }}">
                                             @endif
                                             {{ $activitylogModel->model_class }}
                                             @if (isset($targetModel))
@@ -69,7 +69,7 @@
                                     </tr>
                                     <tr class="border-bottom">
                                         <td class="w-50 fw-bold text-center align-middle">
-                                            {{ Str::of(__('validation.attributes.created_at'))->ucFirst() }}</td>
+                                            {{ str(__('validation.attributes.created_at'))->ucFirst() }}</td>
                                         <td class="w-50 text-center align-middle">
                                             <span class="badge rounded-pill bg-secondary">
                                                 {{ $activitylogModel->created_at->isoFormat('LLLL') }}

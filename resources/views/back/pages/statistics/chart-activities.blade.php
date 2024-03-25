@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-12">
         <form class="input-group mb-3" action="{{ route('bo.statistics.update') }}" method="POST">
-            <label class="input-group-text" for="date_start">{{ Str::of(__('validation.custom.date_start'))->ucFirst() }}</label>
+            <label class="input-group-text" for="date_start">{{ str(__('validation.custom.date_start'))->ucFirst() }}</label>
             <input class="form-control" id="date_start" name="date_start" type="date"
                 value="{{ !empty($dateLastDays->first()) ? $dateLastDays->first()->format('Y-m-d') : Carbon::now()->subDays(29)->format('Y-m-d') }}"
                 required>
             @csrf
-            <label class="input-group-text" for="date_end">{{ Str::of(__('validation.custom.date_end'))->ucFirst() }}</label>
+            <label class="input-group-text" for="date_end">{{ str(__('validation.custom.date_end'))->ucFirst() }}</label>
             <input class="form-control" id="date_end" name="date_end" type="date"
                 value="{{ !empty($dateLastDays->last()) ? $dateLastDays->last()->format('Y-m-d') : Carbon::now()->format('Y-m-d') }}"
                 required>
@@ -25,7 +25,7 @@
         var chartActivities = window.Echarts.init(document.getElementById('chart-activities'), 'royal');
         var optionActivities = {
             title: {
-                text: @json(Str::of(__('bo_other_stats_latest_activities'))->ucFirst()->value()),
+                text: @json(str(__('bo_other_stats_latest_activities'))->ucFirst()),
                 left: 'center',
                 textStyle: {
                     fontSize: '16px',
@@ -85,28 +85,28 @@
                 type: 'value'
             },
             series: [{
-                    name: @json(Str::of(trans_choice('models.game', 2))->ucFirst()->value()),
+                    name: @json(str(trans_choice('models.game', 2))->ucFirst()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Game']),
                     color: '#0D6EFD',
                 },
                 {
-                    name: @json(Str::of(__('models.folder'))->plural()->ucFirst()->value()),
+                    name: @json(str(__('models.folder'))->plural()->ucFirst()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Folder']),
                     color: '#dc3545',
                 },
                 {
-                    name: @json(Str::of(__('models.tag'))->plural()->ucFirst()->value()),
+                    name: @json(str(__('models.tag'))->plural()->ucFirst()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Tag']),
                     color: '#0dcaf0',
                 },
                 {
-                    name: @json(Str::of(__('models.user'))->plural()->ucFirst()->value()),
+                    name: @json(str(__('models.user'))->plural()->ucFirst()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\User']),
