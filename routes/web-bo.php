@@ -35,8 +35,8 @@ Route::prefix('bo')
                 });
             Route::middleware(['auth:backend'])
                 ->group(function () {
-                    // * HOMEPAGE
-                    Route::get('/', [HomeController::class, 'index'])->name('homepage');
+                    // * HOME
+                    Route::get('/', [HomeController::class, 'index'])->name('home');
 
                     // * STATISTICS
                     Route::get('/statistics', [StatisticController::class, 'index'])

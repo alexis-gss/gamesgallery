@@ -17,8 +17,8 @@ Breadcrumbs::for('bo.login', function ($trail) {
 });
 
 // * HOMEPAGE
-Breadcrumbs::for('bo.homepage', function (Generator $trail) {
-    $trail->push(__('Homepage'), route('bo.homepage'));
+Breadcrumbs::for('bo.home', function (Generator $trail) {
+    $trail->push(__('Homepage'), route('bo.home'));
 });
 
 // * STATISTIQUES
