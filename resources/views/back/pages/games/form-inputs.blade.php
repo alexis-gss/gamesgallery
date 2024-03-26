@@ -12,7 +12,7 @@
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'name'])'></div>
                     <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text"
-                        value="{{ old('name', $gameModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}">
+                        value="{{ old('name', $gameModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}" required>
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.name'),
@@ -30,9 +30,10 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button">
+                    <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button"
+                        required>
                         @foreach ($folderModels as $folder)
-                            <option value="{{ $folder->getRouteKey() }}" @if ($folder->getRouteKey() == $gameModel->folder_id) selected @endif>
+                            <option value="{{ $folder->getRouteKey() }}" @selected($folder->getRouteKey() == $gameModel->folder_id)>
                                 {{ $folder->name }}
                             </option>
                         @endforeach
@@ -117,7 +118,7 @@
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
                         <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
-                            name="published" type="checkbox" value="1" role="button" @if (old('published', $gameModel->published ?? '')) checked @endif>
+                            name="published" type="checkbox" value="1" role="button" @checked(old('published', $gameModel->published ?? ''))>
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                         </label>

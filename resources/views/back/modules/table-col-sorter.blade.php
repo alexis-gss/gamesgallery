@@ -23,14 +23,26 @@
             @if ($noOrder and !in_array($col, $ignore))
                 @continue
             @endif
-            <th class="h-100 @if (isset($mobileHide) and is_array($mobileHide) and in_array($col, $mobileHide)) d-none d-md-table-cell @endif text-center" scope="col">
+            <th @class([
+                'h-100 text-center',
+                'd-none d-md-table-cell' =>
+                    isset($mobileHide) and
+                    is_array($mobileHide) and
+                    in_array($col, $mobileHide),
+            ]) scope="col">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <span class="text-nowrap">{{ $colname }}</span>
                 </div>
             </th>
             @continue
         @endif
-        <th class="h-100 @if (isset($mobileHide) and is_array($mobileHide) and in_array($col, $mobileHide)) d-none d-md-table-cell @endif text-center" scope="col">
+        <th @class([
+            'h-100 text-center',
+            'd-none d-md-table-cell' =>
+                isset($mobileHide) and
+                is_array($mobileHide) and
+                in_array($col, $mobileHide),
+        ]) scope="col">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <span class="text-nowrap">
                     {{ $colname }}

@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text"
-                        value="{{ old('name', $folderModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}*">
+                        value="{{ old('name', $folderModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}*" required>
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.name'),
@@ -67,7 +67,7 @@
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
                         <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckPublished"
-                            name="published" type="checkbox" value="1" role="button" @if (old('published', $folderModel->published ?? '')) checked @endif>
+                            name="published" type="checkbox" value="1" role="button" @checked(old('published', $folderModel->published ?? ''))>
                         <label class="form-check-label" for="flexSwitchCheckPublished" role="button">
                             <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                         </label>
@@ -81,7 +81,7 @@
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
                         <input class="form-check-input @error('mandatory') is-invalid @enderror" id="flexSwitchCheckMandatory"
-                            name="mandatory" type="checkbox" value="1" role="button" @if (old('mandatory', $folderModel->mandatory ?? '')) checked @endif>
+                            name="mandatory" type="checkbox" value="1" role="button" @checked(old('mandatory', $folderModel->mandatory ?? ''))>
                         <label class="form-check-label" for="flexSwitchCheckMandatory" role="button">
                             <b>{{ str(__('validation.custom.folder_mandatory'))->ucFirst() }}</b>
                         </label>

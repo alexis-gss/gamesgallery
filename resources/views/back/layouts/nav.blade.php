@@ -41,16 +41,17 @@
                             </script>
                         @endpush
                         @csrf
-                        @foreach (\App\Enums\Theme\BootstrapThemeEnum::toArray() as $key => $bootstrapTheme)
+                        @use('\App\Enums\Theme\BootstrapThemeEnum', 'BootstrapThemeEnum')
+                        @foreach (BootstrapThemeEnum::toArray() as $key => $bootstrapTheme)
                             <input class="btn-check" id="theme{{ $key }}" name="theme" type="radio"
                                 value="{{ $bootstrapTheme->value }}">
-                            <label class="dropdown-item btn btn-secondary @if (
-                                !is_null(Cache::get('theme'))
-                                    ? $bootstrapTheme->value === intval(Cache::get('theme'))
-                                    : $bootstrapTheme->value === \App\Enums\Theme\BootstrapThemeEnum::light->value) active @endif py-2"
-                                for="theme{{ $key }}">
-                                {{ str($bootstrapTheme->label)->ucFirst() }}
-                            </label>
+                            <label for="theme{{ $key }}"
+                                @class([
+                                    'dropdown-item btn btn-secondary py-2',
+                                    'active' => !is_null(Cache::get('theme'))
+                                        ? $bootstrapTheme->value === intval(Cache::get('theme'))
+                                        : $bootstrapTheme->value === BootstrapThemeEnum::light->value,
+                                ])>{{ str($bootstrapTheme->label)->ucFirst() }}</label>
                         @endforeach
                     </form>
                 </li>
@@ -80,10 +81,10 @@
                         @foreach (config('app.locales') as $key => $locale)
                             <input class="btn-check" id="lang{{ $key }}" name="lang" type="radio"
                                 value="{{ $locale }}">
-                            <label class="dropdown-item btn btn-secondary @if ($locale === app()->getLocale()) active @endif py-2"
-                                for="lang{{ $key }}">
-                                {{ str($locale)->upper() }}
-                            </label>
+                            <label for="lang{{ $key }}" @class([
+                                'dropdown-item btn btn-secondary py-2',
+                                'active' => $locale === app()->getLocale(),
+                            ])>{{ str($locale)->upper() }}</label>
                         @endforeach
                     </form>
                 </li>

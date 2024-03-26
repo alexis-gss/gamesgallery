@@ -16,7 +16,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 @if (isset($activitylogModel->data) && count($activitylogModel->data)) border-bottom @endif mb-3">
+        <div @class([
+            'col-12 mb-3',
+            'border-bottom' =>
+                isset($activitylogModel->data) && count($activitylogModel->data),
+        ])>
             <fieldset class="p-3">
                 <legend>{{ __('bo_title_general_informations') }}</legend>
                 <div class="row">

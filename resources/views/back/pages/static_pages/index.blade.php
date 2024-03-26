@@ -34,8 +34,11 @@
                             <td class="text-center align-middle">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
                                     @foreach (config('app.locales') as $locale)
-                                        <p
-                                            class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif col-10 text-truncate m-0">
+                                        <p @class([
+                                            'col-10 text-truncate m-0',
+                                            'fst-italic text-body-secondary' =>
+                                                $locale !== config('app.fallback_locale'),
+                                        ])>
                                             {{ $staticPageModel->getTranslation('seo_title', $locale) }}
                                         </p>
                                     @endforeach
@@ -44,8 +47,11 @@
                             <td class="text-center align-middle">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
                                     @foreach (config('app.locales') as $locale)
-                                        <p
-                                            class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif col-10 text-truncate m-0">
+                                        <p @class([
+                                            'col-10 text-truncate m-0',
+                                            'fst-italic text-body-secondary' =>
+                                                $locale !== config('app.fallback_locale'),
+                                        ])>
                                             {{ $staticPageModel->getTranslation('seo_description', $locale) }}
                                         </p>
                                     @endforeach
@@ -54,8 +60,11 @@
                             <td class="text-center align-middle">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
                                     @foreach (config('app.locales') as $locale)
-                                        <p
-                                            class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif col-10 text-truncate m-0">
+                                        <p @class([
+                                            'col-10 text-truncate m-0',
+                                            'fst-italic text-body-secondary' =>
+                                                $locale !== config('app.fallback_locale'),
+                                        ])>
                                             {{ $staticPageModel->getTranslation('title', $locale) }}
                                         </p>
                                     @endforeach

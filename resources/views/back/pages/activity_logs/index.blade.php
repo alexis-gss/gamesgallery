@@ -51,9 +51,12 @@
                             @endphp
                             <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
                                 @if (!empty($targetModel) and Route::has($editRouteName))
-                                    <a class="btn btn-sm btn-primary text-decoration-none @if (!isset($targetModel)) disabled @endif"
-                                        data-bs-tooltip="tooltip" href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel) }}"
-                                        title="{{ __('crud.actions_model.show', ['model' => __('models.' . str($targetModel->getTable())->singular())]) }}">
+                                    <a data-bs-tooltip="tooltip" href="{{ route('bo.' . $targetModel->getTable() . '.edit', $targetModel) }}"
+                                        title="{{ __('crud.actions_model.show', ['model' => __('models.' . str($targetModel->getTable())->singular())]) }}"
+                                        @class([
+                                            'btn btn-sm btn-primary text-decoration-none',
+                                            'disabled' => !isset($targetModel),
+                                        ])>
                                 @endif
                                 {{ $activitylogModel->model_class }}
                                 @if (!empty($targetModel) and Route::has($editRouteName))

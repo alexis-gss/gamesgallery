@@ -6,5 +6,8 @@
         'allTags' => $tagModels,
     ];
 @endphp
-<div class="games-list @if (request()->routeIs('fo.games.index')) bg-secondary rounded-2 p-2 @else mt-2 @endif"
-    data-json='@json($dataGame)'></div>
+<div data-json='@json($dataGame)' @class([
+    'games-list',
+    'bg-secondary rounded-2 p-2' => request()->routeIs('fo.games.index'),
+    'mt-2' => !request()->routeIs('fo.games.index'),
+])></div>
