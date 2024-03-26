@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text"
-                        value="{{ old('name', $tagModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}*">
+                        value="{{ old('name', $tagModel->name ?? '') }}" required placeholder="{{ __('validation.attributes.name') }}*">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.name'),
@@ -44,7 +44,7 @@
                 <div class="col-12 col-md-6 form-check form-switch">
                     <div class="form-check form-switch">
                         <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
-                            name="published" type="checkbox" value="1" role="button" @if (old('published', $tagModel->published ?? '')) checked @endif>
+                            name="published" type="checkbox" value="1" role="button" @checked(old('published', $tagModel->published ?? ''))>
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ str(__('validation.custom.publishment'))->ucfirst() }}</b>
                         </label>

@@ -12,7 +12,7 @@
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'first_name'])'></div>
                     <input class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" type="text"
-                        value="{{ old('first_name', $userModel->first_name ?? '') }}"
+                        value="{{ old('first_name', $userModel->first_name ?? '') }}" required
                         placeholder="{{ __('validation.attributes.first_name') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
@@ -32,7 +32,7 @@
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'last_name'])'></div>
                     <input class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" type="text"
-                        value="{{ old('last_name', $userModel->last_name ?? '') }}"
+                        value="{{ old('last_name', $userModel->last_name ?? '') }}" required
                         placeholder="{{ __('validation.attributes.last_name') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
@@ -52,7 +52,8 @@
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'email'])'></div>
                     <input class="form-control @error('email') is-invalid @enderror" id="email" name="email" type="text"
-                        value="{{ old('email', $userModel->email ?? '') }}" placeholder="{{ __('validation.attributes.email') }}">
+                        value="{{ old('email', $userModel->email ?? '') }}" required
+                        placeholder="{{ __('validation.attributes.email') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.email', ['attribute' => __('validation.attributes.email')]) }}
                     </small>
@@ -65,9 +66,9 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" role="button">
+                    <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" role="button" required>
                         @foreach (Arr::where(\App\Enums\Users\RoleEnum::toArray(), fn(object $role) => $role->value >= auth('backend')->user()->role->value()) as $associatedModel)
-                            <option value="{{ $associatedModel->value }}" @if ((isset($userModel->role) && old('role', $userModel->role->value()) ?? 1) === $associatedModel->value) selected @endif>
+                            <option value="{{ $associatedModel->value }}" @selected((isset($userModel->role) && old('role', $userModel->role->value()) ?? 1) === $associatedModel->value)>
                                 {{ str($associatedModel->label)->ucFirst() }}
                             </option>
                         @endforeach
@@ -165,8 +166,7 @@
                     <div class="col-12 col-md-6 form-check form-switch">
                         <div class="form-check form-switch">
                             <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
-                                name="published" type="checkbox" value="1" role="button"
-                                @if (old('published', $userModel->published ?? '')) checked @endif>
+                                name="published" type="checkbox" value="1" role="button" @checked(old('published', $userModel->published ?? ''))>
                             <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                                 <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                             </label>

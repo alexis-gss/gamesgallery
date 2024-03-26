@@ -59,7 +59,10 @@
                                 @if ($gameModel->folder->mandatory)
                                     <div class="d-flex flex-column justify-content-center align-items-center">
                                         @foreach (config('app.locales') as $locale)
-                                            <span @if ($locale !== config('app.fallback_locale')) class="fst-italic text-body-secondary" @endif>
+                                            <span @class([
+                                                'fst-italic text-body-secondary' =>
+                                                    $locale !== config('app.fallback_locale'),
+                                            ])>
                                                 {{ $gameModel->folder->getTranslation('name', $locale) }}
                                             </span>
                                         @endforeach

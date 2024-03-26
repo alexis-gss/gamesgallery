@@ -38,7 +38,11 @@
                             <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.custom.seo_title'))->ucFirst() }}</td>
                             <td class="w-50 text-center align-middle">
                                 @foreach (config('app.locales') as $locale)
-                                    <p class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif m-0">
+                                    <p @class([
+                                        'm-0',
+                                        'fst-italic text-body-secondary' =>
+                                            $locale !== config('app.fallback_locale'),
+                                    ])>
                                         {{ $staticPageModel->getTranslation('seo_title', $locale) }}
                                     </p>
                                 @endforeach
@@ -49,18 +53,27 @@
                             </td>
                             <td class="w-50 text-center align-middle">
                                 @foreach (config('app.locales') as $locale)
-                                    <p class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif m-0">
+                                    <p @class([
+                                        'm-0',
+                                        'fst-italic text-body-secondary' =>
+                                            $locale !== config('app.fallback_locale'),
+                                    ])>
                                         {{ $staticPageModel->getTranslation('seo_description', $locale) }}
                                     </p>
                                 @endforeach
                             </td>
                         </tr>
                         <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.title'))->ucFirst() }}
+                            <td class="w-50 fw-bold text-center align-middle">
+                                {{ str(__('validation.attributes.title'))->ucFirst() }}
                             </td>
                             <td class="w-50 text-center align-middle">
                                 @foreach (config('app.locales') as $locale)
-                                    <p class="@if ($locale !== config('app.fallback_locale')) fst-italic text-body-secondary @endif m-0">
+                                    <p @class([
+                                        'm-0',
+                                        'fst-italic text-body-secondary' =>
+                                            $locale !== config('app.fallback_locale'),
+                                    ])>
                                         {{ $staticPageModel->getTranslation('title', $locale) }}
                                     </p>
                                 @endforeach

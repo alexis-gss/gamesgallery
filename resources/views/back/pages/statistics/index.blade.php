@@ -22,9 +22,9 @@
                             </li>
                             @foreach ($navLinks as $navLink)
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link @if ($loop->first) active @endif" id="{{ $navLink['name'] }}-tab"
-                                        data-bs-toggle="tab" data-bs-target="#{{ $navLink['name'] }}-tab-pane" type="button" role="tab"
-                                        aria-controls="{{ $navLink['name'] }}-tab-pane" aria-selected="true">
+                                    <button id="{{ $navLink['name'] }}-tab" data-bs-toggle="tab"
+                                        data-bs-target="#{{ $navLink['name'] }}-tab-pane" type="button" role="tab"
+                                        aria-controls="{{ $navLink['name'] }}-tab-pane" aria-selected="true" @class(['nav-link', 'active' => $loop->first])>
                                         {{ $navLink['translation'] }}
                                     </button>
                                 </li>
@@ -32,8 +32,8 @@
                         </ul>
                         <div class="tab-content border-top-0 rounded-bottom border" id="tab-latest-data-updated-content">
                             @foreach ($navLinks as $navLink)
-                                <div class="tab-pane fade @if ($loop->first) active show @endif"
-                                    id="{{ $navLink['name'] }}-tab-pane" role="tabpanel" aria-labelledby="{{ $navLink['name'] }}-tab">
+                                <div id="{{ $navLink['name'] }}-tab-pane" role="tabpanel" aria-labelledby="{{ $navLink['name'] }}-tab"
+                                    @class(['tab-pane fade', 'active show' => $loop->first])>
                                     <div class="card-body bg-body-tertiary">
                                         <table class="table-hover m-0 table">
                                             <tbody>

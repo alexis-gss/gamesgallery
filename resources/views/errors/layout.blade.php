@@ -7,7 +7,7 @@
         <h1>@yield('errorTitle')</h1>
         <p>@yield('errorMessage')</p>
         <p class="text-body-secondary">{{ __('errors.error_code') }} @yield('errorCode')</p>
-        <a class="text-decoration-none" href="{{ Request::is('bo/*') ? route('bo.homepage') : route('fo.games.index') }}">
+        <a class="text-decoration-none" href="{{ Request::is('bo/*') ? route('bo.home') : route('fo.games.index') }}">
             {{ __('errors.error_text') }}
         </a>
     </div>

@@ -52,8 +52,10 @@
                         @csrf
                         @foreach (config('app.locales') as $key => $locale)
                             <input class="btn-check" id="lang{{ $key }}" name="lang" type="radio" value="{{ $locale }}">
-                            <label class="dropdown-item btn btn-secondary @if ($locale === app()->getLocale()) active @endif text-white"
-                                for="lang{{ $key }}">
+                            <label for="lang{{ $key }}" @class([
+                                'dropdown-item btn btn-secondary text-white',
+                                'active' => $locale === app()->getLocale(),
+                            ])>
                                 {{ str($locale)->upper() }}
                             </label>
                         @endforeach

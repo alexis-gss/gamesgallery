@@ -14,9 +14,11 @@
             <ul class="dropdown-menu">
                 @foreach (\App\Enums\Pagination\ItemsPerPaginationEnum::toArray() as $itemsPerPaginationEnum)
                     <li>
-                        <a class="dropdown-item user-select-none @if ($pagination === $itemsPerPaginationEnum->value) active @endif text-center"
-                            href="{{ request()->fullUrlWithQuery(['page' => 1, 'pagination' => $itemsPerPaginationEnum->value]) }}"
-                            role="button">
+                        <a href="{{ request()->fullUrlWithQuery(['page' => 1, 'pagination' => $itemsPerPaginationEnum->value]) }}"
+                            role="button" @class([
+                                'dropdown-item user-select-none text-center',
+                                'active' => $pagination === $itemsPerPaginationEnum->value,
+                            ])>
                             {{ $itemsPerPaginationEnum->value }}
                         </a>
                     </li>
@@ -28,11 +30,11 @@
             <div class="d-flex justify-content-end align-items-center">
                 <ul class="pagination m-0">
                     {{-- PREVIOUS PAGE --}}
-                    <li class="page-item @if ($paginator->onFirstPage()) disabled @endif">
+                    <li @class(['page-item', 'disabled' => $paginator->onFirstPage()])>
                         <a class="page-link d-flex align-items-center h-100" data-bs-tooltip="tooltip" data-bs-placement="top"
-                            title="{{ __('pagination.previous') }}" aria-label="{{ __('pagination.previous') }}"
-                            @if (!$paginator->onFirstPage()) href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() - 1]) }}" @endif
-                            rel="prev" @if ($paginator->onFirstPage()) aria-hidden="true" disabled @endif>
+                            title="{{ __('pagination.previous') }}" aria-label="{{ __('pagination.previous') }}" rel="prev"
+                            @if (!$paginator->onFirstPage()) href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() - 1]) }}"
+                            @else aria-hidden="true" disabled @endif>
                             <i class="fa-solid fa-chevron-left fa-2xs mt-1"></i>
                         </a>
                     </li>
@@ -60,10 +62,11 @@
                                         <ul class="dropdown-menu">
                                             @for ($i = 1; $i <= $paginator->lastPage(); $i++)
                                                 <li>
-                                                    <a class="dropdown-item user-select-none @if ($paginator->currentPage() === $i) active @endif text-center"
-                                                        href="{{ request()->fullUrlWithQuery(['page' => $i]) }}" role="button">
-                                                        {{ $i }}
-                                                    </a>
+                                                    <a href="{{ request()->fullUrlWithQuery(['page' => $i]) }}" role="button"
+                                                        @class([
+                                                            'dropdown-item user-select-none text-center',
+                                                            'active' => $paginator->currentPage() === $i,
+                                                        ])>{{ $i }}</a>
                                                 </li>
                                             @endfor
                                         </ul>
@@ -91,11 +94,11 @@
                         </li>
                     @endif
                     {{-- NEXT PAGE --}}
-                    <li class="page-item @if (!$paginator->hasMorePages()) disabled @endif">
+                    <li @class(['page-item', 'disabled' => !$paginator->hasMorePages()])>
                         <a class="page-link d-flex align-items-center h-100" data-bs-tooltip="tooltip" data-bs-placement="top"
-                            title="{{ __('pagination.next') }}" aria-label="{{ __('pagination.next') }}"
-                            @if ($paginator->hasMorePages()) href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() + 1]) }}" @endif
-                            rel="next" @if (!$paginator->hasMorePages()) aria-hidden="true" disabled @endif>
+                            title="{{ __('pagination.next') }}" aria-label="{{ __('pagination.next') }}" rel="next"
+                            @if ($paginator->hasMorePages()) href="{{ request()->fullUrlWithQuery(['page' => $paginator->currentPage() + 1]) }}"
+                            @else aria-hidden="true" disabled @endif>
                             <i class="fa-solid fa-chevron-right fa-2xs mt-1"></i>
                         </a>
                     </li>

@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     <input class="form-control @error('seo_title') is-invalid @enderror" id="seo_title" name="seo_title" type="text"
-                        value="{{ old('seo_title', $staticPageModel->seo_title ?? '') }}"
+                        value="{{ old('seo_title', $staticPageModel->seo_title ?? '') }}" required
                         placeholder="{{ __('validation.custom.seo_title') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
@@ -56,7 +56,7 @@
                         </div>
                     @endif
                     <input class="form-control @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
-                        type="text" value="{{ old('seo_description', $staticPageModel->seo_description ?? '') }}"
+                        type="text" value="{{ old('seo_description', $staticPageModel->seo_description ?? '') }}" required
                         placeholder="{{ __('validation.custom.seo_description') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
@@ -90,7 +90,8 @@
                         </div>
                     @endif
                     <input class="form-control @error('title') is-invalid @enderror" id="title" name="title" type="text"
-                        value="{{ old('title', $staticPageModel->title ?? '') }}" placeholder="{{ __('validation.attributes.title') }}">
+                        value="{{ old('title', $staticPageModel->title ?? '') }}" required
+                        placeholder="{{ __('validation.attributes.title') }}">
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.title'),
