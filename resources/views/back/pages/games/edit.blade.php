@@ -22,13 +22,11 @@
                     @method('DELETE')
                     <div class="btn-group" role="group">
                         @if ($gameModel->published)
-                            @can('view', $gameModel)
-                                <a class="btn btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                    href="{{ route('fo.games.show', $gameModel->slug) }}"
-                                    title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                </a>
-                            @endcan
+                            <a class="btn btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                href="{{ route('fo.games.show', $gameModel->slug) }}"
+                                title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
                         @endif
                         @can('view', $gameModel)
                             <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
