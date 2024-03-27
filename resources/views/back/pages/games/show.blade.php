@@ -17,6 +17,12 @@
         @canAny(['duplicate', 'update', 'delete'], $gameModel)
             <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
                 action="{{ route('bo.games.destroy', $gameModel) }}" method="POST" novalidate>
+                @if ($gameModel->published)
+                    <a class="btn btn-info" data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('fo.games.show', $gameModel->slug) }}"
+                        title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                @endif
                 @can('duplicate', $gameModel)
                     <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                         href="{{ route('bo.games.duplicate', ['game' => $gameModel]) }}"
@@ -80,9 +86,9 @@
                                 <div class="vstack gap-1">
                                     @if (count($gameModel->pictures))
                                         @foreach ($gameModel->pictures as $picture)
-                                            <div class="hstack">
+                                            <div class="hstack justify-content-center">
                                                 <p class="m-0">{{ sprintf('%s.webp', $picture->uuid) }}</p>
-                                                <button class="btn btn-sm btn-warning ms-auto" data-bs-toggle="modal"
+                                                <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="modal"
                                                     data-bs-target="#ModalViewPicture">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </button>
@@ -97,8 +103,8 @@
                                                                     {{ str(__('models.picture'))->ucFirst()->value() }}
                                                                 </h5>
                                                                 <button class="btn-close" data-bs-dismiss="modal" data-bs-tooltip="tooltip"
-                                                                    type="button" aria-label="{{ __('bo_other_close') }}"
-                                                                    :title="__('bo_other_close')" />
+                                                                    type="button" title="{{ __('bo_other_close') }}"
+                                                                    aria-label="{{ __('bo_other_close') }}" />
                                                             </div>
                                                             <div class="modal-body">
                                                                 <img class="img-fluid"

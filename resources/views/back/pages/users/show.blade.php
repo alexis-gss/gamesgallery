@@ -77,6 +77,40 @@
                             </td>
                         </tr>
                         <tr class="border-bottom">
+                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.image'))->ucFirst() }}</td>
+                            <td class="w-50 text-center align-middle">
+                                <div class="vstack gap-1">
+                                    <div class="hstack justify-content-center">
+                                        <p class="m-0">{{ basename($userModel->picture) }}</p>
+                                        <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="modal" data-bs-target="#ModalViewPicture">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal" id="ModalViewPicture" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+                                        tabindex="-1">
+                                        <div class="d-flex justify-content-center align-items-center h-100">
+                                            <div class="modal-dialog modal-xl" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            {{ str(__('models.picture'))->ucFirst()->value() }}
+                                                        </h5>
+                                                        <button class="btn-close" data-bs-dismiss="modal" data-bs-tooltip="tooltip"
+                                                            type="button" title="{{ __('bo_other_close') }}"
+                                                            aria-label="{{ __('bo_other_close') }}" />
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img class="img-fluid" src="{{ asset($userModel->picture) }}"
+                                                            title="{{ $userModel->picture_title }}" alt="{{ $userModel->picture_alt }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-bottom">
                             <td class="w-50 fw-bold text-center align-middle">
                                 {{ str(__('validation.custom.published_at'))->ucFirst() }}
                             </td>
