@@ -7,7 +7,7 @@
 
 {{-- blade-formatter-disable --}}
 @use('\App\Enums\Theme\BootstrapThemeEnum', 'BootstrapThemeEnum')
-<body data-bs-theme="{{ (BootstrapThemeEnum::make(intval(Cache::get('theme'))) ?? BootstrapThemeEnum::light)->name() }}">
+<body data-bs-theme="{{ (BootstrapThemeEnum::make(intval(cache()->get('theme'))) ?? BootstrapThemeEnum::light)->name() }}">
     <!-- Header -->
     @include('back.layouts.nav')
 
