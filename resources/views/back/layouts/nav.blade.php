@@ -106,8 +106,8 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end m-0 p-1 text-center" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item w-100 text-decoration-none p-2" data-bs-tooltip="tooltip" data-bs-placement="left"
-                                href="{{ route('bo.users.edit', auth('backend')->user()->getKey()) }}"
-                                title="{{ __('bo_tooltip_to_edit_profile') }}">
+                                href="{{ route('bo.users.show', auth('backend')->user()->getKey()) }}"
+                                title="{{ __('bo_tooltip_to_show_profile') }}">
                                 {{ __('bo_other_edit_profile') }}
                             </a>
                             <hr class="dropdown-divider m-0">
