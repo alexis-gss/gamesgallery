@@ -45,7 +45,7 @@ class Game extends Model
     /**
      * The attributes that are fillable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'slug',

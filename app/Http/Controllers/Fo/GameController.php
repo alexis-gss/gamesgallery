@@ -9,6 +9,7 @@ use App\Models\Rating;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 
 class GameController extends Controller
 {
@@ -42,7 +43,8 @@ class GameController extends Controller
             }
 
             /** @var \Illuminate\Database\Eloquent\Collection $ratingModels */
-            $ratingModels = Rating::query()->where('ip_address', request()->ip())
+            $ratingModels = Rating::query()
+                ->where('uuid', Cache::get('rating-uuid'))
                 ->get()->map(function ($rating) {
                     return $rating->picture_id;
                 });
@@ -76,12 +78,12 @@ class GameController extends Controller
         $selectedFolderId = intval($request->filters_id[1] ?? 0);
         /** @var \Illuminate\Support\Collection $gamesFiltered */
         $gamesFiltered = Game::query()->with('pictures')->where('published', true)
-            ->when($selectedTagId, function ($query) use ($selectedTagId) {
+            ->when($selectedTagId, function (Builder $query) use ($selectedTagId) {
                 $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
                     $query->where('id', $selectedTagId);
                 });
             })
-            ->when($selectedFolderId, function ($query) use ($selectedFolderId) {
+            ->when($selectedFolderId, function (Builder $query) use ($selectedFolderId) {
                 $query->where('folder_id', $selectedFolderId);
             })
             ->orderBy('slug', 'ASC')

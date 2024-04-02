@@ -19,7 +19,7 @@ final class RatingFactory extends Factory
     {
         return [
             'picture_id' => Picture::query()->where('published', true)->get()->random()->getKey(),
-            'ip_address' => "127.0.0.1",
+            'uuid'       => fake()->uuid(),
         ];
     }
 }

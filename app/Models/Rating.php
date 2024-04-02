@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer                         $id         Id.
- * @property string                          $ip_address IP of the user.
+ * @property string                          $uuid       IP of the user.
  * @property \App\Models\Picture             $picture_id Picture associated.
  * @property-read \Illuminate\Support\Carbon $created_at Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at Updated date.
@@ -21,10 +21,10 @@ class Rating extends Model
     /**
      * The attributes that are fillable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
-        'ip_address',
+        'uuid',
         'picture_id',
     ];
 

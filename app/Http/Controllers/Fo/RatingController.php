@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Fo;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RatingController extends Controller
 {
@@ -20,9 +22,16 @@ class RatingController extends Controller
     public function update(Request $request, Rating $rating): \Illuminate\Http\JsonResponse
     {
         return DB::transaction(function () use ($request, $rating) {
-            $fields    = array_merge($request->all(), ['ip_address' => $request->ip()]);
+            // Check if there is an existing universally unique identifier in the cache,
+            // if not in case, create it and store it in the cache.
+            Cache::put('rating-uuid', !is_null(Cache::get('rating-uuid')) ?
+                Cache::get('rating-uuid') :
+                Str::uuid()->toString());
+
+            // Validate the request.
+            $fields    = array_merge($request->all(), ['uuid' => Cache::get('rating-uuid')]);
             $validator = Validator::make($fields, [
-                'ip_address' => 'required|string|ip',
+                'uuid'       => 'required|uuid|string',
                 'picture_id' => 'required|numeric|exists:pictures,id|distinct',
             ]);
 
@@ -33,7 +42,7 @@ class RatingController extends Controller
 
             // Check if the rating already exist.
             $ratingExist = Rating::query()
-                ->where('ip_address', $validator->validated()['ip_address'])
+                ->where('uuid', $validator->validated()['uuid'])
                 ->where('picture_id', $validator->validated()['picture_id'])
                 ->first();
             if ($ratingExist) {
