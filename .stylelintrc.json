@@ -29,8 +29,6 @@
         "order/properties-alphabetical-order": null,
         "max-nesting-depth": 5,
         "selector-max-compound-selectors": 5,
-        "declaration-colon-newline-after": null,
-        "value-list-comma-newline-after": null,
         "selector-no-qualifying-type": null,
         "scss/double-slash-comment-empty-line-before": [
             "always",
