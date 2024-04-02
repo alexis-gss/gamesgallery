@@ -47,7 +47,7 @@ class User extends Authenticatable
     /**
      * The attributes that are fillable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'first_name',

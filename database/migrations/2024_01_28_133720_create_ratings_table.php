@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->ipAddress('ip_address')->comment('IP address of the user.');
+            $table->ipAddress('uuid')->comment('Universally Unique Identifier (UUID) of the customer.');
             $table->foreignId('picture_id')->constrained('pictures')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

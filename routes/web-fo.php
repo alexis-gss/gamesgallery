@@ -24,8 +24,6 @@ Route::name('fo.')
         // * RATINGS
         Route::post('/ratings/{picture_id}', [RatingController::class, 'update'])
             ->name('ratings.update');
-        Route::post('/ratings/filtered/{ip_address}', [RatingController::class, 'getRatingsFromIp'])
-            ->name('ratings.filtered');
 
         // * CHANGE LANGUAGES.
         Route::post('/lang/set', [Controller::class, 'setLang'])->name('lang.set');
