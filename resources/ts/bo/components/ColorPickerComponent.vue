@@ -26,11 +26,11 @@
           :value="intValue"
         >
         <div
-          :class="`chrome-picker position-absolute left-0 ${
+          :class="`color-picker position-absolute left-0 ${
             intDisplayPicker ? 'd-inline-block' : 'd-none'
           }`"
         >
-          <Chrome-picker
+          <Color-picker
             ref="picker"
             v-model="intInternalValue"
           />
@@ -65,9 +65,8 @@
 </template>
 
 <script lang="ts">
+import { Sketch } from "@ckpack/vue-color";
 import { defineComponent, type PropType } from "vue";
-// @ts-ignore
-import { Chrome } from "@ckpack/vue-color";
 import trans from "../../modules/trans";
 import { Tooltips } from "./../../modules/tooltip";
 
@@ -76,7 +75,7 @@ export default defineComponent({
   inheritAttrs: false,
   mixins: [trans],
   components: {
-    "Chrome-picker": Chrome,
+    "Color-picker": Sketch,
   },
   props: {
     id: {
@@ -118,7 +117,7 @@ export default defineComponent({
     intDisplayPicker: boolean;
     intNullableInput: HTMLInputElement | null;
     intColorPickerFakeInput: HTMLElement | null;
-    intPicker: typeof Chrome | null;
+    intPicker: typeof Sketch | null;
     tooltips: Tooltips | null;
   } {
     return {
@@ -141,7 +140,7 @@ export default defineComponent({
     this.intNullableInput = this.$refs.nullableInput as HTMLInputElement;
     this.intColorPickerFakeInput = this.$refs
       .colorPickerFakeInput as HTMLElement;
-    this.intPicker = this.$refs.picker as typeof Chrome;
+    this.intPicker = this.$refs.picker as typeof Sketch;
 
     const json = String(this.$attrs.json ?? "{}"),
           data = JSON.parse(json);
@@ -251,19 +250,77 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 .color-picker-component {
   position: relative;
-  .chrome-picker {
-    z-index: 9;
+  z-index: 2;
+  .vc-sketch {
+    background-color: var(--bs-tertiary-bg);
   }
-  .vc-chrome-alpha-wrap {
+  .vc-sketch-sliders, .vc-sketch-field {
+    margin-top: 10px;
+    padding: 0;
+  }
+  .vc-sketch-sliders {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 16px;
+  }
+  .vc-sketch-hue-wrap {
+    width: 100%;
+  }
+  .vc-sketch-alpha-wrap, .vc-sketch-presets-color:last-of-type, .vc-sketch-color-wrap, .vc-sketch-field--single {
     display: none;
   }
-  .vc-chrome-body {
-    background-color: var(--bs-body-bg);
+  .vc-sketch-color-wrap .vc-checkerboard {
+    background-image: none !important;
   }
-  .vc-chrome-fields .vc-input__input {
+  .vc-sketch-active-color, .vc-sketch-saturation-wrap {
+    border-radius: 3px;
+  }
+  .vc-sketch-hue-wrap, .vc-hue-pointer, .vc-hue-picker {
+    height: 100%;
+  }
+  .vc-hue-picker {
+    margin: 0;
+  }
+  .vc-saturation-circle {
+    box-shadow: 0 0 0 1.2px #fff,inset 0 0 1px 1px rgba(0,0,0,.3),0 0 1px 2px rgba(0,0,0,.4)
+  }
+  .vc-editable-input {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+  .vc-input__label, .vc-input__input {
+    font-size: 1rem !important;
+  }
+  .vc-input__label {
+    color: var(--bs-body-color) !important;
+  }
+  .vc-input__input {
+    padding: .375rem .75rem !important;
+    margin-left: 0.5rem;
     color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    border-radius: var(--bs-border-radius);
+    box-shadow: none !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+  }
+  .vc-input__input:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #94a8be;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem #29507c40 !important;
+  }
+  .vc-sketch-presets {
+    border: none !important;
   }
 }
 </style>
