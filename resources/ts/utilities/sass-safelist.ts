@@ -7,6 +7,6 @@ const sassSafelist: UserDefinedSafelist = [
     // Vue
     /-(leave|enter|appear)(|-(to|from|active))$/, /^(?!(|.*?:)cursor-move).+-move$/, /^router-link(|-exact)-active$/, /data-v-.*/,
     // Other libraries
-    /^aos-.*/, /^simplebar-.*/, /^g.*/
+    /^aos-*/, /^[data-aos^="fade"][data-aos^="fade"]*/, /^simplebar-.*/, /^g.*/
 ];
 export { sassSafelist };
