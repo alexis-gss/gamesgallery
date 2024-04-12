@@ -9,7 +9,7 @@
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.games.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', 2)]) }}">
+                title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])

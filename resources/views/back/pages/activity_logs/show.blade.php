@@ -9,7 +9,7 @@
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
-                title="{{ __('crud.actions_model.list_all', ['model' => trans_choice(__('models.activity_log'), 2)]) }}">
+                title="{{ __('crud.actions_model.list_all', ['model' => trans_choice(__('models.activity_log'), \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $activitylogModel])

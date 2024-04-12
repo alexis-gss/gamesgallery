@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('crud.meta.all_models', ['model' => trans_choice('models.static_page', 2)]))
-@section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.static_page', 2)]))
+@section('title', __('crud.meta.all_models', ['model' => trans_choice('models.static_page', \INF)]))
+@section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.static_page', \INF)]))
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">

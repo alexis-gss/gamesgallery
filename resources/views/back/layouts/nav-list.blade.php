@@ -18,11 +18,11 @@
         @can('viewAny', \App\Models\Game::class)
             <li class="nav-item">
                 <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.games.index') }}"
-                    title="{{ __('bo_tooltip_list_models', ['count' => count($globalGames), 'model' => trans_choice('models.game', 2)]) }}"
+                    title="{{ __('bo_tooltip_list_models', ['count' => count($globalGames), 'model' => trans_choice('models.game', \INF)]) }}"
                     @class([
                         'nav-link text-center',
                         'fw-bold' => request()->routeIs('bo.games.*'),
-                    ])>{{ str(trans_choice('models.game', 2))->ucfirst() }}</a>
+                    ])>{{ str(trans_choice('models.game', \INF))->ucfirst() }}</a>
             </li>
         @endcan
         @can('viewAny', \App\Models\Folder::class)
@@ -68,20 +68,20 @@
                 <div class="dropdown-menu m-0 p-1 text-center" aria-labelledby="navbarDropdownAdmin">
                     @can('viewAny', \App\Models\StaticPage::class)
                         <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.static_pages.index') }}"
-                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalStaticPages), 'model' => trans_choice('models.static_page', 2)]) }}"
+                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalStaticPages), 'model' => trans_choice('models.static_page', \INF)]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
                                 'active' => request()->routeIs('bo.static_pages.*'),
-                            ])>{{ str(trans_choice('models.static_page', 2))->ucfirst() }}</a>
+                            ])>{{ str(trans_choice('models.static_page', \INF))->ucfirst() }}</a>
                     @endcan
                     @can('viewAny', \App\Models\ActivityLog::class)
                         <hr class="dropdown-divider m-0">
                         <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.activity_logs.index') }}"
-                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalActivities), 'model' => trans_choice('models.activity_log', 2)]) }}"
+                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalActivities), 'model' => trans_choice('models.activity_log', \INF)]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
                                 'active' => request()->routeIs('bo.activity_logs.*'),
-                            ])>{{ str(trans_choice('models.activity_log', 2))->ucfirst() }}</a>
+                            ])>{{ str(trans_choice('models.activity_log', \INF))->ucfirst() }}</a>
                     @endcan
                     @canAny(['isConceptor', 'viewAny'], \App\Models\User::class)
                         <hr class="dropdown-divider m-0">
