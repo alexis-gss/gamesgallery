@@ -5,7 +5,7 @@
         var chartGamesByTags = window.Echarts.init(document.getElementById('chart-games-by-tags'), 'royal');
         var optionGamesByTags = {
             title: {
-                text: @json(str(trans_choice('models.game', 2))->ucFirst()->value() .
+                text: @json(str(trans_choice('models.game', \INF))->ucFirst()->value() .
                         "\u{00A0}" .
                         __('bo_other_stats_by') .
                         "\u{00A0}" .
@@ -66,7 +66,7 @@
                 type: 'value',
             }],
             series: [{
-                name: @json(str(trans_choice('models.game', 2))->ucFirst()->value()),
+                name: @json(str(trans_choice('models.game', \INF))->ucFirst()->value()),
                 type: 'bar',
                 data: @json(
                     $globalTags->map(function ($tag) {

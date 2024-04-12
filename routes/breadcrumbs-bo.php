@@ -32,7 +32,7 @@ Breadcrumbs::for('bo.statistics.update', function (Generator $trail) {
 // * GAMES
 Breadcrumbs::for('bo.games.index', function (Generator $trail) {
     $trail->push(
-        Str::of(trans_choice('models.game', 2))->ucfirst(),
+        Str::of(trans_choice('models.game', \INF))->ucfirst(),
         route('bo.games.index')
     );
 });
@@ -128,7 +128,7 @@ Breadcrumbs::for('bo.users.duplicate', function (Generator $trail) {
 // * ACTIVITY_LOGS
 Breadcrumbs::for('bo.activity_logs.index', function (Generator $trail) {
     $trail->push(
-        Str::of(trans_choice('models.activity_log', 2))->ucfirst(),
+        Str::of(trans_choice('models.activity_log', \INF))->ucfirst(),
         route('bo.activity_logs.index')
     );
 });
@@ -148,7 +148,7 @@ Breadcrumbs::for('bo.ranks.index', function (Generator $trail) {
 // * STATIC_PAGES
 Breadcrumbs::for('bo.static_pages.index', function (Generator $trail) {
     $trail->push(
-        Str::of(trans_choice('models.static_page', 2))->ucfirst(),
+        Str::of(trans_choice('models.static_page', \INF))->ucfirst(),
         route('bo.static_pages.index')
     );
 });

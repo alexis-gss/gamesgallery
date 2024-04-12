@@ -16,7 +16,7 @@
                     <div class="d-flex justify-content-center align-items-center user-select-none w-100 flex-row text-center">
                         <a class="btn btn-secondary bg-primary rounded-2 text-decoration-none border-0 px-2 py-0 text-white"
                             data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('fo.games.index') }}"
-                            title="{{ __('fo_back_to_homepage', ['model' => trans_choice('models.game', 2)]) }}">
+                            title="{{ __('fo_back_to_homepage', ['model' => trans_choice('models.game', \INF)]) }}">
                             <i class="fa fa-arrow-left"></i>
                         </a>
                         <span class="mx-1">-</span>

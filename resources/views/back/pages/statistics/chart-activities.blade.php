@@ -85,7 +85,7 @@
                 type: 'value'
             },
             series: [{
-                    name: @json(str(trans_choice('models.game', 2))->ucFirst()),
+                    name: @json(str(trans_choice('models.game', \INF))->ucFirst()),
                     type: 'line',
                     smooth: true,
                     data: @json($activityModels['App\Models\Game']),
