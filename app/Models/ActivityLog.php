@@ -48,7 +48,7 @@ class ActivityLog extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'is_anonymous' => 'bool',
+        'is_anonymous' => 'boolean',
         'event'        => ActivityLogsEventEnum::class,
         'data'         => 'json',
         'created_at'   => 'datetime',

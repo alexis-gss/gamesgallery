@@ -59,8 +59,8 @@ class Folder extends Model
      */
     protected $casts = [
         'color'        => HtmlColor::class,
-        'mandatory'    => 'bool',
-        'published'    => 'bool',
+        'mandatory'    => 'boolean',
+        'published'    => 'boolean',
         'published_at' => 'datetime'
     ];
 

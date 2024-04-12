@@ -62,7 +62,7 @@ class Game extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'published'    => 'bool',
+        'published'    => 'boolean',
         'published_at' => 'datetime'
     ];
 
