@@ -59,13 +59,22 @@ class StoreGameRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'        => trans('name of the game'),
-            'slug'        => trans('slug of the game'),
-            'tags'        => trans('tags of the game'),
-            'tags.*'      => trans('tags of the game'),
-            'tags.*.id'   => trans('tag\'s id'),
-            'tags.*.name' => trans('tag\'s name'),
-            'published'   => trans('published status of the game'),
+            'slug'        => trans('validation.custom.slug'),
+            'folder_id'   => trans('validation.custom.folder_associated'),
+            'name'        => trans('validation.attributes.name'),
+            'tags'        => trans('models.tag'),
+            'tags.*'      => trans('models.tag'),
+            'tags.*.id'   => trans(':field :inter:model', [
+                'field' => trans('validation.custom.identification'),
+                'inter' => trans('validation.custom.inter.vowel'),
+                'model' => trans('models.tag'),
+            ]),
+            'tags.*.name' => trans(':field :inter:model', [
+                'field' => trans('validation.custom.name'),
+                'inter' => trans('validation.custom.inter.vowel'),
+                'model' => trans('models.tag'),
+            ]),
+            'published'   => trans('validation.custom.publishment'),
         ];
     }
 }

@@ -64,8 +64,8 @@ class StoreTagRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'      => trans('name of the tag'),
-            'published' => trans('published status of the tag')
+            'name'      => trans('validation.attributes.name'),
+            'published' => trans('validation.custom.publishment')
         ];
     }
 }

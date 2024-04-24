@@ -53,8 +53,12 @@ class StoreRankRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'ranks'   => trans('rank of the game'),
-            'ranks.*' => trans('id of the game'),
+            'ranks'   => trans('models.rank'),
+            'ranks.*' => trans(':field :inter:model', [
+                'field' => trans('validation.custom.element'),
+                'inter' => trans('validation.custom.inter.male'),
+                'model' => trans('models.rank'),
+            ]),
         ];
     }
 }

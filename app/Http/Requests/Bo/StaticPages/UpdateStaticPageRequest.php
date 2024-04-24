@@ -30,4 +30,18 @@ class UpdateStaticPageRequest extends FormRequest
             'title'           => 'required|min:3|max:255',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'seo_title'       => trans('validation.custom.seo_title'),
+            'seo_description' => trans('validation.custom.seo_description'),
+            'title'           => trans('validation.attributes.title'),
+        ];
+    }
 }

@@ -68,10 +68,10 @@ class StoreFolderRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'      => trans('name of the folder'),
-            'mandatory' => trans('mandatory status of the folder'),
-            'published' => trans('published status of the folder'),
-            'color'     => trans('color of the folder')
+            'name'      => trans('validation.attributes.name'),
+            'mandatory' => trans('validation.custom.folder_mandatory'),
+            'color'     => trans('validation.custom.color'),
+            'published' => trans('validation.custom.publishment'),
         ];
     }
 }
