@@ -47,7 +47,7 @@
                                 'model' => $tagModel,
                             ])
                             <td class="text-center align-middle">
-                                <span class="badge rounded-pill bg-secondary">{{ $tagModel->updated_at->isoFormat('LLLL') }}</span>
+                                <span class="badge rounded-pill text-bg-secondary">{{ $tagModel->updated_at->isoFormat('LLLL') }}</span>
                             </td>
                             @php $routeName = request()->route()->getName(); @endphp
                             @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')

@@ -42,7 +42,7 @@
                                         href="{{ route('bo.folders.edit', ['folder' => $gameModel->folder_id]) }}"
                                         title="{{ __('bo_tooltip_show_folder') }}">
                                     @endcan
-                                    <span class="@can('update', $gameModel) badge rounded-pill bg-primary @else text-body @endcan">
+                                    <span class="@can('update', $gameModel) badge rounded-pill text-bg-primary @else text-body @endcan">
                                         {{ $gameModel->folder->name }}
                                     </span>
                                     @can('update', $gameModel)
@@ -58,7 +58,7 @@
                                 'model' => $gameModel,
                             ])
                             <td class="text-center align-middle">
-                                <span class="badge rounded-pill bg-secondary">{{ $gameModel->updated_at->isoFormat('LLLL') }}</span>
+                                <span class="badge rounded-pill text-bg-secondary">{{ $gameModel->updated_at->isoFormat('LLLL') }}</span>
                             </td>
                             @php $routeName = request()->route()->getName(); @endphp
                             @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')

@@ -64,7 +64,7 @@
                                 @endif
                             </td>
                             <td class="bg-{{ $activitylogModel->event->bootstrapClass() }}-subtle text-center align-middle">
-                                <span class="badge rounded-pill bg-secondary">
+                                <span class="badge rounded-pill text-bg-secondary">
                                     {{ $activitylogModel->created_at->isoFormat('LLLL') }}
                                 </span>
                             </td>

@@ -25,7 +25,7 @@
             @else
                 </p>
             @endif
-            <span class="badge rounded-pill bg-secondary">{{ $pictureRating->ratings_count }}</span>
+            <span class="badge rounded-pill text-bg-secondary">{{ $pictureRating->ratings_count }}</span>
             @if ($pictureExist)
                 <div class="modal" id="ModalViewPicture" data-bs-backdrop="static" data-bs-keyboard="false"
                     role="dialog" tabindex="-1">
