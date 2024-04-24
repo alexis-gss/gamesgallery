@@ -1,9 +1,12 @@
 <div class="row">
-    <div class="col-12 border-bottom mb-3">
-        <fieldset class="p-3">
-            <legend>{{ __('bo_title_general_informations') }}</legend>
-            <div class="row mb-3">
-                <div class="col-12 col-md-6 form-group">
+    <div class="col-12 mb-3">
+        <fieldset class="bg-body-tertiary border rounded-3 p-3">
+            <legend class="fw-bold fst-italic">
+                <i class="fa-solid fa-gears"></i>
+                {{ __('bo_title_general_informations') }}
+            </legend>
+            <div class="row">
+                <div class="col-12 col-md-6 form-group mb-3">
                     <label class="col-form-label" for="folder_id">
                         <b>{{ __('bo_label_seo_title') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_SEO_title_page') }}">
@@ -35,7 +38,7 @@
                     </small>
                     @include('back.modules.input-error', ['inputName' => 'seo_title'])
                 </div>
-                <div class="col-12 col-md-6 form-group">
+                <div class="col-12 col-md-6 form-group mb-3">
                     <label class="col-form-label" for="folder_id">
                         <b>{{ __('bo_label_seo_description') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_SEO_description_page') }}">
@@ -68,8 +71,8 @@
                     @include('back.modules.input-error', ['inputName' => 'seo_description'])
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-12 col-md-6 form-group">
+            <div class="row">
+                <div class="col-12 col-md-6 form-group mb-3">
                     <label class="col-form-label" for="folder_id">
                         <b>{{ __('bo_label_identification') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_title_page') }}">

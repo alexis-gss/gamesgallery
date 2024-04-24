@@ -16,7 +16,7 @@ class RankPolicy
      */
     public function viewAny(User $authUser): bool
     {
-        return UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+        return UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -27,7 +27,7 @@ class RankPolicy
      */
     public function view(User $authUser): bool
     {
-        return UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+        return UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -38,7 +38,7 @@ class RankPolicy
      */
     public function create(User $authUser): bool
     {
-        return UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+        return UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -60,6 +60,6 @@ class RankPolicy
      */
     public function delete(User $authUser): bool
     {
-        return UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+        return UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 }

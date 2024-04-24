@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 p-0">
-                <div class="card p-sm-4 p-3">
+                <div class="bg-body-tertiary card p-sm-4 p-3">
                     <div class="row justify-content-center align-items-center mb-3">
                         <a class="btn btn-sm btn-primary w-fit" href="{{ route('bo.login') }}">
                             <i class="fa-solid fa-arrow-left"></i>

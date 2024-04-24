@@ -23,7 +23,7 @@
         }: { item: RankObject }"
       >
         <vue-nestable-handle
-          class="d-flex justify-content-between align-items-center border rounded p-1"
+          class="d-flex justify-content-between align-items-center border rounded bg-white p-1"
         >
           <div class="d-flex justify-content-start align-items-center">
             <button class="btn btn-sm border-0 disabled opacity-100">

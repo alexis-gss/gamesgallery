@@ -5,7 +5,7 @@
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.folders.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"

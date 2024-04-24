@@ -5,7 +5,7 @@
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.folders.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
@@ -44,75 +44,96 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="table-responsive mb-3">
-                <table class="table-hover m-0 table">
-                    <tbody>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.name'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                @if ($folderModel->mandatory)
-                                    <div class="d-flex flex-column justify-content-center align-items-center">
-                                        @foreach (config('app.locales') as $locale)
-                                            <span @class([
-                                                'fst-italic text-body-secondary' =>
-                                                    $locale !== config('app.fallback_locale'),
-                                            ])>
-                                                {{ $folderModel->getTranslation('name', $locale) }}
-                                            </span>
-                                        @endforeach
+            <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
+                <legend class="fw-bold fst-italic">
+                    <i class="fa-solid fa-gears"></i>
+                    {{ __('bo_title_general_informations') }}
+                </legend>
+                <div class="table-responsive">
+                    <table class="table-hover m-0 table">
+                        <tbody>
+                            <tr>
+                                <td class="w-50 rounded-top rounded-end-0 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.name'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 rounded-top rounded-start-0 text-center align-middle">
+                                    @if ($folderModel->mandatory)
+                                        <div class="d-flex flex-column justify-content-center align-items-center">
+                                            @foreach (config('app.locales') as $locale)
+                                                <span @class([
+                                                    'fst-italic text-body-secondary' =>
+                                                        $locale !== config('app.fallback_locale'),
+                                                ])>
+                                                    {{ $folderModel->getTranslation('name', $locale) }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        {{ $folderModel->name }}
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.custom.color'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 text-center align-middle">
+                                    <div class="d-flex justify-content-center align-items-center flex-row">
+                                        <p class="m-0">
+                                            {{ $folderModel->color }}
+                                        </p>
+                                        <span class="border-secondary rounded-circle ms-2 border p-2"
+                                            style="background-color:{{ $folderModel->color }}">
+                                        </span>
                                     </div>
-                                @else
-                                    {{ $folderModel->name }}
-                                @endif
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.custom.color'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                <div class="d-flex justify-content-center align-items-center flex-row">
-                                    <p class="m-0">
-                                        {{ $folderModel->color }}
-                                    </p>
-                                    <span class="border-secondary rounded-circle ms-2 border p-2"
-                                        style="background-color:{{ $folderModel->color }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.custom.folder_mandatory'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 text-center align-middle">
+                                    {{ str($folderModel->mandatory ? __('bo_other_yes') : __('bo_other_no'))->ucFirst() }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.custom.published_at'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 text-center align-middle">
+                                    <span @class([
+                                        'badge rounded-pill text-bg-secondary' => $folderModel->published,
+                                        'fst-italic' => !$folderModel->published,
+                                    ])>
+                                        {{ $folderModel->published
+                                            ? str($folderModel->created_at->isoFormat('LLLL'))->ucFirst()
+                                            : __('bo_other_model_not_published', [
+                                                'model' => str(__('models.user'))->ucFirst(),
+                                            ]) }}
                                     </span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">
-                                {{ str(__('validation.custom.folder_mandatory'))->ucFirst() }}
-                            </td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($folderModel->mandatory ? __('bo_other_yes') : __('bo_other_no'))->ucFirst() }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">
-                                {{ str(__('validation.custom.published_at'))->ucFirst() }}
-                            </td>
-                            <td class="w-50 text-center align-middle">
-                                {{ $folderModel->published
-                                    ? str($folderModel->created_at->isoFormat('LLLL'))->ucFirst()
-                                    : __('bo_other_model_not_published', [
-                                        'model' => str(__('models.folder'))->ucFirst(),
-                                    ]) }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.created_at'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($folderModel->created_at->isoFormat('LLLL'))->ucFirst() }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.updated_at'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($folderModel->updated_at->isoFormat('LLLL'))->ucFirst() }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.created_at'))->ucFirst() }}</td>
+                                <td class="w-50 text-center align-middle">
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ str($folderModel->created_at->isoFormat('LLLL'))->ucFirst() }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="border-0">
+                                <td class="w-50 fw-bold border-0 text-center align-middle">
+                                    {{ str(__('validation.attributes.updated_at'))->ucFirst() }}</td>
+                                <td class="w-50 border-0 text-center align-middle">
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ str($folderModel->updated_at->isoFormat('LLLL'))->ucFirst() }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

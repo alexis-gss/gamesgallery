@@ -11,7 +11,7 @@
                 <button id="{{ $navLink['name'] }}-tab" data-bs-toggle="tab"
                     data-bs-target="#{{ $navLink['name'] }}-tab-pane" type="button" role="tab"
                     aria-controls="{{ $navLink['name'] }}-tab-pane" aria-selected="true" @class(['nav-link', 'active' => $loop->first])>
-                    {{ $navLink['translation'] }}
+                    {{ str($navLink['translation'])->ucFirst() }}
                 </button>
             </li>
         @endforeach

@@ -5,7 +5,7 @@
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.users.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
@@ -36,7 +36,8 @@
                         </a>
                     @endcan
                     @can('update', $userModel)
-                        <a class="btn btn-primary" data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('bo.users.edit', $userModel) }}"
+                        <a class="btn btn-primary" data-bs-tooltip="tooltip" data-bs-placement="top"
+                            href="{{ route('bo.users.edit', $userModel) }}"
                             title="{{ __('crud.actions_model.edit', ['model' => __('models.user')]) }}">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
@@ -55,87 +56,112 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="table-responsive mb-3">
-                <table class="table-hover m-0 table">
-                    <tbody>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('models.user'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ $userModel->first_name }}&nbsp;{{ $userModel->last_name }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.email'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ $userModel->email }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.role'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($userModel->role->label())->ucFirst() }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.image'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                <div class="vstack gap-1">
-                                    <div class="hstack justify-content-center">
-                                        <p class="m-0">{{ basename($userModel->picture) }}</p>
-                                        <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="modal" data-bs-target="#ModalViewPicture">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal" id="ModalViewPicture" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
-                                        tabindex="-1">
-                                        <div class="d-flex justify-content-center align-items-center h-100">
-                                            <div class="modal-dialog modal-xl" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">
-                                                            {{ str(__('models.picture'))->ucFirst()->value() }}
-                                                        </h5>
-                                                        <button class="btn-close" data-bs-dismiss="modal" data-bs-tooltip="tooltip"
-                                                            type="button" title="{{ __('bo_other_close') }}"
-                                                            aria-label="{{ __('bo_other_close') }}" />
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <img class="img-fluid" src="{{ asset($userModel->picture) }}"
-                                                            title="{{ $userModel->picture_title }}" alt="{{ $userModel->picture_alt }}">
+            <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
+                <legend class="fw-bold fst-italic">
+                    <i class="fa-solid fa-gears"></i>
+                    {{ __('bo_title_general_informations') }}
+                </legend>
+                <div class="table-responsive">
+                    <table class="table-hover m-0 table">
+                        <tbody>
+                            <tr>
+                                <td class="w-50 rounded-top rounded-end-0 fw-bold text-center align-middle">
+                                    {{ str(__('models.user'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 rounded-top rounded-start-0 text-center align-middle">
+                                    {{ $userModel->first_name }}&nbsp;{{ $userModel->last_name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.email'))->ucFirst() }}</td>
+                                <td class="w-50 text-center align-middle">
+                                    {{ $userModel->email }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.role'))->ucFirst() }}</td>
+                                <td class="w-50 text-center align-middle">
+                                    {{ str($userModel->role->label())->ucFirst() }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.image'))->ucFirst() }}</td>
+                                <td class="w-50 text-center align-middle">
+                                    <div class="vstack gap-1">
+                                        <div class="hstack justify-content-center">
+                                            <p class="m-0">{{ basename($userModel->picture) }}</p>
+                                            <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="modal"
+                                                data-bs-target="#ModalViewPicture">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal" id="ModalViewPicture" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" role="dialog" tabindex="-1">
+                                            <div class="d-flex justify-content-center align-items-center h-100">
+                                                <div class="modal-dialog modal-xl" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">
+                                                                {{ str(__('models.picture'))->ucFirst()->value() }}
+                                                            </h5>
+                                                            <button class="btn-close" data-bs-dismiss="modal"
+                                                                data-bs-tooltip="tooltip" type="button"
+                                                                title="{{ __('bo_other_close') }}"
+                                                                aria-label="{{ __('bo_other_close') }}" />
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <img class="img-fluid" src="{{ asset($userModel->picture) }}"
+                                                                title="{{ $userModel->picture_title }}"
+                                                                alt="{{ $userModel->picture_alt }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">
-                                {{ str(__('validation.custom.published_at'))->ucFirst() }}
-                            </td>
-                            <td class="w-50 text-center align-middle">
-                                {{ $userModel->published
-                                    ? str($userModel->created_at->isoFormat('LLLL'))->ucFirst()
-                                    : __('bo_other_model_not_published', [
-                                        'model' => str(__('models.user'))->ucFirst(),
-                                    ]) }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.created_at'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($userModel->created_at->isoFormat('LLLL'))->ucFirst() }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.updated_at'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($userModel->updated_at->isoFormat('LLLL'))->ucFirst() }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.custom.published_at'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 text-center align-middle">
+                                    <span @class([
+                                        'badge rounded-pill text-bg-secondary' => $userModel->published,
+                                        'fst-italic' => !$userModel->published,
+                                    ])>
+                                        {{ $userModel->published
+                                            ? str($userModel->created_at->isoFormat('LLLL'))->ucFirst()
+                                            : __('bo_other_model_not_published', [
+                                                'model' => str(__('models.user'))->ucFirst(),
+                                            ]) }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.created_at'))->ucFirst() }}</td>
+                                <td class="w-50 text-center align-middle">
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ str($userModel->created_at->isoFormat('LLLL'))->ucFirst() }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="border-0">
+                                <td class="w-50 fw-bold border-0 text-center align-middle">
+                                    {{ str(__('validation.attributes.updated_at'))->ucFirst() }}</td>
+                                <td class="w-50 border-0 text-center align-middle">
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ str($userModel->updated_at->isoFormat('LLLL'))->ucFirst() }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

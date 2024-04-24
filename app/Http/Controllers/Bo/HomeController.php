@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use Parsedown;
-use Illuminate\Support\Facades\File;
 
 class HomeController extends Controller
 {
@@ -15,9 +13,6 @@ class HomeController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $parsedown = new Parsedown();
-        $changelog = $parsedown->text(File::get(\app_path('../CHANGELOG.md')));
-
-        return view('back.pages.home', compact('changelog'));
+        return view('back.pages.home');
     }
 }

@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-xl position-fixed fixed-top bg-body-tertiary shadow-sm" id="navbar">
+<nav class="navbar navbar-expand-xl position-fixed fixed-top bg-body-tertiary shadow-sm border-bottom" id="navbar">
     <div class="container">
-        <a class="navbar-brand" data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('fo.games.index') }}"
+        <a class="navbar-brand fw-bold fst-italic fs-4" data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('fo.games.index') }}"
             title="{{ __('bo_other_access_website') }}" target="_blank">
             {{ config('app.name', 'Laravel') }}
         </a>
@@ -60,7 +60,7 @@
                     <button
                         class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 px-xl-3 flex-row border-0 px-0"
                         data-bs-toggle="dropdown" type="button" aria-expanded="false">
-                        <i class="d-none d-xl-block fa-solid fa-globe"></i>
+                        <i class="d-none d-xl-block fa-solid fa-language fa-xl"></i>
                         <span class="d-xl-none">{{ __('bo_other_change_locale') }}</span>
                     </button>
                     <form class="dropdown-menu dropdown-menu-custom dropdown-menu-end p-1 text-center" id="lang-selector"

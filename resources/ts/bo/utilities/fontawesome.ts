@@ -10,6 +10,7 @@ import {
     faArrowsAltH,
     faArrowsAltV,
     faBan,
+    faBook,
     faCheck,
     faChevronLeft,
     faChevronRight,
@@ -23,11 +24,16 @@ import {
     faEraser,
     faEye,
     faEyeSlash,
+    faFilePen,
     faFloppyDisk,
     faFolderOpen,
+    faGears,
     faGlobe,
     faGripVertical,
+    faImage,
+    faImages,
     faKey,
+    faLanguage,
     faListUl,
     faMagnifyingGlass,
     faPaintRoller,
@@ -37,7 +43,9 @@ import {
     faRedoAlt,
     faSearchMinus,
     faSearchPlus,
+    faShieldHalved,
     faSyncAlt,
+    faTags,
     faTrash,
     faUndoAlt,
     faWandMagic,
@@ -89,4 +97,12 @@ library.add(faGripVertical);
 library.add(faGlobe);
 library.add(faKey);
 library.add(faArrowUpRightFromSquare);
+library.add(faBook);
+library.add(faLanguage);
+library.add(faShieldHalved);
+library.add(faImage);
+library.add(faGears);
+library.add(faFilePen);
+library.add(faImages);
+library.add(faTags);
 dom.watch();

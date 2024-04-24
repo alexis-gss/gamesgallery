@@ -4,13 +4,13 @@
 @section('description', __('crud.meta.all_models_list', ['model' => str(__('models.rank'))->plural()]))
 
 @section('content')
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         @include('breadcrumbs.breadcrumb-body')
     </div>
-    <div class="row my-3">
+    <div class="row w-100 mx-auto">
         @can('update', \App\Models\Rank::class)
-            <div class="col-12 form-group">
-                <form class="d-flex flex-column flex-sm-row justify-content-center align-items-center border-bottom input-group flex-row pb-3"
+            <div class="col-12 px-0 form-group">
+                <form class="d-flex flex-column flex-sm-row justify-content-center align-items-center input-group flex-row"
                     id="search" action="{{ route('bo.ranks.store') }}" method="POST">
                     <label class="input-group-text w-100 w-sm-fit" for="search-field">
                         <span class="text-truncate">
@@ -36,7 +36,7 @@
                     </button>
                 </form>
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-12 bg-body-tertiary border rounded-3 p-3 mt-3">
                 @php
                     $data = [
                         'id' => 'gamesRanking',

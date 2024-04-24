@@ -29,7 +29,7 @@ Each element (name, image, folder, color, etc.) can be managed in the back-offic
 
 # Documentation
 
-You can find all the documentation of this project on this link : [Games Gallery documention](https://docs-games-gallery.alexis-gousseau.com).
+You can find all the documentation of this project on this link : [Games Gallery documentation](https://docs-games-gallery.alexis-gousseau.com).
 
 # Contributing
 

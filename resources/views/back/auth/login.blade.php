@@ -14,7 +14,7 @@
             @include('back.modules.flash-messages')
         </div>
         <div class="col-12 p-0">
-            <form class="card p-sm-4 p-3" method="POST" action="{{ route('bo.login') }}">
+            <form class="bg-body-tertiary card p-sm-4 p-3" method="POST" action="{{ route('bo.login') }}">
                 @csrf
                 <div class="row mb-3">
                     <h2 class="h2 fw-bold m-0 text-center">{{ __('auth.login') }}</h2>

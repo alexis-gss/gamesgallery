@@ -57,8 +57,8 @@ return [
         'sort_arrow'      => 'Ici, les flèches sont utilisées pour trier et non pour filtrer',
     ],
     'sweetalert' => [
-        'confirm'      => 'Confirmer',
-        'cancel'       => 'Annuler',
+        'confirm'      => 'Oui, supprimer !',
+        'cancel'       => 'Non, annuler',
         'are_you_sure' => 'Êtes-vous sûr ?',
         'data_lost'    => 'Toutes les données seront perdues.',
         'send_email'   => 'L\'utilisateur recevra un e-mail de réinitialisation du mot de passe.',

@@ -1,10 +1,10 @@
 @auth
     <ul class="navbar-nav border-top border-xl-0 mt-xl-0 me-auto mt-2">
         <li class="nav-item">
-            <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.home') }}" title="{{ __('bo_tooltip_homepage') }}"
-                @class([
+            <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.home') }}"
+                title="{{ __('bo_tooltip_homepage') }}" @class([
                     'nav-link text-center',
-                    'fw-bold' => request()->routeIs('bo.home'),
+                    'fw-bold active' => request()->routeIs('bo.home'),
                 ])>{{ __('bo_other_homepage') }}</a>
         </li>
         <li class="nav-item">
@@ -12,7 +12,7 @@
                 title="{{ __('bo_tooltip_statistics', ['model' => str(__('models.statistic'))->plural()]) }}"
                 @class([
                     'nav-link text-center',
-                    'fw-bold' => request()->routeIs('bo.statistics.*'),
+                    'fw-bold active' => request()->routeIs('bo.statistics.*'),
                 ])>{{ str(__('models.statistic'))->plural()->ucfirst() }}</a>
         </li>
         @can('viewAny', \App\Models\Game::class)
@@ -21,7 +21,7 @@
                     title="{{ __('bo_tooltip_list_models', ['count' => count($globalGames), 'model' => trans_choice('models.game', \INF)]) }}"
                     @class([
                         'nav-link text-center',
-                        'fw-bold' => request()->routeIs('bo.games.*'),
+                        'fw-bold active' => request()->routeIs('bo.games.*'),
                     ])>{{ str(trans_choice('models.game', \INF))->ucfirst() }}</a>
             </li>
         @endcan
@@ -31,7 +31,7 @@
                     title="{{ __('bo_tooltip_list_models', ['count' => count($globalFolders), 'model' => str(__('models.folder'))->plural()]) }}"
                     @class([
                         'nav-link text-center',
-                        'fw-bold' => request()->routeIs('bo.folders.*'),
+                        'fw-bold active' => request()->routeIs('bo.folders.*'),
                     ])>{{ str(__('models.folder'))->plural()->ucfirst() }}</a>
             </li>
         @endcan
@@ -41,26 +41,26 @@
                     title="{{ __('bo_tooltip_list_models', ['count' => count($globalTags), 'model' => str(__('models.tag'))->plural()]) }}"
                     @class([
                         'nav-link text-center',
-                        'fw-bold' => request()->routeIs('bo.tags.*'),
+                        'fw-bold active' => request()->routeIs('bo.tags.*'),
                     ])>{{ str(__('models.tag'))->plural()->ucfirst() }}</a>
             </li>
         @endcan
-        @can('viewAny', \App\Models\Rank::class)
-            <li class="nav-item">
-                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.ranks.index') }}"
-                    title="{{ __('bo_tooltip_list_models', ['count' => count($globalRanks), 'model' => str(__('models.rank'))->plural()]) }}"
-                    @class([
-                        'nav-link text-center',
-                        'fw-bold' => request()->routeIs('bo.ranks.*'),
-                    ])>{{ str(__('models.rank'))->plural()->ucfirst() }}</a>
-            </li>
-        @endcan
         @canAny(['isConceptor', 'viewAny'], \App\Models\ActivityLog::class)
+            @can('viewAny', \App\Models\Rank::class)
+                <li class="nav-item">
+                    <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.ranks.index') }}"
+                        title="{{ __('bo_tooltip_list_models', ['count' => count($globalRanks), 'model' => str(__('models.rank'))->plural()]) }}"
+                        @class([
+                            'nav-link text-center',
+                            'fw-bold active' => request()->routeIs('bo.ranks.*'),
+                        ])>{{ str(__('models.rank'))->plural()->ucfirst() }}</a>
+                </li>
+            @endcan
             <li class="nav-item dropdown">
                 <button id="navbarDropdownAdmin" data-bs-toggle="dropdown" type="button"
                     @class([
                         'btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 rounded-0 flex-row border-0',
-                        'fw-bold' =>
+                        'fw-bold active' =>
                             request()->routeIs('bo.static_pages.*') ||
                             request()->routeIs('bo.activity_logs.*') ||
                             request()->routeIs('bo.users.*'),

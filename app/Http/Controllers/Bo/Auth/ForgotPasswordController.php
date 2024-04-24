@@ -12,16 +12,6 @@ use Illuminate\Support\Facades\Mail;
 class ForgotPasswordController extends Controller
 {
     /**
-     * Show the form when user forget his password.
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function showLinkRequestForm(): \Illuminate\Contracts\View\View
-    {
-        return view('bo.auth.password.link-email');
-    }
-
-    /**
      * Store the token and send an email to the user.
      *
      * @param \App\Http\Requests\Bo\Auth\LinkEmailRequest $request

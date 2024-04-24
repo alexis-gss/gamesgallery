@@ -5,7 +5,7 @@
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')
-    <div class="d-flex justify-content-between flex-md-nowrap align-items-center border-bottom flex-wrap pb-3">
+    <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.tags.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
@@ -44,49 +44,70 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="table-responsive mb-3">
-                <table class="table-hover m-0 table">
-                    <tbody>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.name'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                @foreach (config('app.locales') as $locale)
-                                    <p @class([
-                                        'm-0',
-                                        'fst-italic text-body-secondary' =>
-                                            $locale !== config('app.fallback_locale'),
+            <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
+                <legend class="fw-bold fst-italic">
+                    <i class="fa-solid fa-gears"></i>
+                    {{ __('bo_title_general_informations') }}
+                </legend>
+                <div class="table-responsive">
+                    <table class="table-hover m-0 table">
+                        <tbody>
+                            <tr>
+                                <td class="w-50 rounded-top rounded-end-0 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.name'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 rounded-top rounded-start-0 text-center align-middle">
+                                    @foreach (config('app.locales') as $locale)
+                                        <p @class([
+                                            'm-0',
+                                            'fst-italic text-body-secondary' =>
+                                                $locale !== config('app.fallback_locale'),
+                                        ])>
+                                            {{ $tagModel->getTranslation('name', $locale) }}
+                                        </p>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.custom.published_at'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 text-center align-middle">
+                                    <span @class([
+                                        'badge rounded-pill text-bg-secondary' => $tagModel->published,
+                                        'fst-italic' => !$tagModel->published,
                                     ])>
-                                        {{ $tagModel->getTranslation('name', $locale) }}
-                                    </p>
-                                @endforeach
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">
-                                {{ str(__('validation.custom.published_at'))->ucFirst() }}
-                            </td>
-                            <td class="w-50 text-center align-middle">
-                                {{ $tagModel->published
-                                    ? str($tagModel->created_at->isoFormat('LLLL'))->ucFirst()
-                                    : __('bo_other_model_not_published', [
-                                        'model' => str(__('models.tag'))->ucFirst(),
-                                    ]) }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.created_at'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($tagModel->created_at->isoFormat('LLLL'))->ucFirst() }}
-                            </td>
-                        </tr>
-                        <tr class="border-bottom">
-                            <td class="w-50 fw-bold text-center align-middle">{{ str(__('validation.attributes.updated_at'))->ucFirst() }}</td>
-                            <td class="w-50 text-center align-middle">
-                                {{ str($tagModel->updated_at->isoFormat('LLLL'))->ucFirst() }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                        {{ $tagModel->published
+                                            ? str($tagModel->created_at->isoFormat('LLLL'))->ucFirst()
+                                            : __('bo_other_model_not_published', [
+                                                'model' => str(__('models.user'))->ucFirst(),
+                                            ]) }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.created_at'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 text-center align-middle">
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ str($tagModel->created_at->isoFormat('LLLL'))->ucFirst() }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="border-0">
+                                <td class="w-50 border-0 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.updated_at'))->ucFirst() }}
+                                </td>
+                                <td class="w-50 border-0 text-center align-middle">
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ str($tagModel->updated_at->isoFormat('LLLL'))->ucFirst() }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

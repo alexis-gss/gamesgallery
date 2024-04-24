@@ -32,10 +32,11 @@ export default {
                 cancelButtonText: trans.default.methods.__("crud.sweetalert.cancel"),
                 showCloseButton: true,
                 allowEscapeKey: true,
+                reverseButtons: true,
                 // * Bootstrap Styling
                 customClass: {
-                    confirmButton: "btn btn-primary mx-1",
-                    cancelButton: "btn btn-danger mx-1",
+                    confirmButton: "btn btn-danger mx-1",
+                    cancelButton: "btn btn-secondary mx-1",
                 },
                 buttonsStyling: false,
                 background: getComputedStyle(document.body).getPropertyValue("--bs-body-bg"),

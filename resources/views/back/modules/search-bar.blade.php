@@ -1,4 +1,4 @@
-<form class="d-flex align-items-center justify-content-center flex-column flex-sm-row input-group py-3" id="search"
+<form class="d-flex align-items-center justify-content-center flex-column flex-sm-row input-group pb-3" id="search"
     action="{{ request()->url() }}" enctype="multipart/form-data">
     <label class="input-group-text w-100 w-sm-fit" for="search-field">
         <span class="text-truncate">

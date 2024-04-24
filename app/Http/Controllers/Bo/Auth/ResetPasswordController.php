@@ -9,7 +9,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
@@ -56,13 +55,12 @@ class ResetPasswordController extends Controller
             }
 
             // Update user data.
-            $userModel = User::query()->where('email', $request->email)->first();
-            $userModel->update([
-                'password'          => Hash::make($request->password),
-                'email_verified_at' => (!is_null($userModel->email_verified_at)) ?
-                    $userModel->email_verified_at :
-                    Carbon::now()
-            ]);
+            $userModel                    = User::query()->where('email', $request->email)->first();
+            $userModel->password          = $request->password;
+            $userModel->email_verified_at = (!is_null($userModel->email_verified_at)) ?
+                $userModel->email_verified_at :
+                Carbon::now();
+            $userModel->save();
 
             // Notification target user.
             Mail::to($userModel->email)->send(new ResetPassword((object)$userModel));

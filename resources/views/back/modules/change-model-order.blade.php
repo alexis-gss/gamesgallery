@@ -1,4 +1,4 @@
-<td class="text-center align-middle">
+<td @class(['text-center align-middle', 'border-0' => $loop->last])>
     @can('changeOrder', $model)
         <div class="d-flex justify-content-center align-items-center">
             <form @class([

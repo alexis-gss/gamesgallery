@@ -16,8 +16,8 @@ class GameController extends Controller
     /**
      * Show a specific game.
      *
-     * @param Request $request
-     * @param string  $slug
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $slug
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show(
