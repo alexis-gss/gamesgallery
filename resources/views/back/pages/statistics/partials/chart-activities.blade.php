@@ -1,16 +1,19 @@
 <div class="row">
     <div class="col-12">
         <form class="input-group mb-3" action="{{ route('bo.statistics.update') }}" method="POST">
-            <label class="input-group-text" for="date_start">{{ str(__('validation.custom.date_start'))->ucFirst() }}</label>
+            <label class="input-group-text"
+                for="date_start">{{ str(__('validation.custom.date_start'))->ucFirst() }}</label>
             <input class="form-control" id="date_start" name="date_start" type="date"
                 value="{{ !empty($dateLastDays->first()) ? $dateLastDays->first()->format('Y-m-d') : Carbon::now()->subDays(29)->format('Y-m-d') }}"
                 required>
             @csrf
-            <label class="input-group-text" for="date_end">{{ str(__('validation.custom.date_end'))->ucFirst() }}</label>
+            <label class="input-group-text"
+                for="date_end">{{ str(__('validation.custom.date_end'))->ucFirst() }}</label>
             <input class="form-control" id="date_end" name="date_end" type="date"
                 value="{{ !empty($dateLastDays->last()) ? $dateLastDays->last()->format('Y-m-d') : Carbon::now()->format('Y-m-d') }}"
                 required>
-            <button class="btn btn-primary" data-bs-tooltip="tooltip" type="submit" title="{{ __('bo_other_stats_show_activities') }}">
+            <button class="btn btn-primary" data-bs-tooltip="tooltip" type="submit"
+                title="{{ __('bo_other_stats_show_activities') }}">
                 {{ __('bo_other_stats_visualize') }}
             </button>
         </form>
@@ -34,7 +37,8 @@
             },
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgb(' + getComputedStyle(document.body).getPropertyValue('--bs-emphasis-color-rgb') + ', .9)',
+                backgroundColor: 'rgb(' + getComputedStyle(document.body).getPropertyValue(
+                    '--bs-emphasis-color-rgb') + ', .9)',
                 borderColor: 'rgba(0,0,0,0)',
                 borderRadius: 6,
                 textStyle: {

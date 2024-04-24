@@ -2,7 +2,8 @@
 <script nonce="{{ $nonce }}">
     document.addEventListener("DOMContentLoaded", function(event) {
         /** chart-games-by-folders */
-        var chartGamesByFolders = window.Echarts.init(document.getElementById('chart-games-by-folders'), 'royal');
+        var chartGamesByFolders = window.Echarts.init(document.getElementById('chart-games-by-folders'),
+            'royal');
         optionGamesByFolders = {
             title: {
                 text: @json(str(trans_choice('models.game', \INF))->ucFirst() .
@@ -18,7 +19,8 @@
             },
             tooltip: {
                 trigger: 'item',
-                backgroundColor: 'rgb(' + getComputedStyle(document.body).getPropertyValue('--bs-emphasis-color-rgb') + ', .9)',
+                backgroundColor: 'rgb(' + getComputedStyle(document.body).getPropertyValue(
+                    '--bs-emphasis-color-rgb') + ', .9)',
                 borderColor: 'rgba(0,0,0,0)',
                 borderRadius: 6,
                 textStyle: {
