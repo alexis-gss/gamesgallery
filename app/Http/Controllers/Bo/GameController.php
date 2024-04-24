@@ -127,12 +127,12 @@ class GameController extends Controller
                 )->validated());
                 (new Tag())->setTags($game, collect(request()->tags));
                 return redirect()->route('bo.games.edit', $game)
-                    ->with('success', __('crud.messages.has_been_created', [
+                    ->with('success', trans('crud.messages.has_been_created', [
                         'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                     ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.messages.cannot_be_created', [
+                ->with('error', trans('crud.messages.cannot_be_created', [
                     'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));
         });
@@ -185,12 +185,12 @@ class GameController extends Controller
             (new Tag())->setTags($game, collect($request->tags));
             if ($game->saveOrFail()) {
                 return redirect()->route('bo.games.edit', $game)
-                    ->with('success', __('crud.messages.has_been_updated', [
+                    ->with('success', trans('crud.messages.has_been_updated', [
                         'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                     ]));
             }
             return redirect()->route('bo.games.edit', $game)
-                ->with('error', __('crud.messages.cannot_be_updated', [
+                ->with('error', trans('crud.messages.cannot_be_updated', [
                     'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));
         });
@@ -209,12 +209,12 @@ class GameController extends Controller
         \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
         if ($game->deleteOrFail()) {
             return redirect()->route('bo.games.index', $previousQueries)
-                ->with('success', __('crud.messages.has_been_deleted', [
+                ->with('success', trans('crud.messages.has_been_deleted', [
                     'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
                 ]));
         }
         return redirect()->back()
-            ->with('error', __('crud.messages.cannot_be_deleted', [
+            ->with('error', trans('crud.messages.cannot_be_deleted', [
                 'model' => Str::of(trans_choice('models.game', 1))->ucfirst()
             ]));
     }

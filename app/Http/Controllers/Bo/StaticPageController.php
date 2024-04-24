@@ -96,12 +96,12 @@ class StaticPageController extends Controller
 
             if ($static_page->saveOrFail()) {
                 return redirect()->route('bo.static_pages.edit', $static_page)
-                    ->with('success', __('crud.messages.has_been_updated', [
+                    ->with('success', trans('crud.messages.has_been_updated', [
                         'model' => Str::ucfirst(trans_choice('models.static_page', 1))
                     ]));
             }
             return redirect()->route('bo.static_pages.edit', $static_page)
-                ->with('error', __('crud.messages.cannot_be_updated', [
+                ->with('error', trans('crud.messages.cannot_be_updated', [
                     'model' => Str::ucfirst(trans_choice('models.static_page', 1))
                 ]));
         });

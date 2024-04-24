@@ -57,14 +57,14 @@ class RankController extends Controller
                 $rank->fill(["game_id" => $dataValidated]);
                 if (!$rank->saveOrFail()) {
                     return redirect()->back()
-                        ->with('error', __('crud.messages.cannot_be_updated', [
-                            'model' => Str::of(__('models.rank'))->ucfirst()
+                        ->with('error', trans('crud.messages.cannot_be_updated', [
+                            'model' => Str::of(trans('models.rank'))->ucfirst()
                         ]));
                 }
             }
             return redirect()->route('bo.ranks.index')
-                ->with('success', __('crud.messages.has_been_updated', [
-                    'model' => Str::of(__('models.rank'))->ucfirst()
+                ->with('success', trans('crud.messages.has_been_updated', [
+                    'model' => Str::of(trans('models.rank'))->ucfirst()
                 ]));
         });
     }
@@ -82,8 +82,8 @@ class RankController extends Controller
                 return $this->getRanksForComponent();
             }
             return [
-                'message' => __('crud.messages.cannot_be_deleted', [
-                    'model' => Str::of(__('models.rank'))->ucfirst()
+                'message' => trans('crud.messages.cannot_be_deleted', [
+                    'model' => Str::of(trans('models.rank'))->ucfirst()
                 ])
             ];
         });

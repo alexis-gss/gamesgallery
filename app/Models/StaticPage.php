@@ -70,14 +70,14 @@ class StaticPage extends Model
     protected static function booted(): void
     {
         static::creating(function () {
-            throw new \RuntimeException(__('crud.messages.cannot_event_on_model', [
-                'event' => __('crud.actions.create'),
+            throw new \RuntimeException(trans('crud.messages.cannot_event_on_model', [
+                'event' => trans('crud.actions.create'),
                 'model' => trans_choice('models.static_page', 1)
             ]));
         });
         static::deleting(function () {
-            throw new \RuntimeException(__('crud.messages.cannot_event_on_model', [
-                'event' => __('crud.actions.delete'),
+            throw new \RuntimeException(trans('crud.messages.cannot_event_on_model', [
+                'event' => trans('crud.actions.delete'),
                 'model' => trans_choice('models.static_page', 1)
             ]));
         });

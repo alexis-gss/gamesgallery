@@ -101,13 +101,13 @@ class UserController extends Controller
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user)
-                    ->with('success', __('crud.messages.has_been_created', [
-                        'model' => Str::of(__('models.user'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_created', [
+                        'model' => Str::of(trans('models.user'))->ucfirst()
                     ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.messages.cannot_be_created', [
-                    'model' => Str::of(__('models.user'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_created', [
+                    'model' => Str::of(trans('models.user'))->ucfirst()
                 ]));
         });
     }
@@ -137,13 +137,13 @@ class UserController extends Controller
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user)
-                    ->with('success', __('crud.messages.has_been_updated', [
-                        'model' => Str::of(__('models.user'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_updated', [
+                        'model' => Str::of(trans('models.user'))->ucfirst()
                     ]));
             }
             return redirect()->route('bo.users.edit', $user)
-                ->with('error', __('crud.messages.cannot_be_updated', [
-                    'model' => Str::of(__('models.user'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_updated', [
+                    'model' => Str::of(trans('models.user'))->ucfirst()
                 ]));
         });
     }
@@ -161,13 +161,13 @@ class UserController extends Controller
         \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
         if ($user->deleteOrFail()) {
             return redirect()->route('bo.users.index', $previousQueries)
-                ->with('success', __('crud.messages.has_been_deleted', [
-                    'model' => Str::of(__('models.user'))->ucfirst()
+                ->with('success', trans('crud.messages.has_been_deleted', [
+                    'model' => Str::of(trans('models.user'))->ucfirst()
                 ]));
         }
         return redirect()->back()
-            ->with('error', __('crud.messages.cannot_be_deleted', [
-                'model' => Str::of(__('models.user'))->ucfirst()
+            ->with('error', trans('crud.messages.cannot_be_deleted', [
+                'model' => Str::of(trans('models.user'))->ucfirst()
             ]));
     }
 

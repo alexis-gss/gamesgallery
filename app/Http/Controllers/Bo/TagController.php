@@ -91,13 +91,13 @@ class TagController extends Controller
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag)
-                    ->with('success', __('crud.messages.has_been_created', [
-                        'model' => Str::of(__('models.tag'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_created', [
+                        'model' => Str::of(trans('models.tag'))->ucfirst()
                     ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.messages.cannot_be_created', [
-                    'model' => Str::of(__('models.tag'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_created', [
+                    'model' => Str::of(trans('models.tag'))->ucfirst()
                 ]));
         });
     }
@@ -146,13 +146,13 @@ class TagController extends Controller
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag)
-                    ->with('success', __('crud.messages.has_been_updated', [
-                        'model' => Str::of(__('models.tag'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_updated', [
+                        'model' => Str::of(trans('models.tag'))->ucfirst()
                     ]));
             }
             return redirect()->route('bo.tags.edit', $tag)
-                ->with('error', __('crud.messages.cannot_be_updated', [
-                    'model' => Str::of(__('models.tag'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_updated', [
+                    'model' => Str::of(trans('models.tag'))->ucfirst()
                 ]));
         });
     }
@@ -170,13 +170,13 @@ class TagController extends Controller
         \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
         if ($tag->deleteOrFail()) {
             return redirect()->route('bo.tags.index', $previousQueries)
-                ->with('success', __('crud.messages.has_been_deleted', [
-                    'model' => Str::of(__('models.tag'))->ucfirst()
+                ->with('success', trans('crud.messages.has_been_deleted', [
+                    'model' => Str::of(trans('models.tag'))->ucfirst()
                 ]));
         }
         return redirect()->back()
-            ->with('error', __('crud.messages.cannot_be_deleted', [
-                'model' => Str::of(__('models.tag'))->ucfirst()
+            ->with('error', trans('crud.messages.cannot_be_deleted', [
+                'model' => Str::of(trans('models.tag'))->ucfirst()
             ]));
     }
 
@@ -201,11 +201,11 @@ class TagController extends Controller
     {
         if ($tag->getTranslation('name', config('app.fallback_locale'))) {
             $tag->update(['published' => !$tag->getOriginal('published')]);
-            return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
+            return redirect()->back()->with('success', trans('crud.messages.publish_status_saved'));
         } else {
-            return redirect()->back()->with('error', trans(__('crud.messages.translation_default_required', [
+            return redirect()->back()->with('error', trans('crud.messages.translation_default_required', [
                 'fallbackLocale' => config('app.fallback_locale')
-            ])));
+            ]));
         }
     }
 }

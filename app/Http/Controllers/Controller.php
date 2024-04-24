@@ -273,7 +273,7 @@ class Controller extends BaseController
         if (Cache::get("theme") !== $theme) {
             Cache::put("theme", $theme);
         }
-        return redirect()->back()->with('success', __('crud.messages.theme_updated'));
+        return redirect()->back()->with('success', trans('crud.messages.theme_updated'));
     }
 
     /**
@@ -290,6 +290,6 @@ class Controller extends BaseController
         }
         app()->setLocale($lang);
         session()->put('lang', $lang);
-        return redirect()->back()->with('success', __('crud.messages.lang_updated'));
+        return redirect()->back()->with('success', trans('crud.messages.lang_updated'));
     }
 }

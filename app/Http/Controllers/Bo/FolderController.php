@@ -95,13 +95,13 @@ class FolderController extends Controller
 
             if ($folder->saveOrFail()) {
                 return redirect()->route('bo.folders.edit', $folder)
-                    ->with('success', __('crud.messages.has_been_created', [
-                        'model' => Str::of(__('models.folder'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_created', [
+                        'model' => Str::of(trans('models.folder'))->ucfirst()
                     ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.messages.cannot_be_created', [
-                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_created', [
+                    'model' => Str::of(trans('models.folder'))->ucfirst()
                 ]));
         });
     }
@@ -131,13 +131,13 @@ class FolderController extends Controller
 
             if ($folder->saveOrFail()) {
                 return redirect()->route('bo.folders.edit', $folder)
-                    ->with('success', __('crud.messages.has_been_updated', [
-                        'model' => Str::of(__('models.folder'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_updated', [
+                        'model' => Str::of(trans('models.folder'))->ucfirst()
                     ]));
             }
             return redirect()->route('bo.folders.edit', $folder)
-                ->with('error', __('crud.messages.cannot_be_updated', [
-                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_updated', [
+                    'model' => Str::of(trans('models.folder'))->ucfirst()
                 ]));
         });
     }
@@ -156,18 +156,18 @@ class FolderController extends Controller
             \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);
             if ($folder->deleteOrFail()) {
                 return redirect()->route('bo.folders.index', $previousQueries)
-                    ->with('success', __('crud.messages.has_been_deleted', [
-                        'model' => Str::of(__('models.folder'))->ucfirst()
+                    ->with('success', trans('crud.messages.has_been_deleted', [
+                        'model' => Str::of(trans('models.folder'))->ucfirst()
                     ]));
             }
             return redirect()->back()
-                ->with('error', __('crud.messages.cannot_be_deleted', [
-                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_deleted', [
+                    'model' => Str::of(trans('models.folder'))->ucfirst()
                 ]));
         } else {
             return redirect()->back()
-                ->with('error', __('crud.messages.cannot_be_deleted_with_children', [
-                    'model' => Str::of(__('models.folder'))->ucfirst()
+                ->with('error', trans('crud.messages.cannot_be_deleted_with_children', [
+                    'model' => Str::of(trans('models.folder'))->ucfirst()
                 ]));
         }
     }
@@ -194,15 +194,15 @@ class FolderController extends Controller
         if ($folder->mandatory) {
             if ($folder->getTranslation('name', config('app.fallback_locale'))) {
                 $folder->update(['published' => !$folder->getOriginal('published')]);
-                return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
+                return redirect()->back()->with('success', trans('crud.messages.publish_status_saved'));
             } else {
-                return redirect()->back()->with('error', trans(__('crud.messages.translation_default_required', [
+                return redirect()->back()->with('error', trans('crud.messages.translation_default_required', [
                     'fallbackLocale' => config('app.fallback_locale')
-                ])));
+                ]));
             }
         } else {
             $folder->update(['published' => !$folder->getOriginal('published')]);
-            return redirect()->back()->with('success', trans(__('crud.messages.publish_status_saved')));
+            return redirect()->back()->with('success', trans('crud.messages.publish_status_saved'));
         }
     }
 }
