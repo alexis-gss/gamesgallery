@@ -15,6 +15,8 @@ return [
     "404_message"   => "Nous n'arrivons pas à trouver la page que vous cherchez...",
     "405_title"     => "Oh dommage...",
     "405_message"   => "Nous vous avons entendu, mais la ressource cible ne supporte pas cette méthode.",
+    "413_title"     => "Qu'est-ce que c'est que ça...",
+    "413_message"   => "L'entité que vous essayez d'envoyer est supérieure aux limites définies par le serveur",
     "419_title"     => "Qui êtes-vous ?",
     "419_message"   => "Votre session a expiré, veuillez vous reconnecter.",
     "429_title"     => "Hé, arrêtez ça !",

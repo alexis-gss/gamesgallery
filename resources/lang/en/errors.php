@@ -15,6 +15,8 @@ return [
     "404_message"   => "We can't seed to find the page you're looking for...",
     "405_title"     => "Oh buddy...",
     "405_message"   => "We heard you, but the target resource doesn't support this method.",
+    "413_title"     => "What the hell is this...",
+    "413_message"   => "The entity you are trying to send exceeds the limits defined by the server.",
     "419_title"     => "What the hell, who you are ?",
     "419_message"   => "Your session has expired, please reconnect.",
     "429_title"     => "Hey, stop that !",

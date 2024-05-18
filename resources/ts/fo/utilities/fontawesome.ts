@@ -7,6 +7,7 @@ import {
     faGlobe,
     faRankingStar,
     faThumbsUp,
+    faTriangleExclamation,
     faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -16,5 +17,16 @@ import {
 config.autoReplaceSvg = false;
 
 // @ts-ignore
-library.add( faArrowUp, faXmark, faBars, faArrowLeft, faGithub, faRankingStar, faGlobe, faThumbsUp, farThumbsUp);
+library.add(
+    faArrowUp,
+    faXmark,
+    faBars,
+    faArrowLeft,
+    faGithub,
+    faRankingStar,
+    faGlobe,
+    faThumbsUp,
+    farThumbsUp,
+    faTriangleExclamation
+);
 dom.watch();

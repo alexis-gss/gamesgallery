@@ -14,8 +14,9 @@
                         </span>
                     </label>
                     <div class="word-counter" data-json='@json(['id' => 'name'])'></div>
-                    <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text"
-                        value="{{ old('name', $gameModel->name ?? '') }}" placeholder="{{ __('validation.attributes.name') }}" required>
+                    <input class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                        type="text" value="{{ old('name', $gameModel->name ?? '') }}"
+                        placeholder="{{ __('validation.attributes.name') }}" required>
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.name'),
@@ -33,15 +34,27 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    <select class="form-select @error('folder_id') is-invalid @enderror" id="folder_id" name="folder_id" role="button"
-                        required>
-                        @foreach ($folderModels as $folder)
-                            <option value="{{ $folder->getRouteKey() }}" @selected($folder->getRouteKey() == $gameModel->folder_id)>
-                                {{ $folder->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <small class="text-body-secondary">{{ __('validation.rule.select-single', ['entity' => __('models.folder')]) }}</small>
+                    @php
+                        ($gameModel->folder) ? $gameModel->folder->nameLocale = $gameModel->folder->name : "";
+                        $data = [
+                            'id' => 'gameFolder',
+                            'name' => 'folder_id',
+                            'multiple' => false,
+                            'targetClass' => 'App\Models\Folder',
+                            'routeName' => 'bo.folders.jsonPaginate',
+                            'modelListPaginate' => $folderModels,
+                            'modelSelected' => $gameModel->folder,
+                            'fieldName' => 'nameLocale',
+                            'roundedBorder' => true,
+                            'required' => true,
+                            'disabled' => false,
+                            'placeholder' => 'test placeholder',
+                        ];
+                    @endphp
+                    <div class="search-belongs-to-dropdown" data-json='@json($data)'></div>
+                    <small class="text-body-secondary">
+                        {{ __('validation.rule.select-single', ['entity' => __('models.folder')]) }}
+                    </small>
                     @include('back.modules.input-error', ['inputName' => 'folder_id'])
                 </div>
             </div>
@@ -57,7 +70,8 @@
                 <div class="col-12">
                     <label class="col-form-label" for="name">
                         <b>{{ __('bo_label_choose_pictures') }}</b>
-                        <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_game_images') }}">
+                        <span data-bs-tooltip="tooltip" data-bs-placement="top"
+                            title="{{ __('bo_tooltip_game_images') }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -70,7 +84,11 @@
                             'model' => $gameModel,
                             'value' => $gameModel->pictures ?? [],
                             'limit' => [0, 76],
-                            'helper' => __('validation.rule.images_label', ['format' => 'JPG/PNG', 'width' => 3840, 'height' => 2160]),
+                            'helper' => __('validation.rule.images_label', [
+                                'format' => 'JPG/PNG',
+                                'width' => 3840,
+                                'height' => 2160,
+                            ]),
                             'csrf' => csrf_token(),
                             'errors' => $errors->getBag('default')->getMessages(),
                         ];
@@ -98,20 +116,29 @@
                     </label>
                     @php
                         $data = [
-                            'id' => 'tags',
+                            'id' => 'gameTags',
                             'name' => 'tags',
-                            'value' => old(
+                            'fieldName' => 'nameLocale',
+                            'multiple' => true,
+                            'targetClass' => 'App\Models\Tag',
+                            'routeName' => 'bo.tags.jsonPaginate',
+                            'modelListPaginate' => $tagModels,
+                            'modelSelected' => old(
                                 'tags',
                                 $gameModel->tags->map(function ($tagModel) {
-                                    $tagModel->nameLocale = $tagModel->name;
-                                    return $tagModel;
+                                    return [
+                                        'id' => $tagModel->id,
+                                        'nameLocale' => $tagModel->name
+                                    ];
                                 }) ?? [],
                             ),
-                            'items' => $tagModels,
+                            'roundedBorder' => true,
+                            'required' => true,
+                            'disabled' => false,
                             'placeholder' => __('bo_other_taggable_add'),
                         ];
                     @endphp
-                    <div id="belongs-to-many-dropdown" data-json='@json($data)'></div>
+                    <div class="search-belongs-to-dropdown" data-json='@json($data)'></div>
                     <small class="text-body-secondary">
                         {{ __('validation.rule.select-multiple', ['entity' => str(__('models.tag'))->plural()]) }}
                     </small>
@@ -129,8 +156,9 @@
             <div class="row mb-3">
                 <div class="col-12 form-check form-switch">
                     <div class="form-check form-switch">
-                        <input class="form-check-input @error('published') is-invalid @enderror" id="flexSwitchCheckDefault"
-                            name="published" type="checkbox" value="1" role="button" @checked(old('published', $gameModel->published ?? ''))>
+                        <input class="form-check-input @error('published') is-invalid @enderror"
+                            id="flexSwitchCheckDefault" name="published" type="checkbox" value="1" role="button"
+                            @checked(old('published', $gameModel->published ?? ''))>
                         <label class="form-check-label" for="flexSwitchCheckDefault" role="button">
                             <b>{{ str(__('validation.custom.publishment'))->ucFirst() }}</b>
                         </label>

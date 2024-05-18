@@ -98,14 +98,17 @@
                         $data = [
                             'id' => 'userPicture',
                             'name' => 'picture',
+                            'value' => $userModel->picture ?? '',
+                            'width' => 100,
+                            'height' => 100,
+                            'showLabels' => true,
+                            'required' => true,
+                            'preview' => true,
                             'helper' => __('validation.rule.images_label', [
                                 'format' => 'JPG/PNG',
                                 'width' => 100,
                                 'height' => 100,
                             ]),
-                            'width' => 100,
-                            'height' => 100,
-                            'value' => $userModel->picture ?? '',
                         ];
                     @endphp
                     <div class="image-input" data-json='@json($data)'></div>
@@ -129,13 +132,12 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    <div class="word-counter" data-json='@json(['id' => 'password'])'></div>
-                    <div class="col-12 input-group d-flex w-100 justify-content-center">
+                    <div class="input-group d-flex justify-content-center w-100">
                         <input class="form-control @error('password') is-invalid @enderror" id="password"
                             id="password" name="password" type="password" value="{{ old('password') }}"
                             aria-describedby="passwordHelp" placeholder="{{ __('validation.attributes.password') }}"
                             autocomplete="current-password">
-                        @php $dataPassword = ['inputId' => 'password']; @endphp
+                        @php $dataPassword = ['id' => 'password']; @endphp
                         <span class="password-visibility" data-json='@json($dataPassword)'>
                         </span>
                     </div>
@@ -155,15 +157,14 @@
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
-                    <div class="word-counter" data-json='@json(['id' => 'password_confirmation'])'></div>
-                    <div class="col-12 input-group d-flex w-100 justify-content-center">
+                    <div class="input-group d-flex justify-content-center w-100">
                         <input class="form-control @error('password_confirmation') is-invalid @enderror"
                             id="password_confirmation" id="password_confirmation" name="password_confirmation"
                             type="password" value="{{ old('password_confirmation') }}"
                             aria-describedby="passwordConfirmationHelp"
                             placeholder="{{ __('validation.attributes.password_confirmation') }}"
                             autocomplete="current-password">
-                        @php $dataPassword = ['inputId' => 'password_confirmation']; @endphp
+                        @php $dataPassword = ['id' => 'password_confirmation']; @endphp
                         <span class="password-visibility" data-json='@json($dataPassword)'>
                         </span>
                     </div>

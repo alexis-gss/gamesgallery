@@ -22,13 +22,19 @@
                         $data = [
                             'id' => 'ranksListInput',
                             'name' => 'ranks',
-                            'value' => [],
-                            'items' => $gameModels,
+                            'multiple' => true,
+                            'targetClass' => 'App\Models\Game',
+                            'routeName' => 'bo.ranks.gamesPaginate',
+                            'modelListPaginate' => $gameModels,
+                            'modelSelected' => [],
+                            'fieldName' => 'name',
+                            'roundedBorder' => false,
+                            'required' => true,
+                            'disabled' => false,
                             'placeholder' => __('bo_other_rank_add'),
-                            'ranking' => true,
                         ];
                     @endphp
-                    <div class="form-control w-100 border-0 p-0" id="belongs-to-many-dropdown" data-json='@json($data)'></div>
+                    <div class="form-control w-100 border-0 p-0" id="search-belongs-to-dropdown" data-json='@json($data)'></div>
                     @include('back.modules.input-error', ['inputName' => 'tags'])
                     <button class="btn btn-primary w-100 w-sm-fit m-0" id="search-ranking-btn" data-bs-tooltip="tooltip" type="submit"
                         title="{{ __('bo_tooltip_ranking_add_game') }}">

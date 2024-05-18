@@ -9,21 +9,23 @@
     }
     window.__SYSTEM._routes = {
         bo: {
-            tags: {
-                store: "{{ route('bo.tags.store') }}",
-                jsonStore: "{{ route('bo.tags.jsonStore') }}",
-            },
             games: {
                 show: "{{ route('bo.games.show', 'ID') }}",
                 edit: "{{ route('bo.games.edit', 'ID') }}",
+            },
+            folders: {
+                jsonPaginate: "{{ route('bo.folders.json-paginate') }}",
             },
             pictures: {
                 upload: "{{ route('bo.pictures.upload') }}"
             },
             ranks: {
-                games: "{{ route('bo.ranks.games') }}",
+                gamesPaginate: "{{ route('bo.ranks.games-paginate') }}",
                 saveOrder: "{{ route('bo.ranks.save-order', 'RANKS') }}",
                 destroy: "{{ route('bo.ranks.destroy', 'ID') }}",
+            },
+            tags: {
+                jsonPaginate: "{{ route('bo.tags.json-paginate') }}"
             },
         },
         fo: {

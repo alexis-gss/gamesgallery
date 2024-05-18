@@ -46,7 +46,6 @@ class StoreGameRequest extends FormRequest
             'tags'        => 'sometimes|array',
             'tags.*'      => 'required|array',
             'tags.*.id'   => 'required|numeric|exists:tags,id|distinct',
-            'tags.*.name' => 'required|string|min:1|max:255',
             'published'   => 'required|boolean',
         ];
     }
@@ -66,11 +65,6 @@ class StoreGameRequest extends FormRequest
             'tags.*'      => trans('models.tag'),
             'tags.*.id'   => trans(':field :inter:model', [
                 'field' => trans('validation.custom.identification'),
-                'inter' => trans('validation.custom.inter.vowel'),
-                'model' => trans('models.tag'),
-            ]),
-            'tags.*.name' => trans(':field :inter:model', [
-                'field' => trans('validation.custom.name'),
                 'inter' => trans('validation.custom.inter.vowel'),
                 'model' => trans('models.tag'),
             ]),

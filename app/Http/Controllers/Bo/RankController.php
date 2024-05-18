@@ -36,7 +36,7 @@ class RankController extends Controller
         $rankModels = $this->getRanksForComponent();
 
         /** @var \Illuminate\Database\Eloquent\Collection $gameModels */
-        $gameModels = $this->getPublishedGamesInNotRanking();
+        $gameModels = $this->getPublishedGamesInNotRanking()->paginate(8);
 
         $searchFields = trans('validation.attributes.name');
 
@@ -126,17 +126,29 @@ class RankController extends Controller
     /**
      * Get published games that aren't in ranking.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getPublishedGamesInNotRanking(): \Illuminate\Database\Eloquent\Collection
+    public function jsonSearchPaginateRanks(Request $request): \Illuminate\Pagination\LengthAwarePaginator
+    {
+        return $this->getPublishedGamesInNotRanking()
+            ->where('name', 'like', "%{$request->input('search')}%")
+            ->paginate($request->input('paginate'));
+    }
+
+    /**
+     * Get published games that aren't in ranking.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function getPublishedGamesInNotRanking(): \Illuminate\Database\Eloquent\Builder
     {
         return Game::query()
+            ->whereNotIn('id', Rank::query()->pluck('game_id')->all())
             ->where('published', true)
             ->whereHas('folder', function ($q) {
                 $q->where('published', true);
             })
-            ->whereNotIn('id', Rank::query()->pluck('game_id')->all())
-            ->orderBy('slug', 'ASC')
-            ->get();
+            ->orderBy('slug', 'ASC');
     }
 }

@@ -1,20 +1,20 @@
 <template>
   <div
     ref="gamesRanking"
-    :class="`ranks-${intId} position-relative`"
+    :class="`ranks-${id} position-relative`"
   >
     <Transition name="fade">
       <p
-        v-if="intMessage"
+        v-if="message"
         class="d-flex align-items-center text-danger mb-2"
       >
-        <span>{{ Object.values(intMessage)[0] }}&nbsp;</span>
+        <span>{{ Object.values(message)[0] }}&nbsp;</span>
       </p>
     </Transition>
     <vue-nestable
-      :value="intRanks"
+      :value="ranks"
       @change="updateRank"
-      @input="intRanks = $event"
+      @input="ranks = $event"
       :hooks="{ beforeMove: beforeMove }"
     >
       <template
@@ -23,7 +23,7 @@
         }: { item: RankObject }"
       >
         <vue-nestable-handle
-          class="d-flex justify-content-between align-items-center border rounded bg-white p-1"
+          class="d-flex justify-content-between align-items-center border rounded bg-body p-1"
         >
           <div class="d-flex justify-content-start align-items-center">
             <button class="btn btn-sm border-0 disabled opacity-100">
@@ -47,7 +47,7 @@
                 :href="getFrontShowGameRoute(item.game_slug)"
                 class="btn btn-sm btn-info"
                 target="_blank"
-                :title="__('crud.other.access_link')"
+                :title="trans.methods.__('crud.other.access_link')"
                 data-bs-tooltip="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" />
@@ -55,7 +55,7 @@
               <a
                 :href="getShowGameRoute(item.game_id)"
                 class="btn btn-sm btn-warning"
-                :title="__('bo_tooltip_ranking_see_game')"
+                :title="trans.methods.__('bo_tooltip_ranking_see_game')"
                 data-bs-tooltip="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-eye" />
@@ -63,7 +63,7 @@
               <a
                 :href="getEditGameRoute(item.game_id)"
                 class="btn btn-sm btn-primary"
-                :title="__('bo_tooltip_ranking_update_game')"
+                :title="trans.methods.__('bo_tooltip_ranking_update_game')"
                 data-bs-tooltip="tooltip"
               >
                 <FontAwesomeIcon icon="fa-solid fa-pencil" />
@@ -71,7 +71,7 @@
               <button
                 @click="deleteRank($event, item as never as RankObject)"
                 class="btn btn-sm btn-danger confirmDelete"
-                :title="__('bo_tooltip_ranking_delete_game')"
+                :title="trans.methods.__('bo_tooltip_ranking_delete_game')"
                 data-bs-tooltip="tooltip"
                 ref="confirmDelete"
               >
@@ -83,7 +83,7 @@
       </template>
     </vue-nestable>
     <div
-      v-if="intLoading"
+      v-if="loading"
       class="loading position-absolute top-0 start-0 d-flex justify-content-center align-items-center rounded-1 w-100 h-100"
     >
       <div
@@ -91,199 +91,225 @@
         role="status"
       >
         <span class="visually-hidden">
-          {{ __("bo_tooltip_viewer_loading") }}
+          {{ trans.methods.__("bo_tooltip_viewer_loading") }}
         </span>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { defineComponent } from "vue";
+import { defineOptions, onMounted, ref, useAttrs, nextTick } from "vue";
 import { VueNestable, VueNestableHandle } from "vue3-nestable";
 import route from "./../../modules/route";
-import { Tooltips } from "./../../modules/tooltip";
-import error from "././../../modules/error";
+import { Tooltips } from "./../../modules/tooltips";
+import errors from "././../../modules/errors";
 import sweetalert from "././../../modules/sweetalert";
 import trans from "././../../modules/trans";
 
-export default defineComponent({
-  name: "GamesRankingComponent",
-  components: {
-    VueNestable,
-    VueNestableHandle,
-    FontAwesomeIcon,
-  },
-  mixins: [error, route, sweetalert, trans],
-  data(): {
-    intCsrf: string | null | undefined;
-    intId: String;
-    intRanks: RankObject[];
-    intGames: LaravelModel[];
-    intMessage: object | object[] | null;
-    intLoading: boolean;
-    tooltips: Tooltips | null;
-  } {
-    return {
-      intCsrf: document
-        .querySelector("meta[name=\"csrf-token\"]")
-        ?.getAttribute("content"),
-      intId: "",
-      intRanks: [],
-      intGames: [],
-      intMessage: null,
-      intLoading: false,
-      tooltips: null
-    };
-  },
-  mounted() {
-    const json = String(this.$attrs.json ?? "{}");
-    const data = JSON.parse(json);
-    this.intId = data.id;
-    this.intRanks = data.rankModels;
-    this.$nextTick(() => {
-      this.tooltips = Tooltips.make({
-        type: "dom",
-        elements: (this.$refs.gamesRanking as HTMLDivElement)
-          .querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
-      });
-    });
-  },
-  methods: {
-    /** Check the deep of current item before the move. */
-    beforeMove({
-      pathTo,
-    }: {
-      pathTo: number[];
-    }) {
-      if (pathTo.length == 2) {
-        return false;
-      }
-      return true;
-    },
-    /** Update data's ranks. */
-    updateRank() {
-      let newOrder = this.assignRank(this.intRanks);
-      const route = this.route("bo.ranks.saveOrder");
-      if (!route) {
-        throw new Error("Undefined route bo.ranks.saveOrder");
-      }
-      window.axios.post(route, { ranks: newOrder }).catch(this.ajaxErrorHandler);
-      this.$nextTick(() => {
-        this.tooltips?.refreshTooltips();
-      });
-    },
-    /** Assign the new order and parent id to each rank. */
-    assignRank(ranks: RankObject[]) {
-      ranks.forEach((element, index) => {
-        element.rank = index + 1;
-      });
-      return ranks;
-    },
-    /** Return front show route for a game. */
-    getFrontShowGameRoute(slug: string): string {
-      const route = this.route("fo.games.show", {
-        SLUG: slug,
-      });
-      if (!route) {
-        throw new Error("Undefined route fo.games.show");
-      }
-      return route;
-    },
-    /** Return show route for a game. */
-    getShowGameRoute(id: number): string {
-      const route = this.route("bo.games.show", {
-        ID: id,
-      });
-      if (!route) {
-        throw new Error("Undefined route bo.games.show");
-      }
-      return route;
-    },
-    /** Return edit route for a game. */
-    getEditGameRoute(id: number): string {
-      const route = this.route("bo.games.edit", {
-        ID: id,
-      });
-      if (!route) {
-        throw new Error("Undefined route bo.games.edit");
-      }
-      return route;
-    },
-    /** Delete specific game from the ranking. */
-    deleteRank(e: Event, model: RankObject) {
-      const btnConfirmDelete = this.$refs.confirmDelete as HTMLButtonElement;
-      let promise:Promise<boolean>|null = null;
-      (async () => {
-        if (promise !== null && await promise === false) {
-          return;
-        }
-        promise = new Promise((resolve: (value: boolean) => void) => {
-          sweetalert.methods.confirm(
-            "Confirmez",
-            "Êtes vous sure ?",
-            btnConfirmDelete,
-            function (response) {
-              resolve(response.isConfirmed);
-            },
-            { icon: "warning" }
-          );
-          return false;
-        });
-        if (await promise) {
-          this.intLoading = true;
-          const route = this.route("bo.ranks.destroy", {
-            ID: model.id as number,
-          });
-          if (!route) {
-            throw new Error("Undefined route bo.ranks.destroy");
-          }
-          window.axios
-            .post(route, { id: model.id, _method: "DELETE" })
-            .then((reponse) => {
-              this.intRanks = reponse.data;
-              this.intLoading = false;
-              this.updateRank();
-              this.$nextTick(() => {
-                this.tooltips?.refreshTooltips();
-              });
-            })
-            .catch(this.ajaxErrorHandler);
-        }
-      })();
-    },
-    ajaxErrorHandler(e: any) {
-      this.intLoading = false;
-      let message = this.__("Une erreur est survenue");
-      if (e.response.status === 422) {
-        message =
-          this.parseValidationErrors(
-            e.response?.data?.errors ?? {}
-          ) || message;
-        if (window.vueDebug) {
-          console.warn(e.response.data.errors);
-        }
-      } else if (e.response.status === 419) {
-        // * CSRF TOKEN MISMATCH (On ne pourrais plus faire d'appels AJAX sans recharger la page)
-        console.log(this.__("Votre session a expiré, la page va être rechargée"));
-        setTimeout(() => window.location.reload(), 2000);
-      } else if (e.response.status === 403) {
-        // * Access denied
-        console.log(this.__("Vous n'êtes pas autorisé a effectuer cette action"));
-        setTimeout(() => window.location.reload(), 2000);
-      } else {
-        if (window.vueDebug) {
-          console.error(e);
-        }
-      }
-      console.log(message);
-    }
-  },
+defineOptions({
+  name: "GamesRankingComponent"
 });
+
+// * ATTRIBUTES
+const attrs = useAttrs();
+
+// * REFS
+const gamesRanking = ref<HTMLDivElement|null>(null);
+const confirmDelete = ref<HTMLButtonElement|null>(null);
+
+// * DATA
+const id = ref<string>("");
+const csrf = ref<string|null>(null);
+const ranks = ref<Array<RankObject>>([]);
+const message = ref<string>("");
+const loading = ref<boolean>(false);
+const tooltips = ref<Tooltips|null>(null);
+
+// * LIFECYCLE
+onMounted((): void => {
+  const json = String(attrs.json ?? "{}"),
+        data = JSON.parse(json);
+  id.value = data.id;
+  ranks.value = data.rankModels;
+  csrf.value = document.querySelector("meta[name=\"csrf-token\"]")!.getAttribute("content");
+  nextTick(() => {
+    tooltips.value = Tooltips.make({
+      type: "dom",
+      elements: gamesRanking.value!.querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
+    });
+  });
+});
+
+// * METHODS
+
+/**
+  * Check if there is an input or textearea.
+  * @return boolean
+  */
+function beforeMove({pathTo}: {pathTo: Array<number>}): boolean {
+  if (pathTo.length == 2) {
+    return false;
+  }
+  return true;
+}
+
+/**
+  * Update data's ranks.
+  * @return void
+  */
+function updateRank(): void {
+  const routeRank = route.methods.route("bo.ranks.saveOrder");
+  if (!routeRank) {
+    throw new Error("Undefined route bo.ranks.saveOrder");
+  }
+  window.axios.post(routeRank, { ranks: assignRank(ranks.value) }).catch(ajaxErrorHandler);
+  nextTick(() => {
+    tooltips.value?.refreshTooltips();
+  });
+}
+
+/**
+  * Assign the new order and parent id to each rank.
+  * @return Array<RankObject>
+  */
+function assignRank(ranks: Array<RankObject>): Array<RankObject> {
+  ranks.forEach((element, index) => {
+    element.rank = index + 1;
+  });
+  return ranks;
+}
+
+/**
+  * Return front show route for a game.
+  * @return string
+  */
+function getFrontShowGameRoute(slug: string): string {
+  const routeShowGame = route.methods.route("fo.games.show", {
+    SLUG: slug,
+  });
+  if (!routeShowGame) {
+    throw new Error("Undefined route fo.games.show");
+  }
+  return routeShowGame;
+}
+
+/**
+  * Return show route for a game.
+  * @return string
+  */
+function getShowGameRoute(id: number): string {
+  const routeShowGame = route.methods.route("bo.games.show", {
+    ID: id,
+  });
+  if (!routeShowGame) {
+    throw new Error("Undefined route bo.games.show");
+  }
+  return routeShowGame;
+}
+
+/**
+  * Return edit route for a game.
+  * @return string
+  */
+function getEditGameRoute(id: number): string {
+  const routeGameEdit = route.methods.route("bo.games.edit", {
+    ID: id,
+  });
+  if (!routeGameEdit) {
+    throw new Error("Undefined route bo.games.edit");
+  }
+  return routeGameEdit;
+}
+
+/**
+  * Return destroy route for a game.
+  * @return string
+  */
+function getDestroyGameRoute(id: number): string {
+  const routeDestroy = route.methods.route("bo.ranks.destroy", {
+    ID: id,
+  });
+  if (!routeDestroy) {
+    throw new Error("Undefined route bo.ranks.destroy");
+  }
+  return routeDestroy;
+}
+
+/**
+  * Delete specific game from the ranking.
+  * @return void|boolean
+  */
+function deleteRank(e: Event, model: RankObject): void|boolean {
+  const btnConfirmDelete = confirmDelete.value as HTMLButtonElement;
+  let promise:Promise<boolean>|null = null;
+  (async () => {
+    if (promise !== null && await promise === false) {
+      return;
+    }
+    promise = new Promise((resolve: (value: boolean) => void) => {
+      sweetalert.methods.confirm(
+        "Confirmez",
+        "Êtes vous sure ?",
+        btnConfirmDelete,
+        function (response) {
+          resolve(response.isConfirmed);
+        },
+        { icon: "warning" }
+      );
+      return false;
+    });
+    if (await promise) {
+      loading.value = true;
+      window.axios
+        .post(getDestroyGameRoute(model.id), { id: model.id, _method: "DELETE" })
+        .then((reponse) => {
+          ranks.value = reponse.data;
+          loading.value = false;
+          updateRank();
+          nextTick(() => {
+            tooltips.value?.refreshTooltips();
+          });
+        })
+        .catch(ajaxErrorHandler);
+    }
+  })();
+}
+
+/**
+  * Return error message after the ajax call.
+  * @return void
+  */
+function ajaxErrorHandler(e: any): void {
+  loading.value = false;
+  let message = trans.methods.__("Une erreur est survenue");
+  if (e.response.status === 422) {
+    message =
+      errors.methods.parseValidationErrors(
+        e.response?.data?.errors ?? {}
+      ) || message;
+    if (window.vueDebug) {
+      console.warn(e.response.data.errors);
+    }
+  } else if (e.response.status === 419) {
+    // * CSRF TOKEN MISMATCH (On ne pourrais plus faire d'appels AJAX sans recharger la page)
+    console.log(trans.methods.__("Votre session a expiré, la page va être rechargée"));
+    setTimeout(() => window.location.reload(), 2000);
+  } else if (e.response.status === 403) {
+    // * Access denied
+    console.log(trans.methods.__("Vous n'êtes pas autorisé a effectuer cette action"));
+    setTimeout(() => window.location.reload(), 2000);
+  } else {
+    if (window.vueDebug) {
+      console.error(e);
+    }
+  }
+  console.log(message);
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scopped>
 .ranks-games {
   .loading {
     z-index: 5;

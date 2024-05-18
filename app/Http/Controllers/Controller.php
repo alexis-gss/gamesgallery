@@ -292,4 +292,25 @@ class Controller extends BaseController
         session()->put('lang', $lang);
         return redirect()->back()->with('success', trans('crud.messages.lang_updated'));
     }
+
+    /**
+     * Get a paginate resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function jsonSearchPaginate(Request $request): \Illuminate\Http\JsonResponse
+    {
+        /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $models */
+        $models = $request->targetModel::query()
+            ->where('published', true)
+            ->where('name', 'like', "%{$request->input('search')}%")
+            ->orderBy('name', 'ASC')
+            ->paginate($request->input('paginate') ?? 5)
+            ->through(function ($model) {
+                $model->nameLocale = $model->name;
+                return $model;
+            });
+        return \response()->json($models);
+    }
 }

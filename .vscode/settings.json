@@ -20,7 +20,7 @@
         "commandCenter.border": "#e7e7e799"
     },
     "peacock.remoteColor": "#121416",
-    "intelephense.environment.phpVersion": "8.2.0",
+    "intelephense.environment.phpVersion": "8.3.0",
     "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
     "intelephense.phpdoc.useFullyQualifiedNames": true
 }

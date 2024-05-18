@@ -66,6 +66,8 @@ Route::prefix('bo')
                         ->name('folders.change-published');
                     Route::get('/folders/{folder}/duplicate', [FolderController::class, 'duplicate'])
                         ->name('folders.duplicate');
+                    Route::get('/folders/json/paginate', [FolderController::class, 'jsonSearchPaginate'])
+                        ->name('folders.json-paginate');
 
                     // * TAGS
                     Route::resource('tags', TagController::class);
@@ -78,13 +80,15 @@ Route::prefix('bo')
                         ->name('tags.jsonStore');
                     Route::get('/tags/{tag}/duplicate', [TagController::class, 'duplicate'])
                         ->name('tags.duplicate');
+                    Route::get('/tags/json/paginate', [TagController::class, 'jsonSearchPaginate'])
+                        ->name('tags.json-paginate');
 
                     // * RANKS
                     Route::resource('ranks', RankController::class)->except(['show', 'edit']);
                     Route::post('/ranks/save-order/{ranks}', [RankController::class, 'saveOrder'])
                         ->name('ranks.save-order');
-                    Route::get('/ranks/games', [RankController::class, 'getPublishedGamesInNotRanking'])
-                        ->name('ranks.games');
+                    Route::get('/ranks/games', [RankController::class, 'jsonSearchPaginateRanks'])
+                        ->name('ranks.games-paginate');
 
                     // * STATIC PAGES
                     Route::resource('static_pages', StaticPageController::class)
