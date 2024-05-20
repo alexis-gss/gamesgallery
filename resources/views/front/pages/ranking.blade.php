@@ -20,7 +20,7 @@
                             <i class="fa fa-arrow-left"></i>
                         </a>
                         <span class="mx-1">-</span>
-                        <p class="bg-primary rounded-2 m-0 px-2 py-0 text-white">
+                        <p class="bg-secondary rounded-2 m-0 px-2 py-0 text-white">
                             {{ str(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
                         </p>
                     </div>

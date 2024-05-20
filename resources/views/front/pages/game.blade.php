@@ -14,7 +14,7 @@
                         <span class="d-none d-sm-block angles"></span>
                     </h1>
                     <div class="d-flex justify-content-center align-items-center user-select-none w-100 flex-row flex-wrap text-center">
-                        <a class="bg-primary rounded-2 text-decoration-none border-0 px-2 text-white" data-bs-tooltip="tooltip"
+                        <a class="btn btn-primary rounded-2 text-decoration-none border-0 px-2 py-0 text-white" data-bs-tooltip="tooltip"
                             data-bs-placement="top" href="{{ route('fo.games.index') }}" title="{{ __('bo_other_back_home') }}">
                             <i class="fa fa-arrow-left"></i>
                         </a>
@@ -26,7 +26,7 @@
                             <span class="ms-1">-</span>
                             @foreach ($gameModel->tags as $tag)
                                 @if ($tag->published)
-                                    <p class="bg-primary rounded-2 my-1 ms-1 px-2 py-0 text-white">
+                                    <p class="bg-secondary rounded-2 my-1 ms-1 px-2 py-0 text-white">
                                         {{ $tag->name }}
                                     </p>
                                 @endif

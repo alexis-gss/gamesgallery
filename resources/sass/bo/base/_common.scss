@@ -114,9 +114,8 @@ body {
             position: sticky;
             right: 0;
             width: 0;
-            color: rgb(var(--bs-body-color));
-            /* stylelint-disable-next-line order/properties-order */
             background-color: rgb(var(--bs-secondary-bg-rgb));
+            color: rgb(var(--bs-body-color));
             white-space: nowrap;
         }
 

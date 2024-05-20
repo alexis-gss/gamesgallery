@@ -48,7 +48,7 @@
                             'roundedBorder' => true,
                             'required' => true,
                             'disabled' => false,
-                            'placeholder' => 'test placeholder',
+                            'placeholder' => __('models.folder'),
                         ];
                     @endphp
                     <div class="search-belongs-to-dropdown" data-json='@json($data)'></div>

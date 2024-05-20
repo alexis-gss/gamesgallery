@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-xl position-fixed fixed-top bg-body-tertiary shadow-sm border-bottom" id="navbar">
     <div class="container">
         <a class="navbar-brand fw-bold fst-italic fs-4" data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('fo.games.index') }}"
-            title="{{ __('bo_other_access_website') }}" target="_blank">
+            title="{{ __('global_access_website') }}" target="_blank">
             {{ config('app.name', 'Laravel') }}
         </a>
         @auth

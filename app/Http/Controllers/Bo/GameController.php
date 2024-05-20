@@ -89,14 +89,22 @@ class GameController extends Controller
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
         /** @var \Illuminate\Database\Eloquent\Collection $folderModels */
-        $folderModels = Folder::query()->where('published', true)->get();
+        $folderModels = Folder::query()
+            ->where('published', true)
+            ->orderBy('name', 'ASC')
+            ->paginate(8)
+            ->through(function ($folderModel) {
+                $folderModel->nameLocale = $folderModel->name;
+                return $folderModel;
+            });
 
         /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
-        $tagModels = Tag::select(['id', 'name', 'slug'])
+        $tagModels = Tag::query()
+            ->select(['id', 'name', 'slug'])
             ->where('published', true)
-            ->get()
-            ->map(function ($tagModel) {
-                // @phpstan-ignore-next-line
+            ->orderBy('name', 'ASC')
+            ->paginate(8)
+            ->through(function ($tagModel) {
                 $tagModel->nameLocale = $tagModel->name;
                 return $tagModel;
             });

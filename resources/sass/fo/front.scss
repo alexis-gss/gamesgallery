@@ -4,10 +4,10 @@
 @import './utilities/variables';
 
 // * LIBS.
-@import './libs/aos';
 @import './libs/bootstrap';
-@import './libs/glightbox';
-@import './libs/simplebar';
+@import 'aos/src/sass/aos';
+@import 'glightbox/dist/css/glightbox.css';
+@import 'simplebar-vue/dist/simplebar.min.css';
 
 // * BASE.
 @import './base/common';

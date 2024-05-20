@@ -23,7 +23,7 @@
           >
           <button
             @click="clearInputSearch()"
-            class="btn btn-primary d-flex align-items-center text-white border-0"
+            class="btn btn-primary d-flex align-items-center text-bg-primary border-0"
             type="button"
             :title="trans.methods.__('fo_clear_search')"
             data-bs-toggle="tooltip"
@@ -35,7 +35,7 @@
       <div class="col-12 row">
         <!-- Filter by folders -->
         <select
-          class="col-12 col-md-6 form-select select-border border-0 bg-primary shadow-none text-white rounded-0 px-2 py-2"
+          class="col-12 col-md-6 form-select select-border border-0 bg-primary shadow-none text-bg-primary rounded-0 px-2 py-2"
           name="folder"
           role="button"
           @change="setSelectedValue($event)"
@@ -56,7 +56,7 @@
         </select>
         <!-- Filter by tags -->
         <select
-          class="col-12 col-md-6 form-select bg-primary border-0 shadow-none text-white rounded-0 px-2 py-2"
+          class="col-12 col-md-6 form-select bg-primary border-0 shadow-none text-bg-primary rounded-0 px-2 py-2"
           name="tag"
           role="button"
           @change="setSelectedValue($event)"
@@ -85,12 +85,14 @@
       >
         <div
           v-if="gameLoading"
-          class="placeholder-glow row flex-column w-100 mx-auto"
+          class="d-flex justify-content-center align-items-center h-100"
         >
-          <span class="placeholder col-12 col-md-4 opacity-1 my-2 p-0" />
-          <span class="placeholder col-12 col-md-3 opacity-1 my-2 p-0" />
-          <span class="placeholder col-12 col-md-5 opacity-1 my-2 p-0" />
-          <span class="placeholder col-12 col-md-2 opacity-1 my-2 p-0" />
+          <div
+            class="spinner-border text-white"
+            role="status"
+          >
+            <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
+          </div>
         </div>
         <template v-else>
           <ul
@@ -105,7 +107,7 @@
             >
               <a
                 :href="getGameRoute(game.slug)"
-                class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-white text-decoration-none w-100 p-2"
+                class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-light text-decoration-none w-100 p-2"
               >
                 <div
                   class="d-flex flex-row justify-content-start align-items-center"
@@ -116,11 +118,11 @@
                   >
                     <span
                       v-if="folder.id === game.folder_id"
-                      class="list-group-item-span"
+                      class="list-group-item-span z-1"
                       :style="`background-color:${folder.color}`"
                     />
                   </template>
-                  <span>{{ game.name }}</span>
+                  <p class="text-start m-0 z-2">{{ game.name }}</p>
                 </div>
                 <span>{{ game.pictures.length }}</span>
               </a>
@@ -129,7 +131,7 @@
           <!-- NO RESULT -->
           <div
             v-else
-            class="d-flex flex-column justify-content-center align-items-center border-0 bg-transparent text-white h-100 p-3 pt-0"
+            class="d-flex flex-column justify-content-center align-items-center border-0 bg-transparent text-light h-100 p-3 pt-0"
           >
             <span class="no-result-icon">
               <FontAwesomeIcon

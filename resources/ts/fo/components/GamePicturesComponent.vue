@@ -79,7 +79,7 @@
           </div>
         </template>
       </template>
-      <div class="w-100 text-center mt-5">
+      <div class="w-100 text-center my-5">
         <div
           v-if="gameLoading"
           class="spinner-border text-primary"
@@ -172,7 +172,7 @@ function checkScroll(): void {
   window.addEventListener("scroll", () => {
     if (
       window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - 300 &&
+      document.body.offsetHeight - 800 &&
       !gameLoading.value
     ) {
       if (gamePage.value < gameLastPage.value) {

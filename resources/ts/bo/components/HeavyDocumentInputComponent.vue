@@ -254,7 +254,7 @@ onMounted((): void => {
   */
 function initResumable(): void {
   resumableJS.value = new Resumable({
-    chunkSize: 1024 * 1024,
+    chunkSize: 1024 * 1024 * 1024 * 1024,
     simultaneousUploads: 5,
     maxFiles: 75,
     testChunks: false,
