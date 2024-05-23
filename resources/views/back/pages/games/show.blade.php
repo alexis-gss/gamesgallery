@@ -96,37 +96,24 @@
                                 <td class="w-50 text-center align-middle">
                                     <div class="vstack gap-1">
                                         @if (count($gameModel->pictures))
-                                            @foreach ($gameModel->pictures as $picture)
+                                            @foreach ($gameModel->pictures as $key => $picture)
                                                 <div class="hstack justify-content-center">
                                                     <p class="m-0">{{ sprintf('%s.webp', $picture->uuid) }}</p>
                                                     <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="modal"
-                                                        data-bs-target="#ModalViewPicture">
+                                                        data-bs-target="#ModalViewPicture{{ $key }}">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </button>
                                                 </div>
-                                                <div class="modal" id="ModalViewPicture" data-bs-backdrop="static"
-                                                    data-bs-keyboard="false" role="dialog" tabindex="-1">
-                                                    <div class="d-flex justify-content-center align-items-center h-100">
-                                                        <div class="modal-dialog modal-xl" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title">
-                                                                        {{ str(__('models.picture'))->ucFirst()->value() }}
-                                                                    </h5>
-                                                                    <button class="btn-close" data-bs-dismiss="modal"
-                                                                        data-bs-tooltip="tooltip" type="button"
-                                                                        title="{{ __('bo_other_close') }}"
-                                                                        aria-label="{{ __('bo_other_close') }}" />
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <img class="img-fluid"
-                                                                        src="{{ sprintf('%s/storage/pictures/%s/%s.webp', config('app.url'), $gameModel->slug, $picture->uuid) }}"
-                                                                        alt="{{ $picture->label }}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @include('back.partials.modal-view-picture', [
+                                                    'id' => "ModalViewPicture$key",
+                                                    'pictureSrc' => sprintf(
+                                                        '%s/storage/pictures/%s/%s.webp',
+                                                        config('app.url'),
+                                                        $gameModel->slug,
+                                                        $picture->uuid),
+                                                    'pictureAlt' => $picture->label,
+                                                    'pictureTitle' => str(__('models.picture'))->ucFirst(),
+                                                ])
                                             @endforeach
                                         @else
                                             {{ __('bo_other_number_images', ['number' => 0]) }}
