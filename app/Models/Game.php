@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Traits\Models\ActivityLog;
 use App\Traits\Models\SchemaOrg;
+use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Spatie\SchemaOrg\Schema;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property integer                         $id           Id.
@@ -36,11 +39,12 @@ use Spatie\SchemaOrg\Schema;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Rank[] $rank
  * Get Rank of the Game (belongs-to relationship).
  */
-class Game extends Model
+class Game extends Model implements Sitemapable
 {
     use ActivityLog;
     use HasFactory;
     use SchemaOrg;
+    use Sitemap;
 
     /**
      * The attributes that are fillable.
@@ -78,13 +82,22 @@ class Game extends Model
             self::setPublishedDate($game);
             (new Picture())->renameFolderSavedPictures($game, "default_folder");
         });
+        static::created(function () {
+            static::updateSitemap();
+        });
         static::updating(function (self $game) {
             self::setPublishedDate($game);
             (new Picture())->renameFolderSavedPictures($game, $game->getOriginal('slug'));
         });
+        static::updated(function () {
+            static::updateSitemap();
+        });
         static::deleting(function (self $game) {
             (new Tag())->removeTags($game);
             (new Picture())->removePictures($game->pictures);
+        });
+        static::deleted(function () {
+            static::updateSitemap();
         });
     }
 
@@ -114,6 +127,16 @@ class Game extends Model
     private static function setOrder(self $game): void
     {
         $game->order = \intval(self::query()->max('order')) + 1;
+    }
+
+    /**
+     * Set sitemap tag.
+     *
+     * @return \Spatie\Sitemap\Tags\Url|string|array
+     */
+    public function toSitemapTag(): \Spatie\Sitemap\Tags\Url|string|array
+    {
+        return $this->toSitemapTagCustom(route('fo.games.show', $this->slug), Url::CHANGE_FREQUENCY_YEARLY, 0.9);
     }
 
     /**

@@ -37,7 +37,7 @@ class Picture extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $with = ['ratings'];
 

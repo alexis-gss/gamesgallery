@@ -6,8 +6,11 @@ use App\Enums\Pages\StaticPageTypeEnum;
 use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use App\Traits\Models\SchemaOrg;
+use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\SchemaOrg\Schema;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property \App\Enums\Pages\StaticPageTypeEnum $type            Page type.
@@ -24,11 +27,12 @@ use Spatie\SchemaOrg\Schema;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
  * Get Activities of the Static page (morph-to-many relationship).
  */
-class StaticPage extends Model
+class StaticPage extends Model implements Sitemapable
 {
     use ActivityLog;
     use HasTranslations;
     use SchemaOrg;
+    use Sitemap;
 
     /**
      * The attributes that are mass assignable.
@@ -75,12 +79,25 @@ class StaticPage extends Model
                 'model' => trans_choice('models.static_page', 1)
             ]));
         });
+        static::updated(function () {
+            static::updateSitemap();
+        });
         static::deleting(function () {
             throw new \RuntimeException(trans('crud.messages.cannot_event_on_model', [
                 'event' => trans('crud.actions.delete'),
                 'model' => trans_choice('models.static_page', 1)
             ]));
         });
+    }
+
+    /**
+     * Set sitemap tag.
+     *
+     * @return \Spatie\Sitemap\Tags\Url|string|array
+     */
+    public function toSitemapTag(): \Spatie\Sitemap\Tags\Url|string|array
+    {
+        return $this->toSitemapTagCustom(route($this->type->routeName()), Url::CHANGE_FREQUENCY_MONTHLY, 1);
     }
 
     /**

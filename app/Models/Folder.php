@@ -6,6 +6,7 @@ use App\Casts\HtmlColor;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
+use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -36,6 +37,7 @@ class Folder extends Model
     use ActivityLog;
     use HasFactory;
     use HasTranslations;
+    use Sitemap;
 
     /**
      * The attributes that are fillable.
@@ -86,10 +88,19 @@ class Folder extends Model
             self::setPublishedDate($folder);
             self::setDefaultTranslation($folder);
         });
+        static::created(function () {
+            static::updateSitemap();
+        });
         static::updating(function (self $folder) {
             self::setSlug($folder);
             self::setPublishedDate($folder);
             self::setDefaultTranslation($folder);
+        });
+        static::updated(function () {
+            static::updateSitemap();
+        });
+        static::deleted(function () {
+            static::updateSitemap();
         });
     }
 
