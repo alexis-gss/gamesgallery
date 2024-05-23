@@ -7,10 +7,10 @@
     :aria-pressed="visible"
   >
     <span
-      :class="{
-        'text-bg-primary reveal d-flex justify-content-center align-items-center h-100': true,
-        'd-none': visible
-      }"
+      :class="[
+        'text-bg-primary reveal d-flex justify-content-center align-items-center h-100',
+        {'d-none': visible}
+      ]"
       type="button"
       :title="trans.methods.__('bo_tooltip_password_hide')"
       data-bs-toggle="tooltip"
@@ -22,10 +22,10 @@
     </span>
     <span
       ref="passwordVisibilitySpan"
-      :class="{
-        'text-bg-primary reveal d-flex justify-content-center align-items-center h-100': true,
-        'd-none': !visible
-      }"
+      :class="[
+        'text-bg-primary reveal d-flex justify-content-center align-items-center h-100',
+        {'d-none': !visible}
+      ]"
       type="button"
       :title="trans.methods.__('bo_tooltip_password_show')"
       data-bs-toggle="tooltip"

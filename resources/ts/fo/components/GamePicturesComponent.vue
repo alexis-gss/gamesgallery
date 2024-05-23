@@ -13,12 +13,12 @@
             <div
               v-for="(pictureValue, pictureIndex) in templateValue"
               :key="pictureValue"
-              class="glightbox-wrapper position-relative col-12 p-0"
-              :class="((templateValue % 2 === 0) ? `col-sm-6` : `col-sm-12`) + ` col-lg-${gameItems / templateValue}`"
+              class="glightbox-wrapper position-relative col-12 p-1"
+              :class="[`col-lg-${gameItems / templateValue}`, (templateValue % 2 === 0) ? `col-sm-6` : `col-sm-12`]"
               data-aos="fade-up"
             >
               <div
-                class="p-1"
+                class="shadow rounded-3"
                 v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]"
               >
                 <a
@@ -27,7 +27,7 @@
                   data-gallery="games-pictures"
                 >
                   <div
-                    class="ratio ratio-16x9 overflow-hidden"
+                    class="ratio ratio-16x9 overflow-hidden rounded-3"
                   >
                     <img
                       :src="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
@@ -53,25 +53,24 @@
                   </div>
                 </a>
                 <button
-                  class="picture-likes btn btn-white position-absolute bottom-0 end-0 rounded-0 m-1 z-2"
-                  :class="(ratingLoading) ? 'disabled': ''"
+                  :class="['picture-ratings btn btn-white position-absolute bottom-0 end-0 m-1 z-2', {disabled: ratingLoading}]"
                   :disabled="ratingLoading"
-                  @click="ajaxPictureUpvote(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)"
+                  @click="ajaxPictureRating(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id, getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
                 >
                   <span
                     :id="`ratings-${gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id}`"
                     :data-picture-id="getPictureNumber(paginateIndex, templateIndex) + pictureIndex"
                     class="me-1"
                   >
-                    {{ gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count }}
+                    {{ (gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count) }}
                   </span>
                   <FontAwesomeIcon
                     icon="fa-regular fa-thumbs-up"
-                    :class="(picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
+                    :class="[{'d-none': picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)}]"
                   />
                   <FontAwesomeIcon
                     icon="fa-solid fa-thumbs-up"
-                    :class="(!picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)) ? 'd-none' : ''"
+                    :class="[{'d-none': !picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)}]"
                   />
                 </button>
               </div>
@@ -108,7 +107,8 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { Toast } from "bootstrap";
 import GLightbox from "glightbox";
-import { computed, defineOptions, onMounted, ref, useAttrs, nextTick } from "vue";
+import { computed, defineOptions, onMounted, ref, useAttrs } from "vue";
+import errors from "./../../modules/errors";
 import route from "./../../modules/route";
 import trans from "./../../modules/trans";
 
@@ -145,9 +145,9 @@ onMounted((): void => {
   gameSlug.value = data.gameSlug;
   gamePage.value = data.gamePictures.current_page;
   gameLastPage.value = data.gamePictures.last_page;
-  gameItems.value =
-    data.gamePictures.per_page < 12 ? 12 : data.gamePictures.per_page;
+  gameItems.value = data.gamePictures.per_page < 12 ? 12 : data.gamePictures.per_page;
   picturesRatings.value = data.ratingModels;
+  checkPicturesLoaded();
   checkScroll();
   getPictures();
 });
@@ -159,13 +159,25 @@ onMounted((): void => {
   * user scroll to the bottom.
   * @return Array<number>
   */
-const incrementNumber = computed<Array<number>>(() => gamePictures.value.map((_, index) => index).filter((index) => index % gameItems.value === 0));
+const incrementNumber = computed<Array<number>>(() =>
+  gamePictures.value.map((_, index) => index)
+    .filter((index) => index % gameItems.value === 0));
 
 // * METHODS
 
 /**
-  * Increment the current page number when the
-  * user scroll to the bottom.
+  * Check if all images are loaded on mounted component.
+  * @return void
+  */
+function checkPicturesLoaded(): void {
+  if (gamePage.value >= gameLastPage.value) {
+    gameAllLoaded.value = true;
+  }
+}
+
+/**
+  * Check if all images are loaded,
+  * if not, get next pictures.
   * @return void
   */
 function checkScroll(): void {
@@ -203,22 +215,29 @@ function getPictures(): void {
       gameLoading.value = false;
       updateGlightbox();
     })
-    .catch((error) => {
-      if (error.response) {
-        console.log(error.response);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log("Error", error.message);
-      }
-      console.log(error.config);
-    });
+    .catch(errors.methods.ajaxErrorHandler);
+}
+
+/**
+  * Return the number of the picture.
+  * @param paginateIndex Number of the picture.
+  * @param templateIndex Number of the template.
+  * @return number
+  */
+function getPictureNumber(paginateIndex: number, templateIndex: number): number {
+  let result = 0;
+  if (picturesTemplate.value[templateIndex - 1] !== undefined) {
+    for (let index = 0; index <= templateIndex - 1; index++) {
+      result += picturesTemplate.value[index];
+    }
+  }
+  return paginateIndex + result;
 }
 
 /**
   * Show image when she loaded,
   * Hide the placeholder's image.
-  * @param {Event} e
+  * @param e Event
   * @return void
   */
 function gameImageLazyLoad(e: Event): void {
@@ -227,30 +246,23 @@ function gameImageLazyLoad(e: Event): void {
   const nodeTargetParent = nodeTarget.closest(".glightbox-wrapper");
   nodeTargetParent?.querySelector(".picture-loader")?.classList.add("z-0");
   nodeTargetParent?.querySelector(".picture-loader")?.classList.remove("z-3");
-  nodeTargetParent?.querySelector(".btn.picture-likes")?.classList.remove("d-none");
+  nodeTargetParent?.querySelector(".btn.picture-ratings")?.classList.remove("d-none");
 }
 
 /**
   * Return the path of the picture.
-  * @param number n
-  * @return void
+  * @param n Number of the picture.
+  * @return string
   */
-function getPicturePath(n: number) {
-  return (
-    location.origin +
-    "/storage/pictures/" +
-    gameSlug.value +
-    "/" +
-    gamePictures.value[n].uuid +
-    ".webp"
-  );
+function getPicturePath(n: number): string {
+  return `${location.origin}/storage/pictures/${gameSlug.value}/${gamePictures.value[n].uuid}.webp`;
 }
 
 /**
   * Update Glightbox elements.
   * @return void
   */
-function updateGlightbox() {
+function updateGlightbox(): void {
   setTimeout(() => {
     gameViewer.value?.destroy();
     gameViewer.value = new GLightbox({
@@ -260,104 +272,76 @@ function updateGlightbox() {
 }
 
 /**
-  * Return a list of games which corresponds to the search from selects.
-  * @return void
+  * Get the update rating route.
+  * @return string
   */
-function ajaxPictureUpvote(id: number): void {
-  ratingLoading.value = true;
+function getUpdateRatingRoute(): string {
   const updateRatingRoute = route.methods.route("fo.ratings.update");
   if (!updateRatingRoute) {
     throw new Error("Undefined route fo.ratings.update");
   }
-  window.axios
-    .post(updateRatingRoute, {
-      picture_id: id,
-    })
-    .then((reponse) => {
-      // Add or remove the vote.
-      let numberToAdd = "0";
-      if (reponse.data.rating_exist) {
-        picturesRatings.value.splice(picturesRatings.value.indexOf(reponse.data.picture_id), 1);
-        numberToAdd = "-1";
-      } else {
-        picturesRatings.value.push(reponse.data.picture_id);
-        numberToAdd = "+1";
-      }
-      nextTick(() => {
-        const ratingsCount = document.getElementById("ratings-" + String(reponse.data.picture_id)) as HTMLSpanElement|null;
-        if (ratingsCount) {
-          ratingsCount.textContent = String(Number(ratingsCount.textContent) + Number(numberToAdd));
-        }
-        ratingLoading.value = false;
-        showToastLike(numberToAdd, ratingsCount?.getAttribute("data-picture-id"), reponse.data.rating_exist);
-      });
-    });
+  return updateRatingRoute;
 }
 
 /**
-  * Show a new bootstrap toast.
+  * Update picture ratings.
   * @return void
   */
-function showToastLike(numberToAdd: string, pictureNumber: string|null|undefined, like: boolean): void {
-  let toastContainer = document.querySelector(".toast-container");
-  let toastTemplate = document.querySelector(".toast-container .toast");
-  if (toastTemplate) {
-    let toastLike = toastTemplate.cloneNode(true) as HTMLElement;
-    toastContainer?.appendChild(toastLike);
-    const bootstrapToast = new Toast(toastLike);
-    // Set badge data.
-    let toastLikeBadge = toastLike.querySelector(".badge");
-    if (toastLikeBadge) {
-      toastLikeBadge.textContent = numberToAdd;
-      toastLikeBadge.classList.add((like) ? "bg-danger" : "bg-success");
-    }
-    // Set picture number.
-    let toastPictureId = toastLike.querySelector(".toast-picture-id");
-    if (toastPictureId && pictureNumber)
-      toastPictureId.textContent = String(Number(pictureNumber) + 1);
-    // Set game name.
-    let toastGameName = toastLike.querySelector(".toast-game-name");
-    if (toastGameName)
-      toastGameName.textContent = gameName.value;
-    // Set action text.
-    let toastAction = toastLike.querySelector(".toast-action");
-    let toastActionDetail = toastLike.querySelector(".toast-action-detail");
-    if (toastAction)
-      toastAction.textContent = (like) ? trans.methods.__("fo_toast_unlike") : trans.methods.__("fo_toast_like");
-    if (toastActionDetail)
-      toastActionDetail.textContent = (like) ? trans.methods.__("fo_toast_message_unlike") : trans.methods.__("fo_toast_message_like");
+function updatePictureRatings(pictureId: number): void {
+  // Picture ratings button
+  (picturesRatings.value.includes(pictureId)) ?
+    picturesRatings.value.splice(picturesRatings.value.indexOf(pictureId), 1) :
+    picturesRatings.value.push(pictureId);
+  // Picture ratings count
+  const pictureRatingNode = document.getElementById(`ratings-${pictureId}`);
+  pictureRatingNode!.textContent = String(
+    Number(pictureRatingNode?.textContent) +
+      ((picturesRatings.value.includes(pictureId)) ? +1 : -1));
+}
+
+/**
+  * Create the bootstrap toast from an id.
+  * @return void
+  */
+function createBoostrapToastFromId(toastId: string): void {
+  const toast = document.getElementById(toastId) as HTMLDivElement|null;
+  if (toast) {
+    const bootstrapToast = new Toast(toast);
     bootstrapToast?.show();
-    toastLike.addEventListener("hidden.bs.toast", () => {
-      toastLike.remove();
+    toast.addEventListener("hidden.bs.toast", () => {
+      document.getElementById(toastId)?.remove();
     });
   }
 }
 
 /**
-  * Return the number of the picture.
-  * @param paginateIndex
-  * @param templateIndex
-  * @return number
+  * Update a specific picture rating.
+  * @param id Picture's id.
+  * @return void
   */
-function getPictureNumber(paginateIndex: number, templateIndex: number): number {
-  let result = 0;
-  if (picturesTemplate.value[templateIndex - 1] !== undefined) {
-    for (let index = 0; index <= templateIndex - 1; index++) {
-      result += picturesTemplate.value[index];
-    }
-  } else {
-    result = 0;
-  }
-  return paginateIndex + result;
+function ajaxPictureRating(id: number, place: number): void {
+  ratingLoading.value = true;
+  window.axios
+    .post(getUpdateRatingRoute(), { picture_id: id, picture_place: place })
+    .then((reponse) => {
+      let toastContainer = document.querySelector(".toast-container") as HTMLDivElement|null;
+      if (toastContainer) {
+        // Add the view to the toast wrapper.
+        toastContainer!.innerHTML += reponse.data.view;
+        updatePictureRatings(reponse.data.pictureId);
+        createBoostrapToastFromId(reponse.data.toastId);
+      } else {
+        throw new Error("Toast wrapper is not present");
+      }
+    })
+    .then(() => { ratingLoading.value = false; })
+    .catch(errors.methods.ajaxErrorHandler);
 }
 </script>
 
 <style lang="scss" scopped>
 @import "./../../../sass/fo/utilities/variables";
 
-.gscrollbar-fixer {
-  margin: auto !important;
-}
 .glightbox {
   z-index: 10;
   transition: .3s;
@@ -369,10 +353,12 @@ function getPictureNumber(paginateIndex: number, templateIndex: number): number 
 .glightbox-wrapper:focus img {
   transform: scale(1.05) !important;
 }
-.picture-likes {
+.picture-ratings {
   width: fit-content;
   min-width: 55px;
   height: 40px;
-  transition: .3s !important;
+  border-radius: calc(var(--bs-border-radius-lg) - 0.08rem);
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 </style>

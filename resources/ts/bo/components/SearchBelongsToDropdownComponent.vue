@@ -42,7 +42,7 @@
               @click="updatePage(pageParameters.page - 1)"
               :disabled="!pageParameters.hasPrevPage"
               class="page-link"
-              :class="{ 'disabled': pageParameters.page === 1 }"
+              :class="{'disabled': pageParameters.page === 1}"
             >
               <FontAwesomeIcon icon="fa-solid fa-chevron-left fa-2xs" />
             </button>
@@ -67,7 +67,7 @@
               @click="updatePage(pageParameters.page + 1)"
               :disabled="!pageParameters.hasNextPage"
               class="page-link"
-              :class="{ 'disabled': pageParameters.page === pageParameters.totalPage }"
+              :class="{'disabled': pageParameters.page === pageParameters.totalPage}"
             >
               <FontAwesomeIcon icon="fa-solid fa-chevron-right fa-2xs" />
             </button>
@@ -122,9 +122,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { PropType } from "vue";
 import { computed, defineOptions, nextTick, onMounted, reactive, ref, useAttrs } from "vue";
 import VueSelect from "vue-select";
+import errors from "../../modules/errors";
 import route from "../../modules/route";
 import trans from "../../modules/trans";
-import errors from "../../modules/errors";
 import { Tooltips } from "./../../modules/tooltips";
 
 defineOptions({
@@ -330,34 +330,7 @@ function search(search: string|false|null = null): void {
       updateButtonStatus();
     })
     .then(() => { loading.value = false; })
-    .catch(ajaxErrorHandler);
-}
-
-/**
-  * Return error message after the ajax call.
-  * @return void
-  */
-function ajaxErrorHandler(e: any): void {
-  let message = trans.methods.__("Une erreur est survenue");
-  if (e.response.status === 422) {
-    message = errors.methods.parseValidationErrors(
-      e.response?.data?.errors ?? {}
-    ) || message;
-    if (window.vueDebug) {
-      console.warn(e.response.data.errors);
-    }
-  } else if (e.response.status === 419) {
-    console.log(trans.methods.__("Votre session a expiré, la page va être rechargée"));
-    setTimeout(() => window.location.reload(), 2000);
-  } else if (e.response.status === 403) {
-    console.log(trans.methods.__("Vous n'êtes pas autorisé a effectuer cette action"));
-    setTimeout(() => window.location.reload(), 2000);
-  } else {
-    if (window.vueDebug) {
-      console.error(e);
-    }
-  }
-  console.log(message);
+    .catch(errors.methods.ajaxErrorHandler);
 }
 
 /**

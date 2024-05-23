@@ -14,7 +14,7 @@ class FolderSeeder extends Seeder
      */
     public function run(): void
     {
-        Folder::factory(12)->make()->each(function (Folder $folder) {
+        Folder::factory(12)->make()->each(function (Folder $folder, int $key) {
             if ($folder->mandatory) {
                 $locales          = config('app.locales');
                 $fallbelLocaleKey = array_search(config('app.fallback_locale'), config('app.locales'));
@@ -23,7 +23,8 @@ class FolderSeeder extends Seeder
                     $folder->setTranslation('name', $locale, fake()->unique()->word);
                 }
             }
-            $folder->save();
+            $folder->order = $key + 1;
+            $folder->saveQuietly();
         });
     }
 }

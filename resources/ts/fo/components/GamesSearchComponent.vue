@@ -163,6 +163,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Simplebar from "simplebar-vue";
 import { defineOptions, onMounted, ref, useAttrs } from "vue";
+import errors from "./../../modules/errors";
 import route from "./../../modules/route";
 import trans from "./../../modules/trans";
 import { Tooltips } from "./../../modules/tooltips";
@@ -196,8 +197,8 @@ const games = ref<[
 const gamesCount = ref<number>(0);
 const search = ref<string>("");
 const searchInput = ref<HTMLInputElement|null>(null);
-const allTags = ref<Array<LaravelModel>>([]);
-const allFolders = ref<Array<LaravelModel>>([]);
+const allTags = ref<LaravelModelList>([]);
+const allFolders = ref<LaravelModelList>([]);
 const selectedTag = ref<string>("");
 const selectedFolder = ref<string>("");
 const gameLoading = ref<boolean>(false);
@@ -286,7 +287,8 @@ function ajaxGamesFiltered(filters: string[]): void {
     .then((reponse) => {
       games.value = reponse.data;
       gameLoading.value = false;
-    });
+    })
+    .catch(errors.methods.ajaxErrorHandler);
 }
 
 /**

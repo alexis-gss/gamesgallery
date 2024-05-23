@@ -28,3 +28,4 @@ node_modules
 vendor
 .env
 mix-manifest.json
+auth.json

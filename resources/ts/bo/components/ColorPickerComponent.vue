@@ -33,11 +33,7 @@
           {{ trans.methods.__('Cocher pour rendre vide') }}
         </label>
       </div>
-      <div
-        :class="`position-absolute top-100 left-0 z-2 ${
-          displayPicker ? 'd-inline-block' : 'd-none'
-        }`"
-      >
+      <div :class="['position-absolute top-100 left-0 z-2', displayPicker ? 'd-inline-block' : 'd-none']">
         <Sketch
           ref="popupPicker"
           v-model="internalColor"

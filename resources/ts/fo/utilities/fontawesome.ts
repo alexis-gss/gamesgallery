@@ -4,6 +4,8 @@ import {
     faArrowLeft,
     faArrowUp,
     faBars,
+    faCircleCheck,
+    faCircleExclamation,
     faGlobe,
     faRankingStar,
     faThumbsUp,
@@ -27,6 +29,8 @@ library.add(
     faGlobe,
     faThumbsUp,
     farThumbsUp,
+    faCircleCheck,
+    faCircleExclamation,
     faTriangleExclamation
 );
 dom.watch();

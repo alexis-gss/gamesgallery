@@ -164,7 +164,9 @@ function updateRank(): void {
   if (!routeRank) {
     throw new Error("Undefined route bo.ranks.saveOrder");
   }
-  window.axios.post(routeRank, { ranks: assignRank(ranks.value) }).catch(ajaxErrorHandler);
+  window.axios
+    .post(routeRank, { ranks: assignRank(ranks.value) })
+    .catch(errors.methods.ajaxErrorHandler);
   nextTick(() => {
     tooltips.value?.refreshTooltips();
   });
@@ -272,40 +274,9 @@ function deleteRank(e: Event, model: RankObject): void|boolean {
             tooltips.value?.refreshTooltips();
           });
         })
-        .catch(ajaxErrorHandler);
+        .catch(errors.methods.ajaxErrorHandler);
     }
   })();
-}
-
-/**
-  * Return error message after the ajax call.
-  * @return void
-  */
-function ajaxErrorHandler(e: any): void {
-  loading.value = false;
-  let message = trans.methods.__("Une erreur est survenue");
-  if (e.response.status === 422) {
-    message =
-      errors.methods.parseValidationErrors(
-        e.response?.data?.errors ?? {}
-      ) || message;
-    if (window.vueDebug) {
-      console.warn(e.response.data.errors);
-    }
-  } else if (e.response.status === 419) {
-    // * CSRF TOKEN MISMATCH (On ne pourrais plus faire d'appels AJAX sans recharger la page)
-    console.log(trans.methods.__("Votre session a expiré, la page va être rechargée"));
-    setTimeout(() => window.location.reload(), 2000);
-  } else if (e.response.status === 403) {
-    // * Access denied
-    console.log(trans.methods.__("Vous n'êtes pas autorisé a effectuer cette action"));
-    setTimeout(() => window.location.reload(), 2000);
-  } else {
-    if (window.vueDebug) {
-      console.error(e);
-    }
-  }
-  console.log(message);
 }
 </script>
 

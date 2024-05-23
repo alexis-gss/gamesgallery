@@ -6,7 +6,7 @@
     <!-- CHOOSE FILE -->
     <div
       class="col-12 pe-3"
-      :class="!isUsedWithProps ? 'col-md-6 mb-3' : ''"
+      :class="[{'col-md-6 mb-3': !isUsedWithProps}]"
     >
       <label
         v-if="!isUsedWithProps"
@@ -15,7 +15,7 @@
       >
         <b>{{ trans.methods.__('bo_label_choose_picture') }} *</b>
       </label>
-      <div :class="isUploading ? 'd-none' : ''">
+      <div :class="[{'d-none': isUploading}]">
         <div class="input-group">
           <button
             @click.prevent="inputFile?.click()"
@@ -72,7 +72,7 @@
       </div>
       <div
         class="progress w-100 my-1"
-        :class="!isUploading ? 'd-none' : ''"
+        :class="[{'d-none': !isUploading}]"
       >
         <div
           class="progress-bar progress-bar-striped progress-bar-animated"
@@ -146,7 +146,7 @@
           </div>
           <img
             class="mw-100 mh-100"
-            :class="viewerLoadImage ? 'd-none' : ''"
+            :class="[{'d-none': viewerLoadImage}]"
             ref="imgViewer"
             src=""
           >

@@ -22,7 +22,7 @@ Route::name('fo.')
             ->name('ranks.index');
 
         // * RATINGS
-        Route::post('/ratings/{picture_id}', [RatingController::class, 'update'])
+        Route::post('/ratings/{picture_id}/{picture_place}', [RatingController::class, 'update'])
             ->name('ratings.update');
 
         // * CHANGE LANGUAGES.

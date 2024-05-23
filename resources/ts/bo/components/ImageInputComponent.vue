@@ -6,7 +6,7 @@
     <!-- INPUT GROUP -->
     <div class="row">
       <!-- INPUT GROUP -->
-      <div :class="`col-12 ${parameters.preview ? 'col-md-6' : ''} form-group`">
+      <div :class="['col-12 form-group', {'col-md-6': parameters.preview}]">
         <label
           v-if="parameters.preview && parameters.showLabels"
           :for="parameters.id"
@@ -84,7 +84,7 @@
           <button
             @click.prevent="prepareImageEditor()"
             :disabled="!hasPicture"
-            :class="`btn ${!hasCroppedPicture ? 'btn-primary' : 'btn-success'}`"
+            :class="['btn', !hasCroppedPicture ? 'btn-primary' : 'btn-success']"
             type="button"
             :title="trans.methods.__('bo_tooltip_image_input_resize_image')"
             data-bs-tooltip="tooltip"
@@ -113,7 +113,7 @@
       <!-- INLINE PREVIEW PART -->
       <div
         v-if="parameters.preview"
-        :class="`col-12 ${parameters.preview ? 'col-md-6' : ''} form-group d-flex flex-column`"
+        :class="['col-12 form-group d-flex flex-column', {'col-md-6': parameters.preview}]"
       >
         <p
           v-if="fileDataUrl && parameters.showLabels"

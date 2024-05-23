@@ -13,7 +13,7 @@
             filtered: "{{ route('fo.games.filtered', ['filters_id' => 'FILTERSID']) }}",
         },
         ratings: {
-            update: "{{ route('fo.ratings.update', ['picture_id' => 'PICTUREID']) }}",
+            update: "{{ route('fo.ratings.update', ['picture_id' => 'PICTUREID', 'picture_place' => 'PICTUREPLACE']) }}",
         },
     };
 </script>

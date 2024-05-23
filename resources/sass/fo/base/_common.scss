@@ -110,14 +110,12 @@ body {
     }
 }
 
-.toast {
-    &-container {
-        right: 50%;
-        transform: translateX(50%);
+.toast-container {
+    right: 50%;
+    transform: translateX(50%);
 
-        @include media-breakpoint-up(lg) {
-            right: 0%;
-            transform: translateX(0);
-        }
+    @include media-breakpoint-up(lg) {
+        right: 0%;
+        transform: translateX(0);
     }
 }

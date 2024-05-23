@@ -22,8 +22,9 @@
     <!-- Footer -->
     @include('front.layouts.footer')
 
+    <!-- Toast messages container -->
     @if (request()->routeIs('fo.games.show'))
-        @include('front.partials.toast')
+        <div class="toast-container position-fixed top-0 p-3"></div>
     @endif
 
     <!-- Other -->
