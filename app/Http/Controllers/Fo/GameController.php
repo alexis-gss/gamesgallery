@@ -9,7 +9,6 @@ use App\Models\Rating;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Cache;
 
 class GameController extends Controller
 {
@@ -44,8 +43,9 @@ class GameController extends Controller
 
             /** @var \Illuminate\Database\Eloquent\Collection $ratingModels */
             $ratingModels = Rating::query()
-                ->where('uuid', Cache::get('rating-uuid'))
-                ->get()->map(function ($rating) {
+                ->where('uuid', $request->cookie('rating-uuid'))
+                ->get()
+                ->map(function ($rating) {
                     return $rating->picture_id;
                 });
 

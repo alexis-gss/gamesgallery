@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Picture;
 use App\Models\Rating;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -23,15 +22,20 @@ class RatingController extends Controller
     public function update(Request $request, Rating $rating): \Illuminate\Http\JsonResponse
     {
         return DB::transaction(function () use ($request, $rating) {
-            // Check if there is an existing universally unique identifier in the cache,
-            // if not in case, create it and store it in the cache.
-            if (is_null(Cache::get('rating-uuid'))) {
-                Cache::put('rating-uuid', Str::uuid()->toString());
-            }
+            // Check if there is an existing cookie with universally unique identifier in,
+            // if not in case, create it and store it.
+            $cookieUUID = (is_null($request->cookie('rating-uuid'))) ?
+                Str::uuid()->toString() :
+                $request->cookie('rating-uuid');
+            $cookie     = cookie(
+                'rating-uuid',
+                $cookieUUID,
+                time() + (10 * 365 * 24 * 60 * 60)
+            );
 
             // Validate the request.
             $validator = Validator::make(
-                array_merge($request->all(), ['uuid' => Cache::get('rating-uuid')]),
+                array_merge($request->all(), ['uuid' => $cookieUUID]),
                 [
                     'uuid'       => 'required|uuid|string',
                     'picture_id' => 'required|numeric|exists:pictures,id|distinct',
@@ -66,7 +70,7 @@ class RatingController extends Controller
                 ])->render(),
                 'toastId'   => $toastId,
                 'pictureId' => $validator->validated()['picture_id'],
-            ]);
+            ])->withCookie($cookie);
         });
     }
 }
