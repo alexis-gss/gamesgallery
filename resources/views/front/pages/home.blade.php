@@ -18,7 +18,7 @@
                     <div class="home-text-label">
                         <p class="fw-bold m-0">{{ __('fo_last_games_added') }}</p>
                     </div>
-                    <div class="home-text-content w-100 mx-2 overflow-hidden">
+                    <div class="home-text-content w-100 overflow-hidden ms-1">
                         <p class="m-0">{{ $gamesLatestString }}</p>
                     </div>
                 </div>

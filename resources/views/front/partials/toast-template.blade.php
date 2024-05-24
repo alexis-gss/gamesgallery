@@ -8,7 +8,7 @@
                     {{ str($likeStatus ? __('fo_toast_like') : __('fo_toast_unlike'))->ucFirst() }}
                 </p>
                 <small class="text-primary fst-italic">
-                    {{ __('fo_toast_details', ['picturePlace' => $picturePlace + 1, 'gameName' => $gameName]) }}
+                    {{ str(__('fo_toast_details', ['picturePlace' => $picturePlace + 1, 'gameName' => $gameName]))->ucFirst() }}
                 </small>
             </div>
         </div>

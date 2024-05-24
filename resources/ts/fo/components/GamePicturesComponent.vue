@@ -9,70 +9,72 @@
           v-for="(templateValue, templateIndex) in picturesTemplate"
           :key="templateIndex"
         >
-          <div class="row w-100 mx-auto p-0">
+          <div class="row w-100 mx-auto">
             <div
               v-for="(pictureValue, pictureIndex) in templateValue"
               :key="pictureValue"
-              class="glightbox-wrapper position-relative col-12 p-1"
+              class="glightbox-wrapper position-relative col-12 p-0"
               :class="[`col-lg-${gameItems / templateValue}`, (templateValue % 2 === 0) ? `col-sm-6` : `col-sm-12`]"
               data-aos="fade-up"
             >
               <div
-                class="shadow rounded-3"
+                class="p-1"
                 v-if="gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex]"
               >
-                <a
-                  :href="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
-                  class="glightbox"
-                  data-gallery="games-pictures"
-                >
-                  <div
-                    class="ratio ratio-16x9 overflow-hidden rounded-3"
+                <div class="shadow rounded-3">
+                  <a
+                    :href="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
+                    class="glightbox"
+                    data-gallery="games-pictures"
                   >
-                    <img
-                      :src="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
-                      :alt="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
-                      :title="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
-                      class="d-none w-100 z-1"
-                      @load="gameImageLazyLoad"
+                    <div
+                      class="ratio ratio-16x9 overflow-hidden rounded-3"
                     >
-                    <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
-                      <div
-                        class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
+                      <img
+                        :src="getPicturePath(getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
+                        :alt="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
+                        :title="'Picture n°' + (getPictureNumber(paginateIndex, templateIndex) + pictureIndex + 1) + ' from the game ' + gameName"
+                        class="d-none w-100 z-1"
+                        @load="gameImageLazyLoad"
                       >
+                      <div class="picture-loader position-absolute top-0 start-0 w-100 h-100">
                         <div
-                          class="spinner-border text-light"
-                          role="status"
+                          class="d-flex justify-content-center align-items-center w-100 h-100 bg-primary"
                         >
-                          <span class="visually-hidden">
-                            {{ trans.methods.__("fo_text_loading") }}
-                          </span>
+                          <div
+                            class="spinner-border text-light"
+                            role="status"
+                          >
+                            <span class="visually-hidden">
+                              {{ trans.methods.__("fo_text_loading") }}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </a>
-                <button
-                  :class="['picture-ratings btn btn-white position-absolute bottom-0 end-0 m-1 z-2', {disabled: ratingLoading}]"
-                  :disabled="ratingLoading"
-                  @click="ajaxPictureRating(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id, getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
-                >
-                  <span
-                    :id="`ratings-${gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id}`"
-                    :data-picture-id="getPictureNumber(paginateIndex, templateIndex) + pictureIndex"
-                    class="me-1"
+                  </a>
+                  <button
+                    :class="['picture-ratings btn btn-white position-absolute bottom-0 end-0 m-1 z-2', {disabled: ratingLoading}]"
+                    :disabled="ratingLoading"
+                    @click="ajaxPictureRating(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id, getPictureNumber(paginateIndex, templateIndex) + pictureIndex)"
                   >
-                    {{ (gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count) }}
-                  </span>
-                  <FontAwesomeIcon
-                    icon="fa-regular fa-thumbs-up"
-                    :class="[{'d-none': picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)}]"
-                  />
-                  <FontAwesomeIcon
-                    icon="fa-solid fa-thumbs-up"
-                    :class="[{'d-none': !picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)}]"
-                  />
-                </button>
+                    <span
+                      :id="`ratings-${gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id}`"
+                      :data-picture-id="getPictureNumber(paginateIndex, templateIndex) + pictureIndex"
+                      class="me-1"
+                    >
+                      {{ (gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].ratings_count) }}
+                    </span>
+                    <FontAwesomeIcon
+                      icon="fa-regular fa-thumbs-up"
+                      :class="[{'d-none': picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)}]"
+                    />
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-thumbs-up"
+                      :class="[{'d-none': !picturesRatings.includes(gamePictures[getPictureNumber(paginateIndex, templateIndex) + pictureIndex].id)}]"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

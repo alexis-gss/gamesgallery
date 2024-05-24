@@ -18,4 +18,4 @@
     </button>
 </nav>
 
-<div class="nav-filter nav-filter-hidden position-fixed w-100 h-100 bg-secondary start-0 top-0"></div>
+<div class="nav-filter nav-filter-hidden position-fixed w-100 h-100 bg-dark start-0 top-0"></div>
