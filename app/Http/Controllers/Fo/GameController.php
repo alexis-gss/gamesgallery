@@ -24,8 +24,6 @@ class GameController extends Controller
         string $slug
     ): \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse {
         if ($gameModel = Game::query()->where('published', true)->where('slug', $slug)->first()) {
-            $this->getModelsPublished();
-
             /** @var array $gamePictures */
             $gamePictures = [];
             if (count($gameModel->pictures)) {
@@ -54,12 +52,12 @@ class GameController extends Controller
             }
 
             return view('front.pages.game', [
-                'gameModels'   => $this->gameModels,
                 'gameModel'    => $gameModel,
                 'gamePictures' => $gamePictures,
-                'folderModels' => $this->folderModels,
-                'tagModels'    => $this->tagModels,
                 'ratingModels' => $ratingModels,
+                'gameModels'   => $this->getGamesPublished(),
+                'folderModels' => $this->getFoldersPublished(),
+                'tagModels'    => $this->getTagsPublished(),
             ]);
         } else {
             return redirect()->route('fo.games.index');
@@ -74,17 +72,17 @@ class GameController extends Controller
      */
     public function getGamesFiltered(Request $request): \Illuminate\Http\JsonResponse
     {
-        $selectedTagId    = intval($request->filters_id[0] ?? 0);
         $selectedFolderId = intval($request->filters_id[1] ?? 0);
+        $selectedTagId    = intval($request->filters_id[0] ?? 0);
         /** @var \Illuminate\Support\Collection $gamesFiltered */
         $gamesFiltered = Game::query()->with('pictures')->where('published', true)
+            ->when($selectedFolderId, function (Builder $query) use ($selectedFolderId) {
+                $query->where('folder_id', $selectedFolderId);
+            })
             ->when($selectedTagId, function (Builder $query) use ($selectedTagId) {
                 $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
                     $query->where('id', $selectedTagId);
                 });
-            })
-            ->when($selectedFolderId, function (Builder $query) use ($selectedFolderId) {
-                $query->where('folder_id', $selectedFolderId);
             })
             ->orderBy('slug', 'ASC')
             ->get();

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Fo;
 
 use App\Enums\Pages\StaticPageTypeEnum;
 use App\Http\Controllers\Controller;
-use App\Models\Rank;
 use App\Models\StaticPage;
 
 class RankController extends Controller
@@ -16,29 +15,15 @@ class RankController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        $this->getModelsPublished();
-
         /** @var \App\Models\StaticPage $staticPageModel */
         $staticPageModel = StaticPage::query()->where('type', StaticPageTypeEnum::ranking->value())->first();
 
-        /** @var \Illuminate\Database\Eloquent\Collection $rankModels */
-        $rankModels = Rank::query()
-            ->orderby('rank', 'ASC')
-            ->with('game')
-            ->get()
-            ->each(function (Rank $rank) {
-                // @phpstan-ignore-next-line
-                $rank->game_name = $rank->game->name;
-                // @phpstan-ignore-next-line
-                $rank->game_slug = $rank->game->slug;
-            });
-
         return view('front.pages.ranking', [
             'staticPageModel' => $staticPageModel,
-            'gameModels'      => $this->gameModels,
-            'rankModels'      => $rankModels,
-            'folderModels'    => $this->folderModels,
-            'tagModels'       => $this->tagModels,
+            'gameModels'      => $this->getGamesPublished(),
+            'rankModels'      => $this->getRanksPublished(),
+            'folderModels'    => $this->getFoldersPublished(),
+            'tagModels'       => $this->getTagsPublished(),
         ]);
     }
 }

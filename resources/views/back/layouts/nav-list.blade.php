@@ -17,7 +17,7 @@
         </li>
         @can('viewAny', \App\Models\Game::class)
             <li class="nav-item">
-                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.games.index') }}"
+                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.games.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
                     title="{{ __('bo_tooltip_list_models', ['count' => count($globalGames), 'model' => trans_choice('models.game', \INF)]) }}"
                     @class([
                         'nav-link text-center',
@@ -27,7 +27,7 @@
         @endcan
         @can('viewAny', \App\Models\Folder::class)
             <li class="nav-item">
-                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.folders.index') }}"
+                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.folders.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
                     title="{{ __('bo_tooltip_list_models', ['count' => count($globalFolders), 'model' => str(__('models.folder'))->plural()]) }}"
                     @class([
                         'nav-link text-center',
@@ -37,7 +37,7 @@
         @endcan
         @can('viewAny', \App\Models\Tag::class)
             <li class="nav-item">
-                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.tags.index') }}"
+                <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.tags.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
                     title="{{ __('bo_tooltip_list_models', ['count' => count($globalTags), 'model' => str(__('models.tag'))->plural()]) }}"
                     @class([
                         'nav-link text-center',
@@ -67,7 +67,7 @@
                     ])>{{ __('bo_other_admin') }}</button>
                 <div class="dropdown-menu m-0 p-1 text-center" aria-labelledby="navbarDropdownAdmin">
                     @can('viewAny', \App\Models\StaticPage::class)
-                        <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.static_pages.index') }}"
+                        <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.static_pages.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
                             title="{{ __('bo_tooltip_list_models', ['count' => count($globalStaticPages), 'model' => trans_choice('models.static_page', \INF)]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
@@ -76,7 +76,7 @@
                     @endcan
                     @can('viewAny', \App\Models\ActivityLog::class)
                         <hr class="dropdown-divider m-0">
-                        <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.activity_logs.index') }}"
+                        <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
                             title="{{ __('bo_tooltip_list_models', ['count' => count($globalActivities), 'model' => trans_choice('models.activity_log', \INF)]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
@@ -85,7 +85,7 @@
                     @endcan
                     @canAny(['isConceptor', 'viewAny'], \App\Models\User::class)
                         <hr class="dropdown-divider m-0">
-                        <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.users.index') }}"
+                        <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
                             title="{{ __('bo_tooltip_list_models', ['count' => count($globalUsers), 'model' => str(__('models.user'))->plural()]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',

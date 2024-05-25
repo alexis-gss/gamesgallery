@@ -1,4 +1,5 @@
 <div class="row">
+    {{-- NAME --}}
     <div class="col-12 col-md-6 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -40,6 +41,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- PUBLISHED --}}
     <div class="col-12 col-md-6 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">

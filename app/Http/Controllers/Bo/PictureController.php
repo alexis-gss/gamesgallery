@@ -64,13 +64,13 @@ class PictureController extends Controller
             $uuid = Str::uuid();
         }
 
-        /** @var string Current name of the uploaded image */
+        /** @var string $currentImageName Current name of the uploaded image */
         $currentImageName = $uuid . "." . $file->getClientOriginalExtension();
 
-        /** @var string Finale name of the uploaded image */
+        /** @var string $finalImageName Finale name of the uploaded image */
         $finalImageName = $uuid . ".webp";
 
-        /** @var string Image storage folder path */
+        /** @var string $finalPath Image storage folder path */
         $finalPath = Storage::disk("public")->path(sprintf("pictures/%s/", $gameSlug));
 
         // Save image on default format.

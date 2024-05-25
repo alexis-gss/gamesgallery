@@ -90,8 +90,7 @@ class FolderController extends Controller
     public function store(StoreFolderRequest $request): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request) {
-            $folder = new Folder();
-            $folder->fill($request->validated());
+            $folder = (new Folder())->fill($request->validated());
 
             if ($folder->saveOrFail()) {
                 return redirect()->route('bo.folders.edit', $folder)

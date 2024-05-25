@@ -76,8 +76,6 @@ Route::prefix('bo')
                         ->name('tags.change-order');
                     Route::patch('/tags/{tag}/change-published', [TagController::class, 'changePublished'])
                         ->name('tags.change-published');
-                    Route::post('/tags/store', [TagController::class, 'jsonStore'])
-                        ->name('tags.jsonStore');
                     Route::get('/tags/{tag}/duplicate', [TagController::class, 'duplicate'])
                         ->name('tags.duplicate');
                     Route::get('/tags/json/paginate', [TagController::class, 'jsonSearchPaginate'])

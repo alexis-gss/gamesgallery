@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         <div class="d-flex align-items-start flex-row">
             <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
-                href="{{ route('bo.static_pages.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
+                href="{{ route('bo.static_pages.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
                 title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.static_page', \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>

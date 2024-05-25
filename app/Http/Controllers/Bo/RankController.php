@@ -32,15 +32,11 @@ class RankController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection $rankModels */
-        $rankModels = $this->getRanksForComponent();
-
-        /** @var \Illuminate\Database\Eloquent\Collection $gameModels */
-        $gameModels = $this->getPublishedGamesInNotRanking()->paginate(8);
-
-        $searchFields = trans('validation.attributes.name');
-
-        return view('back.pages.ranks.index', compact('rankModels', 'gameModels', 'searchFields'));
+        return view('back.pages.ranks.index', [
+            'rankModels'   => $this->getRanksPublished(),
+            'gameModels'   => $this->getPublishedGamesInNotRanking()->paginate($this->modelsPerPage),
+            'searchFields' => trans('validation.attributes.name'),
+        ]);
     }
 
     /**
@@ -79,7 +75,7 @@ class RankController extends Controller
     {
         return DB::transaction(function () use ($rank) {
             if ($rank->deleteOrFail()) {
-                return $this->getRanksForComponent();
+                return $this->getRanksPublished();
             }
             return [
                 'message' => trans('crud.messages.cannot_be_deleted', [
@@ -105,25 +101,6 @@ class RankController extends Controller
     }
 
     /**
-     * Get ranks for component.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection<array-key,\App\Models\Rank>
-     */
-    private function getRanksForComponent(): \Illuminate\Database\Eloquent\Collection
-    {
-        return Rank::query()
-            ->orderby('rank', 'ASC')
-            ->with('game')
-            ->get()
-            ->each(function (Rank $rank) {
-                // @phpstan-ignore-next-line
-                $rank->game_name = $rank->game->name;
-                // @phpstan-ignore-next-line
-                $rank->game_slug = $rank->game->slug;
-            });
-    }
-
-    /**
      * Get published games that aren't in ranking.
      *
      * @param \Illuminate\Http\Request $request
@@ -133,7 +110,7 @@ class RankController extends Controller
     {
         return $this->getPublishedGamesInNotRanking()
             ->where('name', 'like', "%{$request->input('search')}%")
-            ->paginate($request->input('paginate'));
+            ->paginate($request->input('paginate') ?? $this->modelsPerPage);
     }
 
     /**

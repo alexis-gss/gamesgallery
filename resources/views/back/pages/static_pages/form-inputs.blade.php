@@ -1,4 +1,5 @@
 <div class="row">
+    {{-- NAME/SEO_TITLE/SEO_DESCRIPTION --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">

@@ -96,8 +96,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request) {
-            $user = new User();
-            $user->fill($request->validated());
+            $user = (new User())->fill($request->validated());
 
             if ($user->saveOrFail()) {
                 return redirect()->route('bo.users.edit', $user)

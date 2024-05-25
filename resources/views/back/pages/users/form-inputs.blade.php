@@ -1,4 +1,5 @@
 <div class="row">
+    {{-- FIRST_NAME/LAST_NAME/EMAIL/ROLE --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -86,6 +87,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- PICTURE --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -104,6 +106,7 @@
                             'showLabels' => true,
                             'required' => true,
                             'preview' => true,
+                            'placeholder' => __('validation.attributes.image'),
                             'helper' => __('validation.rule.images_label', [
                                 'format' => 'JPG/PNG',
                                 'width' => 100,
@@ -117,6 +120,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- PASSWORD/CONFIRMATION_PASSWORD --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -179,6 +183,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- PUBLISHED --}}
     @can('changePublished', $userModel)
         <div class="col-12 col-md-6 mb-3">
             <fieldset class="bg-body-tertiary border rounded-3 p-3">

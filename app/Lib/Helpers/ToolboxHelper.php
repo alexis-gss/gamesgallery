@@ -2,7 +2,7 @@
 
 namespace App\Lib\Helpers;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -209,18 +209,18 @@ class ToolboxHelper
     /**
      * Dynamic model query.
      *
-     * @param string                                          $defaultLocale
-     * @param \Illuminate\Contracts\Database\Eloquent\Builder $q
-     * @param string                                          $column
-     * @param string                                          $value
-     * @return \Illuminate\Contracts\Database\Eloquent\Builder
+     * @param string                                $defaultLocale
+     * @param \Illuminate\Database\Eloquent\Builder $q
+     * @param string                                $column
+     * @param string                                $value
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function queryColumnWithLocales(
         string $defaultLocale,
         Builder $q,
         string $column,
         string $value
-    ): \Illuminate\Contracts\Database\Eloquent\Builder {
+    ): \Illuminate\Database\Eloquent\Builder {
         $currentLocale = app()->currentLocale();
         $locales       = collect(config('app.locales'))
             ->mapWithKeys(fn (string $locale) => [$locale => $locale]);

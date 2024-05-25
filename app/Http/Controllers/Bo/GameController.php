@@ -7,7 +7,6 @@ use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
 use App\Http\Requests\Bo\Pictures\StorePictureRequest;
 use App\Http\Requests\Bo\Pictures\UpdatePictureRequest;
-use App\Models\Folder;
 use App\Models\Game;
 use App\Models\Picture;
 use App\Models\Tag;
@@ -84,35 +83,13 @@ class GameController extends Controller
      *
      * @param \App\Models\Game $game
      * @return \Illuminate\Contracts\View\View
-     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function create(Game $game): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection $folderModels */
-        $folderModels = Folder::query()
-            ->where('published', true)
-            ->orderBy('name', 'ASC')
-            ->paginate(8)
-            ->through(function ($folderModel) {
-                $folderModel->nameLocale = $folderModel->name;
-                return $folderModel;
-            });
-
-        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
-        $tagModels = Tag::query()
-            ->select(['id', 'name', 'slug'])
-            ->where('published', true)
-            ->orderBy('name', 'ASC')
-            ->paginate(8)
-            ->through(function ($tagModel) {
-                $tagModel->nameLocale = $tagModel->name;
-                return $tagModel;
-            });
-
         return view('back.pages.games.create', [
             'gameModel'    => $game,
-            'folderModels' => $folderModels,
-            'tagModels'    => $tagModels
+            'folderModels' => $this->getFoldersPublished(true),
+            'tagModels'    => $this->getTagsPublished(true)
         ]);
     }
 
@@ -125,8 +102,7 @@ class GameController extends Controller
     public function store(StoreGameRequest $request): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request) {
-            $game = new Game();
-            $game->fill(Arr::except($request->validated(), ['tags']));
+            $game = (new Game())->fill(Arr::except($request->validated(), ['tags']));
 
             if ($game->saveOrFail()) {
                 (new Picture())->updatePictures($game, Validator::make(
@@ -151,35 +127,13 @@ class GameController extends Controller
      *
      * @param \App\Models\Game $game
      * @return \Illuminate\Contracts\View\View
-     * @ignore phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
      */
     public function edit(Game $game): \Illuminate\Contracts\View\View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection $folderModels */
-        $folderModels = Folder::query()
-            ->where('published', true)
-            ->orderBy('name', 'ASC')
-            ->paginate(8)
-            ->through(function ($folderModel) {
-                $folderModel->nameLocale = $folderModel->name;
-                return $folderModel;
-            });
-
-        /** @var \Illuminate\Database\Eloquent\Collection $tagModels */
-        $tagModels = Tag::query()
-            ->select(['id', 'name', 'slug'])
-            ->where('published', true)
-            ->orderBy('name', 'ASC')
-            ->paginate(8)
-            ->through(function ($tagModel) {
-                $tagModel->nameLocale = $tagModel->name;
-                return $tagModel;
-            });
-
         return view('back.pages.games.edit', [
             'gameModel'    => $game,
-            'folderModels' => $folderModels,
-            'tagModels'    => $tagModels
+            'folderModels' => $this->getFoldersPublished(true),
+            'tagModels'    => $this->getTagsPublished(true)
         ]);
     }
 

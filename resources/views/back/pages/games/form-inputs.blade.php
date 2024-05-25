@@ -1,4 +1,5 @@
 <div class="row">
+    {{-- NAME/FOLDER_ID --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -16,7 +17,7 @@
                     <div class="word-counter" data-json='@json(['id' => 'name'])'></div>
                     <input class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                         type="text" value="{{ old('name', $gameModel->name ?? '') }}"
-                        placeholder="{{ __('validation.attributes.name') }}" required>
+                        placeholder="{{ __('validation.attributes.name') }}*" required>
                     <small class="text-body-secondary">
                         {{ __('validation.between.string', [
                             'attribute' => __('validation.attributes.name'),
@@ -35,20 +36,25 @@
                         </span>
                     </label>
                     @php
-                        ($gameModel->folder) ? $gameModel->folder->nameLocale = $gameModel->folder->name : "";
+                        $folderModel = old('folder_id')
+                            ? \App\Models\Folder::query()->where('id', old('folder_id'))->first()
+                            : $gameModel->folder;
+                        if (!is_null($folderModel)) {
+                            $folderModel->nameLocale = $folderModel->getTranslation('name', config('app.locale'));
+                        }
                         $data = [
                             'id' => 'gameFolder',
                             'name' => 'folder_id',
                             'multiple' => false,
-                            'targetClass' => 'App\Models\Folder',
+                            'targetClass' => '\App\Models\Folder',
                             'routeName' => 'bo.folders.jsonPaginate',
                             'modelListPaginate' => $folderModels,
-                            'modelSelected' => $gameModel->folder,
+                            'modelSelected' => $folderModel,
                             'fieldName' => 'nameLocale',
                             'roundedBorder' => true,
                             'required' => true,
                             'disabled' => false,
-                            'placeholder' => __('models.folder'),
+                            'placeholder' => __('models.folder') . "*",
                         ];
                     @endphp
                     <div class="search-belongs-to-dropdown" data-json='@json($data)'></div>
@@ -60,6 +66,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- PICTURE/PICTURE_ALT/PICTURE_TITLE --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -99,6 +106,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- TAGS --}}
     <div class="col-12 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">
@@ -115,23 +123,29 @@
                         </span>
                     </label>
                     @php
+                        $oldTagModels = old('tags')
+                            ? \App\Models\Folder::query()
+                                ->whereIn('id', collect(old('tags'))
+                                    ->map(function ($tag) {
+                                        return $tag['id'];
+                                    })->toArray(),
+                                )->get()
+                            : $gameModel->tags;
+                        if (!is_null($oldTagModels)) {
+                            $oldTagModels->map(function ($tagModel) {
+                                $tagModel->nameLocale = $tagModel->getTranslation('name', config('app.locale'));
+                                return $tagModel;
+                            });
+                        }
                         $data = [
                             'id' => 'gameTags',
                             'name' => 'tags',
                             'fieldName' => 'nameLocale',
                             'multiple' => true,
-                            'targetClass' => 'App\Models\Tag',
+                            'targetClass' => '\App\Models\Tag',
                             'routeName' => 'bo.tags.jsonPaginate',
                             'modelListPaginate' => $tagModels,
-                            'modelSelected' => old(
-                                'tags',
-                                $gameModel->tags->map(function ($tagModel) {
-                                    return [
-                                        'id' => $tagModel->id,
-                                        'nameLocale' => $tagModel->name
-                                    ];
-                                }) ?? [],
-                            ),
+                            'modelSelected' => $oldTagModels,
                             'roundedBorder' => true,
                             'required' => true,
                             'disabled' => false,
@@ -147,6 +161,7 @@
             </div>
         </fieldset>
     </div>
+    {{-- PUBLISHED --}}
     <div class="col-12 col-md-6 mb-3">
         <fieldset class="bg-body-tertiary border rounded-3 p-3">
             <legend class="fw-bold fst-italic">

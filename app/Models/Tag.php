@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
  * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
  * @property boolean                         $published    Published status.
- * @property \Illuminate\Support\Carbon      $published_at Published date update.
+ * @property \Illuminate\Support\Carbon|null $published_at Published date update.
  * @property integer                         $order        Order.
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.

@@ -86,8 +86,7 @@ class TagController extends Controller
     public function store(StoreTagRequest $request): \Illuminate\Http\RedirectResponse
     {
         return DB::transaction(function () use ($request) {
-            $tag = new Tag();
-            $tag->fill($request->validated());
+            $tag = (new Tag())->fill($request->validated());
 
             if ($tag->saveOrFail()) {
                 return redirect()->route('bo.tags.edit', $tag)
@@ -99,25 +98,6 @@ class TagController extends Controller
                 ->with('error', trans('crud.messages.cannot_be_created', [
                     'model' => Str::of(trans('models.tag'))->ucfirst()
                 ]));
-        });
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\Bo\Tags\StoreTagRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function jsonStore(StoreTagRequest $request): \Illuminate\Http\JsonResponse
-    {
-        return DB::transaction(function () use ($request) {
-            /** @var \App\Models\Tag */
-            $tag = Tag::where('slug', Str::of($request->name)->slug())->firstOrNew();
-            $tag->fill($request->validated());
-
-            if ($tagSaved = $tag->saveOrFail()) {
-                return \response()->json($tagSaved);
-            }
         });
     }
 

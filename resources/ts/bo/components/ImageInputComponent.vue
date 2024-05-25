@@ -53,6 +53,7 @@
           <input
             @click.prevent="chooseAFile"
             type="text"
+            role="button"
             :value="fileParameters.fileName"
             class="form-control right-aligned"
             data-bs-tooltip="tooltip"
@@ -630,11 +631,13 @@ onMounted((): void => {
     parameters.required = Boolean(data.required);
     parameters.showLabels = Boolean(data.showLabels);
     parameters.browseEvent = Boolean(data.browseEvent);
-    const value = data.value;
+    let value = data.value;
     if(typeof value === "string" && value.length) {
       fileParameters.filePath = value.replace(/^\/|^/, "");
       fileParameters.fileName = value.replace(/^\/|^/, "");
       fileOutput.value = fileParameters.filePath;
+    } else {
+      fileParameters.fileName = data.placeholder ?? "image";
     }
   } else {
     assignFromProps();

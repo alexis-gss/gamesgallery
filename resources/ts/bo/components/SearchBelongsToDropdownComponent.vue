@@ -344,7 +344,6 @@ function getJsonRouteUrl(): string {
   }
   return routeUrl + "?targetModel=" + modelParameters.targetClass +
     "&page=" + pageParameters.page +
-    "&paginate=" + pageParameters.itemPerPage +
     ((searchText.value !== null) ? "&search=" + searchText.value : "");
 }
 

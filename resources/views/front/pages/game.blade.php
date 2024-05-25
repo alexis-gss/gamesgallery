@@ -24,7 +24,7 @@
                         </p>
                         @if (count($gameModel->tags) > 0 && $gameModel->tags->contains('published', true))
                             <span class="ms-1">-</span>
-                            @foreach ($gameModel->tags as $tag)
+                            @foreach ($gameModel->tags->sortBy('name') as $tag)
                                 @if ($tag->published)
                                     <p class="bg-secondary text-white rounded-2 shadow my-1 ms-1 px-2 py-0">
                                         {{ $tag->name }}

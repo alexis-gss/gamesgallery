@@ -7,11 +7,13 @@ use App\Enums\Theme\BootstrapThemeEnum;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Folder;
 use App\Models\Game;
+use App\Models\Rank;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
@@ -23,46 +25,120 @@ class Controller extends BaseController
     use AuthorizesRequests;
     use ValidatesRequests;
 
-    /** @var \Illuminate\Support\Collection $gameModels */
-    protected $gameModels;
-
-    /** @var \Illuminate\Support\Collection $folderModels */
-    protected $folderModels;
-
-    /** @var \Illuminate\Support\Collection $tagModels */
-    protected $tagModels;
+    /**
+     * Use for pagination,
+     * number of models per page.
+     *
+     * @var integer
+     */
+    protected $modelsPerPage = 8;
 
     /**
-     * Get game/folder/tag models where are published.
+     * Get game models published.
      *
-     * @return void
+     * @return \Illuminate\Support\Collection
      */
-    public function getModelsPublished(): void
+    protected function getGamesPublished(): \Illuminate\Support\Collection
     {
-        $this->gameModels   = Game::query()
+        return Game::query()
             ->where('published', true)
             ->orderBy('slug', 'ASC')
             ->whereHas('folder', function ($q) {
                 $q->where('published', true);
-            })->with('pictures')->get();
-        $this->folderModels = Folder::query()
-            ->where('published', true)
-            ->orderBy('mandatory', 'DESC')
-            ->orderBy('slug', 'ASC')
+            })
+            ->with('pictures')
+            ->get();
+    }
+
+    /**
+     * Get folder models published.
+     *
+     * @param boolean $paginate Paginate the query.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    protected function getFoldersPublished(
+        bool $paginate = false
+    ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = Folder::query()->where('published', true);
+
+        if ($paginate) {
+            /** @var \Illuminate\Pagination\LengthAwarePaginator $folderModels */
+            $folderModels = $query->orderby('mandatory', 'DESC')
+                ->orderBy('name')
+                ->paginate($this->modelsPerPage)
+                ->through(function (Folder $folderModel) {
+                    // @phpstan-ignore-next-line
+                    $folderModel->nameLocale = $folderModel->getTranslation('name', config('app.locale'));
+                    return $folderModel;
+                });
+            return new LengthAwarePaginator(
+                $folderModels->sortBy('nameLocale')->sortByDesc('mandatory')->values(),
+                $query->paginate($this->modelsPerPage)->total(),
+                $this->modelsPerPage
+            );
+        } else {
+            return $query->get()
+                ->map(function ($folderModel) {
+                    // @phpstan-ignore-next-line
+                    $folderModel->nameLocale = $folderModel->getTranslation('name', config('app.locale'));
+                    return $folderModel;
+                })->sortBy('nameLocale')->sortByDesc('mandatory')->values();
+        } //end if
+    }
+
+    /**
+     * Get tag models published.
+     *
+     * @param boolean $paginate Paginate the query.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     */
+    protected function getTagsPublished(
+        bool $paginate = false
+    ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
+        $query = Tag::query()->where('published', true);
+
+        if ($paginate) {
+            /** @var \Illuminate\Pagination\LengthAwarePaginator $tagModels */
+            $tagModels = $query->orderBy('name')
+                ->paginate($this->modelsPerPage)
+                ->through(function (Tag $tagModel) {
+                    // @phpstan-ignore-next-line
+                    $tagModel->nameLocale = $tagModel->getTranslation('name', config('app.locale'));
+                    return $tagModel;
+                });
+            return new LengthAwarePaginator(
+                $tagModels->sortBy('nameLocale')->values(),
+                $query->paginate($this->modelsPerPage)->total(),
+                $this->modelsPerPage
+            );
+        } else {
+            return $query->get()
+                ->map(function (Tag $tagModel) {
+                    // @phpstan-ignore-next-line
+                    $tagModel->nameLocale = $tagModel->getTranslation('name', config('app.locale'));
+                    return $tagModel;
+                })->sortBy('nameLocale')->sortByDesc('mandatory')->values();
+        } //end if
+    }
+
+    /**
+     * Get rank models published.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getRanksPublished(): \Illuminate\Support\Collection
+    {
+        return Rank::query()
+            ->orderby('rank', 'ASC')
+            ->with('game')
             ->get()
-            ->map(function ($gameModel) {
+            ->map(function (Rank $rank) {
                 // @phpstan-ignore-next-line
-                $gameModel->nameLocale = $gameModel->name;
-                return $gameModel;
-            });
-        $this->tagModels    = Tag::query()
-            ->where('published', true)
-            ->orderBy('slug', 'ASC')
-            ->get()
-            ->map(function ($tagModel) {
+                $rank->game_name = $rank->game->name;
                 // @phpstan-ignore-next-line
-                $tagModel->nameLocale = $tagModel->name;
-                return $tagModel;
+                $rank->game_slug = $rank->game->slug;
+                return $rank;
             });
     }
 
@@ -253,8 +329,7 @@ class Controller extends BaseController
         if (Cache::get($cacheKey) !== $pagination) {
             Cache::put($cacheKey, $pagination);
         }
-        $query = $query->paginate($pagination);
-        return $query;
+        return $query->paginate($pagination);
     }
 
     /**
@@ -301,16 +376,29 @@ class Controller extends BaseController
      */
     public function jsonSearchPaginate(Request $request): \Illuminate\Http\JsonResponse
     {
-        /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $models */
-        $models = $request->targetModel::query()
-            ->where('published', true)
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = $request->targetModel::query()->where('published', true);
+        $query = ($request->targetModel === "\App\Models\Folder")
+            ? $query->orderby('mandatory', 'DESC')
+            : $query;
+
+        /** @var \Illuminate\Pagination\LengthAwarePaginator $models */
+        $models = $query->orderBy('name')
             ->where('name', 'like', "%{$request->input('search')}%")
-            ->orderBy('name', 'ASC')
-            ->paginate($request->input('paginate') ?? 5)
+            ->paginate($this->modelsPerPage)
             ->through(function ($model) {
-                $model->nameLocale = $model->name;
+                $model->nameLocale = $model->getTranslation('name', config('app.locale'));
                 return $model;
             });
-        return \response()->json($models);
+        /** @var \Illuminate\Support\Collection $modelsSorted */
+        $modelsSorted = $models->sortBy('nameLocale');
+        $modelsSorted = ($request->targetModel === "\App\Models\Folder")
+            ? $modelsSorted->sortByDesc('mandatory')
+            : $modelsSorted;
+        return \response()->json(new LengthAwarePaginator(
+            $modelsSorted->values(),
+            $models->total(),
+            $this->modelsPerPage
+        ));
     }
 }
