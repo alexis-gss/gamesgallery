@@ -78,10 +78,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function checkDistanceTop() {
         if (document.documentElement.scrollTop < 200) {
             btnScroll?.classList.add("btn-scroll-hidden");
-            breadcrumb?.classList.remove("breadcrumb-resize");
+            breadcrumb?.classList.remove("breadcrumb-resize-wrapper");
         } else {
             btnScroll?.classList.remove("btn-scroll-hidden");
-            breadcrumb?.classList.add("breadcrumb-resize");
+            breadcrumb?.classList.add("breadcrumb-resize-wrapper");
         }
     }
 });

@@ -14,10 +14,12 @@
                         <span class="d-none d-sm-block angles"></span>
                     </h1>
                     <div class="d-flex justify-content-center align-items-center user-select-none w-100 flex-row flex-wrap text-center">
-                        <a class="btn btn-primary text-decoration-none text-white border-0 shadow rounded-2 px-2 py-0" data-bs-tooltip="tooltip"
-                            data-bs-placement="top" href="{{ route('fo.games.index') }}" title="{{ __('bo_other_back_home') }}">
-                            <i class="fa fa-arrow-left"></i>
-                        </a>
+                        <div class="rounded-2 shadow">
+                            <a class="btn btn-primary text-decoration-none text-white border-0 rounded-2 px-2 py-0" data-bs-tooltip="tooltip"
+                                data-bs-placement="top" href="{{ route('fo.games.index') }}" title="{{ __('bo_other_back_home') }}">
+                                <i class="fa fa-arrow-left"></i>
+                            </a>
+                        </div>
                         <span class="mx-1">-</span>
                         <p class="rounded-2 text-white shadow m-0 px-2 py-0" style="background-color:{{ $gameModel->folder->color }}">
                             {{ $gameModel->folder->name }}

@@ -6,7 +6,8 @@
     <div class="container">
         <div class="row w-100 mx-auto">
             {{-- PROJECT DETAILS --}}
-            <div class="col-12 col-lg-3 d-flex flex-column justify-content-start align-items-start align-items-lg-center pb-5 pb-lg-0">
+            <div
+                class="col-12 col-lg-3 d-flex flex-column justify-content-start align-items-start align-items-lg-center pb-5 pb-lg-0">
                 <div>
                     <p class="title-font-regular m-0">{{ config('app.name') }}</p>
                     <ul class="list-group list-group-flush">
@@ -14,7 +15,7 @@
                             <p class="text-light m-0">{!! nl2br(
                                 __('fo_footer_details', [
                                     'conceptor' =>
-                                        '<a data-bs-tooltip="tooltip" data-bs-placement="top" href="https://www.alexis-gousseau.com" title="' .
+                                        '<a class="link-light link-offset-2 link-opacity-75-hover" data-bs-tooltip="tooltip" data-bs-placement="top" href="https://www.alexis-gousseau.com" title="' .
                                         __('global_access_website') .
                                         '" target="_blank">' .
                                         config('app.conceptor') .
@@ -40,13 +41,15 @@
                     <p class="title-font-regular m-0">{{ __('fo_footer_sitemap') }}</p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-transparent border-0 pt-2 pb-1">
-                            <a data-bs-tooltip="tooltip" type="button" href="{{ route('fo.games.index') }}"
+                            <a class="link-light link-offset-2 link-opacity-75-hover" data-bs-tooltip="tooltip"
+                                type="button" href="{{ route('fo.games.index') }}"
                                 title="{{ __('fo_tooltip_footer_access_page', ['pageName' => str(__('fo_homepage'))->lower()]) }}">
                                 {{ __('fo_homepage') }}
                             </a>
                         </li>
                         <li class="list-group-item bg-transparent border-0 pt-1 pb-0">
-                            <a data-bs-tooltip="tooltip" type="button" href="{{ route('fo.ranks.index') }}"
+                            <a class="link-light link-offset-2 link-opacity-75-hover" data-bs-tooltip="tooltip"
+                                type="button" href="{{ route('fo.ranks.index') }}"
                                 title="{{ __('fo_tooltip_footer_access_page', ['pageName' => str(__('fo_footer_rank'))->lower()]) }}">
                                 {{ __('fo_footer_rank') }}
                             </a>
@@ -55,7 +58,8 @@
                 </div>
             </div>
             {{-- LANGUAGES --}}
-            <div class="col-12 col-lg-3 d-flex flex-column justify-content-start align-items-start align-items-lg-center pb-5 pb-lg-0">
+            <div
+                class="col-12 col-lg-3 d-flex flex-column justify-content-start align-items-start align-items-lg-center pb-5 pb-lg-0">
                 <div>
                     <p class="title-font-regular m-0">{{ __('fo_footer_languages') }}</p>
                     <ul class="list-group list-group-flush">
@@ -88,24 +92,27 @@
                 </div>
             </div>
             {{-- ABOUT --}}
-            <div class="col-12 col-lg-3 d-flex flex-column justify-content-start align-items-start align-items-lg-center">
+            <div
+                class="col-12 col-lg-3 d-flex flex-column justify-content-start align-items-start align-items-lg-center">
                 <div>
                     <p class="title-font-regular m-0">{{ __('fo_footer_about') }}</p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-transparent border-0 pt-2 pb-1">
-                            <a href="{{ route('bo.login') }}" title="{{ __('fo_tooltip_footer_back') }}"
-                                data-bs-tooltip="tooltip" target="_blank">
+                            <a class="link-light link-offset-2 link-opacity-75-hover" href="{{ route('bo.login') }}"
+                                title="{{ __('fo_tooltip_footer_back') }}" data-bs-tooltip="tooltip" target="_blank">
                                 {{ __('fo_footer_back_label') }}
                             </a>
                         </li>
                         <li class="list-group-item bg-transparent border-0 py-1">
-                            <a href="https://docs-games-gallery.alexis-gousseau.com" target="_blank"
+                            <a class="link-light link-offset-2 link-opacity-75-hover"
+                                href="https://docs-games-gallery.alexis-gousseau.com" target="_blank"
                                 title="{{ __('bo_tooltip_home_documentation') }}" data-bs-tooltip="tooltip">
                                 {{ __('fo_footer_documentation_label') }}
                             </a>
                         </li>
                         <li class="list-group-item bg-transparent border-0 pt-1 pb-0">
-                            <a href="https://github.com/alexis-gss/games-gallery" target="_blank"
+                            <a class="link-light link-offset-2 link-opacity-75-hover"
+                                href="https://github.com/alexis-gss/games-gallery" target="_blank"
                                 title="{{ __('bo_tooltip_home_github') }}" data-bs-tooltip="tooltip">
                                 {{ __('fo_footer_github_label') }}
                             </a>

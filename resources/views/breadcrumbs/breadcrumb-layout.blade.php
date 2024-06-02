@@ -1,15 +1,14 @@
 @if (count($breadcrumbs))
     <ol @class([
         'breadcrumb flex-nowrap',
-        'border border-top-0 border-bottom-0 border-end-0 border-secondary w-100 m-0' => !request()->is(
-            'bo/*'),
+        'border-top-0 border-end-0 border-bottom-0 border-secondary border w-100 m-0' => !request()->is('bo/*'),
         'm-0' => request()->is('bo/*'),
     ])>
         @foreach ($breadcrumbs as $breadcrumb)
             @if ($breadcrumb->url && !$loop->last)
                 <li class="breadcrumb-item d-flex">
                     <a href="{{ $breadcrumb->url }}" @class([
-                        'text-decoration-none p-3 pe-0 text-white' => !request()->is('bo/*'),
+                        'link-light link-offset-2 link-opacity-75 link-opacity-50-hover link-underline-opacity-75 link-underline-opacity-50-hover rounded-0 p-3 pe-2' => !request()->is('bo/*'),
                         'h2 text-primary ps-2 m-0 fw-bold' => request()->is('bo/*'),
                     ])>
                         {{ $breadcrumb->title }}
@@ -17,15 +16,14 @@
                 </li>
             @else
                 <li @class([
-                    'breadcrumb-item btn-games position-relative d-flex align-items-center flex-grow-1 active',
-                    'text-white' => !request()->is('bo/*'),
+                    'breadcrumb-item position-relative d-flex align-items-center flex-grow-1',
+                    'btn-games text-white p-0' => !request()->is('bo/*'),
                     'h2 text-body m-0 fw-bold' => request()->is('bo/*'),
                 ])>
                     <p @class([
                         'm-0',
-                        'breadcrumb-resize position-absolute overflow-hidden text-start' => !request()->is(
-                            'bo/*'),
-                    ])>
+                        'breadcrumb-resize-btn position-absolute overflow-hidden m-0 py-3 ps-2 pe-3' => !request()->is('bo/*'),
+                    ]) @if(!request()->is('bo/*')) role="button" @endif>
                         {{ $breadcrumb->title }}
                     </p>
                 </li>

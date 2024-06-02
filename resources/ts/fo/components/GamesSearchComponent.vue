@@ -10,11 +10,11 @@
     >
       <div class="col-12">
         <!-- Filter by text -->
-        <div class="d-flex border-bottom border-1 border-secondary w-100 pb-1">
+        <div class="d-flex border-bottom border-1 border-secondary pb-1 w-100">
           <input
             name="search"
             v-model="search"
-            class="form-control border-0 text-bg-primary ps-2"
+            class="form-control border-0 rounded-3 text-bg-primary me-1 ps-2"
             :placeholder="trans.methods.__('fo_search', { games: `${gamesCount}` })"
             type="text"
             maxlength="60"
@@ -23,7 +23,7 @@
           >
           <button
             @click="clearInputSearch()"
-            class="btn btn-primary d-flex align-items-center text-bg-primary border-0"
+            class="btn btn-primary btn-clear d-flex align-items-center border-0 rounded-3"
             type="button"
             :title="trans.methods.__('fo_clear_search')"
             data-bs-toggle="tooltip"
@@ -34,53 +34,57 @@
       </div>
       <div class="col-12 row">
         <!-- Filter by folders -->
-        <select
-          class="col-12 col-md-6 form-select select-border border-0 bg-primary shadow-none text-bg-primary rounded-0 px-2 py-2"
-          name="folder"
-          role="button"
-          @change="setSelectedValue($event)"
-        >
-          <option
-            value="0"
-            selected
+        <div class="col-12 col-md-6 border-custom p-0 py-1 pe-md-1 pb-md-0">
+          <select
+            class="form-select border-0 rounded-3 bg-primary shadow-none text-bg-primary px-2 py-2"
+            name="folder"
+            role="button"
+            @change="setSelectedValue($event)"
           >
-            {{ trans.methods.__("fo_search_folder") }}
-          </option>
-          <option
-            v-for="(folder, folderIndex) in allFolders"
-            :key="folderIndex"
-            :value="folder.id"
-          >
-            {{ folder.nameLocale }}
-          </option>
-        </select>
+            <option
+              value="0"
+              selected
+            >
+              {{ trans.methods.__("fo_search_folder") }}
+            </option>
+            <option
+              v-for="(folder, folderIndex) in allFolders"
+              :key="folderIndex"
+              :value="folder.id"
+            >
+              {{ folder.nameLocale }}
+            </option>
+          </select>
+        </div>
         <!-- Filter by tags -->
-        <select
-          class="col-12 col-md-6 form-select bg-primary border-0 shadow-none text-bg-primary rounded-0 px-2 py-2"
-          name="tag"
-          role="button"
-          @change="setSelectedValue($event)"
-        >
-          <option
-            value="0"
-            selected
+        <div class="col-12 col-md-6 p-0 pt-1 ps-md-1">
+          <select
+            class="form-select bg-primary rounded-3 border-0 shadow-none text-bg-primary px-2 py-2"
+            name="tag"
+            role="button"
+            @change="setSelectedValue($event)"
           >
-            {{ trans.methods.__("fo_search_tag") }}
-          </option>
-          <option
-            v-for="(tag, tagIndex) in allTags"
-            :key="tagIndex"
-            :value="tag.id"
-          >
-            {{ tag.nameLocale }}
-          </option>
-        </select>
+            <option
+              value="0"
+              selected
+            >
+              {{ trans.methods.__("fo_search_tag") }}
+            </option>
+            <option
+              v-for="(tag, tagIndex) in allTags"
+              :key="tagIndex"
+              :value="tag.id"
+            >
+              {{ tag.nameLocale }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="position-relative">
       <!-- List of games -->
       <OverlayScrollbarsComponent
-        class="nav-games-list"
+        class="nav-games-list rounded-3"
         defer
       >
         <div
@@ -122,7 +126,7 @@
                       :style="`background-color:${folder.color}`"
                     />
                   </template>
-                  <p class="text-start m-0 z-2">{{ game.name }}</p>
+                  <p class="text-start m-0 pe-2 z-2">{{ game.name }}</p>
                 </div>
                 <span>{{ game.pictures.length }}</span>
               </a>
@@ -328,20 +332,26 @@ function initTooltips(): void {
 @import "overlayscrollbars/overlayscrollbars.css";
 
 .nav-games {
+  .form-control {
+    height: 40px;
+  }
   .form-control::placeholder {
     color: var(--bs-light);
   }
-  .no-result-icon {
-    width: 4rem;
-    height: 4rem;
-  }
-  .select-border {
+  .border-custom {
     border-bottom: solid 1px var(--bs-secondary) !important;
 
     @include media-breakpoint-up(md) {
       border-right: solid 1px var(--bs-secondary) !important;
       border-bottom: 0 !important;
     }
+  }
+  .btn-clear {
+    border-top-right-radius: var(--bs-border-radius-lg) !important;
+  }
+  .no-result-icon {
+    width: 4rem;
+    height: 4rem;
   }
   .placeholder-glow .placeholder {
     height: 24px;

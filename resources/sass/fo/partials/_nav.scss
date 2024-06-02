@@ -17,14 +17,12 @@
         }
     }
 
-    &-games {
-        &-list {
-            height: calc(#{$fo-menu-height} - 10rem);
-            overflow-y: auto;
+    &-games-list {
+        height: calc(#{$fo-menu-height} - 11rem);
+        overflow-y: auto;
 
-            @include media-breakpoint-up(xl) {
-                height: calc(#{$fo-menu-height} - 8rem);
-            }
+        @include media-breakpoint-up(md) {
+            height: calc(#{$fo-menu-height} - 8rem);
         }
     }
 
