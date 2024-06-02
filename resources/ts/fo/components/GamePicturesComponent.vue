@@ -1,6 +1,6 @@
 <template>
   <div class="position-relative">
-    <template v-if="gameLoading || gamePictures.length > 0">
+    <template v-if="gamePictures.length > 0">
       <template
         v-for="paginateIndex in incrementNumber"
         :key="paginateIndex"
@@ -80,25 +80,25 @@
           </div>
         </template>
       </template>
-      <div class="w-100 text-center my-5">
-        <div
-          v-if="gameLoading"
-          class="spinner-border text-primary"
-          role="status"
-        >
-          <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
-        </div>
-        <div
-          v-if="gameAllLoaded"
-          class="fst-italic text-secondary"
-        >
-          {{ trans.methods.__("fo_images_loaded") }}
-        </div>
+      <div
+        v-if="!gameLoading && gameAllLoaded"
+        class="fst-italic text-secondary text-center my-5 w-100"
+      >
+        {{ trans.methods.__("fo_images_loaded") }}
       </div>
     </template>
+    <div class="text-center my-5 w-100">
+      <div
+        v-if="gameLoading"
+        class="spinner-border text-primary"
+        role="status"
+      >
+        <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
+      </div>
+    </div>
     <div
-      v-else
-      class="text-center"
+      v-if="!gameLoading && gamePictures.length <= 0"
+      class="text-center my-5 w-100"
     >
       {{ trans.methods.__("fo_images_no_one") }}
     </div>
@@ -132,7 +132,7 @@ const gamePictures = ref<Array<{
 const gamePage = ref<number>(0);
 const gameLastPage = ref<number>(0);
 const gameItems = ref<number>(0);
-const gameLoading = ref<boolean>(false);
+const gameLoading = ref<boolean>(true);
 const gameAllLoaded = ref<boolean>(false);
 const gameViewer = ref<GLightbox|null>(null);
 const picturesTemplate = ref<Array<number>>([4,3,2,3]);
