@@ -79,9 +79,9 @@
     </div>
     <div class="position-relative">
       <!-- List of games -->
-      <Simplebar
+      <OverlayScrollbarsComponent
         class="nav-games-list"
-        data-simplebar-auto-hide="false"
+        defer
       >
         <div
           v-if="gameLoading"
@@ -97,17 +97,17 @@
         <template v-else>
           <ul
             v-if="filterGames().length > 0"
-            class="list-group rounded-0 pe-2"
+            :class="['list-group rounded-0', {'pe-4': filterGames().length > 8}]"
             id="collapseGroup"
           >
             <li
               v-for="(game, key) in filterGames()"
               :key="key"
-              class="list-group-item border-0 rounded-2 bg-transparent p-0 px-1"
+              class="list-group-item border-0 rounded-2 bg-transparent p-0"
             >
               <a
                 :href="getGameRoute(game.slug)"
-                class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center btn border-0 text-light text-decoration-none w-100 p-2"
+                class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center border-0 text-light text-decoration-none rounded-0 w-100 p-2"
               >
                 <div
                   class="d-flex flex-row justify-content-start align-items-center"
@@ -154,14 +154,14 @@
             </button>
           </div>
         </template>
-      </Simplebar>
+      </OverlayScrollbarsComponent>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import Simplebar from "simplebar-vue";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-vue";
 import { defineOptions, onMounted, ref, useAttrs } from "vue";
 import errors from "./../../modules/errors";
 import route from "./../../modules/route";
@@ -325,13 +325,11 @@ function initTooltips(): void {
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/placeholders";
+@import "overlayscrollbars/overlayscrollbars.css";
 
 .nav-games {
   .form-control::placeholder {
     color: var(--bs-light);
-  }
-  .simplebar-content {
-    height: 100%;
   }
   .no-result-icon {
     width: 4rem;
@@ -347,6 +345,15 @@ function initTooltips(): void {
   }
   .placeholder-glow .placeholder {
     height: 24px;
+  }
+  .os-scrollbar {
+    --os-size: 1rem;
+    --os-track-bg: #14171a;
+    --os-track-bg-hover: #14171a;
+    --os-track-bg-active: #14171a;
+    --os-handle-bg: var(--bs-primary);
+    --os-handle-bg-hover: #4d6075;
+    --os-handle-bg-active: #485a6e;
   }
 }
 </style>
