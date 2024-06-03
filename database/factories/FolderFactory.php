@@ -18,13 +18,12 @@ final class FolderFactory extends Factory
     public function definition(): array
     {
         $name      = fake()->unique()->word;
-        $mandatory = fake()->boolean(20);
         $published = fake()->boolean(75);
         return [
             'name'         => $name,
             'slug'         => Str::of($name)->slug(),
             'color'        => fake()->unique()->safeHexColor(),
-            'mandatory'    => $mandatory,
+            'mandatory'    => fake()->boolean(20),
             'published'    => $published,
             'published_at' => ($published) ? now() : null,
         ];

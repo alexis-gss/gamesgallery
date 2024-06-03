@@ -209,9 +209,9 @@ function getPictures(): void {
   window.axios
     .get(url)
     .then((response) => {
-      if (response.data.data.data !== undefined) {
+      if (response.data.data !== undefined) {
         gamePictures.value = gamePictures.value.concat(
-          Object.values(response.data.data.data)
+          Object.values(response.data.data)
         );
       }
       gameLoading.value = false;

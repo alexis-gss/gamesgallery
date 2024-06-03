@@ -48,14 +48,14 @@ class GameController extends Controller
                 });
 
             if ($request->ajax()) {
-                return response()->json(['data' => $gamePictures]);
+                return response()->json($gamePictures);
             }
 
             return view('front.pages.game', [
                 'gameModel'    => $gameModel,
                 'gamePictures' => $gamePictures,
                 'ratingModels' => $ratingModels,
-                'gameModels'   => $this->getGamesPublished(),
+                'gameModels'   => $this->getGamesPublished(true),
                 'folderModels' => $this->getFoldersPublished(),
                 'tagModels'    => $this->getTagsPublished(),
             ]);
@@ -72,20 +72,35 @@ class GameController extends Controller
      */
     public function getGamesFiltered(Request $request): \Illuminate\Http\JsonResponse
     {
-        $selectedFolderId = intval($request->filters_id[1] ?? 0);
-        $selectedTagId    = intval($request->filters_id[0] ?? 0);
+        /** @var array<string|null> $searchSelects Selected folder/tag id */
+        $searchSelects = $request->input('filters_id');
+        /** @var string|null $searchText Search text */
+        $searchText = $request->input('search');
         /** @var \Illuminate\Support\Collection $gamesFiltered */
-        $gamesFiltered = Game::query()->with('pictures')->where('published', true)
-            ->when($selectedFolderId, function (Builder $query) use ($selectedFolderId) {
-                $query->where('folder_id', $selectedFolderId);
+        $gamesFiltered = Game::query()
+            ->when(
+                isset($searchSelects[1]) &&
+                    !empty($searchSelects[1]),
+                function (Builder $query) use ($searchSelects) {
+                    $query->where('folder_id', $searchSelects[1]);
+                }
+            )
+            ->when(
+                isset($searchSelects[0]) &&
+                    !empty($searchSelects[0]),
+                function (Builder $query) use ($searchSelects) {
+                    $query->whereHas('tags', function (Builder $query) use ($searchSelects) {
+                        $query->where('id', $searchSelects[0]);
+                    });
+                }
+            )
+            ->when(!is_null($request->search), function (Builder $query) use ($searchText) {
+                $query->where('name', 'LIKE', "%{$searchText}%");
             })
-            ->when($selectedTagId, function (Builder $query) use ($selectedTagId) {
-                $query->whereHas('tags', function (Builder $query) use ($selectedTagId) {
-                    $query->where('id', $selectedTagId);
-                });
-            })
+            ->with('pictures')
+            ->where('published', true)
             ->orderBy('slug', 'ASC')
-            ->get();
+            ->paginate($this->modelsPerPage);
         return response()->json($gamesFiltered);
     }
 }

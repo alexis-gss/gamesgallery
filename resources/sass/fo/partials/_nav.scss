@@ -19,10 +19,12 @@
 
     &-games-list {
         height: calc(#{$fo-menu-height} - 11rem);
+        max-height: calc(100vh - 17rem);
         overflow-y: auto;
 
         @include media-breakpoint-up(md) {
             height: calc(#{$fo-menu-height} - 8rem);
+            max-height: calc(100vh - 14rem);
         }
     }
 

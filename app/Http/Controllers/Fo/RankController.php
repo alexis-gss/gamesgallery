@@ -20,7 +20,7 @@ class RankController extends Controller
 
         return view('front.pages.ranking', [
             'staticPageModel' => $staticPageModel,
-            'gameModels'      => $this->getGamesPublished(),
+            'gameModels'      => $this->getGamesPublished(true),
             'rankModels'      => $this->getRanksPublished(),
             'folderModels'    => $this->getFoldersPublished(),
             'tagModels'       => $this->getTagsPublished(),

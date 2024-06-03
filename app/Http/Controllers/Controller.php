@@ -31,23 +31,26 @@ class Controller extends BaseController
      *
      * @var integer
      */
-    protected $modelsPerPage = 8;
+    protected $modelsPerPage = 12;
 
     /**
      * Get game models published.
      *
-     * @return \Illuminate\Support\Collection
+     * @param boolean  $paginate
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      */
-    protected function getGamesPublished(): \Illuminate\Support\Collection
-    {
-        return Game::query()
+    protected function getGamesPublished(
+        bool $paginate = false,
+    ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = Game::query()
+            ->with('pictures')
             ->where('published', true)
             ->orderBy('slug', 'ASC')
             ->whereHas('folder', function ($q) {
                 $q->where('published', true);
-            })
-            ->with('pictures')
-            ->get();
+            });
+        return ($paginate) ? $query->paginate($this->modelsPerPage) : $query->get();
     }
 
     /**

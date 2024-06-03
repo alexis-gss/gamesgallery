@@ -37,12 +37,12 @@ class ViewServiceProvider extends ServiceProvider
         if (!app()->runningInConsole()) {
             // Shares this data with all views.
             if (
-                Schema::hasTable('games') and
-                Schema::hasTable('folders') and
-                Schema::hasTable('tags') and
-                Schema::hasTable('users') and
-                Schema::hasTable('activity_logs') and
-                Schema::hasTable('ranks') and
+                Schema::hasTable('games') &&
+                Schema::hasTable('folders') &&
+                Schema::hasTable('tags') &&
+                Schema::hasTable('users') &&
+                Schema::hasTable('activity_logs') &&
+                Schema::hasTable('ranks') &&
                 Schema::hasTable('static_pages')
             ) {
                 View::share('globalGames', Game::query()->with('pictures')->orderBy('name', 'ASC')->get());
@@ -55,12 +55,9 @@ class ViewServiceProvider extends ServiceProvider
             }
 
             // * FORCE BOOTSTRAP PAGINATOR (or custom if in front)
-            // Early boot, request wont be filled as expected.
-            if (collect(explode('/', \request()->getPathInfo()))->get(1) === 'bo') {
-                Paginator::defaultView('back.modules.pagination');
-            } else {
-                Paginator::useBootstrapFive();
-            }
+            (collect(explode('/', \request()->getPathInfo()))->get(1) === 'bo')
+                ? Paginator::defaultView('back.modules.pagination')
+                : Paginator::useBootstrapFive();
         } //end if
     }
 }

@@ -12,10 +12,11 @@
         <!-- Filter by text -->
         <div class="d-flex border-bottom border-1 border-secondary pb-1 w-100">
           <input
+            ref="searchInput"
             name="search"
-            v-model="search"
+            @keyup="filterGames($event)"
             class="form-control border-0 rounded-3 text-bg-primary me-1 ps-2"
-            :placeholder="trans.methods.__('fo_search', { games: `${gamesCount}` })"
+            :placeholder="trans.methods.__('fo_search', { games: `${paginationParameters.total}` })"
             type="text"
             maxlength="60"
             autocomplete="off"
@@ -48,7 +49,7 @@
               {{ trans.methods.__("fo_search_folder") }}
             </option>
             <option
-              v-for="(folder, folderIndex) in allFolders"
+              v-for="(folder, folderIndex) in modelsParameters.folders"
               :key="folderIndex"
               :value="folder.id"
             >
@@ -71,7 +72,7 @@
               {{ trans.methods.__("fo_search_tag") }}
             </option>
             <option
-              v-for="(tag, tagIndex) in allTags"
+              v-for="(tag, tagIndex) in modelsParameters.tags"
               :key="tagIndex"
               :value="tag.id"
             >
@@ -81,43 +82,46 @@
         </div>
       </div>
     </div>
-    <div class="position-relative">
+    <div
+      class="position-relative overflow-hidden rounded-3"
+      :inert="loading || paginationParameters.loading"
+    >
+      <!-- Loading new data -->
+      <div
+        v-if="loading || paginationParameters.loading"
+        class="loading-screen position-absolute top-0 start-0 d-flex justify-content-center align-items-center bg-dark bg-opacity-25 w-100 h-100 z-1"
+      >
+        <div
+          class="spinner-border text-white"
+          role="status"
+        >
+          <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
+        </div>
+      </div>
       <!-- List of games -->
       <OverlayScrollbarsComponent
         class="nav-games-list rounded-3"
-        defer
+        @os-scroll="(event) => { checkScroll(event.elements().scrollOffsetElement); }"
       >
-        <div
-          v-if="gameLoading"
-          class="d-flex justify-content-center align-items-center h-100"
-        >
-          <div
-            class="spinner-border text-white"
-            role="status"
-          >
-            <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
-          </div>
-        </div>
-        <template v-else>
+        <template v-if="modelsParameters.games.length > 0">
           <ul
-            v-if="filterGames().length > 0"
-            :class="['list-group rounded-0', {'pe-4': filterGames().length > 8}]"
+            :class="['list-group rounded-0', {'pe-4': modelsParameters.games.length > 9}]"
             id="collapseGroup"
           >
             <li
-              v-for="(game, key) in filterGames()"
+              v-for="(game, key) in modelsParameters.games"
               :key="key"
               class="list-group-item border-0 rounded-2 bg-transparent p-0"
             >
               <a
-                :href="getGameRoute(game.slug)"
+                :href="getRouteGameShow(String(game.slug))"
                 class="btn btn-secondary position-relative d-flex flex-row justify-content-between align-items-center border-0 text-light text-decoration-none rounded-0 w-100 p-2"
               >
                 <div
                   class="d-flex flex-row justify-content-start align-items-center"
                 >
                   <template
-                    v-for="(folder, folderIndex) in allFolders"
+                    v-for="(folder, folderIndex) in modelsParameters.folders"
                     :key="folderIndex"
                   >
                     <span
@@ -128,36 +132,36 @@
                   </template>
                   <p class="text-start m-0 pe-2 z-2">{{ game.name }}</p>
                 </div>
-                <span>{{ game.pictures.length }}</span>
+                <span>{{ (game.pictures as Array<Object>).length }}</span>
               </a>
             </li>
           </ul>
-          <!-- NO RESULT -->
-          <div
-            v-else
-            class="d-flex flex-column justify-content-center align-items-center border-0 bg-transparent text-light h-100 p-3 pt-0"
-          >
-            <span class="no-result-icon">
-              <FontAwesomeIcon
-                icon="fa-solid fa-triangle-exclamation"
-                class="w-100 h-100"
-              />
-            </span>
-            <p class="text-center m-0 pt-2">
-              {{ trans.methods.__("fo_no_result") }}
-            </p>
-            <p class="text-center m-0 pb-2">
-              {{ trans.methods.__("fo_try_search_again") }}
-            </p>
-            <button
-              class="btn btn-primary"
-              @click="clearInputSearch()"
-              type="button"
-            >
-              {{ trans.methods.__("fo_clear_search") }}
-            </button>
-          </div>
         </template>
+        <!-- NO RESULT -->
+        <div
+          v-if="!loading && modelsParameters.games.length <= 0"
+          class="d-flex flex-column justify-content-center align-items-center border-0 bg-transparent text-light h-100 p-3 pt-0"
+        >
+          <span class="no-result-icon">
+            <FontAwesomeIcon
+              icon="fa-solid fa-triangle-exclamation"
+              class="w-100 h-100"
+            />
+          </span>
+          <p class="text-center m-0 pt-2">
+            {{ trans.methods.__("fo_no_result") }}
+          </p>
+          <p class="text-center m-0 pb-2">
+            {{ trans.methods.__("fo_try_search_again") }}
+          </p>
+          <button
+            class="btn btn-primary"
+            @click="clearInputSearch()"
+            type="button"
+          >
+            {{ trans.methods.__("fo_clear_search") }}
+          </button>
+        </div>
       </OverlayScrollbarsComponent>
     </div>
   </div>
@@ -166,7 +170,7 @@
 <script lang="ts" setup>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-vue";
-import { defineOptions, onMounted, ref, useAttrs } from "vue";
+import { defineOptions, onMounted, ref, useAttrs, reactive } from "vue";
 import errors from "./../../modules/errors";
 import route from "./../../modules/route";
 import trans from "./../../modules/trans";
@@ -181,85 +185,100 @@ const attrs = useAttrs();
 
 // * REFS
 const gamesSearch = ref<HTMLDivElement|null>(null);
+const searchInput = ref<HTMLInputElement|null>(null);
 
 // * DATA
-const games = ref<[
-  {
-    id: number;
-    folder_id: number;
-    slug: string;
-    name: string;
-    pictures: Array<Object>;
-  }
-]>([{
-  id: 0,
-  folder_id: 0,
-  slug: "",
-  name: "",
-  pictures: [],
-}]);
-const gamesCount = ref<number>(0);
 const search = ref<string>("");
-const searchInput = ref<HTMLInputElement|null>(null);
-const allTags = ref<LaravelModelList>([]);
-const allFolders = ref<LaravelModelList>([]);
 const selectedTag = ref<string>("");
 const selectedFolder = ref<string>("");
-const gameLoading = ref<boolean>(false);
+const loading = ref<boolean>(false);
 const tooltips = ref<Tooltips|null>(null);
+
+/** Models parameters. */
+const modelsParameters = reactive<{
+  games: LaravelModelList,
+  folders: LaravelModelList,
+  tags: LaravelModelList,
+}>({
+  games: [],
+  folders: [],
+  tags: [],
+});
+
+/** Pagination parameters. */
+const paginationParameters = reactive<{
+  page: number,
+  lastPage: number,
+  total: number,
+  loading: boolean,
+}>({
+  page: 1,
+  lastPage: 1,
+  total: 0,
+  loading: false,
+});
 
 // * LIFECYCLE
 onMounted((): void => {
   const json = String(attrs.json ?? "{}"),
         data = JSON.parse(json);
-  games.value = data.games;
-  gamesCount.value = data.gamesCount;
-  allTags.value = data.allTags;
-  allFolders.value = data.allFolders;
-  searchInput.value = document.querySelector(".nav-games .form-control");
+
+  /** Models parameters. */
+  modelsParameters.games = data.games.data;
+  modelsParameters.folders = data.allFolders;
+  modelsParameters.tags = data.allTags;
+
+  /** Pagination parameters. */
+  paginationParameters.page = data.games.current_page;
+  paginationParameters.lastPage = data.games.last_page;
+  paginationParameters.total = data.games.total;
+
+  /** Others */
   searchInput.value?.focus();
+
   initTooltips();
 });
 
 // * METHODS
 
 /**
+  * Check if all models are loaded,
+  * if not, get next models.
+  * @return void
+  */
+function checkScroll(event: HTMLElement): void {
+  if (
+    (event.offsetHeight + event.scrollTop) >= (event.scrollHeight - 60)
+    && !loading.value
+    && !paginationParameters.loading
+    && paginationParameters.page < paginationParameters.lastPage
+  ) {
+    paginationParameters.page = paginationParameters.page + 1;
+    ajaxGamesFiltered([selectedTag.value, selectedFolder.value], true);
+  }
+}
+
+/**
   * Clear input search and selects.
   * @return void
   */
 function clearInputSearch(): void {
-  if (searchInput.value) searchInput.value.value = "";
-  search.value = "";
-  document
-    .querySelectorAll("select")
-    .forEach((element: HTMLSelectElement) => {
-      element.value = "0";
-    });
-  ajaxGamesFiltered([]);
+  searchInput.value!.value = search.value = selectedFolder.value = selectedTag.value = "";
+  paginationParameters.page = 1;
+  document.querySelectorAll("select").forEach((element: HTMLSelectElement) => {
+    element.value = "0";
+  });
+  ajaxGamesFiltered();
 }
 
 /**
   * Return a list of games which corresponds to the search from input text.
-  * @return Array<{
-  *   id: number;
-  *   folder_id: number;
-  *   slug: string;
-  *   name: string;
-  *   pictures: Array<Object>;
-  * }>
+  * @return LaravelModelList
 */
-function filterGames(): Array<{
-  id: number;
-  folder_id: number;
-  slug: string;
-  name: string;
-  pictures: Array<Object>;
-}> {
-  return games.value?.filter((game) => {
-    return (game.name as string)
-      .toLowerCase()
-      .includes(search.value.toLowerCase());
-  });
+function filterGames(event: Event|null): void {
+  const target = event?.target as HTMLInputElement|null;
+  paginationParameters.page = 1;
+  ajaxGamesFiltered([selectedTag.value, selectedFolder.value], false, target?.value);
 }
 
 /**
@@ -271,28 +290,45 @@ function setSelectedValue(e: Event): void {
   const select = e.target as HTMLSelectElement;
   if (select.name == "tag") selectedTag.value = select.value;
   if (select.name == "folder") selectedFolder.value = select.value;
+  paginationParameters.page = 1;
   ajaxGamesFiltered([selectedTag.value, selectedFolder.value]);
 }
 
 /**
   * Return a list of games which corresponds to the search from selects.
+  * @param filters    Selected filters.
+  * @param pagination Pagination loader.
   * @return void
   */
-function ajaxGamesFiltered(filters: string[]): void {
-  gameLoading.value = true;
-  const storeTagRoute = route.methods.route("fo.games.filtered");
-  if (!storeTagRoute) {
-    throw new Error("Undefined route fo.games.filtered");
-  }
+function ajaxGamesFiltered(filters: string[] = [], pagination: boolean = false, search: string|null = null): void {
+  (pagination) ? paginationParameters.loading = true : loading.value = true;
   window.axios
-    .post(storeTagRoute, {
+    .post(getRouteGamesFiltered(), {
       filters_id: filters,
+      page: paginationParameters.page,
+      search: search
     })
     .then((reponse) => {
-      games.value = reponse.data;
-      gameLoading.value = false;
+      (pagination)
+        ? modelsParameters.games = modelsParameters.games?.concat(reponse.data.data)
+        : modelsParameters.games = reponse.data.data;
+    })
+    .then(() => {
+      (pagination) ? paginationParameters.loading = false : loading.value = false;
     })
     .catch(errors.methods.ajaxErrorHandler);
+}
+
+/**
+  * Return the route with the parameter slug given.
+  * @return string
+  */
+function getRouteGamesFiltered(): string {
+  const routeGamesFiltered = route.methods.route("fo.games.filtered");
+  if (!routeGamesFiltered) {
+    throw new Error("Undefined route fo.games.filtered");
+  }
+  return routeGamesFiltered;
 }
 
 /**
@@ -300,7 +336,7 @@ function ajaxGamesFiltered(filters: string[]): void {
   * @param slug Slug of the game.
   * @return string
   */
-function getGameRoute(slug: string): string {
+function getRouteGameShow(slug: string): string {
   const routeGameShow = route.methods.route("fo.games.show", {
     SLUG: slug,
   });
@@ -332,6 +368,9 @@ function initTooltips(): void {
 @import "overlayscrollbars/overlayscrollbars.css";
 
 .nav-games {
+  .loading-screen {
+    transition: .3s;
+  }
   .form-control {
     height: 40px;
   }

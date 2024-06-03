@@ -1,7 +1,6 @@
 @php
     $dataGame = [
         'games' => $gameModels,
-        'gamesCount' => count($gameModels),
         'allFolders' => $folderModels,
         'allTags' => $tagModels,
     ];

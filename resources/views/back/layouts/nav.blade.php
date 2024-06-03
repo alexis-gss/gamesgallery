@@ -95,8 +95,9 @@
                             class="btn nav-link dropdown-toggle d-flex align-items-center justify-content-center w-100 h-100 ps-xl-3 flex-row border-0"
                             id="navbarDropdown" data-bs-toggle="dropdown" type="button">
                             <div class="d-flex flex-column align-items-start align-items-xl-end lh-1">
-                                <span
-                                    class="fw-bold">{{ auth('backend')->user()->first_name }}&nbsp;{{ auth('backend')->user()->last_name }}</span>
+                                <span class="fw-bold">
+                                    {{ auth('backend')->user()->first_name }}&nbsp;{{ auth('backend')->user()->last_name }}
+                                </span>
                                 <small class="text-secondary-body">{{ str(auth('backend')->user()->role->label())->ucFirst() }}</small>
                             </div>
                             <div class="profile-picture me-1 ms-2">
