@@ -14,9 +14,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('taggables', function (Blueprint $table) {
-            $table->string('taggable_type', 60);
-            $table->foreignId('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('taggable_id')->references('id')->on('games')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('taggable_type', 60)->comment('Model associated.');
+            $table->foreignId('taggable_id')->comment('Id of the associated model.')
+                ->references('id')->on('games')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('tag_id')->comment('Id of the tag.')
+                ->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

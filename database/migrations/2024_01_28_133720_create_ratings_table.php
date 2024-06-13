@@ -14,9 +14,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Id of the rating.');
             $table->ipAddress('uuid')->comment('Universally Unique Identifier (UUID) of the customer.');
-            $table->foreignId('picture_id')->constrained('pictures')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('picture_id')->comment('Picture associated to the rating.')
+                ->constrained('pictures')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

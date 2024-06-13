@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('order')->comment('Order of this user.');
             $table->boolean('published')->comment('The user is published or not.');
             $table->timestamp('published_at')->nullable()->comment('The date on which the user was published.');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable()->comment('The date on which the email was verified.');
             $table->timestamps();
         });
     }

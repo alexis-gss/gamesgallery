@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('static_pages', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Id of the static page.');
             $table->json('seo_title')->comment('Seo title of the static page.');
             $table->json('seo_description')->comment('Seo description of the static page.');
             $table->json('title')->comment('Title of the static page.');

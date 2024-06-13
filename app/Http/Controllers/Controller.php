@@ -36,7 +36,7 @@ class Controller extends BaseController
     /**
      * Get game models published.
      *
-     * @param boolean  $paginate
+     * @param boolean $paginate
      * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      */
     protected function getGamesPublished(

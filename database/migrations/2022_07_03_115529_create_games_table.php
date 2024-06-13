@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id()->comment('Id of the game.');
             $table->string('name')->comment('Name of the game.');
             $table->string('slug')->unique()->comment('Slugify the name of the game.');
-            $table->foreignId('folder_id')->constrained('folders')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('folder_id')->comment('Folder associated to the game.')
+                ->constrained('folders')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('order')->comment('Order of this game.');
             $table->boolean('published')->comment('The game is published or not.');
             $table->timestamp('published_at')->nullable()->comment('The date on which the game was published.');

@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('ranks', function (Blueprint $table) {
             $table->id()->comment('Id of the rank.');
-            $table->foreignId('game_id')->constrained('games')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('game_id')->comment('Game associated to the rank.')
+                ->constrained('games')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('rank')->comment('Rank of the game.');
             $table->timestamps();
         });
