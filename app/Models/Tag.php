@@ -106,8 +106,8 @@ class Tag extends Model
         $slug  = Str::slug($tag->getTranslation('name', config('app.fallback_locale')) ?
             $tag->getTranslation('name', config('app.fallback_locale')) :
             $tag->name);
-        ToolboxHelper::assertFieldIsUnique($table, 'name', $tag->name, $tag->id);
-        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $tag->id);
+        ToolboxHelper::assertFieldIsUnique($table, 'name', $tag->name, $tag->getKey());
+        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $tag->getKey());
         $tag->slug = $slug;
     }
 

@@ -27,7 +27,7 @@
             @endcan
             @canAny(['delete', 'duplicate', 'update'], $userModel)
                 <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
-                    action="{{ route('bo.users.destroy', $userModel->id) }}" method="POST" novalidate>
+                    action="{{ route('bo.users.destroy', $userModel->getKey()) }}" method="POST" novalidate>
                     @can('duplicate', $userModel)
                         <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
                             href="{{ route('bo.users.duplicate', $userModel) }}"

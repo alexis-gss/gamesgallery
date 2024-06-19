@@ -70,7 +70,7 @@
                                     @canAny(['view', 'duplicate', 'update', 'delete'], $userModel)
                                         <form class="btn-group confirmActionTS"
                                             data-message="{{ __('crud.sweetalert.data_lost') }}"
-                                            action="{{ route('bo.users.destroy', $userModel->id) }}" method="POST" novalidate>
+                                            action="{{ route('bo.users.destroy', $userModel->getKey()) }}" method="POST" novalidate>
                                             @can('view', $userModel)
                                                 <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
                                                     href="{{ route('bo.users.show', $userModel) }}"

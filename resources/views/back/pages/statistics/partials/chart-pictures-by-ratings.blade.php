@@ -17,7 +17,7 @@
                 <p class="m-0">
             @endif
                 {{ __('bo_other_stats_picture_id', [
-                    'id' => $pictureRating->picture->id,
+                    'id' => $pictureRating->picture->getKey(),
                     'game' => $pictureRating->picture->game->name,
                 ]) }}
             @if ($pictureExist)

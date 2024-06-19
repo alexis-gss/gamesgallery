@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Custom cast Html Color
  */
-//phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterfaceAfterLastUsed
-//phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterfaceBeforeLastUsed
 class HtmlColor implements CastsAttributes
 {
     /**

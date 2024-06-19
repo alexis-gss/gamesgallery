@@ -119,8 +119,8 @@ class Folder extends Model
         $slug  = Str::slug($folder->mandatory && $folder->getTranslation('name', config('app.fallback_locale')) ?
             $folder->getTranslation('name', config('app.fallback_locale')) :
             $folder->name);
-        ToolboxHelper::assertFieldIsUnique($table, 'name', $folder->name, $folder->id);
-        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $folder->id);
+        ToolboxHelper::assertFieldIsUnique($table, 'name', $folder->name, $folder->getKey());
+        ToolboxHelper::assertFieldIsUnique($table, 'slug', $slug, $folder->getKey());
         $folder->slug = $slug;
     }
 

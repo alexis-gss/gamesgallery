@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception): \Symfony\Component\HttpFoundation\Response
     {
-        //phpcs:enable
+        // phpcs:enable
         if ($exception instanceof HttpExceptionInterface) {
             $statusCode = $exception->getStatusCode();
             return response()->make(view("errors.pages.{$statusCode}", ['exception' => $exception]), $statusCode);
