@@ -18,9 +18,11 @@ class HtmlColor implements CastsAttributes
      * @param mixed                               $value
      * @param array                               $attributes
      * @return string
+     * @phpcs:disable
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): string
     {
+        //phpcs:enable
         return "#" . $this->zeropad(dechex($value), 6);
     }
 
@@ -32,9 +34,11 @@ class HtmlColor implements CastsAttributes
      * @param mixed                               $value
      * @param array                               $attributes
      * @return integer
+     * @phpcs:disable
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): int
     {
+        //phpcs:enable
         return \intval(hexdec(ltrim($value, '#')));
     }
 
