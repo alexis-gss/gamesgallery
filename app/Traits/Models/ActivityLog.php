@@ -3,6 +3,7 @@
 namespace App\Traits\Models;
 
 use App\Observers\ModelObserver;
+use App\Models\ActivityLog as ActivityLogModel;
 
 /**
  * If there is a static function in a trait (named boot[TraitName]),
@@ -25,12 +26,12 @@ trait ActivityLog
     // * RELATIONS
 
     /**
-     * Get Activities of the Model (morph-to-many relationship).
+     * Get Activities of the Model (has-many relationship).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activityLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(ActivityLog::class);
+        return $this->hasMany(ActivityLogModel::class)->with('user');
     }
 }

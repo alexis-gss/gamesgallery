@@ -9,7 +9,7 @@ use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 
-class ActivityLogsController extends Controller
+class ActivityLogController extends Controller
 {
     use ChangesModelOrder;
     use UpdateModelPublished;
@@ -36,6 +36,12 @@ class ActivityLogsController extends Controller
         /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = ActivityLog::query()->with('user');
 
+        /** @var \App\Models\User|null $userModel */
+        $userModel = $request->route()->parameter('user');
+        if ($userModel) {
+            $query->where('user_id', $userModel->getKey());
+        }
+
         /** @var string $search Search field */
         $search = $request->search;
         if ($search) {
@@ -54,7 +60,12 @@ class ActivityLogsController extends Controller
         /** Custom pagination */
         $activitylogModels = $this->paginate($query);
 
-        return view('back.pages.activity_logs.index', compact('activitylogModels', 'search', 'searchFields'));
+        return view('back.pages.activity_logs.index', compact(
+            'activitylogModels',
+            'search',
+            'searchFields',
+            'userModel'
+        ));
     }
 
     /**

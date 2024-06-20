@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Bo\ActivityLogsController;
+use App\Http\Controllers\Bo\ActivityLogController;
 use App\Http\Controllers\Bo\HomeController;
 use App\Http\Controllers\Bo\GameController;
 use App\Http\Controllers\Bo\FolderController;
@@ -105,7 +105,11 @@ Route::prefix('bo')
                         ->name('users.duplicate');
 
                     // * ACTIVITY LOGS.
-                    Route::resource('activity_logs', ActivityLogsController::class)->only(['index', 'show']);
+                    Route::middleware('can:isConceptor')->group(function () {
+                        Route::resource('activity_logs', ActivityLogController::class)->only(['index', 'show']);
+                        Route::get('/activity_logs/user/{user:id}', [ActivityLogController::class, 'index'])
+                            ->name('activity_logs.user');
+                    });
                 });
 
             // * CHANGE LANGUAGES.

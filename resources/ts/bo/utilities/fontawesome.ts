@@ -18,6 +18,7 @@ import {
     faCircleExclamation,
     faCircleInfo,
     faCircleXmark,
+    faClockRotateLeft,
     faCopy,
     faCrop,
     faDeleteLeft,
@@ -105,6 +106,7 @@ library.add(
     faGears,
     faFilePen,
     faImages,
-    faTags
+    faTags,
+    faClockRotateLeft
 );
 dom.watch();

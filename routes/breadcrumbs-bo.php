@@ -140,6 +140,17 @@ Breadcrumbs::for('bo.activity_logs.index', function (Generator $trail) {
         route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc'])
     );
 });
+Breadcrumbs::for('bo.activity_logs.user', function (Generator $trail, User $userModel) {
+    $trail->push(
+        Str::ucfirst(sprintf(
+            '%s (%s %s)',
+            trans_choice('models.activity_log', 1),
+            $userModel->first_name,
+            $userModel->last_name
+        )),
+        route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc'])
+    );
+});
 Breadcrumbs::for('bo.activity_logs.show', function (Generator $trail, ActivityLog $activity_log) {
     $trail->parent('bo.activity_logs.index');
     $trail->push(Str::of(trans('crud.actions.show'))->ucfirst(), route('bo.activity_logs.show', $activity_log));

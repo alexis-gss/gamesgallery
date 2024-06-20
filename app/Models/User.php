@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Hash;
  * @method static void updatePassword(self $user)        Update model's password.
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
- * Get Activities of the User (morph-to-many relationship).
+ * Get Activities of the User (has-many relationship).
  */
 class User extends Authenticatable
 {

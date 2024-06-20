@@ -1,11 +1,12 @@
-@extends('back.layout')
+@extends('back.layout', ['brParam' => $userModel])
 
 @section('title', __('crud.meta.all_models', ['model' => trans_choice('models.activity_log', \INF)]))
 @section('description', __('crud.meta.all_models_list', ['model' => trans_choice('models.activity_log', \INF)]))
+@section('breadcrumb', request()->route()->getName())
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
-        @include('breadcrumbs.breadcrumb-body')
+        @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
     </div>
     @include('back.modules.search-bar')
     <div class="bg-body-tertiary border rounded-3 p-3 mb-3">

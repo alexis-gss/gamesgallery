@@ -21,7 +21,7 @@
                         <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.send_email') }}" method="POST"
                             action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                             @csrf
-                            <button class="btn btn-info rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
+                            <button class="btn btn-light rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
                                 title="{{ str(__('auth.reset_password_send'))->ucfirst() }}">
                                 <i class="fa-solid fa-key"></i>
                             </button>
@@ -33,9 +33,16 @@
                             @csrf
                             @method('DELETE')
                             <div class="btn-group" role="group">
+                                @can('isConceptor')
+                                    <a class="btn btn-info @can('resetPassword', $userModel) rounded-start-0 @endcan"
+                                        data-bs-tooltip="tooltip"
+                                        href="{{ route('bo.activity_logs.user', ['user' => $userModel]) }}"
+                                        title="{{ str(trans_choice('models.activity_log', 1))->ucfirst() }}">
+                                        <i class="fa-solid fa-clock-rotate-left"></i>
+                                    </a>
+                                @endcan
                                 @can('view', $userModel)
-                                    <a class="btn btn-warning @can('resetPassword', $userModel) rounded-start-0 @endcan"
-                                        data-bs-tooltip="tooltip" data-bs-placement="top"
+                                    <a class="btn btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
                                         href="{{ route('bo.users.show', ['user' => $userModel]) }}"
                                         title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}">
                                         <i class="fa-solid fa-eye"></i>

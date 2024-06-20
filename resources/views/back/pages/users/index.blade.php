@@ -67,44 +67,69 @@
                                     ])
                                 @endif
                                 <td @class(['text-end align-middle', 'border-0' => $loop->last])>
-                                    @canAny(['view', 'duplicate', 'update', 'delete'], $userModel)
-                                        <form class="btn-group confirmActionTS"
-                                            data-message="{{ __('crud.sweetalert.data_lost') }}"
-                                            action="{{ route('bo.users.destroy', $userModel->getKey()) }}" method="POST" novalidate>
-                                            @can('view', $userModel)
-                                                <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                                    href="{{ route('bo.users.show', $userModel) }}"
-                                                    title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </a>
+                                    <div class="btn-group">
+                                        @canAny(['view', 'duplicate', 'update', 'delete', 'resetPassword'], $userModel)
+                                            @can('resetPassword', $userModel)
+                                                <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.send_email') }}"
+                                                    method="POST"
+                                                    action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-light @canAny(['view', 'duplicate', 'update', 'delete'], $userModel) rounded-end-0 w-fit @endcan"
+                                                        data-bs-tooltip="tooltip" type="submit"
+                                                        title="{{ str(__('auth.reset_password_send'))->ucfirst() }}">
+                                                        <i class="fa-solid fa-key"></i>
+                                                    </button>
+                                                </form>
                                             @endcan
-                                            @can('duplicate', $userModel)
-                                                <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip"
-                                                    data-bs-placement="top" href="{{ route('bo.users.duplicate', $userModel) }}"
-                                                    title="{{ __('crud.actions_model.duplicate', ['model' => __('models.user')]) }}">
-                                                    <i class="fa-solid fa-copy"></i>
-                                                </a>
+                                            @canAny(['view', 'duplicate', 'update', 'delete'], $userModel)
+                                                <form class="btn-group confirmActionTS"
+                                                    data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                                    action="{{ route('bo.users.destroy', $userModel->getKey()) }}" method="POST"
+                                                    novalidate>
+                                                    @can('isConceptor')
+                                                        <a class="btn btn-sm btn-info" data-bs-tooltip="tooltip"
+                                                            href="{{ route('bo.activity_logs.user', ['user' => $userModel]) }}"
+                                                            title="{{ str(trans_choice('models.activity_log', 1))->ucfirst() }}">
+                                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('view', $userModel)
+                                                        <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip"
+                                                            data-bs-placement="top" href="{{ route('bo.users.show', $userModel) }}"
+                                                            title="{{ __('crud.actions_model.show', ['model' => __('models.user')]) }}">
+                                                            <i class="fa-solid fa-eye"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('duplicate', $userModel)
+                                                        <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip"
+                                                            data-bs-placement="top"
+                                                            href="{{ route('bo.users.duplicate', $userModel) }}"
+                                                            title="{{ __('crud.actions_model.duplicate', ['model' => __('models.user')]) }}">
+                                                            <i class="fa-solid fa-copy"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('update', $userModel)
+                                                        <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip"
+                                                            data-bs-placement="top" href="{{ route('bo.users.edit', $userModel) }}"
+                                                            title="{{ __('crud.actions_model.edit', ['model' => __('models.user')]) }}">
+                                                            <i class="fa-solid fa-pencil"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('delete', $userModel)
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-sm btn-danger" data-bs-tooltip="tooltip"
+                                                            data-bs-placement="top" type="submit"
+                                                            title="{{ __('crud.actions_model.delete', ['model' => __('models.user')]) }}">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    @endcan
+                                                </form>
                                             @endcan
-                                            @can('update', $userModel)
-                                                <a class="btn btn-sm btn-primary" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                                    href="{{ route('bo.users.edit', $userModel) }}"
-                                                    title="{{ __('crud.actions_model.edit', ['model' => __('models.user')]) }}">
-                                                    <i class="fa-solid fa-pencil"></i>
-                                                </a>
-                                            @endcan
-                                            @can('delete', $userModel)
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-sm btn-danger" data-bs-tooltip="tooltip"
-                                                    data-bs-placement="top" type="submit"
-                                                    title="{{ __('crud.actions_model.delete', ['model' => __('models.user')]) }}">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            @endcan
-                                        </form>
-                                    @else
-                                        @include('back.modules.user-right')
-                                    @endcan
+                                        @else
+                                            @include('back.modules.user-right')
+                                        @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
