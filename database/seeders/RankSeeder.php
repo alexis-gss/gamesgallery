@@ -14,6 +14,9 @@ class RankSeeder extends Seeder
      */
     public function run(): void
     {
-        Rank::factory(10)->create();
+        Rank::factory(10)->make()->each(function (Rank $rankModel, int $key) {
+            $rankModel->rank = $key + 1;
+            $rankModel->saveQuietly();
+        });
     }
 }

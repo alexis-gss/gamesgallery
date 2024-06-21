@@ -15,15 +15,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(5)->make()->each(function (User $user, int $key) {
-            $user->picture = FileStorageHelper::storeFile(
-                $user,
+        User::factory(5)->make()->each(function (User $userModel, int $key) {
+            $userModel->picture = FileStorageHelper::storeFile(
+                $userModel,
                 new \SplFileInfo(\resource_path(
                     '../database/factories/assets/users/default-user-picture.png'
                 ))
             );
-            $user->order   = $key + 1;
-            $user->saveQuietly();
+            $userModel->order   = $key + 1;
+            $userModel->saveQuietly();
         });
     }
 }

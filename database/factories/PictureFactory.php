@@ -20,7 +20,8 @@ final class PictureFactory extends Factory
         return [
             'uuid'      => fake()->uuid(),
             'label'     => "Picture",
-            'game_id'   => Game::query()->where('published', true)->get()->random(),
+            'game_id'   => fake()->randomElement(Game::pluck('id'))
+                ?? Game::factory()->createQuietly(['published' => true]),
             'published' => true,
         ];
     }

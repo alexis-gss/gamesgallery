@@ -26,6 +26,7 @@ final class FolderFactory extends Factory
             'mandatory'    => fake()->boolean(20),
             'published'    => $published,
             'published_at' => ($published) ? now() : null,
+            'order'        => 1,
         ];
     }
 }

@@ -24,6 +24,7 @@ final class TagFactory extends Factory
             'slug'         => Str::of($name)->slug(),
             'published'    => $published,
             'published_at' => ($published) ? now() : null,
+            'order'        => 1,
         ];
     }
 }

@@ -15,14 +15,14 @@ class GameSeeder extends Seeder
      */
     public function run(): void
     {
-        Game::factory(24)->create();
-
         // Seeder for taggables table.
         $tags = Tag::query()->get();
-        Game::query()->each(function (Game $model) use ($tags) {
+        Game::factory(24)->make()->each(function (Game $gameModel, $key) use ($tags) {
+            $gameModel->order = $key + 1;
+            $gameModel->saveQuietly();
             $offset = rand(0, 15);
             $length = rand(1, 2);
-            $model->tags()->saveMany($tags->slice($offset, $length));
+            $gameModel->tags()->saveMany($tags->slice($offset, $length));
         });
     }
 }

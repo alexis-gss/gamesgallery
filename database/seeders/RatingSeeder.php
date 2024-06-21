@@ -14,6 +14,9 @@ class RatingSeeder extends Seeder
      */
     public function run(): void
     {
-        Rating::factory(20)->create();
+        Rating::factory(20)->make()->each(function (Rating $ratingModel, int $key) {
+            $ratingModel->order = $key + 1;
+            $ratingModel->saveQuietly();
+        });
     }
 }

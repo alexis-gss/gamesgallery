@@ -18,7 +18,7 @@
         @can('viewAny', \App\Models\Game::class)
             <li class="nav-item">
                 <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.games.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                    title="{{ __('bo_tooltip_list_models', ['count' => count($globalGames), 'model' => trans_choice('models.game', \INF)]) }}"
+                    title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalGames) : 0, 'model' => trans_choice('models.game', \INF)]) }}"
                     @class([
                         'nav-link text-center',
                         'fw-bold active' => request()->routeIs('bo.games.*'),
@@ -28,7 +28,7 @@
         @can('viewAny', \App\Models\Folder::class)
             <li class="nav-item">
                 <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.folders.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                    title="{{ __('bo_tooltip_list_models', ['count' => count($globalFolders), 'model' => str(__('models.folder'))->plural()]) }}"
+                    title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalFolders) : 0, 'model' => str(__('models.folder'))->plural()]) }}"
                     @class([
                         'nav-link text-center',
                         'fw-bold active' => request()->routeIs('bo.folders.*'),
@@ -38,7 +38,7 @@
         @can('viewAny', \App\Models\Tag::class)
             <li class="nav-item">
                 <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.tags.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                    title="{{ __('bo_tooltip_list_models', ['count' => count($globalTags), 'model' => str(__('models.tag'))->plural()]) }}"
+                    title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalTags) : 0, 'model' => str(__('models.tag'))->plural()]) }}"
                     @class([
                         'nav-link text-center',
                         'fw-bold active' => request()->routeIs('bo.tags.*'),
@@ -49,7 +49,7 @@
             @can('viewAny', \App\Models\Rank::class)
                 <li class="nav-item">
                     <a data-bs-tooltip="tooltip" data-bs-placement="bottom" href="{{ route('bo.ranks.index') }}"
-                        title="{{ __('bo_tooltip_list_models', ['count' => count($globalRanks), 'model' => str(__('models.rank'))->plural()]) }}"
+                        title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalRanks) : 0, 'model' => str(__('models.rank'))->plural()]) }}"
                         @class([
                             'nav-link text-center',
                             'fw-bold active' => request()->routeIs('bo.ranks.*'),
@@ -68,7 +68,7 @@
                 <div class="dropdown-menu m-0 p-1 text-center" aria-labelledby="navbarDropdownAdmin">
                     @can('viewAny', \App\Models\StaticPage::class)
                         <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.static_pages.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalStaticPages), 'model' => trans_choice('models.static_page', \INF)]) }}"
+                            title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalStaticPages) : 0, 'model' => trans_choice('models.static_page', \INF)]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
                                 'active' => request()->routeIs('bo.static_pages.*'),
@@ -77,7 +77,7 @@
                     @can('viewAny', \App\Models\ActivityLog::class)
                         <hr class="dropdown-divider m-0">
                         <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.activity_logs.index', ['sort_col' => 'created_at', 'sort_way' => 'desc']) }}"
-                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalActivities), 'model' => trans_choice('models.activity_log', \INF)]) }}"
+                            title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalActivities) : 0, 'model' => trans_choice('models.activity_log', \INF)]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
                                 'active' => request()->routeIs('bo.activity_logs.*'),
@@ -86,7 +86,7 @@
                     @canAny(['isConceptor', 'viewAny'], \App\Models\User::class)
                         <hr class="dropdown-divider m-0">
                         <a data-bs-tooltip="tooltip" data-bs-placement="right" href="{{ route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                            title="{{ __('bo_tooltip_list_models', ['count' => count($globalUsers), 'model' => str(__('models.user'))->plural()]) }}"
+                            title="{{ __('bo_tooltip_list_models', ['count' => isset($globalGames) ? count($globalUsers) : 0, 'model' => str(__('models.user'))->plural()]) }}"
                             @class([
                                 'dropdown-item w-100 text-decoration-none p-2',
                                 'active' => request()->routeIs('bo.users.*'),

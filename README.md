@@ -37,7 +37,7 @@ You can find all the documentation of this project on this link : [Games Gallery
 
 You can create a [new issue](https://github.com/alexis-gss/games-gallery/issues/new/choose) with a specific templates : bug or feature.
 
-Once your code is working, please run the following commands `npm run stylelint`, `npm run eslint` and check `phpcs errors` to verify that your code is following the same coding standards.
+Once your code is working, please run the following commands `npm run stylelint`, `npm run eslint`, `./vendor/bin/phpstan`, `./vendor/bin/phpcs` and check tests `php artisan test` to verify that your code is following the same coding standards (in all cases, there is github actions that check this part).
 
 ### Fixing a Bug
 

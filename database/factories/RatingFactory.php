@@ -18,7 +18,8 @@ final class RatingFactory extends Factory
     public function definition(): array
     {
         return [
-            'picture_id' => Picture::query()->where('published', true)->get()->random()->getKey(),
+            'picture_id' => fake()->randomElement(Picture::pluck('id'))
+                ?? Picture::factory()->createQuietly(['published' => true]),
             'uuid'       => fake()->uuid(),
         ];
     }

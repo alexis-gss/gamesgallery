@@ -22,6 +22,7 @@
         "spatie/laravel-sitemap": "^7.2"
     },
     "require-dev": {
+        "alexis-gss/laravel-unit-tests": "^1.0.0",
         "fakerphp/faker": "^1.9.1",
         "larastan/larastan": "^2.6",
         "laravel-validation-rules/colour": "dev-l11-compatibility",
