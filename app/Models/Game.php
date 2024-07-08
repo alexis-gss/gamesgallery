@@ -214,4 +214,14 @@ class Game extends Model implements Sitemapable
     {
         return $this->belongsTo(Rank::class);
     }
+
+    /**
+     * Get Visits of the Game (has-many relationship).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visits(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Visit::class);
+    }
 }

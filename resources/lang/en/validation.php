@@ -202,6 +202,7 @@ return [
         ],
         'model'             => 'target element',
         'page_type'         => 'page type',
+        'published'         => 'published',
         'published_at'      => 'published at',
         'seo_description'   => 'SEO description',
         'seo_title'         => 'SEO title',
@@ -210,6 +211,7 @@ return [
         "order"             => "order",
         "pagination_items"  => "number of items per page",
         "publishment"       => "publishment",
+        "visits"            => ":count views",
     ],
     "rule"                 => [
         'select-single'       => 'Choose a :entity among the list.',

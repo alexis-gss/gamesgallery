@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Game;
 use App\Models\Rating;
+use App\Models\Visit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -17,12 +18,13 @@ class GameController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param string                   $slug
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function show(
         Request $request,
         string $slug
-    ): \Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse {
+    ): \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse {
+
         if ($gameModel = Game::query()->where('published', true)->where('slug', $slug)->first()) {
             /** @var array $gamePictures */
             $gamePictures = [];
@@ -51,14 +53,16 @@ class GameController extends Controller
                 return response()->json($gamePictures);
             }
 
-            return view('front.pages.game', [
+            $cookie = (new Visit())->setVisit($request, $gameModel);
+
+            return response(view('front.pages.game', [
                 'gameModel'    => $gameModel,
                 'gamePictures' => $gamePictures,
                 'ratingModels' => $ratingModels,
                 'gameModels'   => $this->getGamesPublished(true),
                 'folderModels' => $this->getFoldersPublished(),
                 'tagModels'    => $this->getTagsPublished(),
-            ]);
+            ]))->withCookie($cookie);
         } else {
             return redirect()->route('fo.games.index');
         } //end if

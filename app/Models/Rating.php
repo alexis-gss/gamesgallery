@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer                         $id         Id.
- * @property string                          $uuid       IP of the user.
+ * @property string                          $uuid       IP of the customer.
  * @property \App\Models\Picture             $picture_id Picture associated.
  * @property-read \Illuminate\Support\Carbon $created_at Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at Updated date.

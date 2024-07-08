@@ -160,6 +160,7 @@
     "fo_tooltip_footer_back": "Accéder à la partie administrative du projet",
     "fo_tooltip_footer_access_page": "Accéder à la page :pageName du projet",
     "fo_back_to_homepage": "Retourner à la liste des :model",
+    "fo_visits_counter": "visite",
     "fo_toast_like": "Vous venez d'ajouter un j'aime",
     "fo_toast_unlike": "Vous venez de supprimer votre j'aime",
     "fo_toast_details": "image n°:picturePlace du jeu :gameName",

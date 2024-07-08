@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->id()->comment('Id of the rating.');
+        Schema::create('visits', function (Blueprint $table) {
+            $table->id()->comment('Id of the visit.');
             $table->string('uuid')->comment('Universally Unique Identifier (UUID) of the customer.');
-            $table->foreignId('picture_id')->comment('Picture associated to the rating.')
-                ->constrained('pictures')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('game_id')->comment('Game associated to the counter of visits.')
+                ->constrained('games')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('visits');
     }
 };

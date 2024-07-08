@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faThumbsUp as farThumbsUp,
+    faEye as farEye,
+    faClock as farClock,
 } from "@fortawesome/free-regular-svg-icons";
 
 config.autoReplaceSvg = false;
@@ -31,6 +33,8 @@ library.add(
     farThumbsUp,
     faCircleCheck,
     faCircleExclamation,
-    faTriangleExclamation
+    faTriangleExclamation,
+    farEye,
+    farClock
 );
 dom.watch();

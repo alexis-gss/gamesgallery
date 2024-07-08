@@ -231,6 +231,7 @@ return [
         ],
         'model'             => 'élément ciblé',
         'page_type'         => 'type de page',
+        'published'         => 'publié',
         'published_at'      => 'publié le',
         'seo_description'   => 'description SEO',
         'seo_title'         => 'titre SEO',
@@ -238,6 +239,7 @@ return [
         "color"             => "couleur",
         "order"             => "ordre",
         "publishment"       => "état de publication",
+        "visits"            => ":count vues",
     ],
     "rule"                 => [
         'select-single'       => 'Sélectionner un :entity parmis la liste.',
