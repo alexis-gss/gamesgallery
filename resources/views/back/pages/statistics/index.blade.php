@@ -16,33 +16,46 @@
                 </div>
             </div>
         @endif
-        <!-- CHARTS -->
         <div class="row">
-            @if (count($activityModels))
-                <div class="col-12 mb-3">
-                    <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
-                        @include('back.pages.statistics.partials.chart-activities')
+            <!-- CHARTS -->
+            @php
+                $array = [
+                    ['models' => $activityModels, 'blade' => 'chart-activities'],
+                    ['models' => $globalTags, 'blade' => 'chart-games-by-tags'],
+                    ['models' => $globalFolders, 'blade' => 'chart-games-by-folders'],
+                ]
+            @endphp
+            @foreach($array as $item)
+                @if (count($item['models']))
+                    <div class="col-12 mb-3">
+                        <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
+                            @include("back.pages.statistics.partials.{$item['blade']}")
+                        </div>
                     </div>
-                </div>
-            @endif
-            @if (count($globalTags))
+                @endif
+            @endforeach
+            <!-- COUNTERS -->
+            @if (count($ratingModels) || count($visitModels))
                 <div class="col-12 mb-3">
                     <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
-                        @include('back.pages.statistics.partials.chart-games-by-tags')
-                    </div>
-                </div>
-            @endif
-            @if (count($globalFolders))
-                <div class="col-12 mb-3">
-                    <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
-                        @include('back.pages.statistics.partials.chart-games-by-folders')
-                    </div>
-                </div>
-            @endif
-            @if (count($picturesRatings))
-                <div class="col-12 mb-3">
-                    <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
-                        @include('back.pages.statistics.partials.chart-pictures-by-ratings')
+                        <div class="row">
+                            @php
+                                $arrayCounters = [
+                                    ['models' => $ratingModels, 'blade' => 'most-liked-pictures'],
+                                    ['models' => $visitModels, 'blade' => 'most-visited-pages'],
+                                ]
+                            @endphp
+                            @foreach($arrayCounters as $item)
+                                @if (count($item['models']))
+                                    <div @class([
+                                        'col-12',
+                                        'col-xxl-6' => count($item['models'])
+                                    ])>
+                                        @include("back.pages.statistics.partials.{$item['blade']}")
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             @endif

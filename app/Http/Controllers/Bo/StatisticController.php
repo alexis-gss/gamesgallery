@@ -10,8 +10,10 @@ use App\Models\Game;
 use App\Models\Rating;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Visit;
 use Illuminate\Support\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -34,13 +36,10 @@ class StatisticController extends Controller
             User::class,
         ];
 
-        $dateLastDays         = collect(CarbonPeriod::create(
+        $dateLastDays = collect(CarbonPeriod::create(
             $request->validated()['date_start'] ?? Carbon::now()->subDays(29),
             $request->validated()['date_end'] ?? Carbon::now()
         ));
-        $dateLastDaysFormated = $dateLastDays->map(function ($date) {
-            return $date->format('d/m');
-        })->toArray();
 
         collect($activitiesClass)->map(function ($class) use (&$activityModels, &$latestModels, $dateLastDays) {
             collect($dateLastDays->toArray())->map(function ($date) use (&$activityModels, $class) {
@@ -52,23 +51,38 @@ class StatisticController extends Controller
             $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->first() ?? [];
         });
 
-        $navLinks = $this->getNavTabsData($latestModels);
+        return view('back.pages.statistics.index', [
+            'navLinks' => $this->getNavTabsData($latestModels),
+            'activityModels' => $activityModels,
+            'dateLastDays' => $dateLastDays,
+            'dateLastDaysFormated' => $dateLastDays->map(function ($date) {
+                return $date->format('d/m');
+            })->toArray(),
+            'ratingModels' => $this->getTopFiveModels(new Rating(), 'picture', ['picture', 'picture.game']),
+            'visitModels' => $this->getTopFiveModels(new Visit(), 'game', ['game']),
+        ]);
+    }
 
-        $picturesRatings = Rating::query()
-            ->with(['picture', 'picture.game'])
-            ->select('picture_id', DB::raw('count(*) as ratings_count'))
-            ->groupBy('picture_id')
-            ->orderBy('ratings_count', 'desc')
+    /**
+     * Get the top 5 of specific models.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string                              $fieldName
+     * @param array                               $relations
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTopFiveModels(
+        Model $model,
+        string $fieldName,
+        array $relations = []
+    ): \Illuminate\Database\Eloquent\Collection {
+        return $model::query()
+            ->with($relations)
+            ->select("{$fieldName}_id", DB::raw('count(*) as count'))
+            ->groupBy("{$fieldName}_id")
+            ->orderBy('count', 'desc')
             ->take(5)
             ->get();
-
-        return view('back.pages.statistics.index', compact(
-            'navLinks',
-            'activityModels',
-            'dateLastDays',
-            'dateLastDaysFormated',
-            'picturesRatings',
-        ));
     }
 
     /**
