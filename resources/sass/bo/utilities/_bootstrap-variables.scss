@@ -1,6 +1,7 @@
 // * OVERRIDE BOOTSTRAP COLORS
 $primary: $color-primary;
 $secondary: $color-secondary;
+$tertiary: $color-tertiary;
 $success: $color-success;
 $info: $color-info;
 $warning: $color-warning;
@@ -10,6 +11,7 @@ $dark: $color-dark;
 $theme-colors: (
     primary: $primary,
     secondary: $secondary,
+    tertiary: $tertiary,
     success: $success,
     info: $info,
     warning: $warning,

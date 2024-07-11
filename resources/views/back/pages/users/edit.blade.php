@@ -18,8 +18,10 @@
                 </div>
                 <div class="btn-group">
                     @can('resetPassword', $userModel)
-                        <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.send_email') }}" method="POST"
-                            action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
+                        <form class="confirmActionTS"
+                            data-sweetalert-message="{{ __('crud.sweetalert.send_email', ['modelName' => sprintf('%s %s', $userModel->first_name, $userModel->last_name)]) }}"
+                            data-sweetalert-btn-accept="{{ __('crud.sweetalert.send') }}" data-sweetalert-btn-color="success"
+                            method="POST" action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                             @csrf
                             <button class="btn btn-light rounded-end-0 w-fit" data-bs-tooltip="tooltip" type="submit"
                                 title="{{ str(__('auth.reset_password_send'))->ucfirst() }}">
@@ -28,7 +30,8 @@
                         </form>
                     @endcan
                     @canAny(['view', 'duplicate', 'update', 'delete'], $userModel)
-                        <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                        <form class="confirmActionTS"
+                            data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => sprintf('%s %s', $userModel->first_name, $userModel->last_name)]) }}"
                             action="{{ route('bo.users.destroy', $userModel) }}" method="POST">
                             @csrf
                             @method('DELETE')

@@ -7,7 +7,8 @@
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         @include('breadcrumbs.breadcrumb-body')
         @can('create', \App\Models\Folder::class)
-            <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('bo.folders.create') }}"
+            <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top"
+                href="{{ route('bo.folders.create') }}"
                 title="{{ __('crud.actions_model.create', ['model' => __('models.folder')]) }}">
                 <i class="fa-solid fa-plus"></i>
             </a>
@@ -66,7 +67,9 @@
                                     'model' => $folderModel,
                                 ])
                                 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
-                                    <span class="badge rounded-pill text-bg-secondary">{{ $folderModel->updated_at->isoFormat('LLLL') }}</span>
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ $folderModel->updated_at->isoFormat('LLLL') }}
+                                    </span>
                                 </td>
                                 @php $routeName = request()->route()->getName(); @endphp
                                 @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')
@@ -78,7 +81,8 @@
                                 @endif
                                 <td @class(['text-end align-middle', 'border-0' => $loop->last])>
                                     @canAny(['view', 'duplicate', 'update', 'delete'], $folderModel)
-                                        <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                        <form class="btn-group confirmActionTS"
+                                            data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $folderModel->name]) }}"
                                             action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST" novalidate>
                                             @can('view', $folderModel)
                                                 <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"
@@ -88,7 +92,8 @@
                                                 </a>
                                             @endcan
                                             @can('duplicate', $folderModel)
-                                                <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                                <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip"
+                                                    data-bs-placement="top"
                                                     href="{{ route('bo.folders.duplicate', ['folder' => $folderModel]) }}"
                                                     title="{{ __('crud.actions_model.duplicate', ['model' => __('models.folder')]) }}">
                                                     <i class="fa-solid fa-copy"></i>
@@ -104,7 +109,8 @@
                                             @can('delete', $folderModel)
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                                                <button class="btn btn-sm btn-danger" data-bs-tooltip="tooltip"
+                                                    data-bs-placement="top" type="submit"
                                                     title="{{ __('crud.actions_model.delete', ['model' => __('models.folder')]) }}">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>

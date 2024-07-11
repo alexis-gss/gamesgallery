@@ -15,7 +15,8 @@
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $tagModel])
         </div>
         @canAny(['duplicate', 'update', 'delete'], $tagModel)
-            <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+            <form class="btn-group confirmActionTS"
+                data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $tagModel->name]) }}"
                 action="{{ route('bo.tags.destroy', $tagModel) }}" method="POST" novalidate>
                 @can('duplicate', $tagModel)
                     <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"

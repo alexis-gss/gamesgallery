@@ -252,13 +252,15 @@ function deleteRank(e: Event, model: RankObject): void|boolean {
     }
     promise = new Promise((resolve: (value: boolean) => void) => {
       sweetalert.methods.confirm(
-        "Confirmez",
-        "Êtes vous sure ?",
         btnConfirmDelete,
         function (response) {
           resolve(response.isConfirmed);
         },
-        { icon: "warning" }
+        { icon: "warning" },
+        undefined,
+        trans.methods.__("crud.sweetalert.delete_element", {"modelName": model.game_name}),
+        undefined,
+        undefined,
       );
       return false;
     });

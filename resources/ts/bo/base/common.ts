@@ -1,6 +1,5 @@
 import type { SweetAlertResult } from "sweetalert2";
 import sweetalert from "../../modules/sweetalert";
-import * as trans from "../../modules/trans";
 
 window.addEventListener("DOMContentLoaded", () => {
     /**
@@ -19,14 +18,17 @@ window.addEventListener("DOMContentLoaded", () => {
                 );
             }
             sweetalert.methods.confirm(
-                trans.default.methods.__("crud.sweetalert.are_you_sure"),
-                el.getAttribute("data-message") ?? undefined,
                 el,
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 function (response: SweetAlertResult<any>) {
                     el.submit();
                 },
-                { icon: "warning" }
+                { icon: "warning" },
+                el.getAttribute("data-sweetalert-title") ?? undefined,
+                el.getAttribute("data-sweetalert-message") ?? undefined,
+                el.getAttribute("data-sweetalert-btn-accept") ?? undefined,
+                el.getAttribute("data-sweetalert-btn-deny") ?? undefined,
+                el.getAttribute("data-sweetalert-btn-color") ?? undefined,
             );
             return false;
         });

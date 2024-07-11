@@ -55,11 +55,13 @@ return [
         'sort_arrow'      => 'Here, the arrows are used to sort and not to filter',
     ],
     'sweetalert' => [
-        'confirm'      => 'Yes, delete !',
-        'cancel'       => 'No, keep it',
-        'are_you_sure' => 'Are you sure ?',
-        'data_lost'    => 'All data will be lost.',
-        'send_email'   => 'The user will receive a password reset e-mail.',
+        'send'           => 'Yes, send !',
+        'confirm'        => 'Yes, delete !',
+        'cancel'         => 'No, give up',
+        'are_you_sure'   => 'Are you sure ?',
+        'data_lost'      => 'All data will be lost.',
+        'delete_element' => 'This element <strong>:modelName</strong> gonna be delete.',
+        'send_email'     => 'This user <strong>:modelName</strong> will receive a password reset e-mail.',
     ],
     'meta' => [
         'all_models'          => 'All :model',

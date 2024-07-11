@@ -7,7 +7,8 @@
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         @include('breadcrumbs.breadcrumb-body')
         @can('create', \App\Models\Game::class)
-            <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('bo.games.create') }}"
+            <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top"
+                href="{{ route('bo.games.create') }}"
                 title="{{ __('crud.actions_model.create', ['model' => trans_choice('models.game', 1)]) }}">
                 <i class="fa-solid fa-plus"></i>
             </a>
@@ -55,14 +56,17 @@
                                 </td>
                                 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
                                     <p class="m-0">
-                                        {{ isset($gameModel->pictures) && count($gameModel->pictures) ? count($gameModel->pictures) : 0 }}</p>
+                                        {{ isset($gameModel->pictures) && count($gameModel->pictures) ? count($gameModel->pictures) : 0 }}
+                                    </p>
                                 </td>
                                 @include('back.modules.change-published-status', [
                                     'routeName' => 'games',
                                     'model' => $gameModel,
                                 ])
                                 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
-                                    <span class="badge rounded-pill text-bg-secondary">{{ $gameModel->updated_at->isoFormat('LLLL') }}</span>
+                                    <span class="badge rounded-pill text-bg-secondary">
+                                        {{ $gameModel->updated_at->isoFormat('LLLL') }}
+                                    </span>
                                 </td>
                                 @php $routeName = request()->route()->getName(); @endphp
                                 @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')
@@ -74,7 +78,8 @@
                                 @endif
                                 <td @class(['text-end align-middle', 'border-0' => $loop->last])>
                                     @canAny(['delete', 'duplicate', 'update', 'view'], $gameModel)
-                                        <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                        <form class="btn-group confirmActionTS"
+                                            data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $gameModel->name]) }}"
                                             action="{{ route('bo.games.destroy', $gameModel) }}" method="POST" novalidate>
                                             @if ($gameModel->published)
                                                 @can('view', $gameModel)
@@ -94,7 +99,8 @@
                                                 </a>
                                             @endcan
                                             @can('duplicate', $gameModel)
-                                                <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                                <a class="btn btn-sm btn-secondary" data-bs-tooltip="tooltip"
+                                                    data-bs-placement="top"
                                                     href="{{ route('bo.games.duplicate', ['game' => $gameModel]) }}"
                                                     title="{{ __('crud.actions_model.duplicate', ['model' => trans_choice('models.game', 1)]) }}">
                                                     <i class="fa-solid fa-copy"></i>
@@ -110,7 +116,8 @@
                                             @can('delete', $gameModel)
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                                                <button class="btn btn-sm btn-danger" data-bs-tooltip="tooltip"
+                                                    data-bs-placement="top" type="submit"
                                                     title="{{ __('crud.actions_model.delete', ['model' => trans_choice('models.game', 1)]) }}">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
@@ -125,7 +132,9 @@
                     </tbody>
                 @else
                     <tr>
-                        <td class="border-0">{{ __('crud.other.no_model_found', ['model' => trans_choice('models.game', 1)]) }}</td>
+                        <td class="border-0">
+                            {{ __('crud.other.no_model_found', ['model' => trans_choice('models.game', 1)]) }}
+                        </td>
                     </tr>
                 @endif
             </table>

@@ -57,11 +57,13 @@ return [
         'sort_arrow'      => 'Ici, les flèches sont utilisées pour trier et non pour filtrer',
     ],
     'sweetalert' => [
-        'confirm'      => 'Oui, supprimer !',
-        'cancel'       => 'Non, annuler',
-        'are_you_sure' => 'Êtes-vous sûr ?',
-        'data_lost'    => 'Toutes les données seront perdues.',
-        'send_email'   => 'L\'utilisateur recevra un e-mail de réinitialisation du mot de passe.',
+        'send'           => 'Oui, envoyer !',
+        'confirm'        => 'Oui, supprimer !',
+        'cancel'         => 'Non, annuler',
+        'are_you_sure'   => 'Êtes-vous sûr ?',
+        'data_lost'      => 'Toutes les données seront perdues.',
+        'delete_element' => 'L\'élément <strong>:modelName</strong> sera supprimé.',
+        'send_email'     => 'L\'utilisateur <strong>:modelName</strong> recevra un e-mail de réinitialisation du mot de passe.',
     ],
     'meta' => [
         'all_models'          => 'Intégralité des :model',

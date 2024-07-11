@@ -18,7 +18,8 @@
                 </div>
                 <div class="mb-md-0 mb-2">
                     @canAny(['view', 'duplicate', 'update', 'delete'], $folderModel)
-                        <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                        <form class="confirmActionTS"
+                            data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $folderModel->name]) }}"
                             action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -38,7 +39,8 @@
                                     </a>
                                 @endcan
                                 @can('update', $folderModel)
-                                    <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                                    <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip"
+                                        data-bs-placement="top" type="submit"
                                         title="{{ __('crud.actions_model.save', ['model' => __('models.folder')]) }}">
                                         <i class="fa-solid fa-floppy-disk"></i>
                                     </button>
@@ -74,8 +76,8 @@
             @include('back.partials.script-button-clone')
             <div class="row mt-3">
                 <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                        title="{{ __('crud.actions_model.save', ['model' => __('models.folder')]) }}">
+                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top"
+                        type="submit" title="{{ __('crud.actions_model.save', ['model' => __('models.folder')]) }}">
                         <i class="fa-solid fa-floppy-disk"></i>
                     </button>
                 </div>

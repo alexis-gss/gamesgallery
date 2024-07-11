@@ -18,7 +18,8 @@
                 </div>
                 <div class="mb-md-0 mb-2">
                     @canAny(['view', 'duplicate', 'update', 'delete'], $gameModel)
-                        <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+                        <form class="confirmActionTS"
+                            data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $gameModel->name]) }}"
                             action="{{ route('bo.games.destroy', $gameModel) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -26,7 +27,8 @@
                                 @if ($gameModel->published)
                                     <a class="btn btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"
                                         href="{{ route('fo.games.show', $gameModel->slug) }}"
-                                        title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}" target="_blank">
+                                        title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}"
+                                        target="_blank">
                                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </a>
                                 @endif
@@ -45,7 +47,8 @@
                                     </a>
                                 @endcan
                                 @can('update', $gameModel)
-                                    <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                                    <button class="btn btn-primary" id="formSubmitClone" data-bs-tooltip="tooltip"
+                                        data-bs-placement="top" type="submit"
                                         title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
                                         <i class="fa-solid fa-floppy-disk"></i>
                                     </button>
@@ -81,7 +84,8 @@
             @include('back.partials.script-button-clone')
             <div class="row mt-3">
                 <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
+                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top"
+                        type="submit"
                         title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
                         <i class="fa-solid fa-floppy-disk"></i>
                     </button>

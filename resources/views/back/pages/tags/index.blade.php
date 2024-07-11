@@ -66,7 +66,7 @@
                                 <td @class(['text-end align-middle', 'border-0' => $loop->last])>
                                     @canAny(['view', 'duplicate', 'update', 'delete'], $tagModel)
                                         <form class="btn-group confirmActionTS"
-                                            data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                            data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $tagModel->name]) }}"
                                             action="{{ route('bo.tags.destroy', $tagModel) }}" method="POST" novalidate>
                                             @can('view', $tagModel)
                                                 <a class="btn btn-sm btn-warning" data-bs-tooltip="tooltip" data-bs-placement="top"

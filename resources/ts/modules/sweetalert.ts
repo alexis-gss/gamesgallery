@@ -6,14 +6,17 @@ import * as trans from "../modules/trans";
 export default {
     methods: {
         confirm(
-            title: string,
-            text = "",
             self: Object,
             after: (response: SweetAlertResult<any>) => void = (
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 response: SweetAlertResult<any>
             ) => {},
-            options: SweetAlertOptions = {}
+            options: SweetAlertOptions = {},
+            title: string = trans.default.methods.__("crud.sweetalert.are_you_sure"),
+            text: string = trans.default.methods.__("crud.sweetalert.data_lost"),
+            btnAccept: string = trans.default.methods.__("crud.sweetalert.confirm"),
+            btnDeny: string = trans.default.methods.__("crud.sweetalert.cancel"),
+            btnColor: string = "danger",
         ) {
             if (!self) {
                 throw Error("Self is needed to set \"this\" on callback");
@@ -24,18 +27,18 @@ export default {
             const icon = options.icon ?? "warning";
             Swal.fire({
                 title: title,
-                text: text,
+                html: text,
                 color: getComputedStyle(document.body).getPropertyValue("--bs-body-color"),
                 icon: icon,
                 showCancelButton: true,
-                confirmButtonText: trans.default.methods.__("crud.sweetalert.confirm"),
-                cancelButtonText: trans.default.methods.__("crud.sweetalert.cancel"),
+                confirmButtonText: btnAccept,
+                cancelButtonText: btnDeny,
                 showCloseButton: true,
                 allowEscapeKey: true,
                 reverseButtons: true,
                 // * Bootstrap Styling
                 customClass: {
-                    confirmButton: "btn btn-danger mx-1",
+                    confirmButton: `btn mx-1 btn-${btnColor}`,
                     cancelButton: "btn btn-secondary mx-1",
                 },
                 buttonsStyling: false,

@@ -70,8 +70,10 @@
                                     <div class="btn-group">
                                         @canAny(['view', 'duplicate', 'update', 'delete', 'resetPassword'], $userModel)
                                             @can('resetPassword', $userModel)
-                                                <form class="confirmActionTS" data-message="{{ __('crud.sweetalert.send_email') }}"
-                                                    method="POST"
+                                                <form class="confirmActionTS"
+                                                    data-sweetalert-message="{{ __('crud.sweetalert.send_email', ['modelName' => sprintf('%s %s', $userModel->first_name, $userModel->last_name)]) }}"
+                                                    data-sweetalert-btn-accept="{{ __('crud.sweetalert.send') }}"
+                                                    data-sweetalert-btn-color="success" method="POST"
                                                     action="{{ route('bo.password.email', ['email' => $userModel->email]) }}">
                                                     @csrf
                                                     <button class="btn btn-sm btn-light @canAny(['view', 'duplicate', 'update', 'delete'], $userModel) rounded-end-0 w-fit @endcan"
@@ -83,7 +85,7 @@
                                             @endcan
                                             @canAny(['view', 'duplicate', 'update', 'delete'], $userModel)
                                                 <form class="btn-group confirmActionTS"
-                                                    data-message="{{ __('crud.sweetalert.data_lost') }}"
+                                                    data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => sprintf('%s %s', $userModel->first_name, $userModel->last_name)]) }}"
                                                     action="{{ route('bo.users.destroy', $userModel->getKey()) }}" method="POST"
                                                     novalidate>
                                                     @can('isConceptor')

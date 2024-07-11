@@ -15,7 +15,8 @@
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
         </div>
         @canAny(['duplicate', 'update', 'delete'], $gameModel)
-            <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+            <form class="btn-group confirmActionTS"
+                data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $gameModel->name]) }}"
                 action="{{ route('bo.games.destroy', $gameModel) }}" method="POST" novalidate>
                 @if ($gameModel->published)
                     <a class="btn btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"

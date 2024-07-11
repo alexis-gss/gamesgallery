@@ -15,7 +15,8 @@
             @include('breadcrumbs.breadcrumb-body', ['brParam' => $folderModel])
         </div>
         @canAny(['duplicate', 'update', 'delete'], $folderModel)
-            <form class="btn-group confirmActionTS" data-message="{{ __('crud.sweetalert.data_lost') }}"
+            <form class="btn-group confirmActionTS"
+                data-sweetalert-message="{{ __('crud.sweetalert.delete_element', ['modelName' => $folderModel->name]) }}"
                 action="{{ route('bo.folders.destroy', $folderModel) }}" method="POST" novalidate>
                 @can('duplicate', $folderModel)
                     <a class="btn btn-secondary" data-bs-tooltip="tooltip" data-bs-placement="top"
