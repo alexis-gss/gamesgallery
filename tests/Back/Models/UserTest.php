@@ -1,38 +1,39 @@
 <?php
 
-namespace Tests\Back;
+namespace Tests\Back\Models;
 
+use App\Enums\ActivityLogs\ActivityLogsEventEnum;
 use App\Enums\Users\RoleEnum;
-use App\Models\Game;
-
+use App\Models\ActivityLog;
+use App\Models\User;
 use App\Models\User as AuthModel;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
-class GameTest extends TestCase
+class UserTest extends TestCase
 {
     /**
      * TESTS GUEST CANNOT ACCESS ROUTES
      */
 
     /** @return void */
-    public function testGuestCannotAccessGamesIndex(): void
+    public function testGuestCannotAccessUsersIndex(): void
     {
         $response = $this->get(route(
             config('unit-tests.route.prefix') .
-                'games.' .
+                'users.' .
                 config('unit-tests.view.resources-index')
         ));
         $response->assertRedirect(route(config('unit-tests.route.prefix') . 'login'));
     }
 
     /** @return void */
-    public function testGuestCannotAccessGamesShow(): void
+    public function testGuestCannotAccessUsersShow(): void
     {
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->get(route(
             config('unit-tests.route.prefix') .
-                'games.' .
+                'users.' .
                 config('unit-tests.view.resources-read'),
             $model->getKey()
         ));
@@ -40,23 +41,23 @@ class GameTest extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotAccessGamesCreate(): void
+    public function testGuestCannotAccessUsersCreate(): void
     {
         $response = $this->get(route(
             config('unit-tests.route.prefix') .
-                'games.' .
+                'users.' .
                 config('unit-tests.view.resources-create')
         ));
         $response->assertRedirect(route(config('unit-tests.route.prefix') . 'login'));
     }
 
     /** @return void */
-    public function testGuestCannotAccessGamesEdit(): void
+    public function testGuestCannotAccessUsersEdit(): void
     {
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->get(route(
             config('unit-tests.route.prefix') .
-                'games.' .
+                'users.' .
                 config('unit-tests.view.resources-update'),
             $model->getKey()
         ));
@@ -68,12 +69,12 @@ class GameTest extends TestCase
      */
 
     /** @return void */
-    public function testGuestCannotCreateGame(): void
+    public function testGuestCannotCreateUser(): void
     {
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->post(
             route(
-                config('unit-tests.route.prefix') . 'games.' . config('unit-tests.route.action-create'),
+                config('unit-tests.route.prefix') . 'users.' . config('unit-tests.route.action-create'),
                 $model->getKey()
             ),
             $model->toArray()
@@ -82,12 +83,12 @@ class GameTest extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotEditGame(): void
+    public function testGuestCannotEditUser(): void
     {
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->patch(
             route(
-                config('unit-tests.route.prefix') . 'games.' . config('unit-tests.route.action-update'),
+                config('unit-tests.route.prefix') . 'users.' . config('unit-tests.route.action-update'),
                 $model->getKey()
             ),
             $model->toArray()
@@ -96,12 +97,12 @@ class GameTest extends TestCase
     }
 
     /** @return void */
-    public function testGuestCannotDestroyGame(): void
+    public function testGuestCannotDestroyUser(): void
     {
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->delete(
             route(
-                config('unit-tests.route.prefix') . 'games.' . config('unit-tests.route.action-delete'),
+                config('unit-tests.route.prefix') . 'users.' . config('unit-tests.route.action-delete'),
                 $model->getKey()
             ),
             $model->toArray()
@@ -114,67 +115,67 @@ class GameTest extends TestCase
      */
 
     /** @return void */
-    public function testUserConceptorCanAccessGamesIndexView(): void
+    public function testUserConceptorCanAccessUsersIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
         $authModel->update(['role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
-            route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-index'))
+            route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-index'))
         );
         $response->assertSuccessful();
         $response->assertViewIs(
             config('unit-tests.view.prefix') .
-                'pages.games.' .
+                'pages.users.' .
                 config('unit-tests.view.resources-index')
         );
     }
 
     /** @return void */
-    public function testUserConceptorCanAccessGamesReadView(): void
+    public function testUserConceptorCanAccessUsersReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
         $authModel->update(['role' => RoleEnum::conceptor]);
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
-            route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-read'), $model)
+            route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-read'), $model)
         );
         $response->assertSuccessful();
         $response->assertViewIs(
             config('unit-tests.view.prefix') .
-                'pages.games.' .
+                'pages.users.' .
                 config('unit-tests.view.resources-read')
         );
     }
 
     /** @return void */
-    public function testUserConceptorCanAccessGamesCreateView(): void
+    public function testUserConceptorCanAccessUsersCreateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
         $authModel->update(['role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
-            route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-create'))
+            route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-create'))
         );
         $response->assertSuccessful();
         $response->assertViewIs(
             config('unit-tests.view.prefix') .
-                'pages.games.' .
+                'pages.users.' .
                 config('unit-tests.view.resources-create')
         );
     }
 
     /** @return void */
-    public function testUserConceptorCanAccessGamesEditView(): void
+    public function testUserConceptorCanAccessUsersEditView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
         $authModel->update(['role' => RoleEnum::conceptor]);
-        $model    = Game::factory()->createOneQuietly();
+        $model    = User::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
-            route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-update'), $model)
+            route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-update'), $model)
         );
         $response->assertSuccessful();
         $response->assertViewIs(
             config('unit-tests.view.prefix') .
-                'pages.games.' .
+                'pages.users.' .
                 config('unit-tests.view.resources-update')
         );
     }
@@ -184,36 +185,61 @@ class GameTest extends TestCase
      */
 
     /** @return void */
-    public function testCanCreateGame(): void
+    public function testCanCreateUser(): void
     {
-        $gameCreated = Game::factory()->createOneQuietly();
-        $this->assertModelExists($gameCreated);
+        $userCreated = User::factory()->createOneQuietly();
+        $this->assertModelExists($userCreated);
     }
 
     /** @return void */
-    public function testCanUpdateGame(): void
+    public function testCanUpdateUser(): void
     {
-        $game = Game::factory()->createOneQuietly();
+        $user = User::factory()->createOneQuietly();
 
         $fieldTest = "";
         foreach (config('unit-tests.list-fields') as $field) {
-            if (Schema::hasColumn($game->getTable(), $field)) {
-                $game->update([$field => "test"]);
+            if (Schema::hasColumn($user->getTable(), $field)) {
+                $user->update([$field => "test"]);
                 $fieldTest = $field;
                 break;
             }
         }
 
-        $this->assertTrue($game->wasChanged());
-        $this->assertTrue(array_key_exists($fieldTest, $game->getChanges()));
-        $this->assertModelExists($game);
+        $this->assertTrue($user->wasChanged());
+        $this->assertTrue(array_key_exists($fieldTest, $user->getChanges()));
+        $this->assertModelExists($user);
     }
 
     /** @return void */
-    public function testCanDestroyGame(): void
+    public function testCanDestroyUser(): void
     {
-        $gameDeleted = Game::factory()->createOneQuietly();
-        $gameDeleted->delete();
-        $this->assertModelMissing($gameDeleted);
+        $userDeleted = User::factory()->createOneQuietly();
+        $userDeleted->delete();
+        $this->assertModelMissing($userDeleted);
+    }
+
+    /**
+     * TESTS RELATIONS
+     */
+
+    /** @return void */
+    public function testRelationActivityLogs(): void
+    {
+        $user        = User::factory()->createOneQuietly();
+        $activityLog = ActivityLog::factory()->createOneQuietly([
+            'user_id'      => null,
+            'is_anonymous' => true,
+            'is_console'   => false,
+            'model_class'  => sprintf("\%s", get_class($user)),
+            'model_id'     => $user->getKey(),
+            'event'        => ActivityLogsEventEnum::created->value(),
+            'data'         => [],
+            'created_at'   => now(),
+        ]);
+        $this->assertModelExists($user);
+        $this->assertModelExists($activityLog);
+        $this->assertIsObject($user->activityLogs);
+        $this->assertCount(1, $user->activityLogs);
+        $this->assertInstanceOf(ActivityLog::class, $user->activityLogs->first());
     }
 }

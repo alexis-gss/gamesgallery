@@ -6,9 +6,9 @@ use App\Models\Game;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<\App\Models\Picture>
+ * @extends Factory<\App\Models\Visit>
  */
-final class PictureFactory extends Factory
+final class VisitFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,11 +18,9 @@ final class PictureFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid'      => fake()->uuid(),
-            'label'     => "Picture",
-            'game_id'   => fake()->randomElement(Game::pluck('id'))
+            'uuid'    => fake()->uuid(),
+            'game_id' => fake()->randomElement(Game::pluck('id'))
                 ?? Game::factory()->createQuietly(['published' => true]),
-            'published' => true,
         ];
     }
 }

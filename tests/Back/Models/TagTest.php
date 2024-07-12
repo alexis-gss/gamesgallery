@@ -1,10 +1,12 @@
 <?php
 
-namespace Tests\Back;
+namespace Tests\Back\Models;
 
+use App\Enums\ActivityLogs\ActivityLogsEventEnum;
 use App\Enums\Users\RoleEnum;
+use App\Models\ActivityLog;
+use App\Models\Game;
 use App\Models\Tag;
-
 use App\Models\User as AuthModel;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -215,5 +217,44 @@ class TagTest extends TestCase
         $tagDeleted = Tag::factory()->createOneQuietly();
         $tagDeleted->delete();
         $this->assertModelMissing($tagDeleted);
+    }
+
+    /**
+     * TESTS RELATIONS
+     */
+
+    /** @return void */
+    public function testRelationGames(): void
+    {
+        $tag  = Tag::factory()->createOneQuietly();
+        $game = Game::factory()->createOneQuietly();
+        (new Tag())->setTags($game, collect([$tag->toArray()]));
+        $this->assertModelExists($tag);
+        $this->assertModelExists($game);
+        $this->assertIsObject($tag->games);
+        $this->assertCount(1, $tag->games);
+        $this->assertInstanceOf(Game::class, $tag->games->first());
+        $this->assertDatabaseCount('taggables', 1);
+    }
+
+    /** @return void */
+    public function testRelationActivityLogs(): void
+    {
+        $tag         = Tag::factory()->createOneQuietly();
+        $activityLog = ActivityLog::factory()->createOneQuietly([
+            'user_id'      => null,
+            'is_anonymous' => true,
+            'is_console'   => false,
+            'model_class'  => sprintf("\%s", get_class($tag)),
+            'model_id'     => $tag->getKey(),
+            'event'        => ActivityLogsEventEnum::created->value(),
+            'data'         => [],
+            'created_at'   => now(),
+        ]);
+        $this->assertModelExists($tag);
+        $this->assertModelExists($activityLog);
+        $this->assertIsObject($tag->activityLogs);
+        $this->assertCount(1, $tag->activityLogs);
+        $this->assertInstanceOf(ActivityLog::class, $tag->activityLogs->first());
     }
 }

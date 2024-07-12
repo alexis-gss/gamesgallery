@@ -7,6 +7,7 @@ use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use App\Traits\Models\SchemaOrg;
 use App\Traits\Models\Sitemap;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\SchemaOrg\Schema;
 use Spatie\Sitemap\Contracts\Sitemapable;
@@ -30,6 +31,7 @@ use Spatie\Sitemap\Tags\Url;
 class StaticPage extends Model implements Sitemapable
 {
     use ActivityLog;
+    use HasFactory;
     use HasTranslations;
     use SchemaOrg;
     use Sitemap;

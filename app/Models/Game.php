@@ -208,11 +208,11 @@ class Game extends Model implements Sitemapable
     /**
      * Get Rank of the Game (belongs-to relationship).
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|null
      */
-    public function rank(): \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+    public function rank(): \Illuminate\Database\Eloquent\Relations\HasOne|null
     {
-        return $this->belongsTo(Rank::class);
+        return $this->hasOne(Rank::class);
     }
 
     /**

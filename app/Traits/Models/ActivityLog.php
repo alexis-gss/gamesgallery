@@ -32,6 +32,6 @@ trait ActivityLog
      */
     public function activityLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(ActivityLogModel::class)->with('user');
+        return $this->hasMany(ActivityLogModel::class, 'model_id')->with('user');
     }
 }

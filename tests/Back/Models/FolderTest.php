@@ -1,10 +1,12 @@
 <?php
 
-namespace Tests\Back;
+namespace Tests\Back\Models;
 
+use App\Enums\ActivityLogs\ActivityLogsEventEnum;
 use App\Enums\Users\RoleEnum;
+use App\Models\ActivityLog;
 use App\Models\Folder;
-
+use App\Models\Game;
 use App\Models\User as AuthModel;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -215,5 +217,42 @@ class FolderTest extends TestCase
         $folderDeleted = Folder::factory()->createOneQuietly();
         $folderDeleted->delete();
         $this->assertModelMissing($folderDeleted);
+    }
+
+    /**
+     * TESTS RELATIONS
+     */
+
+    /** @return void */
+    public function testRelationGame(): void
+    {
+        $folder = Folder::factory()->createOneQuietly();
+        $game   = Game::factory()->createOneQuietly();
+        $this->assertModelExists($folder);
+        $this->assertModelExists($game);
+        $this->assertIsObject($folder->games);
+        $this->assertCount(1, $folder->games);
+        $this->assertInstanceOf(Game::class, $folder->games->first());
+    }
+
+    /** @return void */
+    public function testRelationActivityLogs(): void
+    {
+        $folder        = Folder::factory()->createOneQuietly();
+        $activityLog = ActivityLog::factory()->createOneQuietly([
+            'user_id'      => null,
+            'is_anonymous' => true,
+            'is_console'   => false,
+            'model_class'  => sprintf("\%s", get_class($folder)),
+            'model_id'     => $folder->getKey(),
+            'event'        => ActivityLogsEventEnum::created->value(),
+            'data'         => [],
+            'created_at'   => now(),
+        ]);
+        $this->assertModelExists($folder);
+        $this->assertModelExists($activityLog);
+        $this->assertIsObject($folder->activityLogs);
+        $this->assertCount(1, $folder->activityLogs);
+        $this->assertInstanceOf(ActivityLog::class, $folder->activityLogs->first());
     }
 }
