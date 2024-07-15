@@ -57,7 +57,7 @@ When implementing a feature please create an issue first explaining your idea an
 
 # Changelog
 
-Latest version v5.0.0.
+Latest version v5.1.0.
 
 See the [CHANGELOG.md](CHANGELOG.md) file for details.
 

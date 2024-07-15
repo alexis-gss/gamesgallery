@@ -6,6 +6,23 @@ All notable changes to `games-gallery` will be documented in this file.
 - This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html),
 - Commits respect [Conventionnal commits](https://www.conventionalcommits.org/en/v1.0.0/) & use [Gitmoji](https://gitmoji.dev/).
 
+## **[v5.1.0] - 25.07.24**
+
+### Added
+-   feat: ✨ add a visit page counter in the front header of a game page
+-   feat: ✨ add visits statistics in back office
+-   feat: ✨ add loading screen on front pages
+-   feat: 🚸 add the targeted model in sweetalert message
+-   feat: ✅ extend tests to all the project
+
+### Changed
+-   docs: 📄 update license
+-   fix: 🐛 show message when there isn't rating or visit recorded
+-   fix: 💄 update maintenance page in front/back
+-   fix: 💄 fix the margin at the bottom of the front game page
+
+Full changelog: https://github.com/alexis-gss/games-gallery/compare/v5.0.0...v5.1.0
+
 ## **[v5.0.0] - 26.06.24**
 
 ### Added
