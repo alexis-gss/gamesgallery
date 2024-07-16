@@ -18,17 +18,22 @@ const purgePlugin = purge({
     paths: ["resources/{js,ts,views}/**/*.{ts,js,vue}"],
     safelist: sassSafelist,
 });
-purgePlugin.apply = (config: UserConfig, env: ConfigEnv) => env.mode === "production";
+
+const debugMode = ["development"].find((mod) => process.env.NODE_ENV === mod) !== undefined;
+
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+purgePlugin.apply = (config: UserConfig, env: ConfigEnv) => !debugMode;
 
 export default defineConfig({
     build: {
         rollupOptions: {
             output: {
                 entryFileNames: `assets/${
-                    process.env.NODE_ENV === "local" ? "[name]-" : ""
+                    debugMode ? "[name]-" : ""
                 }[hash].js`,
                 chunkFileNames: `assets/${
-                    process.env.NODE_ENV === "local" ? "[name]-" : ""
+                    debugMode ? "[name]-" : ""
                 }[hash].js`,
                 assetFileNames: (chunk) => {
                     if (
@@ -37,14 +42,14 @@ export default defineConfig({
                     ) {
                         return "vendor/mail/html/themes/default.[ext]";
                     }
-                    return `assets/${process.env.NODE_ENV === "local" ? "[name]-" : ""
+                    return `assets/${debugMode ? "[name]-" : ""
                     }[hash].[ext]`;
                 },
             },
         },
         chunkSizeWarningLimit: 700,
         emptyOutDir: true,
-        sourcemap: process.env.NODE_ENV === "local" ? "inline" : false,
+        sourcemap: debugMode ? "inline" : false,
     },
     css: {
         preprocessorOptions: {
@@ -52,7 +57,7 @@ export default defineConfig({
                 quietDeps: true
             }
         },
-        devSourcemap: process.env.NODE_ENV === "local" ? true : false,
+        devSourcemap: debugMode ? true : false,
         postcss: {
             map: {
                 inline: true,
@@ -121,7 +126,7 @@ export default defineConfig({
         }),
         babel(),
         vue({
-            isProduction: process.env.NODE_ENV !== "local" ? true : false,
+            isProduction: !debugMode,
             exclude: ["node_modules", "vendor"],
         }),
         copy({

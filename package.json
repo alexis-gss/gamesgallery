@@ -3,8 +3,8 @@
     "type": "module",
     "scripts": {
         "prod": "vite build --mode production",
-        "dev": "vite build --mode development -d",
-        "watch": "vite build --mode development --watch",
+        "dev": "NODE_ENV=\"development\" && vite build --mode development -d",
+        "watch": "NODE_ENV=\"development\" && vite build --mode development --watch",
         "eslint": "node ./node_modules/.bin/eslint --max-warnings 0 -c .eslintrc.json ./resources",
         "eslint-fix": "node ./node_modules/.bin/eslint --fix --max-warnings 0 -c .eslintrc.json ./resources",
         "eslint-ci": "node ./node_modules/.bin/eslint --max-warnings 0 -c .eslintrc.json ./resources -f junit",
