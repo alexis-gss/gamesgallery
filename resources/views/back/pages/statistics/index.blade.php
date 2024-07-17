@@ -35,30 +35,23 @@
                 @endif
             @endforeach
             <!-- COUNTERS -->
-            @if (count($ratingModels) || count($visitModels))
-                <div class="col-12 mb-3">
-                    <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
-                        <div class="row">
-                            @php
-                                $arrayCounters = [
-                                    ['models' => $ratingModels, 'blade' => 'most-liked-pictures'],
-                                    ['models' => $visitModels, 'blade' => 'most-visited-pages'],
-                                ]
-                            @endphp
-                            @foreach($arrayCounters as $item)
-                                @if (count($item['models']))
-                                    <div @class([
-                                        'col-12',
-                                        'col-xxl-6' => count($item['models'])
-                                    ])>
-                                        @include("back.pages.statistics.partials.{$item['blade']}")
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
+            <div class="col-12 mb-3">
+                <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
+                    <div class="row">
+                        @php
+                            $arrayCounters = [
+                                ['models' => $ratingModels, 'blade' => 'most-liked-pictures'],
+                                ['models' => $visitModels, 'blade' => 'most-visited-pages'],
+                            ]
+                        @endphp
+                        @foreach($arrayCounters as $item)
+                            <div class="col-12 col-xxl-6">
+                                @include("back.pages.statistics.partials.{$item['blade']}")
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
     </section>
 @endsection
