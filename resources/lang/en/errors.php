@@ -23,6 +23,6 @@ return [
     "429_message"   => "Too many requests sent in a short period of time.",
     "500_title"     => "Hello ?",
     "500_message"   => "The server encountered an unexpected condition that prevented it from fulfilling the request.",
-    "503_title"     => "Wait... what ?",
+    "503_title"     => "Website maintenance !",
     "503_message"   => "The server is not ready to handle the request."
 ];

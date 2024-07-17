@@ -23,6 +23,6 @@ return [
     "429_message"   => "Trop de demandes envoyées en peu de temps.",
     "500_title"     => "Allô ?",
     "500_message"   => "Le serveur a rencontré une situation inattendue qui l'a empêché de répondre à la demande.",
-    "503_title"     => "Attendez... quoi ?",
+    "503_title"     => "Site en maintenance !",
     "503_message"   => "Le serveur n'est pas prêt à traiter la demande."
 ];

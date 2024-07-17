@@ -11,6 +11,7 @@ return [
     'tag'          => 'tag',
     'rank'         => 'rank',
     'rating'       => 'rate',
+    'visit'        => 'visit',
     'static_page'  => 'static page|static pages',
     'user'         => 'user',
 ];

@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container py-5">
         @include('front.partials.btn-github')
 
         @if (request()->routeIs('fo.games.show') || request()->routeIs('fo.ranks.index'))

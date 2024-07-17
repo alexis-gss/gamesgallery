@@ -164,7 +164,6 @@
     "fo_tooltip_footer_back": "Access the project's administrative part",
     "fo_tooltip_footer_access_page": "Access the project's :pageName page",
     "fo_back_to_homepage": "Back to the :model list",
-    "fo_visits_counter": "visit",
     "fo_toast_like": "You have just added a like",
     "fo_toast_unlike": "You have just deleted your like",
     "fo_toast_details": "picture n°:picturePlace from the game :gameName",

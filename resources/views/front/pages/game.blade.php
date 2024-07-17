@@ -42,7 +42,7 @@
                     {{ sprintf(
                         '%s %s',
                         count($gameModel->visits),
-                        count($gameModel->visits) > 1 ? str(__('fo_visits_counter'))->plural() : __('fo_visits_counter'),
+                        count($gameModel->visits) > 1 ? str(__('models.visit'))->plural() : __('models.visit'),
                     ) }}
                 </p>
                 <p class="text-primary m-0">

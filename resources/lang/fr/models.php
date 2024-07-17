@@ -11,6 +11,7 @@ return [
     'tag'          => 'étiquette',
     'rank'         => 'classement',
     'rating'       => 'note',
+    'visit'        => 'visite',
     'static_page'  => 'page statique|pages statiques',
     'user'         => 'utilisateur',
 ];
