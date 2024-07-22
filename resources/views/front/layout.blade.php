@@ -6,6 +6,10 @@
 </head>
 
 <body>
+    @if (request()->routeIs('fo.games.index'))
+        @include('front.layouts.loading-screen')
+    @endif
+
     <div class="container py-5">
         @include('front.partials.btn-github')
 

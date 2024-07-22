@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+window.onload = function() {
+    let loadingScreen: HTMLDivElement|null;
     let menuModal: HTMLDivElement|null;
     let menuFilter: HTMLDivElement|null;
     let btnGames: NodeListOf<HTMLSpanElement>;
@@ -9,25 +10,33 @@ document.addEventListener("DOMContentLoaded", function () {
     selectors();
     events();
     setLatestGamesWidth();
+    hideLoadingScreen();
+
+    /**
+     * Hide loading screen.
+     */
+    function hideLoadingScreen() {
+        // Wait for components to be mounted.
+        setTimeout(() => {
+            loadingScreen?.classList.add("opacity-0");
+            // Wait for the transition end.
+            setTimeout(() => {
+                loadingScreen?.classList.add("invisible");
+            }, 300);
+        }, 300);
+    }
 
     /**
      * Set all selectors on the page.
      */
     function selectors() {
+        loadingScreen = document.querySelector("#loading-screen");
         menuModal = document.querySelector(".nav-modal");
         menuFilter = document.querySelector(".nav-filter");
-        btnGames = document.querySelectorAll(
-            ".btn-games"
-        );
-        btnScroll = document.querySelector(
-            ".btn-scroll"
-        );
-        breadcrumb = document.querySelector(
-            ".breadcrumb"
-        );
-        homeTextContent = document.querySelector(
-            ".main-home-latest"
-        );
+        btnGames = document.querySelectorAll(".btn-games");
+        btnScroll = document.querySelector(".btn-scroll");
+        breadcrumb = document.querySelector(".breadcrumb");
+        homeTextContent = document.querySelector(".main-home-latest");
     }
 
     /**
@@ -84,4 +93,4 @@ document.addEventListener("DOMContentLoaded", function () {
             breadcrumb?.classList.add("breadcrumb-resize-wrapper");
         }
     }
-});
+};
