@@ -82,14 +82,16 @@
       </template>
       <div
         v-if="!gameLoading && gameAllLoaded"
-        class="fst-italic text-secondary text-center my-5 w-100"
+        class="fst-italic text-secondary text-center mt-5 w-100"
       >
         {{ trans.methods.__("fo_images_loaded") }}
       </div>
     </template>
-    <div class="text-center my-5 w-100">
+    <div
+      v-if="gameLoading"
+      class="text-center mt-5 w-100"
+    >
       <div
-        v-if="gameLoading"
         class="spinner-border text-primary"
         role="status"
       >
@@ -98,7 +100,7 @@
     </div>
     <div
       v-if="!gameLoading && gamePictures.length <= 0"
-      class="text-center my-5 w-100"
+      class="text-center mt-5 w-100"
     >
       {{ trans.methods.__("fo_images_no_one") }}
     </div>
