@@ -59,7 +59,7 @@ class GameController extends Controller
                 'gameModel'    => $gameModel,
                 'gamePictures' => $gamePictures,
                 'ratingModels' => $ratingModels,
-                'gameModels'   => $this->getGamesPublished(true),
+                'gameModels'   => $this->getGamesPublished(true, $this->gamesPerPage),
                 'folderModels' => $this->getFoldersPublished(),
                 'tagModels'    => $this->getTagsPublished(),
             ]))->withCookie($cookie);

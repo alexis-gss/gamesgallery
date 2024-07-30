@@ -33,7 +33,7 @@ class StaticPageController extends Controller
         return view('front.pages.home', [
             'staticPageModel'   => $staticPageModel,
             'gamesLatestString' => $gamesLatestString,
-            'gameModels'        => $this->getGamesPublished(true),
+            'gameModels'        => $this->getGamesPublished(true, $this->gamesPerPage),
             'folderModels'      => $this->getFoldersPublished(),
             'tagModels'         => $this->getTagsPublished(),
         ]);
@@ -51,7 +51,7 @@ class StaticPageController extends Controller
 
         return view('front.pages.ranking', [
             'staticPageModel' => $staticPageModel,
-            'gameModels'      => $this->getGamesPublished(true),
+            'gameModels'      => $this->getGamesPublished(true, $this->gamesPerPage),
             'folderModels'    => $this->getFoldersPublished(),
             'tagModels'       => $this->getTagsPublished(),
             'rankModels'      => $this->getRanksPublished(),

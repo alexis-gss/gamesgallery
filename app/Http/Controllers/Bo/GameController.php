@@ -88,8 +88,8 @@ class GameController extends Controller
     {
         return view('back.pages.games.create', [
             'gameModel'    => $game,
-            'folderModels' => $this->getFoldersPublished(true),
-            'tagModels'    => $this->getTagsPublished(true)
+            'folderModels' => $this->getFoldersPublished(true, $this->modelsPerPage),
+            'tagModels'    => $this->getTagsPublished(true, $this->modelsPerPage)
         ]);
     }
 
@@ -132,8 +132,8 @@ class GameController extends Controller
     {
         return view('back.pages.games.edit', [
             'gameModel'    => $game,
-            'folderModels' => $this->getFoldersPublished(true),
-            'tagModels'    => $this->getTagsPublished(true)
+            'folderModels' => $this->getFoldersPublished(true, $this->modelsPerPage),
+            'tagModels'    => $this->getTagsPublished(true, $this->modelsPerPage)
         ]);
     }
 

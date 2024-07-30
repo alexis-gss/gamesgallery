@@ -34,13 +34,23 @@ class Controller extends BaseController
     protected $modelsPerPage = 12;
 
     /**
+     * Use for pagination,
+     * number of games per page.
+     *
+     * @var integer
+     */
+    protected $gamesPerPage = 20;
+
+    /**
      * Get game models published.
      *
-     * @param boolean $paginate
+     * @param boolean $paginate        Paginate the query.
+     * @param integer $nbrItemsPerPage Number of items per pagination page.
      * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      */
     protected function getGamesPublished(
         bool $paginate = false,
+        int $nbrItemsPerPage = 12,
     ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
         /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = Game::query()
@@ -50,17 +60,19 @@ class Controller extends BaseController
             ->whereHas('folder', function ($q) {
                 $q->where('published', true);
             });
-        return ($paginate) ? $query->paginate($this->modelsPerPage) : $query->get();
+        return ($paginate) ? $query->paginate($nbrItemsPerPage) : $query->get();
     }
 
     /**
      * Get folder models published.
      *
-     * @param boolean $paginate Paginate the query.
+     * @param boolean $paginate        Paginate the query.
+     * @param integer $nbrItemsPerPage Number of items per pagination page.
      * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      */
     protected function getFoldersPublished(
-        bool $paginate = false
+        bool $paginate = false,
+        int $nbrItemsPerPage = 12,
     ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
         /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = Folder::query()->where('published', true);
@@ -69,7 +81,7 @@ class Controller extends BaseController
             /** @var \Illuminate\Pagination\LengthAwarePaginator $folderModels */
             $folderModels = $query->orderby('mandatory', 'DESC')
                 ->orderBy('name')
-                ->paginate($this->modelsPerPage)
+                ->paginate($nbrItemsPerPage)
                 ->through(function (Folder $folderModel) {
                     // @phpstan-ignore-next-line
                     $folderModel->nameLocale = $folderModel->getTranslation('name', config('app.locale'));
@@ -77,8 +89,8 @@ class Controller extends BaseController
                 });
             return new LengthAwarePaginator(
                 $folderModels->sortBy('nameLocale')->sortByDesc('mandatory')->values(),
-                $query->paginate($this->modelsPerPage)->total(),
-                $this->modelsPerPage
+                $query->paginate($nbrItemsPerPage)->total(),
+                $nbrItemsPerPage
             );
         } else {
             return $query->get()
@@ -93,18 +105,20 @@ class Controller extends BaseController
     /**
      * Get tag models published.
      *
-     * @param boolean $paginate Paginate the query.
+     * @param boolean $paginate        Paginate the query.
+     * @param integer $nbrItemsPerPage Number of items per pagination page.
      * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      */
     protected function getTagsPublished(
-        bool $paginate = false
+        bool $paginate = false,
+        int $nbrItemsPerPage = 12,
     ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
         $query = Tag::query()->where('published', true);
 
         if ($paginate) {
             /** @var \Illuminate\Pagination\LengthAwarePaginator $tagModels */
             $tagModels = $query->orderBy('name')
-                ->paginate($this->modelsPerPage)
+                ->paginate($nbrItemsPerPage)
                 ->through(function (Tag $tagModel) {
                     // @phpstan-ignore-next-line
                     $tagModel->nameLocale = $tagModel->getTranslation('name', config('app.locale'));
@@ -112,8 +126,8 @@ class Controller extends BaseController
                 });
             return new LengthAwarePaginator(
                 $tagModels->sortBy('nameLocale')->values(),
-                $query->paginate($this->modelsPerPage)->total(),
-                $this->modelsPerPage
+                $query->paginate($nbrItemsPerPage)->total(),
+                $nbrItemsPerPage
             );
         } else {
             return $query->get()
