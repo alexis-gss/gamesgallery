@@ -13,7 +13,7 @@
     <div class="container overflow-hidden">
         @include('front.partials.btn-github')
 
-        @if (request()->routeIs('fo.games.show') || request()->routeIs('fo.ranks.index'))
+        @if ((request()->routeIs('fo.games.show') && isset($gameModel)) || request()->routeIs('fo.ranks.index'))
             @include('front.layouts.nav')
         @endif
 

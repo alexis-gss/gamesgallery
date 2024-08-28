@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Game;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator;
 
@@ -10,9 +9,8 @@ Breadcrumbs::for('fo.games.index', function (Generator $trail) {
 });
 
 // * GAMES
-Breadcrumbs::for('fo.games.show', function (Generator $trail, Game $game) {
+Breadcrumbs::for('fo.games.show', function (Generator $trail) {
     $trail->parent('fo.games.index');
-    $trail->push($game->name, route('fo.games.show', $game));
 });
 
 // * RANKS

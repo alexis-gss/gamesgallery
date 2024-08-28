@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
         // phpcs:enable
         if ($exception instanceof HttpExceptionInterface) {
             $statusCode = $exception->getStatusCode();
-            return response()->make(view("errors.pages.{$statusCode}", ['exception' => $exception]), $statusCode);
+            return response()->make(view("errors.pages.{$statusCode}"), $statusCode);
         }
         return parent::render($request, $exception);
     }

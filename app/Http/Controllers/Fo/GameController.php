@@ -7,6 +7,7 @@ use App\Lib\Helpers\ToolboxHelper;
 use App\Models\Game;
 use App\Models\Rating;
 use App\Models\Visit;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -18,60 +19,63 @@ class GameController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param string                   $slug
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @phpcs:disable
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\View\View
      */
     public function show(
         Request $request,
         string $slug
-    ): \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse {
-        $gameModel = Game::query()
-            ->where('published', true)
-            ->where('slug', $slug)
-            ->whereHas('folder', function ($q) {
-                $q->where('published', true);
-            })->first();
-        if ($gameModel) {
-            /** @var array $gamePictures */
-            $gamePictures = [];
-            if (count($gameModel->pictures)) {
-                $gameModel->pictures->map(function ($picture) {
-                    // @phpstan-ignore-next-line
-                    $picture->ratings_count = count($picture->ratings);
-                    return $picture;
-                });
-                $gamePictures = ToolboxHelper::customPaginate(
-                    $gameModel->pictures,
-                    (count($gameModel->pictures) <= 12) ? count($gameModel->pictures) : 12,
-                    ['path' => Paginator::resolveCurrentPath()]
-                );
-            }
+    ): \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\View\View {
+        // @phpcs:enable
+        try {
+            $gameModel = Game::query()
+                ->where('published', true)
+                ->where('slug', $slug)
+                ->whereHas('folder', function ($q) {
+                    $q->where('published', true);
+                })->firstOrFail();
+        } catch (Exception $exception) {
+            abort(404, $exception->getMessage());
+        }
 
-            /** @var \Illuminate\Database\Eloquent\Collection $ratingModels */
-            $ratingModels = Rating::query()
-                ->where('uuid', $request->cookie('rating-uuid'))
-                ->get()
-                ->map(function ($rating) {
-                    return $rating->picture_id;
-                });
+        /** @var array $gamePictures */
+        $gamePictures = [];
+        if (count($gameModel->pictures)) {
+            $gameModel->pictures->map(function ($picture) {
+                // @phpstan-ignore-next-line
+                $picture->ratings_count = count($picture->ratings);
+                return $picture;
+            });
+            $gamePictures = ToolboxHelper::customPaginate(
+                $gameModel->pictures,
+                (count($gameModel->pictures) <= 12) ? count($gameModel->pictures) : 12,
+                ['path' => Paginator::resolveCurrentPath()]
+            );
+        }
 
-            if ($request->ajax()) {
-                return response()->json($gamePictures);
-            }
+        /** @var \Illuminate\Database\Eloquent\Collection $ratingModels */
+        $ratingModels = Rating::query()
+            ->where('uuid', $request->cookie('rating-uuid'))
+            ->get()
+            ->map(function ($rating) {
+                return $rating->picture_id;
+            });
 
-            $cookie = (new Visit())->setVisit($request, $gameModel);
+        if ($request->ajax()) {
+            return response()->json($gamePictures);
+        }
 
-            return response(view('front.pages.game', [
-                'gameModel'         => $gameModel,
-                'gamePictures'      => $gamePictures,
-                'ratingModels'      => $ratingModels,
-                'gameModels'        => $this->getGamesPublished(true, $this->gamesPerPage),
-                'folderModels'      => $this->getFoldersPublished(),
-                'tagModels'         => $this->getTagsPublished(),
-                'relatedGamesViews' => $this->getRelatedGamesViews($gameModel),
-            ]))->withCookie($cookie);
-        } else {
-            return redirect()->route('fo.games.index');
-        } //end if
+        $cookie = (new Visit())->setVisit($request, $gameModel);
+
+        return response(view('front.pages.game', [
+            'gameModel'         => $gameModel,
+            'gamePictures'      => $gamePictures,
+            'ratingModels'      => $ratingModels,
+            'gameModels'        => $this->getGamesPublished(true, $this->gamesPerPage),
+            'folderModels'      => $this->getFoldersPublished(),
+            'tagModels'         => $this->getTagsPublished(),
+            'relatedGamesViews' => $this->getRelatedGamesViews($gameModel),
+        ]))->withCookie($cookie);
     }
 
     /**
