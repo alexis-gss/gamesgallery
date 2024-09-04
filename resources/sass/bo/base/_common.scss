@@ -183,3 +183,8 @@ body {
         border-radius: 0 0 0.375rem 0.375rem !important;
     }
 }
+
+.scrollable-images {
+    height: 20rem;
+    overflow-y: scroll;
+}
