@@ -109,7 +109,7 @@
                                         {{ $folderModel->published
                                             ? str($folderModel->created_at->isoFormat('LLLL'))->ucFirst()
                                             : __('bo_other_model_not_published', [
-                                                'model' => str(__('models.user'))->ucFirst(),
+                                                'model' => str(__('models.folder'))->ucFirst(),
                                             ]) }}
                                     </span>
                                 </td>

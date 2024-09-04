@@ -134,7 +134,7 @@
                                         {{ $gameModel->published
                                             ? str($gameModel->created_at->isoFormat('LLLL'))->ucFirst()
                                             : __('bo_other_model_not_published', [
-                                                'model' => str(__('models.user'))->ucFirst(),
+                                                'model' => str(trans_choice('models.game', 1))->ucFirst(),
                                             ]) }}
                                     </span>
                                 </td>
