@@ -42,14 +42,14 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-transparent border-0 pt-2 pb-1">
                             <a class="link-light link-offset-2 link-opacity-75-hover" data-bs-tooltip="tooltip"
-                                type="button" href="{{ route('fo.games.index') }}"
+                                role="button" href="{{ route('fo.games.index') }}"
                                 title="{{ __('fo_tooltip_footer_access_page', ['pageName' => str(__('fo_homepage'))->lower()]) }}">
                                 {{ __('fo_homepage') }}
                             </a>
                         </li>
                         <li class="list-group-item bg-transparent border-0 pt-1 pb-0">
                             <a class="link-light link-offset-2 link-opacity-75-hover" data-bs-tooltip="tooltip"
-                                type="button" href="{{ route('fo.ranks.index') }}"
+                                role="button" href="{{ route('fo.ranks.index') }}"
                                 title="{{ __('fo_tooltip_footer_access_page', ['pageName' => str(__('fo_footer_rank'))->lower()]) }}">
                                 {{ __('fo_footer_rank') }}
                             </a>
@@ -79,8 +79,7 @@
                                     </script>
                                 @endpush
                                 @csrf
-                                <select class="form-select bg-primary text-bg-primary border-0 w-fit" name="lang"
-                                    role="button">
+                                <select class="form-select bg-primary text-bg-primary border-0 w-fit" name="lang">
                                     @foreach (config('app.locales') as $key => $locale)
                                         <option value="{{ $locale }}" @selected($locale === app()->getLocale())>
                                             {{ str($locale)->upper() }}</option>

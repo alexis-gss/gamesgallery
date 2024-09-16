@@ -7,7 +7,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 @if ($visitModel->game->published)
                     <a class="btn btn-primary btn-sm" href="{{ route('fo.games.show', $visitModel->game->slug) }}"
-                        data-bs-tooltip="tooltip" type="button" target="_blank"
+                        data-bs-tooltip="tooltip" role="button" target="_blank"
                         title="{{ __('crud.actions_model.show', ['model' => trans_choice('models.game', 1)]) }}">
                     @else
                         <p class="m-0">
