@@ -11,6 +11,8 @@
     @endif
 
     <div class="container overflow-hidden">
+        @include('front.partials.noscript-warning')
+
         @include('front.partials.btn-github')
 
         @if ((request()->routeIs('fo.games.show') && isset($gameModel)) || request()->routeIs('fo.ranks.index'))

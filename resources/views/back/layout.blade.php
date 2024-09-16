@@ -14,6 +14,7 @@
     <!-- Main content -->
     <main class="container-fluid row mx-auto">
         <div class="col-12 col-md-10 col-lg-8 mx-auto px-0 py-3">
+            @include('back.partials.noscript-warning')
             @if (!auth('backend')->user())
                 <div class="d-flex flex-column align-items-center justify-content-center h-100 pb-5">
             @else
