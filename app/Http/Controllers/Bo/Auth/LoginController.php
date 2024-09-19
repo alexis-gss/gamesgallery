@@ -48,7 +48,8 @@ class LoginController extends Controller
      */
     protected function redirectTo(): string
     {
-        return response()->redirectToIntended()->getTargetUrl();
+        $targetUrl = response()->redirectToIntended()->getTargetUrl();
+        return ($targetUrl !== config('app.url')) ? $targetUrl : route('bo.home');
     }
 
     /**
