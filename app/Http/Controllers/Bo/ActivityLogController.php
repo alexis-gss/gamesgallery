@@ -4,16 +4,11 @@ namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
-use App\Traits\Controllers\ChangesModelOrder;
-use App\Traits\Controllers\UpdateModelPublished;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 
 class ActivityLogController extends Controller
 {
-    use ChangesModelOrder;
-    use UpdateModelPublished;
-
     /**
      * Create the controller instance.
      */
