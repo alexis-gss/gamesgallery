@@ -33,4 +33,5 @@ return [
     'reset_password_send'          => 'Send a password reset e-mail',
     'reset_password_email'         => 'Procedure for resetting the password sent to the user !',
     'reset_password_complete'      => 'Password reset procedure completed !',
+    'unpublished_user'             => 'Your account has been deactivated, please contact an administrator.',
 ];

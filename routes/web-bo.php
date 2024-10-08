@@ -33,7 +33,7 @@ Route::prefix('bo')
                         ]
                     );
                 });
-            Route::middleware(['auth:backend'])
+            Route::middleware(['auth:backend', 'logoutusers'])
                 ->group(function () {
                     // * HOME
                     Route::get('/', [HomeController::class, 'index'])->name('home');

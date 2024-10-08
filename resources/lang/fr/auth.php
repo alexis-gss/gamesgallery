@@ -35,4 +35,5 @@ return [
     'reset_password_send'          => 'Envoyer un e-mail de réinitialisation du mot de passe',
     'reset_password_email'         => 'Procédure de ré-initialisation du mot de passe envoyé à l\'utilisateur !',
     'reset_password_complete'      => 'Procédure de ré-initialisation du mot de passe terminée !',
+    'unpublished_user'             => 'Votre compte à été désactivé, veuillez contactez un administrateur du site.',
 ];
