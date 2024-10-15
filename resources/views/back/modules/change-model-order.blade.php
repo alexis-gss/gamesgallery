@@ -1,18 +1,14 @@
 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
     @can('changeOrder', $model)
         <div class="d-flex justify-content-center align-items-center">
-            <form @class([
-                'invisible' =>
-                    $loop->last and $models->currentPage() === $models->lastPage(),
-            ])
+            <form @class(['invisible' => $loop->last and $models->currentPage() === $models->lastPage()])
                 action="{{ route('bo.' . $routeName . '.change-order', [str($routeName)->singular()->value() => $model, 'direction' => 'down']) }}"
                 method="POST">
                 @csrf
                 @method('PATCH')
                 <button data-bs-tooltip="tooltip" type="submit" title="{{ __('crud.other.down') }}" @class([
                     'btn btn-sm btn-outline-secondary me-1',
-                    'disabled' =>
-                        $loop->last and $models->currentPage() === $models->lastPage(),
+                    'disabled' => $loop->last and $models->currentPage() === $models->lastPage(),
                 ])>
                     <i class="fas fa-arrow-down"></i>
                 </button>

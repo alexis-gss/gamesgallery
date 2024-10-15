@@ -6,6 +6,7 @@ return [
     'bootstrap-theme' => [
         "light"  => "clair",
         "dark"   => "sombre",
+        "beige"  => "beige",
     ],
     'user-role' => [
         "conceptor" => "concepteur",

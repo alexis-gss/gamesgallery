@@ -27,6 +27,9 @@
             tags: {
                 jsonPaginate: "{{ route('bo.tags.json-paginate') }}"
             },
+            navigation: {
+                set: "{{ route('bo.navigation.set') }}"
+            },
         },
         fo: {
             games: {

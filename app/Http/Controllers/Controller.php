@@ -353,6 +353,34 @@ class Controller extends BaseController
     }
 
     /**
+     * Set the current locale.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setLang(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $lang = $request->lang;
+        if (!\in_array($lang, config('app.locales'))) {
+            $lang = config('app.fallback_locale');
+        }
+        app()->setLocale($lang);
+        session()->put('lang', $lang);
+        return redirect()->back()->with('success', trans('crud.messages.lang_updated'));
+    }
+
+    /**
+     * Set the navigation size.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
+    protected function setNavigation(Request $request): void
+    {
+        Cache::put("navigation", $request->isExtended);
+    }
+
+    /**
      * Set the bootstrap theme or light (default).
      *
      * @param \Illuminate\Http\Request $request
@@ -369,23 +397,6 @@ class Controller extends BaseController
             Cache::put("theme", $theme);
         }
         return redirect()->back()->with('success', trans('crud.messages.theme_updated'));
-    }
-
-    /**
-     * Set the current locale.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function setLang(Request $request): \Illuminate\Http\RedirectResponse
-    {
-        $lang = $request->lang;
-        if (!\in_array($lang, config('app.locales'))) {
-            $lang = config('app.fallback_locale');
-        }
-        app()->setLocale($lang);
-        session()->put('lang', $lang);
-        return redirect()->back()->with('success', trans('crud.messages.lang_updated'));
     }
 
     /**

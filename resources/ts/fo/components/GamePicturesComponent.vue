@@ -98,7 +98,7 @@
               :aria-label="trans.methods.__('fo_slide_target_aria', {'target': trans.methods.__('fo_prev')})"
               type="button"
             >
-              <i class="fa-solid fa-chevron-left" />
+              <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
             </button>
             <div
               id="swiper-games-related"
@@ -119,7 +119,7 @@
               :aria-label="trans.methods.__('fo_slide_target_aria', {'target': trans.methods.__('fo_next')})"
               type="button"
             >
-              <i class="fa-solid fa-chevron-right" />
+              <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
             </button>
             <div
               v-if="relatedGamesViews.length > 1"

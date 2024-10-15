@@ -112,10 +112,13 @@ Route::prefix('bo')
                     });
                 });
 
-            // * CHANGE LANGUAGES.
+            // * UPDATE LANGUAGES.
             Route::post('/lang/set', [Controller::class, 'setLang'])->name('lang.set');
 
-            // * BOOTSTRAP THEMES.
-            Route::post('theme/set', [Controller::class, 'setTheme'])->name('theme.set');
+            // * UPDATE NAVIGATION.
+            Route::post('/navigation/set', [Controller::class, 'setNavigation'])->name('navigation.set');
+
+            // * UPDATE BOOTSTRAP THEMES.
+            Route::post('/theme/set', [Controller::class, 'setTheme'])->name('theme.set');
         }
     );

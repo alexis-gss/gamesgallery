@@ -1,10 +1,10 @@
 import type { SweetAlertResult } from "sweetalert2";
+import errors from "../../modules/errors";
+import route from "../../modules/route";
 import sweetalert from "../../modules/sweetalert";
 
 window.addEventListener("DOMContentLoaded", () => {
-    /**
-     * Popup action item.
-     */
+    /** Popup action item. */
     const elementsAction = document.getElementsByClassName(
         "confirmActionTS"
     ) as HTMLCollectionOf<Element>;
@@ -33,4 +33,45 @@ window.addEventListener("DOMContentLoaded", () => {
             return false;
         });
     }
+    /** Navigation size */
+    const navigation = document.getElementById("offcanvas-navigation");
+    const btnSideMenuToggle = document.getElementById("side-menu-toggle") as HTMLButtonElement | null;
+    const routeNavigation = route.methods.route("bo.navigation.set");
+    if (!routeNavigation) {
+        throw new Error("Undefined route bo.navigation.set");
+    }
+    btnSideMenuToggle?.addEventListener("click", function () {
+        const isNavigationExtended = navigation?.classList.contains("navigation-extended");
+        window.axios
+            .post(routeNavigation, { isExtended: !isNavigationExtended })
+            .then(() => {
+                btnSideMenuToggle.disabled = true;
+                if (isNavigationExtended) {
+                    navigation?.classList.remove("navigation-extended");
+                    setTimeout(() => { btnSideMenuToggle.disabled = false; }, 300);
+                } else {
+                    btnSideMenuToggle.disabled = false;
+                    navigation?.classList.add("navigation-labels-hidden");
+                    navigation?.classList.add("navigation-transition");
+                    navigation?.classList.add("navigation-extended");
+                    setTimeout(() => {
+                        navigation?.classList.remove("navigation-labels-hidden");
+                        navigation?.classList.add("navigation-transition");
+                    }, 300);
+                    setTimeout(() => {
+                        navigation?.classList.remove("navigation-transition");
+                    }, 600);
+                }
+            })
+            .catch(errors.methods.ajaxErrorHandler);
+    });
+    /** Navigation button */
+    const myOffcanvas = document.getElementById("offcanvas-navigation") as HTMLDivElement|null;
+    const navbarTogglerNavigation = document.getElementById("navbar-toggler-navigation") as HTMLButtonElement|null;
+    navbarTogglerNavigation?.addEventListener("click", function () {
+        navbarTogglerNavigation?.classList.toggle("navbar-toggler-active");
+    });
+    myOffcanvas?.addEventListener("hidden.bs.offcanvas", () => {
+        navbarTogglerNavigation?.classList.remove("navbar-toggler-active");
+    });
 });

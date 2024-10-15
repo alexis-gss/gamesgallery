@@ -17,7 +17,7 @@
             :title="trans.methods.__('bo_tooltip_image_input_choose_file')"
             data-bs-tooltip="tooltip"
           >
-            <i class="fa-solid fa-circle-info" />
+            <FontAwesomeIcon icon="fa-solid fa-circle-info" />
           </span>
         </label>
         <div class="input-group">
