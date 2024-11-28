@@ -34,7 +34,7 @@ class StoreUserRequest extends FormRequest
         $this->merge([
             'published' => $this->boolean('published')
         ]);
-        $this->mergePicture('picture');
+        $this->mergePicture();
     }
     /**
      * Get the validation rules that apply to the request.
@@ -59,10 +59,7 @@ class StoreUserRequest extends FormRequest
             ],
             'published'  => 'required|boolean'
         ];
-        return \array_merge(
-            $rules,
-            $this->pictureRules('picture', true),
-        );
+        return \array_merge($rules, $this->pictureRules());
     }
 
     /**

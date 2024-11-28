@@ -75,11 +75,11 @@
                     fontSize: 14
                 },
                 data: @json(
-                    $globalFolders->map(function ($folder) {
+                    $models->map(function ($folder) {
                         return ['value' => $folder->games->count(), 'name' => $folder->name];
                     })),
                 color: @json(
-                    $globalFolders->map(function ($folder) {
+                    $models->map(function ($folder) {
                         return $folder->color;
                     })),
                 percentPrecision: 2,

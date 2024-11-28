@@ -14,7 +14,7 @@
                         title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.user'))->plural()]) }}">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
-                    @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
+                    <x-breadcrumbs.breadcrumb-body :brParam="$userModel" />
                 </div>
                 <div class="btn-group">
                     @can('resetPassword', $userModel)
@@ -90,21 +90,15 @@
         </div>
     </div>
     @can('update', $userModel)
-        <form action="{{ route('bo.users.update', $userModel) }}" method="POST" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+    <form action="{{ route('bo.users.update', $userModel) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         @endcan
-        @include('back.pages.users.form-inputs')
+        <div class="row">
+            <x-back.forms.user-inputs :userModel="$userModel" />
+            <x-back.end-form action="update" :model="$userModel" :modelTranslation="__('models.user')" />
+        </div>
         @can('update', $userModel)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top"
-                        type="submit" title="{{ __('crud.actions_model.save', ['model' => __('models.user')]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    </form>
     @endcan
 @endsection

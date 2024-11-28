@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
-        @include('breadcrumbs.breadcrumb-body')
+        <x-breadcrumbs.breadcrumb-body />
     </div>
     <div class="row w-100 mx-auto">
         @can('update', \App\Models\Rank::class)
@@ -35,7 +35,7 @@
                         ];
                     @endphp
                     <div class="form-control w-100 border-0 p-0" id="search-belongs-to-dropdown" data-json='@json($data)'></div>
-                    @include('back.modules.input-error', ['inputName' => 'tags'])
+                    <x-back.input-error inputName="tags"/>
                     <button class="btn btn-primary w-100 w-sm-fit m-0" id="search-ranking-btn" data-bs-tooltip="tooltip" type="submit"
                         title="{{ __('bo_tooltip_ranking_add_game') }}">
                         <i class="fa-solid fa-plus"></i>

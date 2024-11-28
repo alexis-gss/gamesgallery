@@ -14,7 +14,7 @@
                         title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.static_page', \INF)]) }}">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
-                    @include('breadcrumbs.breadcrumb-body', ['brParam' => $staticPageModel])
+                    <x-breadcrumbs.breadcrumb-body :brParam="$staticPageModel" />
                 </div>
                 <div class="btn-group">
                     @can('view', $staticPageModel)
@@ -43,21 +43,15 @@
         </div>
     </div>
     @can('update', $staticPageModel)
-        <form action="{{ route('bo.static_pages.update', $staticPageModel) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('bo.static_pages.update', $staticPageModel) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         @endcan
-        @include('back.pages.static_pages.form-inputs')
+        <div class="row">
+            <x-back.forms.static-page-inputs :staticPageModel="$staticPageModel" />
+            <x-back.end-form action="update" :model="$staticPageModel" :modelTranslation="trans_choice('models.static_page', 1)" />
+        </div>
         @can('update', $staticPageModel)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                        title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.static_page', 1)]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    </form>
     @endcan
 @endsection

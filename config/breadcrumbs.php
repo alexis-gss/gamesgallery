@@ -23,7 +23,7 @@ return [
         |
     */
 
-    'view' => 'breadcrumbs/breadcrumb-layout',
+    'view' => 'components/breadcrumbs/breadcrumb-layout',
 
     /*
         |--------------------------------------------------------------------------

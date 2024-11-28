@@ -1,9 +1,9 @@
 <p class="fs-5 fw-semibold mb-4 text-center">
     {{ str(__('bo_other_stats_most_liked_pictures'))->ucFirst()->value() }}
 </p>
-@if ($ratingModels->count())
+@if ($models->isNotEmpty())
     <ul class="list-group border-0">
-        @foreach ($ratingModels as $key => $ratingModel)
+        @foreach ($models as $key => $ratingModel)
             @php
                 $pictureExist = Storage::disk('public')->exists(
                     sprintf('pictures/%s/%s.webp', $ratingModel->picture->game->slug, $ratingModel->picture->uuid),

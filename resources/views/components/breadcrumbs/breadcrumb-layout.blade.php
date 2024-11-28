@@ -1,4 +1,4 @@
-@if (count($breadcrumbs))
+@if ($breadcrumbs->isNotEmpty())
     <ol @class([
         'breadcrumb flex-nowrap',
         'border-top-0 border-end-0 border-bottom-0 border-secondary border w-100 m-0' => !request()->is('bo/*'),

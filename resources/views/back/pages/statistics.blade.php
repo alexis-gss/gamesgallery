@@ -6,47 +6,48 @@
 @section('content')
     <section id="statistics">
         <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap">
-            @include('breadcrumbs.breadcrumb-body')
+            <x-breadcrumbs.breadcrumb-body />
         </div>
-        <!-- LATEST DATA UPDATED -->
+        {{-- LATEST DATA UPDATED --}}
         @if (count($navLinks))
             <div class="row py-3">
                 <div class="col-12 py-0">
-                    @include('back.pages.statistics.partials.latest-data')
+                    <x-back.statistics.latest-data :navLinks="$navLinks" />
                 </div>
             </div>
         @endif
         <div class="row">
-            <!-- CHARTS -->
+            {{-- CHARTS --}}
             @php
                 $array = [
-                    ['models' => $activityModels, 'blade' => 'chart-activities'],
-                    ['models' => $globalTags, 'blade' => 'chart-games-by-tags'],
-                    ['models' => $globalFolders, 'blade' => 'chart-games-by-folders'],
+                    ['models' => $activityModels, 'component' => 'back.statistics.chart-activities'],
+                    ['models' => $globalTags, 'component' => 'back.statistics.chart-games-by-tags'],
+                    ['models' => $globalFolders, 'component' => 'back.statistics.chart-games-by-folders'],
                 ]
             @endphp
             @foreach($array as $item)
-                @if (count($item['models']))
+                @if ($item['models']->isNotEmpty())
                     <div class="col-12 mb-3">
                         <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
-                            @include("back.pages.statistics.partials.{$item['blade']}")
+                            <x-dynamic-component :component="$item['component']" :models="$item['models']"
+                                :dateLastDays="$dateLastDays" :dateLastDaysFormated="$dateLastDaysFormated" />
                         </div>
                     </div>
                 @endif
             @endforeach
-            <!-- COUNTERS -->
+            {{-- COUNTERS --}}
             <div class="col-12">
                 <div class="card bg-body-tertiary border-top rounded-3 p-md-5 p-3">
                     <div class="row">
                         @php
                             $arrayCounters = [
-                                ['models' => $ratingModels, 'blade' => 'most-liked-pictures'],
-                                ['models' => $visitModels, 'blade' => 'most-visited-pages'],
+                                ['models' => $ratingModels, 'component' => 'back.statistics.most-liked-pictures'],
+                                ['models' => $visitModels, 'component' => 'back.statistics.most-visited-pages'],
                             ]
                         @endphp
                         @foreach($arrayCounters as $item)
                             <div class="col-12 col-xxl-6">
-                                @include("back.pages.statistics.partials.{$item['blade']}")
+                                <x-dynamic-component :component="$item['component']" :models="$item['models']" />
                             </div>
                         @endforeach
                     </div>

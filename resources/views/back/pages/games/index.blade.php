@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
-        @include('breadcrumbs.breadcrumb-body')
+        <x-breadcrumbs.breadcrumb-body />
         @can('create', \App\Models\Game::class)
             <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top"
                 href="{{ route('bo.games.create') }}"
@@ -14,24 +14,19 @@
             </a>
         @endcan
     </div>
-    @include('back.modules.search-bar')
+    <x-back.search-bar :search="$search" :searchFields="$searchFields" />
     <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
         <div class="table-responsive">
             <table class="table-hover table-fix-action m-0 table">
                 @if ($gameModels->isNotEmpty())
-                    <thead>
-                        @include('back.modules.table-col-sorter', [
-                            'cols' => [
-                                'name' => str(__('validation.attributes.name'))->ucfirst(),
-                                'folder_id' => str(__('validation.custom.folder_associated'))->ucfirst(),
-                                'pictures' => str(__('validation.attributes.image'))->ucfirst(),
-                                'published' => str(__('validation.custom.publishment'))->ucfirst(),
-                                'updated_at' => str(__('validation.attributes.updated_at'))->ucfirst(),
-                                'order' => str(__('validation.custom.order'))->ucfirst(),
-                            ],
-                            'ignore' => ['pictures'],
-                        ])
-                    </thead>
+                    <x-back.table-col-sorter :cols="[
+                        'name' => str(__('validation.attributes.name'))->ucfirst(),
+                        'folder_id' => str(__('validation.custom.folder_associated'))->ucfirst(),
+                        'pictures' => str(__('validation.attributes.image'))->ucfirst(),
+                        'published' => str(__('validation.custom.publishment'))->ucfirst(),
+                        'updated_at' => str(__('validation.attributes.updated_at'))->ucfirst(),
+                        'order' => str(__('validation.custom.order'))->ucfirst(),
+                    ]" :ignore="['pictures']" />
                     <tbody>
                         @foreach ($gameModels as $gameModel)
                             <tr @class([
@@ -47,7 +42,8 @@
                                             href="{{ route('bo.folders.edit', ['folder' => $gameModel->folder_id]) }}"
                                             title="{{ __('bo_tooltip_show_folder') }}">
                                         @endcan
-                                        <span class="@can('update', $gameModel) badge rounded-pill text-bg-primary @else text-body @endcan">
+                                        <span
+                                            class="@can('update', $gameModel) badge rounded-pill text-bg-primary @else text-body @endcan">
                                             {{ $gameModel->folder->name }}
                                         </span>
                                         @can('update', $gameModel)
@@ -59,10 +55,7 @@
                                         {{ isset($gameModel->pictures) && $gameModel->pictures->isNotEmpty() ? $gameModel->pictures->count() : 0 }}
                                     </p>
                                 </td>
-                                @include('back.modules.change-published-status', [
-                                    'routeName' => 'games',
-                                    'model' => $gameModel,
-                                ])
+                                <x-back.change-published-status routeName="games" :model="$gameModel" :loop="$loop" />
                                 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
                                     <span class="badge rounded-pill text-bg-secondary">
                                         {{ $gameModel->updated_at->isoFormat('LLLL') }}
@@ -70,11 +63,8 @@
                                 </td>
                                 @php $routeName = request()->route()->getName(); @endphp
                                 @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')
-                                    @include('back.modules.change-model-order', [
-                                        'routeName' => 'games',
-                                        'models' => $gameModels,
-                                        'model' => $gameModel,
-                                    ])
+                                    <x-back.change-model-order routeName="games" :models="$gameModels" :model="$gameModel"
+                                        :loop="$loop" />
                                 @endif
                                 <td @class(['text-end align-middle', 'border-0' => $loop->last])>
                                     @canAny(['delete', 'duplicate', 'update', 'view'], $gameModel)
@@ -124,7 +114,7 @@
                                             @endcan
                                         </form>
                                     @else
-                                        @include('back.modules.user-right')
+                                        <x-back.user-right />
                                     @endcan
                                 </td>
                             </tr>

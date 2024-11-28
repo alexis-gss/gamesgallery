@@ -59,7 +59,7 @@
             xAxis: [{
                 type: 'category',
                 data: @json(
-                    $globalTags->map(function ($tag) {
+                    $models->map(function ($tag) {
                         return $tag->name;
                     })),
             }],
@@ -70,7 +70,7 @@
                 name: @json(str(trans_choice('models.game', \INF))->ucFirst()->value()),
                 type: 'bar',
                 data: @json(
-                    $globalTags->map(function ($tag) {
+                    $models->map(function ($tag) {
                         return $tag->games->count();
                     })),
                 color: getComputedStyle(document.body).getPropertyValue("--bs-primary"),

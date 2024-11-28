@@ -1,9 +1,9 @@
 <p class="fs-5 fw-semibold mb-4 text-center">
     {{ str(__('bo_other_stats_most_visited_pages'))->ucFirst()->value() }}
 </p>
-@if ($visitModels->isNotEmpty())
+@if ($models->isNotEmpty())
     <ul class="list-group border-0">
-        @foreach ($visitModels as $key => $visitModel)
+        @foreach ($models as $key => $visitModel)
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 @if ($visitModel->game->published)
                     <a class="btn btn-primary btn-sm" href="{{ route('fo.games.show', $visitModel->game->slug) }}"

@@ -1,40 +1,35 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+@php $brParam = isset($brParam) ? $brParam : []; @endphp
+
 <head>
-    @include('front.layouts.head')
+    <x-front.layouts.head :brParam="$brParam" />
 </head>
 
 <body>
-    @if (request()->routeIs('fo.games.index'))
-        @include('front.layouts.loading-screen')
-    @endif
+    <x-front.layouts.loading-screen />
 
-    <div class="container overflow-hidden">
-        @include('front.partials.noscript-warning')
+    <main class="container overflow-hidden">
+        <x-front.noscript-warning />
+        <x-front.btn-github />
 
-        @include('front.partials.btn-github')
+        {{-- NAVIGATION --}}
+        <x-front.layouts.nav :brParam="$brParam" :gameModel="isset($gameModel) ? $gameModel : null"
+            :gameModels="$gameModels" :folderModels="$folderModels" :tagModels="$tagModels" />
 
-        @if ((request()->routeIs('fo.games.show') && isset($gameModel)) || request()->routeIs('fo.ranks.index'))
-            @include('front.layouts.nav')
-        @endif
+        {{-- MAIN CONTENT --}}
+        @yield('content')
+    </main>
 
-        <div data-aos="fade">
-            <!-- Main content -->
-            @yield('content')
-        </div>
-    </div>
+    {{-- FOOTER --}}
+    <x-front.layouts.footer />
 
-    <!-- Footer -->
-    @include('front.layouts.footer')
+    {{-- TOAST MESSAGES CONTAINER --}}
+    <x-front.toast-container />
 
-    <!-- Toast messages container -->
-    @if (request()->routeIs('fo.games.show'))
-        <div class="toast-container position-fixed top-0 p-3"></div>
-    @endif
-
-    <!-- Other -->
-    @include('front.modules.window-system')
+    {{-- OTHER --}}
+    <x-front.window-system />
     @vite(['resources/ts/fo/front.ts'])
     @stack('scripts')
 </body>

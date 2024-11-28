@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => trans_choice(__('models.activity_log'), \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $activitylogModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$activitylogModel" />
         </div>
     </div>
     <div class="row">

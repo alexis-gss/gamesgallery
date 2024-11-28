@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="@yield('description')">
-<meta name="robots" content="index,follow">
+<meta name="robots" content="noindex,nofollow">
 
 {{-- Open Graph --}}
 {{-- blade-formatter-disable --}}
@@ -18,7 +18,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ \config('app.url') }}/{{ \request()->path() }}">
 <meta property="og:site_name" content="{{ config('app.name') }}">
-<meta property="og:image" content="{{ asset('assets/images/visual-fo.png') }}">
+<meta property="og:image" content="{{ asset('assets/images/visual-bo.png') }}">
 <meta property="og:description" content="@yield('description')">
 
 {{--  Favicon --}}
@@ -34,13 +34,12 @@
 
 {{-- Others --}}
 <link href="{{ \config('app.url') }}/{{ \request()->path() }}" rel="canonical">
-@include('breadcrumbs.breadcrumb-head')
+<x-breadcrumbs.breadcrumb-head :brParam="$brParam" />
 
 {{-- Styles --}}
-@vite(['resources/sass/fo/front.scss'])
+@vite(['resources/sass/bo/back.scss'])
 @stack('styles')
 
-{{-- DEBUG --}}
 @if (config('app.debug'))
     <script @if (!empty($nonce)) nonce="{{ $nonce }}" @endif>
         window.vueDebug = true;

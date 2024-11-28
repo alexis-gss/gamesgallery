@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Games\StoreGameRequest;
 use App\Http\Requests\Bo\Games\UpdateGameRequest;
-use App\Http\Requests\Bo\Pictures\StorePictureRequest;
-use App\Http\Requests\Bo\Pictures\UpdatePictureRequest;
+use App\Http\Requests\Bo\Pictures\PictureRequest;
 use App\Models\Game;
 use App\Models\Picture;
 use App\Models\Tag;
@@ -107,7 +106,7 @@ class GameController extends Controller
             if ($game->saveOrFail()) {
                 (new Picture())->updatePictures($game, Validator::make(
                     $request->all(),
-                    StorePictureRequest::rules()
+                    PictureRequest::rules()
                 )->validated());
                 (new Tag())->setTags($game, collect(request()->tags));
                 return redirect()->route('bo.games.edit', $game)
@@ -150,7 +149,7 @@ class GameController extends Controller
             $game->fill(Arr::except($request->validated(), ['tags']));
             (new Picture())->updatePictures($game, Validator::make(
                 $request->all(),
-                UpdatePictureRequest::rules()
+                PictureRequest::rules()
             )->validated());
             (new Tag())->setTags($game, collect($request->tags));
             if ($game->saveOrFail()) {

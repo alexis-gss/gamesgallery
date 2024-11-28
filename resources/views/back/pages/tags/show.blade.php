@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.tag'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $tagModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$tagModel" />
         </div>
         @canAny(['duplicate', 'update', 'delete'], $tagModel)
             <form class="btn-group confirmActionTS"

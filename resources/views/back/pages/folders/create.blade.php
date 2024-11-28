@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.folder'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $folderModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$folderModel" />
         </div>
         <div class="btn-toolbar mb-md-0 mb-2">
             @can('create', $folderModel)
@@ -24,20 +24,14 @@
         </div>
     </div>
     @can('create', $folderModel)
-        <form action="{{ route('bo.folders.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('bo.folders.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         @endcan
-        @include('back.pages.folders.form-inputs')
+        <div class="row">
+            <x-back.forms.folder-inputs :folderModel="$folderModel" />
+            <x-back.end-form action="create" :model="$folderModel" :modelTranslation="__('models.folder')" />
+        </div>
         @can('create', $folderModel)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                        title="{{ __('crud.actions_model.save', ['model' => __('models.folder')]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        @endcan
     </form>
+    @endcan
 @endsection

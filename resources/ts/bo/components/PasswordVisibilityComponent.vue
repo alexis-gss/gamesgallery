@@ -12,7 +12,7 @@
         {'d-none': visible}
       ]"
       :title="trans.methods.__('bo_tooltip_password_hide')"
-      data-bs-toggle="tooltip"
+      data-bs-tooltip="tooltip"
     >
       <FontAwesomeIcon
         icon="fas fa-eye-slash"
@@ -26,7 +26,7 @@
         {'d-none': !visible}
       ]"
       :title="trans.methods.__('bo_tooltip_password_show')"
-      data-bs-toggle="tooltip"
+      data-bs-tooltip="tooltip"
     >
       <FontAwesomeIcon
         icon="fas fa-eye"
@@ -113,7 +113,7 @@ function initTooltips(): void {
   setTimeout(() => {
     tooltips.value = Tooltips.make({
       type: "dom",
-      elements: passwordVisibility.value!.querySelectorAll("[data-bs-toggle=\"tooltip\"]")
+      elements: passwordVisibility.value!.querySelectorAll("[data-bs-tooltip=\"tooltip\"]")
     });
   }, 500);
 }

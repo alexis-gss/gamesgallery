@@ -14,7 +14,7 @@
                         title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', \INF)]) }}">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
-                    @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
+                    <x-breadcrumbs.breadcrumb-body :brParam="$gameModel" />
                 </div>
                 <div class="mb-md-0 mb-2">
                     @canAny(['view', 'duplicate', 'update', 'delete'], $gameModel)
@@ -75,22 +75,15 @@
         </div>
     </div>
     @can('update', $gameModel)
-        <form action="{{ route('bo.games.update', $gameModel) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('bo.games.update', $gameModel) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         @endcan
-        @include('back.pages.games.form-inputs')
+        <div class="row">
+            <x-back.forms.game-inputs :gameModel="$gameModel" :folderModels="$folderModels" :tagModels="$tagModels" />
+            <x-back.end-form action="update" :model="$gameModel" :modelTranslation="trans_choice('models.game', 1)" />
+        </div>
         @can('update', $gameModel)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top"
-                        type="submit"
-                        title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    </form>
     @endcan
 @endsection

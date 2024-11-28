@@ -5,30 +5,27 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
-        @include('breadcrumbs.breadcrumb-body')
+        <x-breadcrumbs.breadcrumb-body />
         @can('create', \App\Models\StaticPage::class)
-            <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top" href="{{ route('bo.games.create') }}"
+            <a class="btn btn-primary float-right" data-bs-tooltip="tooltip" data-bs-placement="top"
+                href="{{ route('bo.games.create') }}"
                 title="{{ __('crud.actions_model.create', ['model' => trans_choice('models.static_page', 1)]) }}">
                 <i class="fa-solid fa-plus"></i>
             </a>
         @endcan
     </div>
-    @include('back.modules.search-bar')
+    <x-back.search-bar :search="$search" :searchFields="$searchFields" />
     <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
         <div class="table-responsive">
             <table class="table-hover table-fix-action m-0 table">
                 @if ($staticPageModels->isNotEmpty())
-                    <thead>
-                        @include('back.modules.table-col-sorter', [
-                            'cols' => [
-                                'seo_title' => str(__('validation.custom.seo_title'))->ucfirst(),
-                                'seo_description' => str(__('validation.custom.seo_description'))->ucfirst(),
-                                'title' => str(__('validation.attributes.title'))->ucfirst(),
-                                'updated_at' => str(__('validation.attributes.updated_at'))->ucfirst(),
-                                'order' => str(__('validation.custom.order'))->ucfirst(),
-                            ],
-                        ])
-                    </thead>
+                    <x-back.table-col-sorter :cols="[
+                        'seo_title' => str(__('validation.custom.seo_title'))->ucfirst(),
+                        'seo_description' => str(__('validation.custom.seo_description'))->ucfirst(),
+                        'title' => str(__('validation.attributes.title'))->ucfirst(),
+                        'updated_at' => str(__('validation.attributes.updated_at'))->ucfirst(),
+                        'order' => str(__('validation.custom.order'))->ucfirst(),
+                    ]" />
                     <tbody>
                         @foreach ($staticPageModels as $staticPageModel)
                             <tr @class([
@@ -75,22 +72,20 @@
                                     </div>
                                 </td>
                                 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
-                                    <span class="badge rounded-pill text-bg-secondary">{{ $staticPageModel->updated_at->isoFormat('LLLL') }}</span>
+                                    <span
+                                        class="badge rounded-pill text-bg-secondary">{{ $staticPageModel->updated_at->isoFormat('LLLL') }}</span>
                                 </td>
                                 @php $routeName = request()->route()->getName(); @endphp
                                 @if (empty(request()->search) && session()->get("$routeName.sort_col") === 'order')
-                                    @include('back.modules.change-model-order', [
-                                        'routeName' => 'static_pages',
-                                        'models' => $staticPageModels,
-                                        'model' => $staticPageModel,
-                                    ])
+                                    <x-back.change-model-order routeName="static_pages" :models="$staticPageModels" :model="$staticPageModel"
+                                        :loop="$loop" />
                                 @endif
                                 <td @class(['text-end align-middle', 'border-0' => $loop->last])>
                                     @canAny(['update', 'view'], $staticPageModel)
                                         <div class="btn-group">
                                             <a class="btn btn-sm btn-info" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                                href="{{ route($staticPageModel->type->routeName()) }}" title="{{ __('crud.other.access_link') }}"
-                                                target="_blank">
+                                                href="{{ route($staticPageModel->type->routeName()) }}"
+                                                title="{{ __('crud.other.access_link') }}" target="_blank">
                                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                             </a>
                                             @can('view', $staticPageModel)
@@ -109,7 +104,7 @@
                                             @endcan
                                         </div>
                                     @else
-                                        @include('back.modules.user-right')
+                                        <x-back.user-right />
                                     @endcan
                                 </td>
                             </tr>
@@ -117,7 +112,8 @@
                     </tbody>
                 @else
                     <tr>
-                        <td class="border-0">{{ __('crud.other.no_model_found', ['model' => trans_choice('models.static_page', 1)]) }}</td>
+                        <td class="border-0">
+                            {{ __('crud.other.no_model_found', ['model' => trans_choice('models.static_page', 1)]) }}</td>
                     </tr>
                 @endif
             </table>

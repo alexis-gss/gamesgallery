@@ -14,7 +14,7 @@
                         title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.tag'))->plural()]) }}">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
-                    @include('breadcrumbs.breadcrumb-body', ['brParam' => $tagModel])
+                    <x-breadcrumbs.breadcrumb-body :brParam="$tagModel" />
                 </div>
                 @canAny(['view', 'duplicate', 'update', 'delete'], $tagModel)
                     <form class="confirmActionTS"
@@ -65,21 +65,15 @@
         </div>
     </div>
     @can('update', $tagModel)
-        <form action="{{ route('bo.tags.update', $tagModel) }}" method="POST" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+    <form action="{{ route('bo.tags.update', $tagModel) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         @endcan
-        @include('back.pages.tags.form-inputs')
+        <div class="row">
+            <x-back.forms.tag-inputs :tagModel="$tagModel" />
+            <x-back.end-form action="update" :model="$tagModel" :modelTranslation="__('models.tag')" />
+        </div>
         @can('update', $tagModel)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top"
-                        type="submit" title="{{ __('crud.actions_model.save', ['model' => __('models.tag')]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    </form>
     @endcan
 @endsection

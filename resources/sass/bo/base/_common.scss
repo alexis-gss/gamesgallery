@@ -5,7 +5,7 @@ body {
     }
 
     > #header {
-        z-index: 1060 !important;
+        z-index: 1050 !important;
         height: $bo-header-height;
         min-height: $bo-header-height;
         max-height: 100vh;
@@ -141,7 +141,7 @@ body {
                 button:focus,
                 a:hover,
                 a:focus {
-                    background-color: rgba(var(--bs-emphasis-color-rgb), 0.075) !important;
+                    background-color: rgba(#{var(--bs-emphasis-color-rgb)}, 0.075) !important;
                 }
 
                 svg {

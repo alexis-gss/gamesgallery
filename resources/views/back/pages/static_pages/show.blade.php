@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.static_page', \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $staticPageModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$staticPageModel" />
         </div>
         @can('update', $staticPageModel)
             <a class="btn btn-primary" data-bs-tooltip="tooltip" data-bs-placement="top"

@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.folder'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $folderModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$folderModel" />
         </div>
         @canAny(['duplicate', 'update', 'delete'], $folderModel)
             <form class="btn-group confirmActionTS"

@@ -33,7 +33,7 @@ class UpdateUserRequest extends StoreUserRequest
                 $this->boolean('published') :
                 true
         ]);
-        $this->mergePicture('picture');
+        $this->mergePicture();
     }
 
     /**

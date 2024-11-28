@@ -12,7 +12,7 @@
           :for="parameters.id"
           class="col-form-label fw-bold"
         >
-          {{ trans.methods.__("bo_label_choose_picture") }}
+          {{ trans.methods.__("bo_label_choose_picture") + ((parameters.required) ? ' *' : '') }}
           <span
             :title="trans.methods.__('bo_tooltip_image_input_choose_file')"
             data-bs-tooltip="tooltip"

@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$gameModel" />
         </div>
         @canAny(['duplicate', 'update', 'delete'], $gameModel)
             <form class="btn-group confirmActionTS"

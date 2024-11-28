@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.user'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$userModel" />
         </div>
         <div class="btn-toolbar mb-md-0 mb-2">
             @can('create', \App\Models\User::class)
@@ -24,20 +24,14 @@
         </div>
     </div>
     @can('create', \App\Models\User::class)
-        <form action="{{ route('bo.users.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('bo.users.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         @endcan
-        @include('back.pages.users.form-inputs')
+        <div class="row">
+            <x-back.forms.user-inputs :userModel="$userModel" />
+            <x-back.end-form action="create" :model="\App\Models\User::class" :modelTranslation="__('models.user')" />
+        </div>
         @can('create', \App\Models\User::class)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top"
-                        type="submit" title="{{ __('crud.actions_model.save', ['model' => __('models.user')]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    </form>
     @endcan
 @endsection

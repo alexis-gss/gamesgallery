@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => trans_choice('models.game', \INF)]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $gameModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$gameModel" />
         </div>
         <div class="btn-toolbar mb-md-0 mb-2">
             @can('create', $gameModel)
@@ -24,20 +24,14 @@
         </div>
     </div>
     @can('create', $gameModel)
-        <form action="{{ route('bo.games.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('bo.games.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         @endcan
-        @include('back.pages.games.form-inputs')
+        <div class="row">
+            <x-back.forms.game-inputs :gameModel="$gameModel" :folderModels="$folderModels" :tagModels="$tagModels" />
+            <x-back.end-form action="create" :model="$gameModel" :modelTranslation="trans_choice('models.game', 1)" />
+        </div>
         @can('create', $gameModel)
-            <x-back.script-button-clone />
-            <div class="row mt-3">
-                <div class="col text-center">
-                    <button class="btn btn-primary" id="formSubmit" data-bs-tooltip="tooltip" data-bs-placement="top" type="submit"
-                        title="{{ __('crud.actions_model.save', ['model' => trans_choice('models.game', 1)]) }}">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+    </form>
     @endcan
 @endsection

@@ -12,7 +12,7 @@
                 title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.user'))->plural()]) }}">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            @include('breadcrumbs.breadcrumb-body', ['brParam' => $userModel])
+            <x-breadcrumbs.breadcrumb-body :brParam="$userModel" />
         </div>
         <div class="btn-group">
             @can('resetPassword', $userModel)

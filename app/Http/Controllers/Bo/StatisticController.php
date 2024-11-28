@@ -51,9 +51,9 @@ class StatisticController extends Controller
             $latestModels[$class] = $class::query()->orderBy('updated_at', 'DESC')->first() ?? [];
         });
 
-        return view('back.pages.statistics.index', [
+        return view('back.pages.statistics', [
             'navLinks'             => $this->getNavTabsData($latestModels),
-            'activityModels'       => $activityModels,
+            'activityModels'       => collect($activityModels),
             'dateLastDays'         => $dateLastDays,
             'dateLastDaysFormated' => $dateLastDays->map(function ($date) {
                 return $date->format('d/m');
