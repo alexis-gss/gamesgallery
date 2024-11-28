@@ -18,7 +18,7 @@
     <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
         <div class="table-responsive">
             <table class="table-hover table-fix-action m-0 table">
-                @if (count($gameModels) > 0)
+                @if ($gameModels->isNotEmpty())
                     <thead>
                         @include('back.modules.table-col-sorter', [
                             'cols' => [
@@ -56,7 +56,7 @@
                                 </td>
                                 <td @class(['text-center align-middle', 'border-0' => $loop->last])>
                                     <p class="m-0">
-                                        {{ isset($gameModel->pictures) && count($gameModel->pictures) ? count($gameModel->pictures) : 0 }}
+                                        {{ isset($gameModel->pictures) && $gameModel->pictures->isNotEmpty() ? $gameModel->pictures->count() : 0 }}
                                     </p>
                                 </td>
                                 @include('back.modules.change-published-status', [

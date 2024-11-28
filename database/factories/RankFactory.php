@@ -24,7 +24,7 @@ final class RankFactory extends Factory
             ->whereNotIn('id', DB::table('ranks')->pluck('game_id'))
             ->get();
         return [
-            'game_id' => (count($gamesUnrank))
+            'game_id' => ($gamesUnrank->count())
                 ? $gamesUnrank->random()->getKey()
                 : Game::factory()->createQuietly(['published' => true]),
             'rank'    => 1,

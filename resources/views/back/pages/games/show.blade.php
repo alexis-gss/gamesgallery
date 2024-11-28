@@ -96,7 +96,7 @@
                                 </td>
                                 <td class="w-50 text-center align-middle">
                                     <div class="vstack gap-1 scrollable-images">
-                                        @if (count($gameModel->pictures))
+                                        @if ($gameModel->pictures->isNotEmpty())
                                             @foreach ($gameModel->pictures as $key => $picture)
                                                 <div class="hstack justify-content-center">
                                                     <p class="m-0">{{ sprintf('%s.webp', $picture->uuid) }}</p>

@@ -25,7 +25,7 @@
                     style="background-color:{{ $gameModel->folder->color }}">
                     {{ $gameModel->folder->name }}
                 </p>
-                @if (count($gameModel->tags) > 0 && $gameModel->tags->contains('published', true))
+                @if ($gameModel->tags->isNotEmpty() && $gameModel->tags->contains('published', true))
                     <span class="ms-1">-</span>
                     @foreach ($gameModel->tags->sortBy('name') as $tag)
                         @if ($tag->published)
@@ -41,8 +41,8 @@
                     <i class="fa-regular fa-eye"></i>
                     {{ sprintf(
                         '%s %s',
-                        count($gameModel->visits),
-                        count($gameModel->visits) > 1 ? str(__('models.visit'))->plural() : __('models.visit'),
+                        $gameModel->visits->count(),
+                        $gameModel->visits->isNotEmpty() ? str(__('models.visit'))->plural() : __('models.visit'),
                     ) }}
                 </p>
                 <p class="text-secondary m-0">

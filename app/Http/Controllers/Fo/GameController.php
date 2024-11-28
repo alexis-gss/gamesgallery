@@ -40,15 +40,15 @@ class GameController extends Controller
 
         /** @var array $gamePictures */
         $gamePictures = [];
-        if (count($gameModel->pictures)) {
+        if ($gameModel->pictures->isNotEmpty()) {
             $gameModel->pictures->map(function ($picture) {
                 // @phpstan-ignore-next-line
-                $picture->ratings_count = count($picture->ratings);
+                $picture->ratings_count = $picture->ratings->count();
                 return $picture;
             });
             $gamePictures = ToolboxHelper::customPaginate(
                 $gameModel->pictures,
-                (count($gameModel->pictures) <= 12) ? count($gameModel->pictures) : 12,
+                ($gameModel->pictures->count() <= 12) ? $gameModel->pictures->count() : 12,
                 ['path' => Paginator::resolveCurrentPath()]
             );
         }
@@ -131,11 +131,15 @@ class GameController extends Controller
     {
         /** @var array<int, string> $relatedGamesViews */
         $relatedGamesViews = [];
-        Game::query()->with('pictures', 'folder')
+        Game::query()
+            ->with('pictures', 'folder')
             ->where([['published', true], ['id', '!=', $gameModel->getKey()]])
             ->whereHas('folder', function ($q) use ($gameModel) {
                 $q->where([['published', true], ['id', $gameModel->folder->getKey()]]);
-            })->orderby('published_at', 'DESC')->take(5)->get()
+            })
+            ->orderby('published_at', 'DESC')
+            ->take(5)
+            ->get()
             ->map(function (Game $randomGameModel) use (&$relatedGamesViews) {
                 array_push($relatedGamesViews, [
                     view('front.partials.card-game', ['gameModel' => $randomGameModel])->render()

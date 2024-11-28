@@ -30,7 +30,7 @@
                         <div class="d-flex justify-content-start align-items-center">
                             <span class="card-pellet rounded-5" style="background-color:${params[0].color}"></span>&nbsp;&nbsp;
                             <p class="m-0" style="color:${getComputedStyle(document.body).getPropertyValue('--bs-body-bg')}">${params[0].seriesName}&nbsp;:&nbsp;<span class="fw-bold">${params[0].value}</span>&nbsp;
-                            (${Math.round((params[0].value/@json(count($globalGames))*100) * 100) / 100}%)</p>
+                            (${Math.round((params[0].value/@json($globalGames->count())*100) * 100) / 100}%)</p>
                         </div>`;
                 },
             },
@@ -71,7 +71,7 @@
                 type: 'bar',
                 data: @json(
                     $globalTags->map(function ($tag) {
-                        return count($tag->games);
+                        return $tag->games->count();
                     })),
                 color: getComputedStyle(document.body).getPropertyValue("--bs-primary"),
                 markPoint: {

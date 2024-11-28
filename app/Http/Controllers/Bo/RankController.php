@@ -49,8 +49,7 @@ class RankController extends Controller
     {
         return DB::transaction(function () use ($request) {
             foreach ($request->validated()['ranks'] as $dataValidated) {
-                $rank = new Rank();
-                $rank->fill(["game_id" => $dataValidated]);
+                $rank = (new Rank())->fill(["game_id" => $dataValidated]);
                 if (!$rank->saveOrFail()) {
                     return redirect()->back()
                         ->with('error', trans('crud.messages.cannot_be_updated', [

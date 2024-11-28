@@ -26,7 +26,7 @@ class StaticPageController extends Controller
         $gamesLatestString = "";
         $gameLatestModels->map(function ($gameModel, $gameModelIndex) use ($gameLatestModels, &$gamesLatestString) {
             $gamesLatestString .= $gameModel->name . (
-                ($gameModelIndex !== count($gameLatestModels) - 1) ? " / " : "..."
+                ($gameModelIndex !== $gameLatestModels->count() - 1) ? " / " : "..."
             );
         });
 

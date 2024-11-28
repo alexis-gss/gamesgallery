@@ -21,11 +21,11 @@
                         </a>
                         <span class="mx-1">-</span>
                         <p class="bg-secondary rounded-2 shadow m-0 px-2 py-0 text-white">
-                            {{ str(__('fo_ranking_details', ['number' => count($rankModels)]))->ucFirst() }}
+                            {{ str(__('fo_ranking_details', ['number' => $rankModels->count()]))->ucFirst() }}
                         </p>
                     </div>
                 </div>
-                @if (count($rankModels))
+                @if ($rankModels->count())
                     <ul class="bg-secondary rounded-3 shadow p-2">
                         @foreach ($rankModels as $key => $rankModel)
                             <li class="list-group-item rounded-2 border-0 bg-transparent p-0">

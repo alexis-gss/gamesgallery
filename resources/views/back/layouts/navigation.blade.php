@@ -29,7 +29,7 @@
                         <li>
                             <x-back.side-menu-link :label="str(trans_choice('models.game', \INF))->ucfirst()" routeName="bo.games.index"
                                 routeCondition="bo.games.*" icon="gamepad" :title="__('bo_tooltip_list_models', [
-                                    'count' => isset($globalGames) ? count($globalGames) : 0,
+                                    'count' => isset($globalGames) ? $globalGames->count() : 0,
                                     'model' => trans_choice('models.game', \INF),
                                 ])" />
                         </li>
@@ -39,7 +39,7 @@
                         <li>
                             <x-back.side-menu-link :label="str(__('models.folder'))->ucfirst()->plural()" routeName="bo.folders.index"
                                 routeCondition="bo.folders.*" icon="folder" :title="__('bo_tooltip_list_models', [
-                                    'count' => isset($globalFolders) ? count($globalFolders) : 0,
+                                    'count' => isset($globalFolders) ? $globalFolders->count() : 0,
                                     'model' => str(__('models.folder'))->plural(),
                                 ])" />
                         </li>
@@ -49,7 +49,7 @@
                         <li>
                             <x-back.side-menu-link :label="str(__('models.tag'))->ucfirst()->plural()" routeName="bo.tags.index"
                                 routeCondition="bo.tags.*" icon="tag" :title="__('bo_tooltip_list_models', [
-                                    'count' => isset($globalTags) ? count($globalTags) : 0,
+                                    'count' => isset($globalTags) ? $globalTags->count() : 0,
                                     'model' => str(__('models.tag'))->plural(),
                                 ])" />
                         </li>
@@ -59,7 +59,7 @@
                         <li>
                             <x-back.side-menu-link :label="str(__('models.rank'))->ucfirst()->plural()" routeName="bo.ranks.index"
                                 routeCondition="bo.ranks.*" icon="trophy" :title="__('bo_tooltip_list_models', [
-                                    'count' => isset($globalRanks) ? count($globalRanks) : 0,
+                                    'count' => isset($globalRanks) ? $globalRanks->count() : 0,
                                     'model' => str(__('models.rank'))->plural(),
                                 ])" />
                         </li>
@@ -84,7 +84,7 @@
                             <li>
                                 <x-back.side-menu-link :label="str(trans_choice('models.static_page', \INF))->ucfirst()" routeName="bo.static_pages.index"
                                     routeCondition="bo.static_pages.*" icon="file" :title="__('bo_tooltip_list_models', [
-                                        'count' => isset($globalStaticPages) ? count($globalStaticPages) : 0,
+                                        'count' => isset($globalStaticPages) ? $globalStaticPages->count() : 0,
                                         'model' => trans_choice('models.static_page', \INF),
                                     ])" />
                             </li>
@@ -94,7 +94,7 @@
                             <li>
                                 <x-back.side-menu-link :label="str(trans_choice('models.activity_log', \INF))->ucfirst()" routeName="bo.activity_logs.index"
                                     routeCondition="bo.activity_logs.*" icon="clock-rotate-left" :title="__('bo_tooltip_list_models', [
-                                        'count' => isset($globalActivities) ? count($globalActivities) : 0,
+                                        'count' => isset($globalActivities) ? $globalActivities->count() : 0,
                                         'model' => trans_choice('models.activity_log', \INF),
                                     ])" />
                             </li>
@@ -104,7 +104,7 @@
                             <li>
                                 <x-back.side-menu-link :label="str(trans_choice('models.user', \INF))->ucfirst()" routeName="bo.users.index"
                                     routeCondition="bo.users.*" icon="users" :title="__('bo_tooltip_list_models', [
-                                        'count' => isset($globalUsers) ? count($globalUsers) : 0,
+                                        'count' => isset($globalUsers) ? $globalUsers->count() : 0,
                                         'model' => str(__('models.user'))->plural(),
                                     ])" />
                             </li>

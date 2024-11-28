@@ -1,7 +1,7 @@
 <p class="fs-5 fw-semibold mb-4 text-center">
     {{ str(__('bo_other_stats_most_liked_pictures'))->ucFirst()->value() }}
 </p>
-@if (count($ratingModels))
+@if ($ratingModels->count())
     <ul class="list-group border-0">
         @foreach ($ratingModels as $key => $ratingModel)
             @php

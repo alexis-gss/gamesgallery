@@ -149,7 +149,7 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder): \Illuminate\Http\RedirectResponse
     {
-        if (count($folder->games) === 0) {
+        if ($folder->games->isEmpty()) {
             /** @var array<string,string> */
             $previousQueries = [];
             \parse_str(\parse_url(url()->previous(), \PHP_URL_QUERY), $previousQueries);

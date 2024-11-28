@@ -31,7 +31,7 @@
                         <div class="d-flex justify-content-start align-items-center">
                             <span class="card-pellet rounded-5" style="background-color:${params.color}"></span>&nbsp;&nbsp;
                             <p class="m-0" style="color:${getComputedStyle(document.body).getPropertyValue('--bs-body-bg')}">${params.seriesName}&nbsp;:&nbsp;<span class="fw-bold">${params.value}</span>&nbsp;
-                            (${Math.round((params.value/@json(count($globalGames))*100) * 100) / 100}%)</p>
+                            (${Math.round((params.value/@json($globalGames->count())*100) * 100) / 100}%)</p>
                         </div>`;
                 },
             },
@@ -76,7 +76,7 @@
                 },
                 data: @json(
                     $globalFolders->map(function ($folder) {
-                        return ['value' => count($folder->games), 'name' => $folder->name];
+                        return ['value' => $folder->games->count(), 'name' => $folder->name];
                     })),
                 color: @json(
                     $globalFolders->map(function ($folder) {

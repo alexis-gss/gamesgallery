@@ -52,14 +52,14 @@ class StatisticController extends Controller
         });
 
         return view('back.pages.statistics.index', [
-            'navLinks' => $this->getNavTabsData($latestModels),
-            'activityModels' => $activityModels,
-            'dateLastDays' => $dateLastDays,
+            'navLinks'             => $this->getNavTabsData($latestModels),
+            'activityModels'       => $activityModels,
+            'dateLastDays'         => $dateLastDays,
             'dateLastDaysFormated' => $dateLastDays->map(function ($date) {
                 return $date->format('d/m');
             })->toArray(),
-            'ratingModels' => $this->getTopFiveModels(new Rating(), 'picture', ['picture', 'picture.game']),
-            'visitModels' => $this->getTopFiveModels(new Visit(), 'game', ['game']),
+            'ratingModels'         => $this->getTopFiveModels(new Rating(), 'picture', ['picture', 'picture.game']),
+            'visitModels'          => $this->getTopFiveModels(new Visit(), 'game', ['game']),
         ]);
     }
 

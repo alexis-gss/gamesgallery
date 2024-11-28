@@ -31,7 +31,7 @@
                     <label class="col-form-label" for="folder_id">
                         <b>{{ __('bo_label_organization') }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top"
-                            title="{{ __('bo_tooltip_folders', ['number' => count($folderModels)]) }}">
+                            title="{{ __('bo_tooltip_folders', ['number' => $folderModels->count()]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>
@@ -118,7 +118,7 @@
                     <label class="col-form-label" for="name">
                         <b>{{ str(__('models.tag'))->plural()->ucFirst() }}</b>
                         <span data-bs-tooltip="tooltip" data-bs-placement="top"
-                            title="{{ __('bo_tooltip_tags', ['number' => count($tagModels)]) }}">
+                            title="{{ __('bo_tooltip_tags', ['number' => $tagModels->count()]) }}">
                             <i class="fa-solid fa-circle-info"></i>
                         </span>
                     </label>

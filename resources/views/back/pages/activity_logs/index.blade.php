@@ -12,7 +12,7 @@
     <div class="bg-body-tertiary border rounded-3 p-3 mb-3">
         <div class="table-responsive">
             <table class="table-hover table-fix-action m-0 table">
-                @if (count($activitylogModels) > 0)
+                @if ($activitylogModels->isNotEmpty())
                     <thead>
                         @include('back.modules.table-col-sorter', [
                             'cols' => [

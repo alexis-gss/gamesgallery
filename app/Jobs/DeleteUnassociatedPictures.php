@@ -104,8 +104,7 @@ class DeleteUnassociatedPictures implements ShouldQueue, ShouldBeUnique
     public function deleteUnassociatedPictures(): void
     {
         foreach ($this->storagePictures as $picture) {
-            $result = $this->pictures->where("uuid", explode(".", explode("/", $picture)[2])[0]);
-            if (!count($result)) {
+            if ($this->pictures->where("uuid", explode(".", explode("/", $picture)[2])[0])->isEmpty()) {
                 Storage::disk("public")->delete($picture);
             }
         }
