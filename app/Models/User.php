@@ -127,7 +127,7 @@ class User extends Authenticatable
             \validator(
                 ['published' => $user->published],
                 ['published' => 'required|boolean|accepted'],
-                ['published.accepted' => trans('Vous ne pouvez pas déactiver votre propre compte')],
+                ['published.accepted' => trans('validation.rule.disable_own_account')],
             )->validate();
         }
     }

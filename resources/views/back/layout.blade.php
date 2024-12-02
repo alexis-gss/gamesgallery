@@ -17,7 +17,7 @@
             <x-back.layouts.navigation/>
             <section id="page-content" class="col-12 @guest d-flex flex-column justify-content-center align-items-center @endguest bg-body p-3">
                 <div class="container p-0">
-                    <x-back.noscript-warning/>
+                    <x-noscript-warning/>
                     @auth('backend')
                         <x-back.flash-messages />
                     @endauth

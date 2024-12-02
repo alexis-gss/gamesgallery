@@ -1,7 +1,7 @@
 @extends('back.layout', ['brParam' => $gameModel])
 
-@section('title', __('Édition d\'un :model', ['model' => trans_choice('models.game', 1)]))
-@section('description', __('Édition d\'un :model déjà existant', ['model' => trans_choice('models.game', 1)]))
+@section('title', __('crud.meta.view_model', ['model' => trans_choice('models.game', 1)]))
+@section('description', __('crud.meta.view_model_desc', ['model' => trans_choice('models.game', 1)]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

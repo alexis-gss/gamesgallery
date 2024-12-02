@@ -30,7 +30,7 @@
           class="form-check-label"
           for="colorPickerNullable"
         >
-          {{ trans.methods.__('Cocher pour rendre vide') }}
+          {{ trans.methods.__('bo_other_color_empty') }}
         </label>
       </div>
       <div :class="['position-absolute top-100 left-0 z-2', displayPicker ? 'd-inline-block' : 'd-none']">

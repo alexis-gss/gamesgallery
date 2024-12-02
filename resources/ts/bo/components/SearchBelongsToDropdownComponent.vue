@@ -27,9 +27,20 @@
       :close-on-select="!selectParameters.multiple"
     >
       <template #no-options>
-        <p class="vs__no-options m-0">
-          {{ trans.methods.__('Aucun éléments trouvés') }}
-        </p>
+        <div class="vs__no-options d-flex flex-column justify-content-center align-items-center">
+          <span class="no-result-icon">
+            <FontAwesomeIcon
+              icon="fa-solid fa-triangle-exclamation"
+              class="w-100 h-100"
+            />
+          </span>
+          <p class="text-center m-0 pt-2">
+            {{ trans.methods.__("global_no_result") }}
+          </p>
+          <p class="text-center m-0 pb-2">
+            {{ trans.methods.__("global_try_search_again") }}
+          </p>
+        </div>
       </template>
       <template #list-footer>
         <ul
@@ -83,7 +94,7 @@
           class="spinner-border text-secondary ms-1"
           role="status"
         >
-          <span class="visually-hidden">{{ trans.methods.__('Chargement...') }}</span>
+          <span class="visually-hidden">{{ trans.methods.__('global_text_loading') }}</span>
         </div>
       </template>
     </VueSelect>
@@ -294,8 +305,8 @@ function updatePage(number: number): void {
   */
 function customNodes(): void {
   const btnClear = searchBelongsToDropdown.value?.querySelector(".vs__clear") as HTMLButtonElement|null;
-  btnClear?.setAttribute("title", trans.methods.__("Supprimer la sélection"));
-  btnClear?.setAttribute("aria-label", trans.methods.__("Supprimer la sélection"));
+  btnClear?.setAttribute("title", trans.methods.__("bo_delete_selection"));
+  btnClear?.setAttribute("aria-label", trans.methods.__("bo_delete_selection"));
   btnClear?.setAttribute("data-bs-toggle", "tooltip");
   (!roundedBorderBs.value) ? searchBelongsToDropdown.value?.querySelector(".vs__dropdown-toggle")?.classList.add("rounded-0") : "";
 }
@@ -377,6 +388,9 @@ function initTooltips(): void {
 }
 .vs__dropdown-toggle, .vs__dropdown-option, .vs__no-options {
   padding: .375rem .75rem;
+}
+.vs__no-options .no-result-icon {
+  width: 4rem;
 }
 .vs__dropdown-toggle {
   border: var(--bs-border-width) solid var(--bs-border-color);

@@ -70,13 +70,18 @@ class StoreUserRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'first_name' => trans('validation.attributes.first_name'),
-            'last_name'  => trans('validation.attributes.last_name'),
-            'email'      => trans('validation.attributes.email'),
-            'role'       => trans('validation.attributes.role'),
-            'picture'    => trans('validation.attributes.image'),
-            'password'   => trans('validation.attributes.password'),
-            'published'  => trans('validation.custom.publishment')
+            'first_name'             => trans('validation.attributes.first_name'),
+            'last_name'              => trans('validation.attributes.last_name'),
+            'email'                  => trans('validation.attributes.email'),
+            'role'                   => trans('validation.attributes.role'),
+            'picture'                => trans('validation.attributes.image'),
+            'password'               => trans('validation.attributes.password'),
+            'password.letters'       => trans('validation.password.letters'),
+            'password.mixed'         => trans('validation.password.mixed'),
+            'password.numbers'       => trans('validation.password.numbers'),
+            'password.symbols'       => trans('validation.password.symbols'),
+            'password.uncompromised' => trans('validation.password.uncompromised'),
+            'published'              => trans('validation.custom.publishment')
         ];
     }
 }

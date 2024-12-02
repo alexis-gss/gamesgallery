@@ -56,6 +56,7 @@ import {
     faTag,
     faTags,
     faTrash,
+    faTriangleExclamation,
     faTrophy,
     faUndoAlt,
     faUsers,
@@ -127,6 +128,7 @@ library.add(
     faTrophy,
     faFile,
     faUsers,
-    faSortDown
+    faSortDown,
+    faTriangleExclamation
 );
 dom.watch();

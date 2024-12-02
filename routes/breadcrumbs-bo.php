@@ -13,12 +13,12 @@ use Illuminate\Support\Str;
 // * AUTH
 Breadcrumbs::for('bo.login', function ($trail) {
     $trail->parent('fo.games.index');
-    $trail->push(trans('Connection'), route('bo.login'));
+    $trail->push(trans('bo_other_back_office_login'), route('bo.login'));
 });
 
 // * HOMEPAGE
 Breadcrumbs::for('bo.home', function (Generator $trail) {
-    $trail->push(trans('Homepage'), route('bo.home'));
+    $trail->push(trans('bo_other_homepage'), route('bo.home'));
 });
 
 // * STATISTIQUES

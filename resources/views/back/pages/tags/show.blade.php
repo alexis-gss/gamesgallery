@@ -1,7 +1,7 @@
 @extends('back.layout', ['brParam' => $tagModel])
 
-@section('title', __('Édition d\'un :model', ['model' => __('models.tag')]))
-@section('description', __('Édition d\'un :model déjà existant', ['model' => __('models.tag')]))
+@section('title', __('crud.meta.view_model', ['model' => __('models.tag')]))
+@section('description', __('crud.meta.view_model_desc', ['model' => __('models.tag')]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

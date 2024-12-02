@@ -4,12 +4,12 @@
         <div class="picture-loader position-absolute top-0 start-0 d-flex justify-content-center align-items-center bg-primary w-100 h-100 z-3">
             <div class="spinner-border text-light" role="status">
                 <span class="visually-hidden">
-                    {{ __("fo_text_loading") }}
+                    {{ __("global_text_loading") }}
                 </span>
             </div>
         </div>
         <img src="{{ sprintf('%s/storage/pictures/%s/%s.webp', config('app.url'), $gameModel->slug, $gameModel->pictures->first()->uuid ?? '') }}"
-            class="img-fluid d-none" alt="{{ __('image') }}">
+            class="img-fluid d-none" alt="{{ __('fo_image_of', ['gameName' => $gameModel->name]) }}">
     </div>
     <div class="card-body">
         <h5 class="card-title title-font-regular m-0">{{ $gameModel->name }}</h5>

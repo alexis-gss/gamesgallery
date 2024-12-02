@@ -1,7 +1,7 @@
 @extends('back.layout', ['brParam' => $folderModel])
 
-@section('title', __('Édition d\'un :model', ['model' => __('models.folder')]))
-@section('description', __('Édition d\'un :model déjà existant', ['model' => __('models.folder')]))
+@section('title', __('crud.meta.view_model', ['model' => __('models.folder')]))
+@section('description', __('crud.meta.view_model_desc', ['model' => __('models.folder')]))
 @section('breadcrumb', request()->route()->getName())
 
 @section('content')

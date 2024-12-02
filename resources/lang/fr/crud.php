@@ -72,6 +72,8 @@ return [
         'creation_model_desc' => 'Form for entering information to create a new :model',
         'edition_model'       => 'Édition :model',
         'edition_model_desc'  => 'Modification des informations :model précédemment enregistrées',
+        'view_model'          => 'Aperçu :model',
+        'view_model_desc'     => 'Aperçu des informations :model précédemment enregistrées',
     ],
     'other' => [
         'no_model_found'  => 'Aucun résultat (:model) trouvé',

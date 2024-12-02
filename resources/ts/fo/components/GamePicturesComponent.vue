@@ -42,7 +42,7 @@
                             role="status"
                           >
                             <span class="visually-hidden">
-                              {{ trans.methods.__("fo_text_loading") }}
+                              {{ trans.methods.__("global_text_loading") }}
                             </span>
                           </div>
                         </div>
@@ -132,7 +132,7 @@
               role="status"
             >
               <span class="visually-hidden">
-                {{ trans.methods.__("fo_text_loading") }}
+                {{ trans.methods.__("global_text_loading") }}
               </span>
             </div>
           </div>
@@ -147,7 +147,7 @@
         class="spinner-border text-primary"
         role="status"
       >
-        <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
+        <span class="visually-hidden">{{ trans.methods.__("global_text_loading") }}</span>
       </div>
     </div>
     <div

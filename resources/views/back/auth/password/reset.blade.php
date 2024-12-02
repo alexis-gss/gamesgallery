@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('Authentification'))
-@section('description', __('Formulaire d\'authentification au back-office.'))
+@section('title', __('auth.reset_password'))
+@section('description', __('auth.reset_password_desc'))
 
 @section('content')
     <h1 class="title-font-regular position-relative px-sm-5 mx-auto mb-3 w-fit p-0 py-1 text-center">
@@ -63,8 +63,6 @@
                                 </div>
                             </div>
                             <div class="row d-none mb-3">
-                                <label class="col-md-4 col-form-label text-md-end"
-                                    for="token">{{ __('Confirmation du mot de passe') }}</label>
                                 <div class="col-md-6">
                                     <input class="form-control disabled" id="token" name="token" type="text"
                                         value="{{ $token }}" autocomplete="token">
@@ -73,7 +71,7 @@
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button class="btn btn-primary" type="submit">
-                                        <span>{{ __('Envoyer') }}</span>
+                                        <span>{{ __('auth.reset_password') }}</span>
                                     </button>
                                 </div>
                             </div>

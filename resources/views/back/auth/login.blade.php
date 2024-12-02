@@ -1,7 +1,7 @@
 @extends('back.layout')
 
-@section('title', __('bo_other_back_office_login'))
-@section('description', __('bo_other_back_office_login_desc'))
+@section('title', __('auth.login'))
+@section('description', __('auth.login_desc'))
 
 @section('content')
     <h1 class="title-font-regular position-relative px-sm-5 mx-auto mb-3 w-fit p-0 py-1 text-center">

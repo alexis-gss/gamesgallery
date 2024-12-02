@@ -95,7 +95,7 @@
           class="spinner-border text-white"
           role="status"
         >
-          <span class="visually-hidden">{{ trans.methods.__("fo_text_loading") }}</span>
+          <span class="visually-hidden">{{ trans.methods.__("global_text_loading") }}</span>
         </div>
       </div>
       <!-- List of games -->
@@ -149,10 +149,10 @@
             />
           </span>
           <p class="text-center m-0 pt-2">
-            {{ trans.methods.__("fo_no_result") }}
+            {{ trans.methods.__("global_no_result") }}
           </p>
           <p class="text-center m-0 pb-2">
-            {{ trans.methods.__("fo_try_search_again") }}
+            {{ trans.methods.__("global_try_search_again") }}
           </p>
           <button
             class="btn btn-primary"

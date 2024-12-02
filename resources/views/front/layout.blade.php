@@ -11,7 +11,7 @@
     <x-front.layouts.loading-screen />
 
     <main class="container overflow-hidden">
-        <x-front.noscript-warning />
+        <x-noscript-warning />
         <x-front.btn-github />
 
         {{-- NAVIGATION --}}
