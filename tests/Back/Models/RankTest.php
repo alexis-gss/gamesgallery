@@ -33,7 +33,7 @@ class RankTest extends TestCase
     public function testUserConceptorCanAccessRanksIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'ranks.' . config('unit-tests.view.resources-index'))
         );

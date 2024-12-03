@@ -125,8 +125,8 @@ class User extends Authenticatable
     {
         if (optional(auth('backend')->user())->getKey() === $user->getKey()) {
             \validator(
-                ['published' => $user->published],
-                ['published' => 'required|boolean|accepted'],
+                ['published'          => $user->published],
+                ['published'          => 'required|boolean|accepted'],
                 ['published.accepted' => trans('validation.rule.disable_own_account')],
             )->validate();
         }

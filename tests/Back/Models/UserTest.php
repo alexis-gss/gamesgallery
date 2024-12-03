@@ -118,7 +118,7 @@ class UserTest extends TestCase
     public function testUserConceptorCanAccessUsersIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-index'))
         );
@@ -134,7 +134,7 @@ class UserTest extends TestCase
     public function testUserConceptorCanAccessUsersReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = User::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-read'), $model)
@@ -151,7 +151,7 @@ class UserTest extends TestCase
     public function testUserConceptorCanAccessUsersCreateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-create'))
         );
@@ -167,7 +167,7 @@ class UserTest extends TestCase
     public function testUserConceptorCanAccessUsersEditView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = User::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'users.' . config('unit-tests.view.resources-update'), $model)

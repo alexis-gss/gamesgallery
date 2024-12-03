@@ -32,7 +32,7 @@ class RankController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        return view('back.pages.ranks', [
+        return view('back.pages.ranks.index', [
             'rankModels'   => $this->getRanksPublished(),
             'gameModels'   => $this->getPublishedGamesInNotRanking()->paginate($this->modelsPerPage),
             'searchFields' => trans('validation.attributes.name'),

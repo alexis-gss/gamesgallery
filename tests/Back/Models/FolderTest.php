@@ -119,7 +119,7 @@ class FolderTest extends TestCase
     public function testUserConceptorCanAccessFoldersIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'folders.' . config('unit-tests.view.resources-index'))
         );
@@ -135,7 +135,7 @@ class FolderTest extends TestCase
     public function testUserConceptorCanAccessFoldersReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = Folder::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'folders.' . config('unit-tests.view.resources-read'), $model)
@@ -152,7 +152,7 @@ class FolderTest extends TestCase
     public function testUserConceptorCanAccessFoldersCreateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'folders.' . config('unit-tests.view.resources-create'))
         );
@@ -168,7 +168,7 @@ class FolderTest extends TestCase
     public function testUserConceptorCanAccessFoldersEditView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = Folder::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'folders.' . config('unit-tests.view.resources-update'), $model)

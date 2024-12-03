@@ -25,7 +25,7 @@ class AuthenticationTest extends TestCase
     /** @return void */
     public function testUserCanAccessAdminDashboard(): void
     {
-        $authModel    = User::factory()->create();
+        $authModel    = User::factory()->createQuietly(['published' => true]);
         $response = $this->actingAs($authModel, 'backend')->get(route(config('unit-tests.route.prefix') . config('unit-tests.view.name-homepage')));
         $response->assertSuccessful();
         $response->assertViewIs(config('unit-tests.view.prefix') . 'pages.home');
@@ -34,8 +34,8 @@ class AuthenticationTest extends TestCase
     /** @return void */
     public function testUserCannotViewLoginFormWhenAuthenticated(): void
     {
-        $model    = User::factory()->make();
-        $response = $this->actingAs($model, 'backend')->get(route(config('unit-tests.route.prefix') . 'login'));
+        $authModel    = User::factory()->createQuietly(['published' => true]);
+        $response = $this->actingAs($authModel, 'backend')->get(route(config('unit-tests.route.prefix') . 'login'));
         $response->assertStatus(302);
     }
 }

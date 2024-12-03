@@ -119,7 +119,7 @@ class TagTest extends TestCase
     public function testUserConceptorCanAccessTagsIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'tags.' . config('unit-tests.view.resources-index'))
         );
@@ -135,7 +135,7 @@ class TagTest extends TestCase
     public function testUserConceptorCanAccessTagsReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = Tag::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'tags.' . config('unit-tests.view.resources-read'), $model)
@@ -152,7 +152,7 @@ class TagTest extends TestCase
     public function testUserConceptorCanAccessTagsCreateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'tags.' . config('unit-tests.view.resources-create'))
         );
@@ -168,7 +168,7 @@ class TagTest extends TestCase
     public function testUserConceptorCanAccessTagsEditView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = Tag::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'tags.' . config('unit-tests.view.resources-update'), $model)

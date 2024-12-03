@@ -79,7 +79,7 @@ class StaticPageTest extends TestCase
     public function testUserConceptorCanAccessStaticPagesIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'static_pages.' . config('unit-tests.view.resources-index'))
         );
@@ -95,7 +95,7 @@ class StaticPageTest extends TestCase
     public function testUserConceptorCanAccessStaticPagesReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = StaticPage::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'static_pages.' . config('unit-tests.view.resources-read'), $model)
@@ -112,7 +112,7 @@ class StaticPageTest extends TestCase
     public function testUserConceptorCanAccessStaticPagesUpdateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = StaticPage::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'static_pages.' . config('unit-tests.view.resources-update'), $model)

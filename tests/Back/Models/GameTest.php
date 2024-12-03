@@ -123,7 +123,7 @@ class GameTest extends TestCase
     public function testUserConceptorCanAccessGamesIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-index'))
         );
@@ -139,7 +139,7 @@ class GameTest extends TestCase
     public function testUserConceptorCanAccessGamesReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = Game::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-read'), $model)
@@ -156,7 +156,7 @@ class GameTest extends TestCase
     public function testUserConceptorCanAccessGamesCreateView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-create'))
         );
@@ -172,7 +172,7 @@ class GameTest extends TestCase
     public function testUserConceptorCanAccessGamesEditView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = Game::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'games.' . config('unit-tests.view.resources-update'), $model)

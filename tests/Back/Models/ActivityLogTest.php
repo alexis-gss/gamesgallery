@@ -45,7 +45,7 @@ class ActivityLogTest extends TestCase
     public function testUserConceptorCanAccessActivityLogsIndexView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'activity_logs.' . config('unit-tests.view.resources-index'))
         );
@@ -61,7 +61,7 @@ class ActivityLogTest extends TestCase
     public function testUserConceptorCanAccessActivityLogsReadView(): void
     {
         $authModel = AuthModel::factory()->createOneQuietly();
-        $authModel->update(['role' => RoleEnum::conceptor]);
+        $authModel->update(['published' => true, 'role' => RoleEnum::conceptor]);
         $model    = ActivityLog::factory()->createOneQuietly();
         $response = $this->actingAs($authModel, 'backend')->get(
             route(config('unit-tests.route.prefix') . 'activity_logs.' . config('unit-tests.view.resources-read'), $model)
