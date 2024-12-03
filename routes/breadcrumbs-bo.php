@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Users\RoleEnum;
 use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
@@ -8,6 +9,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 // * AUTH
@@ -113,7 +115,9 @@ Breadcrumbs::for('bo.ranks.index', function (Generator $trail) {
 Breadcrumbs::for('bo.users.index', function (Generator $trail) {
     $trail->push(
         Str::of(trans('models.user'))->plural()->ucfirst(),
-        route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc'])
+        (Auth::guard('backend')->user()->role->equals(RoleEnum::conceptor))
+            ? route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc'])
+            : ''
     );
 });
 Breadcrumbs::for('bo.users.show', function (Generator $trail, User $user) {

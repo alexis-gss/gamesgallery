@@ -7,11 +7,13 @@
 @section('content')
     <div class="d-flex justify-content-between flex-md-nowrap align-items-center flex-wrap pb-3">
         <div class="d-flex align-items-start flex-row">
-            <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
-                href="{{ route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
-                title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.user'))->plural()]) }}">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
+            @can('viewAny', $userModel)
+                <a class="btn btn-primary text-decoration-none m-0" data-bs-tooltip="tooltip" data-bs-placement="top"
+                    href="{{ route('bo.users.index', ['sort_col' => 'updated_at', 'sort_way' => 'desc']) }}"
+                    title="{{ __('crud.actions_model.list_all', ['model' => str(__('models.user'))->plural()]) }}">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            @endcan
             <x-breadcrumbs.breadcrumb-body :brParam="$userModel" />
         </div>
         <div class="btn-toolbar mb-md-0 mb-2">

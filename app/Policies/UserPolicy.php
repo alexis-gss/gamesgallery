@@ -28,8 +28,8 @@ class UserPolicy
      */
     public function view(User $authUser, User $user): bool
     {
-        return UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
+        return $authUser->getRouteKey() === $user->getRouteKey() ||
+            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -52,9 +52,8 @@ class UserPolicy
      */
     public function update(User $authUser, User $user): bool
     {
-        return $authUser->getRouteKey() === $user->getRouteKey() or
-            (UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-                UserStaticRules::atLeastRole($authUser, $user->role));
+        return $authUser->getRouteKey() === $user->getRouteKey() ||
+            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -66,37 +65,8 @@ class UserPolicy
      */
     public function delete(User $authUser, User $user): bool
     {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param \App\Models\User $authUser
-     * @param \App\Models\User $user
-     * @return boolean
-     */
-    public function restore(User $authUser, User $user): bool
-    {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param \App\Models\User $authUser
-     * @param \App\Models\User $user
-     * @return boolean
-     */
-    public function forceDelete(User $authUser, User $user): bool
-    {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
+        return $authUser->getRouteKey() !== $user->getRouteKey() &&
+            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -108,23 +78,18 @@ class UserPolicy
      */
     public function duplicate(User $authUser, User $user): bool
     {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
+        return $authUser->getRouteKey() !== $user->getRouteKey() &&
+            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
-
     /**
      * Determine whether the user can change the order model.
      *
      * @param \App\Models\User $authUser
-     * @param \App\Models\User $user
      * @return boolean
      */
-    public function changeOrder(User $authUser, User $user): bool
+    public function changeOrder(User $authUser): bool
     {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
+        return UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -136,10 +101,8 @@ class UserPolicy
      */
     public function changePublished(User $authUser, User $user): bool
     {
-        return ($user->getRouteKey()) ? $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::admin) and
-            UserStaticRules::atLeastRole($authUser, $user->role) :
-            UserStaticRules::atLeastRole($authUser, RoleEnum::admin);
+        return $authUser->getRouteKey() !== $user->getRouteKey() &&
+            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 
     /**
@@ -151,8 +114,7 @@ class UserPolicy
      */
     public function resetPassword(User $authUser, User $user): bool
     {
-        return $authUser->getRouteKey() !== $user->getRouteKey() and
-            UserStaticRules::atLeastRole($authUser, RoleEnum::admin) and
-            UserStaticRules::atLeastRole($authUser, $user->role);
+        return $authUser->getRouteKey() !== $user->getRouteKey() &&
+            UserStaticRules::atLeastRole($authUser, RoleEnum::conceptor);
     }
 }

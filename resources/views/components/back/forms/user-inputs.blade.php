@@ -63,26 +63,28 @@
                 </small>
                 <x-back.input-error inputName="email"/>
             </div>
-            <div class="col-12 col-md-6 form-group mb-3">
-                <label class="col-form-label" for="role">
-                    <b>{{ __('bo_label_user_rights') }}&nbsp;*</b>
-                    <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_role') }}">
-                        <i class="fa-solid fa-circle-info"></i>
-                    </span>
-                </label>
-                <select class="form-select @error('role') is-invalid @enderror" id="role" name="role"
-                    role="button" required>
-                    @foreach (Arr::where(\App\Enums\Users\RoleEnum::toArray(), fn(object $role) => $role->value >= auth('backend')->user()->role->value()) as $associatedModel)
-                        <option value="{{ $associatedModel->value }}" @selected((isset($userModel->role) && old('role', $userModel->role->value()) ?? 1) === $associatedModel->value)>
-                            {{ str($associatedModel->label)->ucFirst() }}
-                        </option>
-                    @endforeach
-                </select>
-                <small class="text-body-secondary">
-                    {{ __('validation.rule.select-single', ['entity' => __('validation.attributes.role')]) }}
-                </small>
-                <x-back.input-error inputName="role"/>
-            </div>
+            @can('isConceptor')
+                <div class="col-12 col-md-6 form-group mb-3">
+                    <label class="col-form-label" for="role">
+                        <b>{{ __('bo_label_user_rights') }}&nbsp;*</b>
+                        <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_role') }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </span>
+                    </label>
+                    <select class="form-select @error('role') is-invalid @enderror" id="role" name="role"
+                        role="button" required>
+                        @foreach (Arr::where(\App\Enums\Users\RoleEnum::toArray(), fn(object $role) => $role->value >= auth('backend')->user()->role->value()) as $associatedModel)
+                            <option value="{{ $associatedModel->value }}" @selected((isset($userModel->role) && old('role', $userModel->role->value()) ?? 1) === $associatedModel->value)>
+                                {{ str($associatedModel->label)->ucFirst() }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small class="text-body-secondary">
+                        {{ __('validation.rule.select-single', ['entity' => __('validation.attributes.role')]) }}
+                    </small>
+                    <x-back.input-error inputName="role"/>
+                </div>
+            @endcan
         </div>
     </fieldset>
 </div>
