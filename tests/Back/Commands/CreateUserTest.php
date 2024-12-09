@@ -10,7 +10,7 @@ class CreateUserTest extends TestCase
     /** @return void */
     public function testCreateUser(): void
     {
-        $this->artisan('user:create')
+        $this->artisan('make:user')
             ->expectsQuestion('Type the wanted user first name', 'John')
             ->expectsQuestion('Type the wanted user last name', 'Doe')
             ->expectsQuestion('Type the wanted user email', 'john.doe@gmail.com')

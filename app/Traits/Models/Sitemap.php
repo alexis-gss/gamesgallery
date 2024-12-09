@@ -5,6 +5,7 @@ namespace App\Traits\Models;
 use App\Models\Game;
 use App\Models\StaticPage;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Sitemap\Tags\Url;
 use Spatie\Sitemap\Sitemap as SpatieSitemap;
 
@@ -22,8 +23,8 @@ trait Sitemap
             ->add(Game::query()
                 ->where('published', true)
                 ->orderBy('slug', 'ASC')
-                ->whereHas('folder', function ($q) {
-                    $q->where('published', true);
+                ->whereHas('folder', function (Builder $query) {
+                    $query->where('published', true);
                 })->get())
             ->writeToFile(public_path('sitemap.xml'));
     }

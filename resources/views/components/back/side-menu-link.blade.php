@@ -1,6 +1,5 @@
-<a data-bs-tooltip="tooltip" href="{{ route($routeName) }}"
-    title="{{ $title }}"
-    role="button" @class([
+<a data-bs-tooltip="tooltip" href="{{ $route }}" title="{{ $title }}" role="button"
+    @class([
         'btn btn-outline-primary border-0 text-start w-100 mt-1',
         'fw-bold text-bg-primary active' => request()->routeIs($routeCondition),
         'text-body bg-transparent' => !request()->routeIs($routeCondition),

@@ -10,9 +10,11 @@ Breadcrumbs::for('fo.games.index', function (Generator $trail) {
 });
 
 // * GAMES
-Breadcrumbs::for('fo.games.show', function (Generator $trail, Game $gameModel) {
+Breadcrumbs::for('fo.games.show', function (Generator $trail, Game|null $gameModel = null) {
     $trail->parent('fo.games.index');
-    $trail->push($gameModel->name);
+    if (!is_null($gameModel)) {
+        $trail->push($gameModel->name);
+    }
 });
 
 // * RANKS

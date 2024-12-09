@@ -8,6 +8,7 @@ use App\Models\Game;
 use App\Models\Rank;
 use App\Traits\Controllers\ChangesModelOrder;
 use App\Traits\Controllers\UpdateModelPublished;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -122,8 +123,8 @@ class RankController extends Controller
         return Game::query()
             ->whereNotIn('id', Rank::query()->pluck('game_id')->all())
             ->where('published', true)
-            ->whereHas('folder', function ($q) {
-                $q->where('published', true);
+            ->whereHas('folder', function (Builder $query) {
+                $query->where('published', true);
             })
             ->orderBy('slug', 'ASC');
     }

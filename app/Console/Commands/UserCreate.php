@@ -22,7 +22,7 @@ class UserCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'user:create';
+    protected $signature = 'make:user';
 
     /**
      * The console command description.

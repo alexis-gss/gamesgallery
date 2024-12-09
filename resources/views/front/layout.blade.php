@@ -16,7 +16,8 @@
 
         {{-- NAVIGATION --}}
         <x-front.layouts.nav :brParam="$brParam" :gameModel="isset($gameModel) ? $gameModel : null"
-            :gameModels="$gameModels" :folderModels="$folderModels" :tagModels="$tagModels" />
+            :gameModels="isset($gameModels) ? $gameModels : []" :folderModels="isset($folderModels) ? $folderModels : []"
+            :tagModels="isset($tagModels) ? $tagModels : []" />
 
         {{-- MAIN CONTENT --}}
         @yield('content')

@@ -31,8 +31,8 @@ class GameController extends Controller
             $gameModel = Game::query()
                 ->where('published', true)
                 ->where('slug', $slug)
-                ->whereHas('folder', function ($q) {
-                    $q->where('published', true);
+                ->whereHas('folder', function (Builder $query) {
+                    $query->where('published', true);
                 })->firstOrFail();
         } catch (Exception $exception) {
             abort(404, $exception->getMessage());
@@ -113,8 +113,8 @@ class GameController extends Controller
             })
             ->with('pictures')
             ->where('published', true)
-            ->whereHas('folder', function ($q) {
-                $q->where('published', true);
+            ->whereHas('folder', function (Builder $query) {
+                $query->where('published', true);
             })
             ->orderBy('slug', 'ASC')
             ->paginate($this->gamesPerPage);
@@ -134,8 +134,8 @@ class GameController extends Controller
         Game::query()
             ->with('pictures', 'folder')
             ->where([['published', true], ['id', '!=', $gameModel->getKey()]])
-            ->whereHas('folder', function ($q) use ($gameModel) {
-                $q->where([['published', true], ['id', $gameModel->folder->getKey()]]);
+            ->whereHas('folder', function (Builder $query) use ($gameModel) {
+                $query->where([['published', true], ['id', $gameModel->folder->getKey()]]);
             })
             ->orderby('published_at', 'DESC')
             ->take(5)

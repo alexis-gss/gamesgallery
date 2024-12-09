@@ -210,14 +210,14 @@ class ToolboxHelper
      * Dynamic model query.
      *
      * @param string                                $defaultLocale
-     * @param \Illuminate\Database\Eloquent\Builder $q
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string                                $column
      * @param string                                $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function queryColumnWithLocales(
         string $defaultLocale,
-        Builder $q,
+        Builder $query,
         string $column,
         string $value
     ): \Illuminate\Database\Eloquent\Builder {
@@ -233,15 +233,15 @@ class ToolboxHelper
             $locales->pull($currentLocale);
         }
 
-        return $q->where(function (Builder $q) use ($defaultLocale, $currentLocale, $locales, $column, $value) {
+        return $query->where(function (Builder $query) use ($defaultLocale, $currentLocale, $locales, $column, $value) {
             // * Query default locale
-            $q->whereRaw("JSON_EXTRACT({$column}, '$.{$defaultLocale}') = '{$value}'");
+            $query->whereRaw("JSON_EXTRACT({$column}, '$.{$defaultLocale}') = '{$value}'");
             if ($defaultLocale !== $currentLocale) {
                 // * Query current locale
-                $q->whereRaw("JSON_EXTRACT({$column}, '$.{$currentLocale}') = '{$value}'");
+                $query->whereRaw("JSON_EXTRACT({$column}, '$.{$currentLocale}') = '{$value}'");
             }
             // * Query any other locale
-            $locales->each(fn ($locale) => $q->orWhereRaw(
+            $locales->each(fn($locale) => $query->orWhereRaw(
                 "JSON_EXTRACT({$column}, '$.{$locale}') = '{$value}'"
             ));
         });

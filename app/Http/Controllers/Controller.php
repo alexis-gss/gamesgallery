@@ -57,8 +57,8 @@ class Controller extends BaseController
             ->with('pictures')
             ->where('published', true)
             ->orderBy('slug', 'ASC')
-            ->whereHas('folder', function ($q) {
-                $q->where('published', true);
+            ->whereHas('folder', function (Builder $query) {
+                $query->where('published', true);
             });
         return ($paginate) ? $query->paginate($nbrItemsPerPage) : $query->get();
     }
@@ -149,8 +149,8 @@ class Controller extends BaseController
         return Rank::query()
             ->orderby('rank', 'ASC')
             ->with('game')
-            ->whereHas('game', function ($q) {
-                $q->where('published', true);
+            ->whereHas('game', function (Builder $query) {
+                $query->where('published', true);
             })
             ->get()
             ->map(function (Rank $rank) {
@@ -183,7 +183,7 @@ class Controller extends BaseController
         if (count($fields)) {
             // Search using words.
             $words = explode(' ', $search);
-            $query->where(function ($query) use ($searchQuery, $words, $search, $fields) {
+            $query->where(function (Builder $query) use ($searchQuery, $words, $search, $fields) {
                 foreach ($words as $word) {
                     if (!strlen($word)) {
                         continue;
@@ -218,8 +218,8 @@ class Controller extends BaseController
             $field = str_replace('?', '\?', $field);
             if (is_array($field)) {
                 $query->orWhereRaw(
-                    sprintf("UPPER(CONCAT(%s)) LIKE UPPER(?)", collect($field)->map(function ($q) use ($table) {
-                        return "`$table`.`$q`";
+                    sprintf("UPPER(CONCAT(%s)) LIKE UPPER(?)", collect($field)->map(function ($string) use ($table) {
+                        return "`$table`.`$string`";
                     })->implode(', \' \', ')),
                     ['%' . htmlspecialchars($search) . '%']
                 );
@@ -237,7 +237,7 @@ class Controller extends BaseController
             }
             // Get models with relation's name/label.
             if (Str::endsWith($field, '_id')) {
-                $query->orWhereHas(Str::remove('_id', $field), function ($queryRelation) use ($field, $search) {
+                $query->orWhereHas(Str::remove('_id', $field), function (Builder $queryRelation) use ($field, $search) {
                     if (Schema::hasColumn(Str::remove('_id', $field) . 's', 'name')) {
                         $queryRelation->where('name', 'like', '%' . $search . '%');
                     } elseif (Schema::hasColumn(Str::remove('_id', $field) . 's', 'label')) {
