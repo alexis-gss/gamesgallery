@@ -5,10 +5,10 @@
         ]) id="offcanvas-navigation">
         <div class="side-menu pb-3 pb-lg-0">
             {{-- HOME --}}
-            <x-back.side-menu-link :label="__('bo_other_homepage')" routeName="bo.home" routeCondition="bo.home"
+            <x-back.side-menu-link :label="__('bo_other_homepage')" :route="route('bo.home')" routeCondition="bo.home"
                 icon="house" :title="__('bo_tooltip_homepage')" />
             {{-- STATISTICS --}}
-            <x-back.side-menu-link :label="str(__('models.statistic'))->plural()->ucfirst()" routeName="bo.statistics.index"
+            <x-back.side-menu-link :label="str(__('models.statistic'))->plural()->ucfirst()" :route="route('bo.statistics.index')"
                 routeCondition="bo.statistics.*" icon="chart-pie" :title="__('bo_tooltip_statistics', [
                     'model' => str(__('models.statistic'))->plural()
                 ])" />
@@ -27,7 +27,7 @@
                     {{-- GAMES --}}
                     @can('viewAny', \App\Models\Game::class)
                         <li>
-                            <x-back.side-menu-link :label="str(trans_choice('models.game', \INF))->ucfirst()" routeName="bo.games.index"
+                            <x-back.side-menu-link :label="str(trans_choice('models.game', \INF))->ucfirst()" :route="route('bo.games.index')"
                                 routeCondition="bo.games.*" icon="gamepad" :title="__('bo_tooltip_list_models', [
                                     'count' => isset($globalGames) ? $globalGames->count() : 0,
                                     'model' => trans_choice('models.game', \INF),
@@ -37,7 +37,7 @@
                     {{-- FOLDERS --}}
                     @can('viewAny', \App\Models\Folder::class)
                         <li>
-                            <x-back.side-menu-link :label="str(__('models.folder'))->ucfirst()->plural()" routeName="bo.folders.index"
+                            <x-back.side-menu-link :label="str(__('models.folder'))->ucfirst()->plural()" :route="route('bo.folders.index')"
                                 routeCondition="bo.folders.*" icon="folder" :title="__('bo_tooltip_list_models', [
                                     'count' => isset($globalFolders) ? $globalFolders->count() : 0,
                                     'model' => str(__('models.folder'))->plural(),
@@ -47,7 +47,7 @@
                     {{-- TAGS --}}
                     @can('viewAny', \App\Models\Tag::class)
                         <li>
-                            <x-back.side-menu-link :label="str(__('models.tag'))->ucfirst()->plural()" routeName="bo.tags.index"
+                            <x-back.side-menu-link :label="str(__('models.tag'))->ucfirst()->plural()" :route="route('bo.tags.index')"
                                 routeCondition="bo.tags.*" icon="tag" :title="__('bo_tooltip_list_models', [
                                     'count' => isset($globalTags) ? $globalTags->count() : 0,
                                     'model' => str(__('models.tag'))->plural(),
@@ -57,7 +57,7 @@
                     {{-- RANKS --}}
                     @can('viewAny', \App\Models\Rank::class)
                         <li>
-                            <x-back.side-menu-link :label="str(__('models.rank'))->ucfirst()->plural()" routeName="bo.ranks.index"
+                            <x-back.side-menu-link :label="str(__('models.rank'))->ucfirst()->plural()" :route="route('bo.ranks.index')"
                                 routeCondition="bo.ranks.*" icon="trophy" :title="__('bo_tooltip_list_models', [
                                     'count' => isset($globalRanks) ? $globalRanks->count() : 0,
                                     'model' => str(__('models.rank'))->plural(),
@@ -82,7 +82,7 @@
                         {{-- STATIC PAGES --}}
                         @can('viewAny', \App\Models\StaticPage::class)
                             <li>
-                                <x-back.side-menu-link :label="str(trans_choice('models.static_page', \INF))->ucfirst()" routeName="bo.static_pages.index"
+                                <x-back.side-menu-link :label="str(trans_choice('models.static_page', \INF))->ucfirst()" :route="route('bo.static_pages.index')"
                                     routeCondition="bo.static_pages.*" icon="file" :title="__('bo_tooltip_list_models', [
                                         'count' => isset($globalStaticPages) ? $globalStaticPages->count() : 0,
                                         'model' => trans_choice('models.static_page', \INF),
@@ -92,7 +92,7 @@
                         {{-- ACTIVITY LOGS --}}
                         @can('viewAny', \App\Models\ActivityLog::class)
                             <li>
-                                <x-back.side-menu-link :label="str(trans_choice('models.activity_log', \INF))->ucfirst()" routeName="bo.activity_logs.index"
+                                <x-back.side-menu-link :label="str(trans_choice('models.activity_log', \INF))->ucfirst()" :route="route('bo.activity_logs.index')"
                                     routeCondition="bo.activity_logs.*" icon="clock-rotate-left" :title="__('bo_tooltip_list_models', [
                                         'count' => isset($globalActivities) ? $globalActivities->count() : 0,
                                         'model' => trans_choice('models.activity_log', \INF),
@@ -102,13 +102,20 @@
                         {{-- USERS --}}
                         @can('viewAny', \App\Models\User::class)
                             <li>
-                                <x-back.side-menu-link :label="str(trans_choice('models.user', \INF))->ucfirst()" routeName="bo.users.index"
+                                <x-back.side-menu-link :label="str(trans_choice('models.user', \INF))->ucfirst()" :route="route('bo.users.index')"
                                     routeCondition="bo.users.*" icon="users" :title="__('bo_tooltip_list_models', [
                                         'count' => isset($globalUsers) ? $globalUsers->count() : 0,
                                         'model' => str(__('models.user'))->plural(),
                                     ])" />
                             </li>
                         @endcan
+                        @if(app()->isLocal() && config('telescope.enabled'))
+                            <li>
+                                <x-back.side-menu-link :label="str(__('telescope'))->ucFirst()" :targetBlank="true"
+                                    :route="sprintf('%s/%s', config('app.url'), config('telescope.path'))"
+                                    icon="arrow-up-right-from-square" :title="__('Accéder à Telescope')" />
+                            </li>
+                        @endif
                     </ul>
                 </div>
             @endcan
