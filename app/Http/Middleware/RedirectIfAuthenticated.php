@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
@@ -17,7 +16,7 @@ class RedirectIfAuthenticated
      * @throws \RuntimeException If guard is unhandled.
      * @phpcs:disable Squiz.Commenting.FunctionComment.IncorrectTypeHint
      */
-    public function handle(Request $request, \Closure $next, ...$guards): Response
+    public function handle(Request $request, \Closure $next, ...$guards): \Symfony\Component\HttpFoundation\Response
     {
         // phpcs:enable phpcs:disable
         $guards = empty($guards) ? [null] : $guards;

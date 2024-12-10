@@ -113,7 +113,7 @@ class Folder extends Model
      * @return void
      * @throws \Illuminate\Validation\ValidationException If a folder name already exists.
      */
-    private static function setSlug(self $folder)
+    private static function setSlug(self $folder): void
     {
         $table = (new self())->getTable();
         $slug  = Str::slug($folder->mandatory && $folder->getTranslation('name', config('app.fallback_locale')) ?

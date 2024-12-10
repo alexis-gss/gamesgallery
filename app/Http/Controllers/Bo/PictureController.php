@@ -20,7 +20,7 @@ class PictureController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException Bla.
      */
-    public function upload(Request $request)
+    public function upload(Request $request): \Illuminate\Http\JsonResponse
     {
         // Create the file receiver.
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
@@ -58,7 +58,7 @@ class PictureController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Contracts\Container\BindingResolutionException Bla.
      */
-    protected function store(UploadedFile $file, mixed $uuid, string $gameSlug)
+    protected function store(UploadedFile $file, mixed $uuid, string $gameSlug): \Illuminate\Http\JsonResponse
     {
         if ($uuid === false) {
             $uuid = Str::uuid();

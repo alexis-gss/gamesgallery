@@ -100,7 +100,7 @@ class Tag extends Model
      * @return void
      * @throws \Illuminate\Validation\ValidationException If a tag name already exists.
      */
-    private static function setSlug(self $tag)
+    private static function setSlug(self $tag): void
     {
         $table = (new self())->getTable();
         $slug  = Str::slug($tag->getTranslation('name', config('app.fallback_locale')) ?

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Bo;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 
 class ActivityLogController extends Controller
 {
@@ -23,7 +22,7 @@ class ActivityLogController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request): \Illuminate\Contracts\View\View
     {
         /** Authorize action */
         $this->authorize('isConceptor');

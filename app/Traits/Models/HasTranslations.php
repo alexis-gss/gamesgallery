@@ -22,7 +22,7 @@ trait HasTranslations
      * @phpcs:disable Squiz.Commenting.FunctionComment.ScalarTypeHintMissing
      * @phpcs:disable Squiz.Commenting.FunctionComment.TypeHintMissing
      */
-    public function setAttribute($key, $value)
+    public function setAttribute($key, $value): mixed
     {
         // phpcs:enable
         if ($this->isTranslatableAttribute($key) && is_array($value)) {
@@ -58,7 +58,7 @@ trait HasTranslations
      * @phpcs:disable Squiz.Commenting.FunctionComment.TypeHintMissing
      * @phpcs:disable Squiz.Commenting.FunctionComment.ScalarTypeHintMissing
      */
-    protected function mutateAttributeForArray($key, $value)
+    protected function mutateAttributeForArray($key, $value): mixed
     {
         // phpcs:enable
         if ($this->isTranslatableAttribute($key)) {
@@ -75,7 +75,7 @@ trait HasTranslations
      * @param string|null $field
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveRouteBinding(mixed $value, $field = null)
+    public function resolveRouteBinding(mixed $value, $field = null): \Illuminate\Database\Eloquent\Model|null
     {
         /** @var string */
         $field = $field ?: ((request()->route() ?

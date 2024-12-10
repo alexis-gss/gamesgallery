@@ -120,7 +120,6 @@ class ActivityLog extends Model
         };
     }
 
-
     /**
      * Get a value type as a string
      * ! Use this for display purpose only.

@@ -24,7 +24,7 @@ class ToolboxHelper
      * @param integer $count
      * @return mixed
      */
-    public static function mbReplace(mixed $search, mixed $replace, mixed $subject, int &$count = 0)
+    public static function mbReplace(mixed $search, mixed $replace, mixed $subject, int &$count = 0): mixed
     {
         if (!is_array($search) && is_array($replace)) {
             return false;
@@ -201,7 +201,7 @@ class ToolboxHelper
      * @param boolean $useStorage
      * @return string|false
      */
-    private static function getUploadedFileMimeType(string $value, bool $useStorage)
+    private static function getUploadedFileMimeType(string $value, bool $useStorage): string|false
     {
         return !$useStorage ? File::mimeType($value) : Storage::mimeType($value);
     }
@@ -264,7 +264,7 @@ class ToolboxHelper
         string|int|float|bool|null|array $value,
         ?int $id = null,
         ?callable $query = null
-    ) {
+    ): void {
         if (!$query) {
             Validator::make([$field => $value], [
                 self::mbReplace('.', '\.', $field) => Rule::unique($table, $field)->ignore($id),
