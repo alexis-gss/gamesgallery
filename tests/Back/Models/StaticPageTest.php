@@ -2,12 +2,12 @@
 
 namespace Tests\Back\Models;
 
-use App\Enums\ActivityLogs\ActivityLogsEventEnum;
 use App\Enums\Users\RoleEnum;
-use App\Models\ActivityLog;
 use App\Models\StaticPage;
 use App\Models\User as AuthModel;
 use Illuminate\Support\Facades\Schema;
+use LaravelActivityLogs\Enums\ActivityLogsEventEnum;
+use LaravelActivityLogs\Models\ActivityLog;
 use Tests\TestCase;
 
 class StaticPageTest extends TestCase

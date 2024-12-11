@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Lib\Helpers\ToolboxHelper;
-use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use LaravelActivityLogs\Traits\ActivityLog;
 
 /**
  * @property integer                         $id           Id.
@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
  * @method static void removeTagsFromGame(self $tag)           Remove a specific tag from all games.
  * @method static void removeTags(Model $model)                Remove all tags previously associated.
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\LaravelActivityLogs\Models\ActivityLog[] $activityLogs
  * Get Activities of the Tag (morph-to-many relationship).
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
  * Get Games of the Tag (morph-to-many relationship).

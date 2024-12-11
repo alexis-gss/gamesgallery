@@ -3,19 +3,11 @@
 namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
-use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use LaravelActivityLogs\Models\ActivityLog;
 
 class ActivityLogController extends Controller
 {
-    /**
-     * Create the controller instance.
-     */
-    public function __construct()
-    {
-        $this->authorizeResource(ActivityLog::class);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +57,7 @@ class ActivityLogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\ActivityLog $activity_log
+     * @param \LaravelActivityLogs\Models\ActivityLog $activity_log
      * @return \Illuminate\Contracts\View\View
      */
     public function show(ActivityLog $activity_log): \Illuminate\Contracts\View\View

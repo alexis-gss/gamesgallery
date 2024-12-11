@@ -4,12 +4,12 @@ namespace App\Models;
 
 use App\Enums\Users\RoleEnum;
 use App\Lib\Helpers\FileStorageHelper;
-use App\Traits\Models\ActivityLog;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use LaravelActivityLogs\Traits\ActivityLog;
 
 /**
  * @property integer                         $id                Id.
@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Hash;
  * @method static void setOrder(self $user)              Set model's order after the last element of the list.
  * @method static void updatePassword(self $user)        Update model's password.
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\LaravelActivityLogs\Models\ActivityLog[] $activityLogs
  * Get Activities of the User (has-many relationship).
  */
 class User extends Authenticatable

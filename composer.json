@@ -19,6 +19,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "alexis-gss/laravel-activity-logs": "^1.0",
         "diglactic/laravel-breadcrumbs": "^9.0",
         "erusev/parsedown": "^1.7",
         "guzzlehttp/guzzle": "^7.2",
@@ -32,7 +33,7 @@
         "spatie/schema-org": "^3.23"
     },
     "require-dev": {
-        "alexis-gss/laravel-unit-tests": "^1.0.0",
+        "alexis-gss/laravel-unit-tests": "^1.1",
         "fakerphp/faker": "^1.9.1",
         "larastan/larastan": "^2.6",
         "laravel-validation-rules/colour": "dev-l11-compatibility",

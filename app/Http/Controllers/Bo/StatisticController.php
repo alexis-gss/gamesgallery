@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Bo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Bo\Statistics\ActivityDateRequest;
-use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
 use App\Models\Rating;
@@ -16,6 +15,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use LaravelActivityLogs\Models\ActivityLog;
 
 class StatisticController extends Controller
 {

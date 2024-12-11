@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\Users\RoleEnum;
-use App\Models\ActivityLog;
 use App\Models\Folder;
 use App\Models\Game;
 use App\Models\StaticPage;
@@ -11,6 +10,7 @@ use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use LaravelActivityLogs\Models\ActivityLog;
 
 // * AUTH
 Breadcrumbs::for('bo.login', function ($trail) {

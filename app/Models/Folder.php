@@ -4,12 +4,12 @@ namespace App\Models;
 
 use App\Casts\HtmlColor;
 use App\Lib\Helpers\ToolboxHelper;
-use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use LaravelActivityLogs\Traits\ActivityLog;
 
 /**
  * @property integer                         $id           Id.
@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
  * @method static void setPublishedDate(self $folder) Set model's published date.
  * @method static void setOrder(self $folder)         Set model's order after the last element of the list.
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\LaravelActivityLogs\Models\ActivityLog[] $activityLogs
  * Get Activities of the Folder (morph-to-many relationship).
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Game[] $games
  * Get Games of the Folder (has-many relationship).

@@ -90,7 +90,7 @@
                             </li>
                         @endcan
                         {{-- ACTIVITY LOGS --}}
-                        @can('viewAny', \App\Models\ActivityLog::class)
+                        @can('isConceptor')
                             <li>
                                 <x-back.side-menu-link :label="str(trans_choice('models.activity_log', \INF))->ucfirst()" :route="route('bo.activity_logs.index')"
                                     routeCondition="bo.activity_logs.*" icon="clock-rotate-left" :title="__('bo_tooltip_list_models', [

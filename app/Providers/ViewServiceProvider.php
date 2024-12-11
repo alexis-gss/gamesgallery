@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\ActivityLog;
 use App\Models\Game;
 use App\Models\Folder;
 use App\Models\Rank;
@@ -15,6 +14,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use LaravelActivityLogs\Models\ActivityLog;
 
 class ViewServiceProvider extends ServiceProvider
 {

@@ -3,8 +3,8 @@
 namespace Tests\Back\Models;
 
 use App\Enums\Users\RoleEnum;
-use App\Models\ActivityLog;
 use App\Models\User as AuthModel;
+use LaravelActivityLogs\Models\ActivityLog;
 use Tests\TestCase;
 
 class ActivityLogTest extends TestCase

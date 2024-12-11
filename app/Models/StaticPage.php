@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Enums\Pages\StaticPageTypeEnum;
-use App\Traits\Models\ActivityLog;
 use App\Traits\Models\HasTranslations;
 use App\Traits\Models\SchemaOrg;
 use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use LaravelActivityLogs\Traits\ActivityLog;
 use Spatie\SchemaOrg\Schema;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
@@ -25,7 +25,7 @@ use Spatie\Sitemap\Tags\Url;
  * @method static void booted()                    Perform any actions required after the model boots.
  * @method \Spatie\SchemaOrg\WebPage toSchemaOrg() Set micro data.
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\LaravelActivityLogs\Models\ActivityLog[] $activityLogs
  * Get Activities of the Static page (morph-to-many relationship).
  */
 class StaticPage extends Model implements Sitemapable

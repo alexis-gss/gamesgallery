@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\Models\ActivityLog;
 use App\Traits\Models\SchemaOrg;
 use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use LaravelActivityLogs\Traits\ActivityLog;
 use Spatie\SchemaOrg\Schema;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
@@ -28,7 +28,7 @@ use Spatie\Sitemap\Tags\Url;
  * @method static void setOrder(self $game)         Set model's order after the last element of the list.
  * @method \Spatie\SchemaOrg\WebPage toSchemaOrg()  Set micro data.
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ActivityLog[] $activityLogs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\LaravelActivityLogs\Models\ActivityLog[] $activityLogs
  * Get Activities of the Game (morph-to-many relationship).
  * @property-read \App\Models\Folder $folder
  * Get Folder that owns the Game (belongs-to relationship).
