@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Lib\Helpers\FileStorageHelper;
 use App\Traits\Models\SchemaOrg;
 use App\Traits\Models\Sitemap;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property \App\Models\Folder              $folder_id    Folder associated.
  * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
+ * @property string                          $picture      Path of the game's picture.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon|null $published_at Published date update.
  * @property integer                         $order        Order.
@@ -53,6 +55,7 @@ class Game extends Model implements Sitemapable
      */
     protected $fillable = [
         'slug',
+        'picture',
         'folder_id',
         'name',
         'published',
@@ -79,6 +82,7 @@ class Game extends Model implements Sitemapable
     {
         static::creating(function (self $game) {
             self::setOrder($game);
+            self::setImage($game);
             self::setPublishedDate($game);
             (new Picture())->renameFolderSavedPictures($game, "default_folder");
         });
@@ -86,18 +90,21 @@ class Game extends Model implements Sitemapable
             static::updateSitemap();
         });
         static::updating(function (self $game) {
+            self::setImage($game);
             self::setPublishedDate($game);
             (new Picture())->renameFolderSavedPictures($game, $game->getOriginal('slug'));
         });
-        static::updated(function () {
+        static::updated(function (self $game) {
             static::updateSitemap();
+            FileStorageHelper::removeOldFile($game, 'picture');
         });
         static::deleting(function (self $game) {
             (new Tag())->removeTags($game);
             (new Picture())->removePictures($game->pictures);
         });
-        static::deleted(function () {
+        static::deleted(function (self $game) {
             static::updateSitemap();
+            FileStorageHelper::removeOldFile($game, 'picture');
         });
     }
 
@@ -116,6 +123,17 @@ class Game extends Model implements Sitemapable
         } elseif (!$game->published) {
             $game->published_at = null;
         }
+    }
+
+    /**
+     * Set model's game's picture.
+     *
+     * @param self $game
+     * @return void
+     */
+    private static function setImage(self $game): void
+    {
+        $game->picture = FileStorageHelper::storeFile($game, $game->picture, true);
     }
 
     /**

@@ -24,7 +24,7 @@ final class UserFactory extends Factory
             'last_name'         => fake()->lastname(),
             'email'             => fake()->unique()->email(),
             'email_verified_at' => now(),
-            'picture'           => "",
+            'picture'           => '',
             'picture_alt'       => fake()->unique()->word,
             'picture_title'     => fake()->unique()->word,
             'password'          => fake()->password(),

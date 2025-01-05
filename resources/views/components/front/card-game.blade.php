@@ -8,8 +8,7 @@
                 </span>
             </div>
         </div>
-        <img src="{{ sprintf('%s/storage/pictures/%s/%s.webp', config('app.url'), $gameModel->slug, $gameModel->pictures->first()->uuid ?? '') }}"
-            class="img-fluid d-none" alt="{{ __('fo_image_of', ['gameName' => $gameModel->name]) }}">
+        <img src="{{ asset($gameModel->picture) }}" class="img-fluid d-none" alt="{{ __('fo_image_of', ['gameName' => $gameModel->name]) }}">
     </div>
     <div class="card-body">
         <h5 class="card-title title-font-regular m-0">{{ $gameModel->name }}</h5>

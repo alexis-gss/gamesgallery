@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id()->comment('Id of the game.');
             $table->string('name')->comment('Name of the game.');
-            $table->string('slug')->unique()->comment('Slugify the name of the game.');
+            $table->string('slug')->unique()->comment('Slugify the name of this game.');
+            $table->string('picture')->comment('Picture associated to this game.');
             $table->foreignId('folder_id')->comment('Folder associated to the game.')
                 ->constrained('folders')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('order')->comment('Order of this game.');

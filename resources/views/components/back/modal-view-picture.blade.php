@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <img class="img-fluid" src="{{ $pictureSrc }}" alt="{{ $pictureAlt }}"
-                        title="{{ $pictureTitle }}">
+                        @if(isset($pictureTitle)) title="{{ $pictureTitle }}" @endif>
                 </div>
             </div>
         </div>

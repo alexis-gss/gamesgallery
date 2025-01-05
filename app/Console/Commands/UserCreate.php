@@ -95,7 +95,7 @@ class UserCreate extends Command
         $user->password      = $this->password;
         $user->picture       = FileStorageHelper::storeFile(
             $user,
-            new \SplFileInfo(\resource_path('../database/factories/assets/users/default-user-picture.png'))
+            new \SplFileInfo(\resource_path('../database/factories/assets/users/default-picture.png'))
         );
         $user->picture_alt   = "Default picture of a user profile";
         $user->picture_title = "User's picture of his profile";

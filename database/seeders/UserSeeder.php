@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             $userModel->picture = FileStorageHelper::storeFile(
                 $userModel,
                 new \SplFileInfo(\resource_path(
-                    '../database/factories/assets/users/default-user-picture.png'
+                    '../database/factories/assets/users/default-picture.png'
                 ))
             );
             $userModel->order   = $key + 1;

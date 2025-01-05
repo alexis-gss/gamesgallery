@@ -59,7 +59,7 @@ class StoreUserRequest extends FormRequest
             ],
             'published'  => 'required|boolean'
         ];
-        return \array_merge($rules, $this->pictureRules());
+        return \array_merge($rules, $this->pictureRules(minWidth: 100, minHeight: 100, maxWidth: 100, maxHeight: 100));
     }
 
     /**

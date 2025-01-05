@@ -21,7 +21,7 @@ class PictureSeeder extends Seeder
             $folder = sprintf("pictures/%s", $picture->game->slug);
             Storage::disk("public")->makeDirectory($folder);
             File::copy(
-                'database/factories/assets/games/default-game-picture.png',
+                'database/factories/assets/pictures/default-picture.png',
                 Storage::disk("public")->path($folder . "/" . $picture->uuid . '.webp')
             );
         });

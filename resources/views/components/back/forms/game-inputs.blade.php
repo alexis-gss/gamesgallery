@@ -73,6 +73,28 @@
             {{ __('bo_title_visuals') }}
         </legend>
         <div class="row mb-3">
+            <div class="col-12 form-group mb-3">
+                @php
+                    $data = [
+                        'id' => 'gamePicture',
+                        'name' => 'picture',
+                        'value' => $gameModel->picture ?? '',
+                        'width' => 400,
+                        'height' => 225,
+                        'showLabels' => true,
+                        'required' => true,
+                        'preview' => true,
+                        'placeholder' => __('validation.attributes.image'),
+                        'helper' => __('validation.rule.images_label', [
+                            'format' => 'JPG/PNG',
+                            'width' => 400,
+                            'height' => 225,
+                        ]),
+                    ];
+                @endphp
+                <div class="image-input" data-json='@json($data)'></div>
+                <x-back.input-error inputName="picture"/>
+            </div>
             <div class="col-12">
                 <label class="col-form-label" for="name">
                     <b>{{ __('bo_label_choose_pictures') }}</b>

@@ -92,6 +92,23 @@
                             </tr>
                             <tr>
                                 <td class="w-50 fw-bold text-center align-middle">
+                                    {{ str(__('validation.attributes.image'))->ucFirst() }}</td>
+                                <td class="w-50 text-center align-middle">
+                                    <div class="vstack gap-1">
+                                        <div class="hstack justify-content-center">
+                                            <p class="m-0">{{ basename($gameModel->picture) }}</p>
+                                            <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="modal"
+                                                data-bs-target="#ModalViewPicture">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <x-back.modal-view-picture id="ModalViewPicture" :pictureAlt="__('fo_image_of', ['gameName' => $gameModel->name])"
+                                            :pictureSrc="asset($gameModel->picture)" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50 fw-bold text-center align-middle">
                                     {{ str(__('validation.attributes.image'))->ucFirst()->plural() }}
                                 </td>
                                 <td class="w-50 text-center align-middle">

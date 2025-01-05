@@ -3,12 +3,15 @@
 namespace App\Http\Requests\Bo\Games;
 
 use App\Models\Game;
+use App\Traits\Requests\HasPicture;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class StoreGameRequest extends FormRequest
 {
+    use HasPicture;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,6 +33,7 @@ class StoreGameRequest extends FormRequest
             'slug'      => Str::of(strip_tags($this->name))->slug()->value(),
             'published' => $this->boolean('published'),
         ]);
+        $this->mergePicture();
     }
 
     /**
@@ -39,7 +43,7 @@ class StoreGameRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'slug'        => 'required|string|unique:games,slug|max:255',
             'folder_id'   => 'required|integer|exists:folders,id',
             'name'        => 'required|string|min:3|max:255',
@@ -48,6 +52,7 @@ class StoreGameRequest extends FormRequest
             'tags.*.id'   => 'required|numeric|exists:tags,id|distinct',
             'published'   => 'required|boolean',
         ];
+        return \array_merge($rules, $this->pictureRules(minWidth: 400, minHeight: 225, maxWidth: 400, maxHeight: 225));
     }
 
     /**
@@ -61,6 +66,7 @@ class StoreGameRequest extends FormRequest
             'slug'        => trans('validation.custom.slug'),
             'folder_id'   => trans('validation.custom.folder_associated'),
             'name'        => trans('validation.attributes.name'),
+            'picture'     => trans('validation.attributes.image'),
             'tags'        => trans('models.tag'),
             'tags.*'      => trans('models.tag'),
             'tags.*.id'   => trans(':field :inter:model', [

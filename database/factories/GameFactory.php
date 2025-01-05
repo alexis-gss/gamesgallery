@@ -25,6 +25,7 @@ final class GameFactory extends Factory
                 ?? Folder::factory()->createQuietly(['published' => true]),
             'name'         => $name,
             'slug'         => Str::of($name)->slug(),
+            'picture'      => '',
             'published'    => $published,
             'published_at' => ($published) ? now() : null,
             'order'        => 1,
