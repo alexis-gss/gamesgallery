@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('last_name')->comment('Last name of the user.');
             $table->string('email')->unique()->comment('Email of the user that is unique.');
             $table->string('picture')->comment('Picture associated to this user.');
-            $table->string('picture_alt')->comment('Alt attribute of the image.');
-            $table->string('picture_title')->comment('Title attribute of the image.');
             $table->string('password')->comment('Encrypted password of the user.');
             $table->rememberToken();
             $table->unsignedTinyInteger('role')->comment('Role of the user who defines the rights/access.');

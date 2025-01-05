@@ -88,20 +88,18 @@ class UserCreate extends Command
         $this->role = null;
         $this->addRole();
 
-        $user                = new User();
-        $user->first_name    = $this->first_name;
-        $user->last_name     = $this->last_name;
-        $user->email         = $this->email;
-        $user->password      = $this->password;
-        $user->picture       = FileStorageHelper::storeFile(
+        $user               = new User();
+        $user->first_name   = $this->first_name;
+        $user->last_name    = $this->last_name;
+        $user->email        = $this->email;
+        $user->password     = $this->password;
+        $user->picture      = FileStorageHelper::storeFile(
             $user,
             new \SplFileInfo(\resource_path('../database/factories/assets/users/default-picture.png'))
         );
-        $user->picture_alt   = "Default picture of a user profile";
-        $user->picture_title = "User's picture of his profile";
-        $user->published     = true;
-        $user->published_at  = Carbon::now();
-        $user->role          = $this->role;
+        $user->published    = true;
+        $user->published_at = Carbon::now();
+        $user->role         = $this->role;
         $user->saveOrFail();
 
         $this->info('User created 👌');

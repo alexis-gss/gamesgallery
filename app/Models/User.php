@@ -17,8 +17,6 @@ use LaravelActivityLogs\Traits\ActivityLog;
  * @property string                          $last_name         Lastname.
  * @property string                          $email             Email.
  * @property string                          $picture           Path of the account's picture.
- * @property string                          $picture_alt       Attribute alt of the picture.
- * @property string                          $picture_title     Attribute title of the picture.
  * @property string                          $password          Password.
  * @property \App\Enums\Users\RoleEnum       $role              Role.
  * @property integer                         $order             Order.
@@ -54,8 +52,6 @@ class User extends Authenticatable
         'last_name',
         'email',
         'picture',
-        'picture_alt',
-        'picture_title',
         'password',
         'role',
         'order',
@@ -154,9 +150,7 @@ class User extends Authenticatable
      */
     private static function setImage(self $user): void
     {
-        $user->picture_alt   = "Default picture of " . $user->first_name . " " . $user->last_name . " account";
-        $user->picture_title = "User's picture of " . $user->first_name . " " . $user->last_name . " account";
-        $user->picture       = FileStorageHelper::storeFile($user, $user->picture, true);
+        $user->picture = FileStorageHelper::storeFile($user, $user->picture, true);
     }
 
     /**

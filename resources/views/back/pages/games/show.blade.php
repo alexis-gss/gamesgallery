@@ -123,8 +123,10 @@
                                                     </button>
                                                 </div>
                                                 <x-back.modal-view-picture id="ModalViewPicture{{ $key }}" :pictureAlt="$picture->label"
-                                                    :pictureTitle="str(__('models.picture'))->ucFirst()"
-                                                    :pictureSrc="sprintf(
+                                                    :pictureTitle="str(__('fo_toast_details', [
+                                                        'picturePlace' => $key + 1,
+                                                        'gameName' => $gameModel->name
+                                                    ]))->ucFirst()" :pictureSrc="sprintf(
                                                         '%s/storage/pictures/%s/%s.webp',
                                                         config('app.url'),
                                                         $gameModel->slug,

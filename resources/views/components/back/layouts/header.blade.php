@@ -133,7 +133,10 @@
                                 </div>
                                 <div class="profile-picture me-1 ms-2">
                                     <img class="w-100 h-100 rounded-circle" src="{{ asset(auth('backend')->user()->picture) }}"
-                                        alt="{{ auth('backend')->user()->picture_alt }}">
+                                        alt="{{ __('bo_other_user_picture', [
+                                            'firstname' => auth('backend')->user()->first_name,
+                                            'lastname'  => auth('backend')->user()->last_name
+                                        ]) }}">
                                 </div>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end m-0 p-1 text-center" aria-labelledby="navbarDropdown">

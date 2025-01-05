@@ -25,8 +25,6 @@ final class UserFactory extends Factory
             'email'             => fake()->unique()->email(),
             'email_verified_at' => now(),
             'picture'           => '',
-            'picture_alt'       => fake()->unique()->word,
-            'picture_title'     => fake()->unique()->word,
             'password'          => fake()->password(),
             'remember_token'    => Str::random(10),
             'role'              => \collect(RoleEnum::toArray())->random()->value,

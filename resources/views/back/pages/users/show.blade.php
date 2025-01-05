@@ -103,8 +103,10 @@
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
                                         </div>
-                                        <x-back.modal-view-picture id="ModalViewPicture" :pictureAlt="$userModel->picture_alt"
-                                            :pictureTitle="$userModel->picture_title" :pictureSrc="asset($userModel->picture)" />
+                                        <x-back.modal-view-picture id="ModalViewPicture" :pictureAlt="__('bo_other_user_picture', [
+                                                'firstname' => $userModel->first_name,
+                                                'lastname'  => $userModel->last_name
+                                            ])" :pictureSrc="asset($userModel->picture)" />
                                     </div>
                                 </td>
                             </tr>

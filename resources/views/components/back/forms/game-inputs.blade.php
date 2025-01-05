@@ -65,7 +65,7 @@
         </div>
     </fieldset>
 </div>
-{{-- PICTURE/PICTURE_ALT/PICTURE_TITLE --}}
+{{-- PICTURE/PICTURES --}}
 <div class="col-12 mb-3">
     <fieldset class="bg-body-tertiary border rounded-3 p-3">
         <legend class="fw-bold fst-italic">
