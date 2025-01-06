@@ -79,7 +79,7 @@
                                     </script>
                                 @endpush
                                 @csrf
-                                <select class="form-select bg-primary text-bg-primary border-0 w-fit" name="lang">
+                                <select class="form-select bg-primary text-bg-primary border-0 w-fit" name="lang" role="button">
                                     @foreach (config('app.locales') as $key => $locale)
                                         <option value="{{ $locale }}" @selected($locale === app()->getLocale())>
                                             {{ str($locale)->upper() }}</option>

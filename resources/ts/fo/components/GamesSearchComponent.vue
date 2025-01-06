@@ -8,7 +8,7 @@
       class="row w-100 justify-content-center align-items-center bg-primary rounded-3 px-0 py-2 mx-auto mb-2"
       novalidate
     >
-      <div class="col-12">
+      <div class="col-12 gx-3">
         <!-- Filter by text -->
         <div class="d-flex border-bottom border-1 border-secondary pb-1 w-100">
           <input
@@ -33,52 +33,54 @@
           </button>
         </div>
       </div>
-      <div class="col-12 row">
-        <!-- Filter by folders -->
-        <div class="col-12 col-md-6 border-custom p-0 py-1 pe-md-1 pb-md-0">
-          <select
-            class="form-select border-0 rounded-3 bg-primary shadow-none text-bg-primary px-2 py-2"
-            name="folder"
-            role="button"
-            @change="setSelectedValue($event)"
-          >
-            <option
-              value="0"
-              selected
+      <div class="col-12 gx-3">
+        <div class="row w-100 mx-auto">
+          <!-- Filter by folders -->
+          <div class="col-12 col-md-6 border-custom p-0 py-1 pe-md-1 pb-md-0">
+            <select
+              class="form-select border-0 rounded-3 bg-primary shadow-none text-bg-primary px-2 py-2"
+              name="folder"
+              role="button"
+              @change="setSelectedValue($event)"
             >
-              {{ trans.methods.__("fo_search_folder") }}
-            </option>
-            <option
-              v-for="(folder, folderIndex) in modelsParameters.folders"
-              :key="folderIndex"
-              :value="folder.id"
+              <option
+                value="0"
+                selected
+              >
+                {{ trans.methods.__("fo_search_folder") }}
+              </option>
+              <option
+                v-for="(folder, folderIndex) in modelsParameters.folders"
+                :key="folderIndex"
+                :value="folder.id"
+              >
+                {{ folder.nameLocale }}
+              </option>
+            </select>
+          </div>
+          <!-- Filter by tags -->
+          <div class="col-12 col-md-6 p-0 pt-1 ps-md-1">
+            <select
+              class="form-select bg-primary rounded-3 border-0 shadow-none text-bg-primary px-2 py-2"
+              name="tag"
+              role="button"
+              @change="setSelectedValue($event)"
             >
-              {{ folder.nameLocale }}
-            </option>
-          </select>
-        </div>
-        <!-- Filter by tags -->
-        <div class="col-12 col-md-6 p-0 pt-1 ps-md-1">
-          <select
-            class="form-select bg-primary rounded-3 border-0 shadow-none text-bg-primary px-2 py-2"
-            name="tag"
-            role="button"
-            @change="setSelectedValue($event)"
-          >
-            <option
-              value="0"
-              selected
-            >
-              {{ trans.methods.__("fo_search_tag") }}
-            </option>
-            <option
-              v-for="(tag, tagIndex) in modelsParameters.tags"
-              :key="tagIndex"
-              :value="tag.id"
-            >
-              {{ tag.nameLocale }}
-            </option>
-          </select>
+              <option
+                value="0"
+                selected
+              >
+                {{ trans.methods.__("fo_search_tag") }}
+              </option>
+              <option
+                v-for="(tag, tagIndex) in modelsParameters.tags"
+                :key="tagIndex"
+                :value="tag.id"
+              >
+                {{ tag.nameLocale }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -309,6 +311,8 @@ function ajaxGamesFiltered(filters: string[] = [], pagination: boolean = false, 
       search: search
     })
     .then((reponse) => {
+      paginationParameters.total = reponse.data.total;
+      paginationParameters.lastPage = reponse.data.last_page;
       (pagination)
         ? modelsParameters.games = modelsParameters.games?.concat(reponse.data.data)
         : modelsParameters.games = reponse.data.data;

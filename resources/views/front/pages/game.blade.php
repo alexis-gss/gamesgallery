@@ -58,8 +58,9 @@
                 $dataGame = [
                     'gameName' => $gameModel->name,
                     'gameSlug' => $gameModel->slug,
-                    'gamePictures' => $gamePictures,
+                    'pictureModels' => $pictureModels,
                     'ratingModels' => $ratingModels,
+                    'routeName' => 'fo.games.pictures',
                     'relatedGamesViews' => $relatedGamesViews,
                 ];
             @endphp

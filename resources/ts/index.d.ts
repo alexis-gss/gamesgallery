@@ -53,7 +53,7 @@ interface UploadFile extends Blob {
 
 interface Paginator {
     current_page: number;
-    data: LaravelModelList;
+    data: LaravelModelList|Array;
     first_page_url: string;
     from: number;
     last_page: number;

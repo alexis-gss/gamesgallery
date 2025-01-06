@@ -10,7 +10,9 @@
     window.__SYSTEM._routes.fo = {
         games: {
             show: "{{ route('fo.games.show', ['slug' => 'SLUG']) }}",
-            filtered: "{{ route('fo.games.filtered', ['filters_id' => 'FILTERSID']) }}",
+            pictures: "{{ route('fo.games.pictures', ['slug' => 'SLUG']) }}",
+            related: "{{ route('fo.games.related', ['slug' => 'SLUG']) }}",
+            filtered: "{{ route('fo.games.filtered') }}",
         },
         ratings: {
             update: "{{ route('fo.ratings.update', ['picture_id' => 'PICTUREID', 'picture_place' => 'PICTUREPLACE']) }}",

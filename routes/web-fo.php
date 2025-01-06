@@ -8,11 +8,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('fo.')
     ->group(function () {
-        // * GAMES
+        // * GAME
         Route::get('/game/{slug}', [GameController::class, 'show'])
             ->where('slug', '^[a-zA-Z0-9-]*$')
             ->name('games.show');
-        Route::post('/game/filtered/{filters_id}', [GameController::class, 'getGamesFiltered'])
+        Route::get('/game/{slug}/pictures', [GameController::class, 'getNextPicturesOfGame'])
+            ->where('slug', '^[a-zA-Z0-9-]*$')
+            ->name('games.pictures');
+        Route::get('/game/{slug}/related', [GameController::class, 'getNextRelatedGames'])
+            ->where('slug', '^[a-zA-Z0-9-]*$')
+            ->name('games.related');
+
+        // * GAMES
+        Route::post('/games/filtered', [GameController::class, 'getGamesFiltered'])
             ->name('games.filtered');
 
         // * STATIC PAGES
@@ -23,6 +31,8 @@ Route::name('fo.')
 
         // * RATINGS
         Route::post('/ratings/{picture_id}/{picture_place}', [RatingController::class, 'update'])
+            ->where('PICTUREID', '^[0-9]*$')
+            ->where('PICTUREPLACE', '^[0-9]*$')
             ->name('ratings.update');
 
         // * CHANGE LANGUAGES.

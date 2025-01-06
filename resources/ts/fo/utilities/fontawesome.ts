@@ -2,6 +2,7 @@ import { config, dom, library } from "@fortawesome/fontawesome-svg-core";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
     faArrowLeft,
+    faArrowRight,
     faArrowUp,
     faBars,
     faChevronLeft,
@@ -25,6 +26,7 @@ config.autoReplaceSvg = false;
 // @ts-ignore
 library.add(
     faArrowUp,
+    faArrowRight,
     faXmark,
     faBars,
     faArrowLeft,
