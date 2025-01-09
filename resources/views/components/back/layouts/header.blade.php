@@ -73,8 +73,8 @@
                                 <label for="theme{{ $key }}"
                                     @class([
                                         'dropdown-item btn btn-secondary py-2',
-                                        'active' => !is_null(cache()->get('theme'))
-                                            ? $bootstrapTheme->value === intval(cache()->get('theme'))
+                                        'active' => !is_null(session()->get('theme'))
+                                            ? $bootstrapTheme->value === intval(session()->get('theme'))
                                             : $bootstrapTheme->value === BootstrapThemeEnum::light->value,
                                     ])>{{ str($bootstrapTheme->label)->ucFirst() }}</label>
                             @endforeach

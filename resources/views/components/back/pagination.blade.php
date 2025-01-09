@@ -1,5 +1,5 @@
 {{-- GET ACTUAL PAGINATION --}}
-@php $pagination = intval(cache()->get('pagination.' . str(request()->route()->getName())->slug())); @endphp
+@php $pagination = intval(session()->get('pagination.' . str(request()->route()->getName())->slug())); @endphp
 @if ($paginator->items())
     <section class="pagination-custom d-flex justify-content-between align-items-center">
         {{-- SELECT ITEMS PER PAGE --}}

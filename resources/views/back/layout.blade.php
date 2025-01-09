@@ -7,7 +7,7 @@
 
 {{-- blade-formatter-disable --}}
 @use('\App\Enums\Theme\BootstrapThemeEnum', 'BootstrapThemeEnum')
-<body class="bg-body-tertiary" data-bs-theme="{{ (BootstrapThemeEnum::make(intval(cache()->get('theme'))) ?? BootstrapThemeEnum::light)->name() }}">
+<body class="bg-body-tertiary" data-bs-theme="{{ (BootstrapThemeEnum::make(intval(session()->get('theme'))) ?? BootstrapThemeEnum::light)->name() }}">
     {{-- HEADER --}}
     <x-back.layouts.header/>
 

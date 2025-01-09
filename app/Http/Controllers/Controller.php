@@ -15,7 +15,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -339,15 +338,15 @@ class Controller extends BaseController
         ItemsPerPaginationEnum $pagination = null
     ): \Illuminate\Contracts\Pagination\LengthAwarePaginator {
         $currentRoutePath = Str::of(request()->route()->getName())->slug();
-        $cacheKey         = "pagination.{$currentRoutePath}";
+        $sessionKey       = "pagination.{$currentRoutePath}";
         $pagination       = $pagination ?? ItemsPerPaginationEnum::twelve;
         $pagination       = ToolboxHelper::getValidatedEnum(
-            Cache::get($cacheKey, $pagination->value()),
+            Session::get($sessionKey, $pagination->value()),
             'pagination',
             '\App\Enums\Pagination\ItemsPerPaginationEnum',
         );
-        if (Cache::get($cacheKey) !== $pagination) {
-            Cache::put($cacheKey, $pagination);
+        if (Session::get($sessionKey) !== $pagination) {
+            Session::put($sessionKey, $pagination);
         }
         return $query->paginate($pagination);
     }
@@ -365,7 +364,7 @@ class Controller extends BaseController
             $lang = config('app.fallback_locale');
         }
         app()->setLocale($lang);
-        session()->put('lang', $lang);
+        Session::put('lang', $lang);
         return redirect()->back()->with('success', trans('crud.messages.lang_updated'));
     }
 
@@ -377,7 +376,7 @@ class Controller extends BaseController
      */
     protected function setNavigation(Request $request): void
     {
-        Cache::put("navigation", $request->isExtended);
+        Session::put("navigation", $request->isExtended);
     }
 
     /**
@@ -389,12 +388,12 @@ class Controller extends BaseController
     protected function setTheme(Request $request): \Illuminate\Http\RedirectResponse
     {
         $theme = ToolboxHelper::getValidatedEnum(
-            $request->theme ?: Cache::get('theme', BootstrapThemeEnum::light->value()),
+            $request->theme ?: Session::get('theme', BootstrapThemeEnum::light->value()),
             'theme',
             '\App\Http\Controllers\BootstrapThemeEnum',
         );
-        if (Cache::get("theme") !== $theme) {
-            Cache::put("theme", $theme);
+        if (Session::get('theme') !== $theme) {
+            Session::put('theme', $theme);
         }
         return redirect()->back()->with('success', trans('crud.messages.theme_updated'));
     }

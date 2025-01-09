@@ -1,7 +1,7 @@
 @auth('backend')
     <nav @class([
             'col-12 offcanvas-lg offcanvas-start d-lg-flex flex-column justify-content-between bg-body-tertiary overflow-x-visible py-2',
-            cache()->has('navigation') ? (cache()->get('navigation') ? 'navigation-extended' : '') : 'navigation-extended'
+            session()->has('navigation') ? (session()->get('navigation') ? 'navigation-extended' : '') : 'navigation-extended'
         ]) id="offcanvas-navigation">
         <div class="side-menu pb-3 pb-lg-0">
             {{-- HOME --}}
