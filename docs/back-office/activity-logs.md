@@ -18,7 +18,7 @@ This part of the project involves monitoring back-office activity on data models
 
 ## Modifications
 
-The **action's author**, **target**, **date** and any **values modified** by the user can be found here. In this way, accounts with the role of conceptor can monitor modifications in detail and act accordingly.
+In this project, I've installed one of my packages called [Laravel Activity Logs](https://docs-laravel-activity-logs.alexis-gousseau.com/), which allows us to track **the author of each action**, **the target**, **the date** and all **the values modified** by the user. In this way, accounts with the designer role can track changes in detail and act accordingly.
 
 <figure><img src="../.gitbook/assets/activitylogs.png" alt=""><figcaption><p>Games Gallery - activity logs</p></figcaption></figure>
 

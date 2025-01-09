@@ -5,6 +5,7 @@
 [![Website test](https://img.shields.io/website-up-down-green-red/https/games-gallery.alexis-gousseau.com?style=for-the-badge)](https://games-gallery.alexis-gousseau.com)
 [![GitHub latest commit](https://img.shields.io/github/last-commit/alexis-gss/games-gallery/develop?color=5A718A&style=for-the-badge)](https://github.com/alexis-gss/games-gallery/commit/master)
 [![GitHub tag](https://img.shields.io/github/tag/alexis-gss/games-gallery?style=for-the-badge&color=5A718A)](https://github.com/alexis-gss/games-gallery/tags)
+[![GitHub License](https://img.shields.io/github/license/alexis-gss/games-gallery?color=5A718A&style=for-the-badge)](https://github.com/alexis-gss/games-gallery/blob/master/LICENSE)
 
 </div>
 
@@ -49,7 +50,7 @@ Once your code is working, please run the following commands `npm run stylelint`
 
 ### Fixing a Bug
 
-When fixing a bug please make sure to test it in several browsers including ie11. If you are not able to do so, mention that in a PR comment, so other contributors can do it.
+When fixing a bug please make sure to test it in several browsers. If you are not able to do so, mention that in a PR comment, so other contributors can do it.
 
 ### Proposing a Change
 
@@ -57,7 +58,7 @@ When implementing a feature please create an issue first explaining your idea an
 
 # Changelog
 
-Latest version v5.1.0.
+Latest version v5.2.0.
 
 See the [CHANGELOG.md](CHANGELOG.md) file for details.
 

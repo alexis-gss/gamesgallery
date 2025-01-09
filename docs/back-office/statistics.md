@@ -36,8 +36,8 @@ Next come the graphs showing the distribution of associations between data model
 
 <figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Games Gallery - graph of games by folders</p></figcaption></figure>
 
-As for the last part, it's simply **a top 5 of the most liked images** from the project :
+As for the last part, it's simply a **top 5** of the project's most **popular images**, as well as the **most visited pages** :
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>Games Gallery - top 5 of rate by picture</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/stats_counter.png" alt=""><figcaption><p>Games Gallery - top 5 of rate by picture</p></figcaption></figure>
 
 Since only one person worked on it, project management was necessary to centralize ideas, bugs and evolutions.

@@ -27,6 +27,65 @@ All notable changes to [Games Gallery](https://www.games-gallery.alexis-gousseau
 * Commits respect [Conventionnal commits](https://www.conventionalcommits.org/en/v1.0.0/) & use [Gitmoji](https://gitmoji.dev/).
 {% endhint %}
 
+## **\[v5.2.0] - 10.01.25**
+
+### Added
+
+* feat: ✨ add a list of related games at the bottom of each game page
+* feat: ✨ logout all unpublished users
+* feat: ✨ update all backend layout
+* feat: ✨ add laravel/telescope for local development
+* feat: ✨ add activity-logs via alexis-gss/laravel-activity-logs
+* feat: ✨ add default picture for each games
+* feat: ✨ add pagination on related games
+* style: 💄 add shadow behind the front navigation
+
+### Changed
+
+* refactor: ♻️ use laravel collection function
+* refactor: ♻️ move all modules/partials files in laravel components
+* refactor: ♻️ resolve some phpcs/phpstan errors refactor: ♻️ replace saving theme/pagination/lang in cache by session
+* ci: 👷 update github issue templates & workflows
+* test: ✅ resolve tests errors
+
+### Fixed
+
+* fix: 💄 update front pagination in the navigation
+* fix: 💄 update the visibility of the modal to view a picture
+* fix: 💄 update scrollable images content in the backend showing page
+* fix: 🌐 update & clean all translations
+* fix: 🚸 show 404 page when the game slug not exist
+* fix: 🚸 resolve some w3c errors/warnings
+* fix: 🚸 add warning if javascript is disable
+* fix: 🩹 update redirect url after login
+* fix: 🐛 update user policies (all only show/update & conceptor on others)
+* fix: 🐛 remove useless alt/title on user model
+
+Full changelog: [https://github.com/alexis-gss/games-gallery/compare/v5.1.0...v5.2.0](https://github.com/alexis-gss/games-gallery/compare/v5.1.0...v5.2.0)
+
+***
+
+## **\[v5.1.0] - 15.07.24**
+
+### Added
+
+* feat: ✨ add a visit page counter in the front header of a game page
+* feat: ✨ add visits statistics in back office
+* feat: ✨ add loading screen on front pages
+* feat: 🚸 add the targeted model in sweetalert message
+* feat: ✅ extend tests to all the project
+
+### Changed
+
+* docs: 📄 update license
+* fix: 🐛 show message when there isn't rating or visit recorded
+* fix: 💄 update maintenance page in front/back
+* fix: 💄 fix the margin at the bottom of the front game page
+
+Full changelog: [https://github.com/alexis-gss/games-gallery/compare/v5.0.0...v5.1.0](https://github.com/alexis-gss/games-gallery/compare/v5.0.0...v5.1.0)
+
+***
+
 ## **\[v5.0.0] - 26.06.24**
 
 ### Added

@@ -22,11 +22,11 @@ Indeed, to manage this project, you need **to log in** to a previously created a
 
 Once logged in, the user accesses the [Games Gallery](https://games-gallery.alexis-gousseau.com/) back office. It is divided into several distinct sections, which can be found in the navigation at the top of the page.&#x20;
 
-<figure><img src="../.gitbook/assets/Capture d&#x27;écran 2024-06-11 164303 (2).png" alt=""><figcaption><p>Games Gallery - back navigation</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/bo_menu.png" alt=""><figcaption><p>Games Gallery - back navigation</p></figcaption></figure>
 
 In the latter, we can also find several functionalities such as changing **the back-office theme**, **language selection** and user **account management**, which we'll look at later.
 
-<figure><img src="../.gitbook/assets/Capture d&#x27;écran 2024-06-11 164303 (3).png" alt=""><figcaption><p>Games Gallery - back functionnalities</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/bo_menu_profile.png" alt=""><figcaption><p>Games Gallery - back functionnalities</p></figcaption></figure>
 
 ## Home page
 

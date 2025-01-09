@@ -22,6 +22,6 @@ This page operates differently from a CRUD. It consists of a selection field for
 
 Once done, a drag-and-drop system is used to reorganize all the items in the list. Each time a modification is made, an ajax call is executed to save directly to the database without having to constantly refresh the page.
 
-<figure><img src="../.gitbook/assets/rank-bo.gif" alt=""><figcaption><p>Games Gallery - moving games in the ranking list</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/ranking.gif" alt=""><figcaption><p>Games Gallery - moving games in the ranking list</p></figcaption></figure>
 
 Each modification to a data model triggers a new entry in the project activity log.

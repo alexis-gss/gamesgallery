@@ -28,6 +28,6 @@ Once an image has been completely rebuilt, it is saved in a **default folder**. 
 
 What's more, once an image has been uploaded, its format is **changed to .webp**, to **lighten and streamline the front-end display**, as explained earlier on the [front pictures page](../front-office/pictures.md). To notify the user of the progress of the image upload, a **progress bar** is visible for each element, with a percentage of completion. At 100%, the image can be viewed.
 
-<figure><img src="../.gitbook/assets/games_pictures.gif" alt=""><figcaption><p>Games Gallery - send pictures</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/upload_pictures.gif" alt=""><figcaption><p>Games Gallery - send pictures</p></figcaption></figure>
 
 When at least one game has been published with images, it can be added to the project ranking.

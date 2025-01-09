@@ -1,6 +1,6 @@
 {
     "name": "alexis-gss/games-gallery",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "type": "project",
     "description": "Gallery of pictures from a lot of games, realised under Laravel.",
     "authors": [
