@@ -1,4 +1,5 @@
 @if (request()->routeIs('fo.games.show') && isset($gameModel) && !is_null($gameModel) || request()->routeIs('fo.ranks.index'))
+    <div class="nav-background position-fixed bottom-0 start-50 translate-middle-x z-1"></div>
     <nav class="nav position-fixed start-50 translate-middle-x d-flex flex-column justify-content-center align-items-center bg-secondary shadow rounded-3 p-2 pt-0">
         <!-- List of games -->
         <div class="nav-modal nav-modal-hidden col bg-third rounded-3 w-100 p-0">
