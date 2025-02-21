@@ -144,6 +144,7 @@
     "fo_ranking_title": "Classement",
     "fo_ranking_description": "Classement personnel des jeux publiés dans le projet.",
     "fo_clear_search": "Réinitialiser la recherche",
+    "fo_images_details": "Voir la fiche descriptive du jeu",
     "fo_images_loaded": "Toutes les images sont chargées",
     "fo_images_no_one": "Pas d'images",
     "fo_image_of": "Image représentative du jeu :gameName.",

@@ -35,6 +35,10 @@
                         @endif
                     @endforeach
                 @endif
+                <span class="mx-1">-</span>
+                <div class="game-details" data-json='@json([
+                    'search' => $gameModel->name,
+                ])'></div>
             </div>
             <div class="d-flex flex-column flex-sm-row-reverse justify-content-center align-items-center w-100 mt-3 px-1">
                 <p class="text-secondary mb-3 ms-sm-5 m-sm-0">
