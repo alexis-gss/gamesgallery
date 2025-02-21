@@ -1,5 +1,6 @@
 <template>
   <div class="position-relative">
+    <!-- PICTURES -->
     <template v-if="pictureModels.length > 0">
       <template
         v-for="paginateIndex in incrementNumber"
@@ -79,6 +80,7 @@
         </template>
       </template>
     </template>
+    <!-- MESSAGES -->
     <div
       class="text-center w-100"
       data-aos="fade-up"
@@ -107,6 +109,7 @@
         </div>
       </template>
     </div>
+    <!-- RELATED GAMES -->
     <template v-if="!gameLoading && (gamePage >= gameLastPage) && swiperInitialized">
       <GamesRelatedComponent
         :game-slug="gameSlug"

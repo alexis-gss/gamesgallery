@@ -35,6 +35,15 @@
                         @endif
                     @endforeach
                 @endif
+                <span class="mx-1">-</span>
+                <a
+                    href="{{ sprintf('%s/%s', config('app.akora_url'), $gameModel->akora_id) }}"
+                    target="_blank"
+                    class="btn btn-primary text-decoration-none text-white border-0 rounded-2 px-2 py-0"
+                >
+                    {{ __('fo_images_details') }}
+                    <i class="fa-solid fa-arrow-up-right-from-square fa-xs ms-1"></i>
+                </a>
             </div>
             <div class="d-flex flex-column flex-sm-row-reverse justify-content-center align-items-center w-100 mt-3 px-1">
                 <p class="text-secondary mb-3 ms-sm-5 m-sm-0">

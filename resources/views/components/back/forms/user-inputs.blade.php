@@ -80,7 +80,7 @@
                         @endforeach
                     </select>
                     <small class="text-body-secondary">
-                        {{ __('validation.rule.select-single', ['entity' => __('validation.attributes.role')]) }}
+                        {{ __('validation.rule.select_single', ['entity' => __('validation.attributes.role')]) }}
                     </small>
                     <x-back.input-error inputName="role"/>
                 </div>

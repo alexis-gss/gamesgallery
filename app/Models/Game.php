@@ -15,13 +15,14 @@ use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property integer                         $id           Id.
- * @property \App\Models\Folder              $folder_id    Folder associated.
  * @property string                          $name         Name.
  * @property string                          $slug         Slug of the name.
  * @property string                          $picture      Path of the game's picture.
+ * @property \App\Models\Folder              $folder_id    Folder associated.
+ * @property integer                         $akora_id     Id of the game in akora.
+ * @property integer                         $order        Order.
  * @property boolean                         $published    Published status.
  * @property \Illuminate\Support\Carbon|null $published_at Published date update.
- * @property integer                         $order        Order.
  * @property-read \Illuminate\Support\Carbon $created_at   Created date.
  * @property-read \Illuminate\Support\Carbon $updated_at   Updated date.
  *
@@ -54,13 +55,14 @@ class Game extends Model implements Sitemapable
      * @var array<int, string>
      */
     protected $fillable = [
+        'name',
         'slug',
         'picture',
         'folder_id',
-        'name',
+        'akora_id',
+        'order',
         'published',
         'published_at',
-        'order',
     ];
 
     /**

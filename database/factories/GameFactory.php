@@ -21,13 +21,14 @@ final class GameFactory extends Factory
         $name      = fake()->unique()->word;
         $published = fake()->boolean(75);
         return [
-            'folder_id'    => fake()->randomElement(Folder::pluck('id'))
-                ?? Folder::factory()->createQuietly(['published' => true]),
             'name'         => $name,
             'slug'         => Str::of($name)->slug(),
             'picture'      => '',
             'published'    => $published,
             'published_at' => ($published) ? now() : null,
+            'folder_id'    => fake()->randomElement(Folder::pluck('id'))
+                ?? Folder::factory()->createQuietly(['published' => true]),
+            'akora_id'     => fake()->numberBetween(1, 1000),
             'order'        => 1,
         ];
     }

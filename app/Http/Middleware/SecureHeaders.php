@@ -36,7 +36,6 @@ class SecureHeaders
         View::share('nonce', $nonce = Vite::useCspNonce());
         // * For VueJS dev tool to execute
         $jsDev     = config('app.debug') ? "'unsafe-eval' 'unsafe-inline'" : "'nonce-{$nonce}' 'strict-dynamic'";
-        $scheme    = config('app.env') === 'local' ? 'http' : 'https';
         $reportUri = Route::has('cspReportUri') ?
             \sprintf(' report-uri %s ;', \parse_url(route('cspReportUri'), \PHP_URL_PATH)) : '';
         $this->removeUnwantedHeaders($this->unwantedHeaderList);
@@ -53,16 +52,11 @@ class SecureHeaders
             "img-src * data: blob:;",
             'frame-src ;',
             "font-src 'self' data: ;",
-            "style-src 'self' 'unsafe-inline' " . \implode(' ', [
-                'https://fonts.googleapis.com',
-            ]) . ';',
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
             "script-src 'self' {$jsDev} ;"
         ];
 
-        $response->headers->set(
-            'Content-Security-Policy',
-            implode(' ', $cspPolicies) . $reportUri
-        );
+        $response->headers->set('Content-Security-Policy', implode(' ', $cspPolicies) . $reportUri);
         $response->headers->set('Feature-Policy', 'fullscreen \'self\';');
         return $response;
     }
