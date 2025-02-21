@@ -221,6 +221,7 @@ return [
         'event'             => 'event',
         'folder_associated' => 'folder associated',
         'folder_mandatory'  => 'mandatory folder',
+        'akora_associated'  => 'Akora identification associated',
         'id'                => 'identification',
         'inter'      => [
             'male'   => 'of the ',
@@ -244,9 +245,11 @@ return [
         'confirmation_label'  => 'Must be identical to the password.',
         'default_field'       => ':field by default: <strong>:value</strong>',
         'disable_own_account' => 'You cannot deactivate your own account.',
-        'images_label'        => 'Respect the format (:format) and dimensions (max): :widthpx (width) x :heightpx (height).',
+        'images_label'        => 'Respect the format (:format) and dimensions
+            (max): :widthpx (width) x :heightpx (height).',
         'password_empty'      => 'Leave the field empty to keep the actual password.',
-        'select-multiple'     => 'Choose one or multiple :entity among the list.',
-        'select-single'       => 'Choose a :entity among the list.',
+        'select_multiple'     => 'Choose one or multiple :entity among the list.',
+        'select_single'       => 'Choose a :entity among the list.',
+        'akora_exist'         => 'Must be an existing id in Akora website.',
     ],
 ];

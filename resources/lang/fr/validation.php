@@ -223,6 +223,7 @@ return [
         'event'             => 'évènement',
         'folder_associated' => 'dossier associé',
         'folder_mandatory'  => 'dossier obligatoire',
+        'akora_associated'  => 'Akora identification associé',
         'id'                => 'identification',
         'inter'            => [
             'male'   => 'du ',
@@ -249,7 +250,8 @@ return [
         'images_label'        => 'Doît respecter le format (:format) ainsi que les dimensions (max):
             :widthpx (largeur) x :heightpx (hauteur).',
         'password_empty'      => 'Laisser le champs vide pour garder le mot de passe actuel.',
-        'select-multiple'     => 'Sélectionner un ou plusieurs :entity parmis la liste.',
-        'select-single'       => 'Sélectionner un :entity parmis la liste.',
+        'select_multiple'     => 'Sélectionner un ou plusieurs :entity parmis la liste.',
+        'select_single'       => 'Sélectionner un :entity parmis la liste.',
+        'akora_exist'         => 'Doît être un id existant dans le site Akora.',
     ],
 ];

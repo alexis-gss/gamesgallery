@@ -45,12 +45,13 @@ class StoreGameRequest extends FormRequest
     {
         $rules = [
             'slug'        => 'required|string|unique:games,slug|max:255',
-            'folder_id'   => 'required|integer|exists:folders,id',
             'name'        => 'required|string|min:3|max:255',
+            'folder_id'   => 'required|integer|exists:folders,id',
+            'akora_id'    => 'required|integer|min:0',
+            'published'   => 'required|boolean',
             'tags'        => 'sometimes|array',
             'tags.*'      => 'required|array',
             'tags.*.id'   => 'required|numeric|exists:tags,id|distinct',
-            'published'   => 'required|boolean',
         ];
         return \array_merge($rules, $this->pictureRules(minWidth: 400, minHeight: 225, maxWidth: 400, maxHeight: 225));
     }
@@ -64,9 +65,11 @@ class StoreGameRequest extends FormRequest
     {
         return [
             'slug'        => trans('validation.custom.slug'),
-            'folder_id'   => trans('validation.custom.folder_associated'),
             'name'        => trans('validation.attributes.name'),
             'picture'     => trans('validation.attributes.image'),
+            'folder_id'   => trans('validation.custom.folder_associated'),
+            'akora_id'    => trans('validation.custom.akora_associated'),
+            'published'   => trans('validation.custom.publishment'),
             'tags'        => trans('models.tag'),
             'tags.*'      => trans('models.tag'),
             'tags.*.id'   => trans(':field :inter:model', [
@@ -74,7 +77,6 @@ class StoreGameRequest extends FormRequest
                 'inter' => trans('validation.custom.inter.vowel'),
                 'model' => trans('models.tag'),
             ]),
-            'published'   => trans('validation.custom.publishment'),
         ];
     }
 }

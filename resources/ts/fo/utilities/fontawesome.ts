@@ -4,6 +4,7 @@ import {
     faArrowLeft,
     faArrowRight,
     faArrowUp,
+    faArrowUpRightFromSquare,
     faBars,
     faChevronLeft,
     faChevronRight,
@@ -42,5 +43,6 @@ library.add(
     faChevronRight,
     farEye,
     farClock,
+    faArrowUpRightFromSquare,
 );
 dom.watch();

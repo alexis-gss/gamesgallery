@@ -65,6 +65,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'akora_url' => env('AKORA_URL', 'http://localhost'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*

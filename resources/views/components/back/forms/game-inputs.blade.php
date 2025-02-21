@@ -58,9 +58,26 @@
                 @endphp
                 <div class="search-belongs-to-dropdown" data-json='@json($data)'></div>
                 <small class="text-body-secondary">
-                    {{ __('validation.rule.select-single', ['entity' => __('models.folder')]) }}
+                    {{ __('validation.rule.select_single', ['entity' => __('models.folder')]) }}
                 </small>
                 <x-back.input-error inputName="folder_id"/>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label class="col-form-label" for="folder_id">
+                    <b>{{ __('bo_akora_identification') }}&nbsp;*</b>
+                    <span data-bs-tooltip="tooltip" data-bs-placement="top" title="{{ __('bo_tooltip_akora_game') }}">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </span>
+                </label>
+                <input class="form-control @error('akora_id') is-invalid @enderror" id="akora_id" name="akora_id"
+                    type="text" value="{{ old('akora_id', $gameModel->akora_id ?? '') }}"
+                    placeholder="{{ __('validation.custom.akora_associated') }}*" required>
+                <small class="text-body-secondary">
+                    {{ sprintf('%s %s', __('validation.numeric', [
+                        'attribute' => __('validation.custom.akora_associated'),
+                    ]), __('validation.rule.akora_exist')) }}
+                </small>
+                <x-back.input-error inputName="name"/>
             </div>
         </div>
     </fieldset>
@@ -175,7 +192,7 @@
                 @endphp
                 <div class="search-belongs-to-dropdown" data-json='@json($data)'></div>
                 <small class="text-body-secondary">
-                    {{ __('validation.rule.select-multiple', ['entity' => str(__('models.tag'))->plural()]) }}
+                    {{ __('validation.rule.select_multiple', ['entity' => str(__('models.tag'))->plural()]) }}
                 </small>
                 <x-back.input-error inputName="tags"/>
             </div>
