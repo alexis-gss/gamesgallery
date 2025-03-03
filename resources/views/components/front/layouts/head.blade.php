@@ -1,6 +1,6 @@
 {{-- Title --}}
 {{-- blade-formatter-disable --}}
-<title>{{ config('app.name') }}@hasSection('title') - @yield('title')@endif</title>
+<title>@hasSection('title')@yield('title') - @endif{{ config('app.name') }}</title>
 {{-- blade-formatter-enable --}}
 
 {{-- Meta --}}
@@ -13,7 +13,7 @@
 
 {{-- Open Graph --}}
 {{-- blade-formatter-disable --}}
-<meta property="og:title" content="{{ config('app.name') }}@hasSection('title') - @yield('title')@endif">
+<meta property="og:title" content="@hasSection('title')@yield('title') - @endif{{ config('app.name') }}">
 {{-- blade-formatter-enable --}}
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ \config('app.url') }}/{{ \request()->path() }}">

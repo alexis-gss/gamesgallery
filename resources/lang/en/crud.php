@@ -70,6 +70,8 @@ return [
         'creation_model_desc' => 'Form for entering information to create a new :model',
         'edition_model'       => 'Editing a :model',
         'edition_model_desc'  => 'Editing information of a previously saved :model',
+        'view_model'          => 'Overview of :model',
+        'view_model_desc'     => 'Overview of previously saved :model information',
     ],
     'other' => [
         'no_model_found'  => 'No :model found',
