@@ -14,7 +14,8 @@
           <input
             ref="searchInput"
             name="search"
-            @keyup="filterGames($event)"
+            v-model="search"
+            @keyup="setTextValue($event)"
             class="form-control border-0 rounded-3 text-bg-primary me-1 ps-2"
             :placeholder="trans.methods.__('fo_search', { games: `${paginationParameters.total}` })"
             type="text"
@@ -52,7 +53,8 @@
               <option
                 v-for="(folder, folderIndex) in modelsParameters.folders"
                 :key="folderIndex"
-                :value="folder.id"
+                :value="folder.slug"
+                :selected="(selectedFolder.length && folder.slug === selectedFolder) ? true : false"
               >
                 {{ folder.nameLocale }}
               </option>
@@ -75,7 +77,8 @@
               <option
                 v-for="(tag, tagIndex) in modelsParameters.tags"
                 :key="tagIndex"
-                :value="tag.id"
+                :value="tag.slug"
+                :selected="(selectedTag.length && tag.slug === selectedTag) ? true : false"
               >
                 {{ tag.nameLocale }}
               </option>
@@ -190,6 +193,7 @@ const gamesSearch = ref<HTMLDivElement|null>(null);
 const searchInput = ref<HTMLInputElement|null>(null);
 
 // * DATA
+const urlParams = new URLSearchParams(window.location.search);
 const search = ref<string>("");
 const selectedTag = ref<string>("");
 const selectedFolder = ref<string>("");
@@ -235,10 +239,16 @@ onMounted((): void => {
   paginationParameters.lastPage = data.games.last_page;
   paginationParameters.total = data.games.total;
 
+  /** Search parameters */
+  search.value = data.params.text ? data.params.text : "";
+  selectedFolder.value = data.params.folder ? data.params.folder : "";
+  selectedTag.value = data.params.tag ? data.params.tag: "";
+
   /** Others */
   searchInput.value?.focus();
 
   initTooltips();
+  initButtons();
 });
 
 // * METHODS
@@ -270,30 +280,69 @@ function clearInputSearch(): void {
   document.querySelectorAll("select").forEach((element: HTMLSelectElement) => {
     element.value = "0";
   });
+  urlParams.delete("text");
+  urlParams.delete("folder");
+  urlParams.delete("tag");
   ajaxGamesFiltered();
 }
 
 /**
-  * Return a list of games which corresponds to the search from input text.
+  * Set event on game buttons (folder/tags).
   * @return LaravelModelList
 */
-function filterGames(event: Event|null): void {
-  const target = event?.target as HTMLInputElement|null;
-  paginationParameters.page = 1;
-  ajaxGamesFiltered([selectedTag.value, selectedFolder.value], false, target?.value);
+function initButtons(): void {
+  let folder = document.querySelector(".game-folder");
+  let tags = document.querySelectorAll(".game-tags");
+  folder?.addEventListener("click", (e) => {
+    setSelectedValue(e);
+    showNavigation();
+  });
+  tags.forEach(tag => {
+    tag.addEventListener("click", (e) => {
+      setSelectedValue(e);
+      showNavigation();
+    });
+  });
 }
 
 /**
-  * Set selected tag/folder variables.
-  * @param e Event on select.
+  * Show the navigation panel.
   * @return void
   */
-function setSelectedValue(e: Event): void {
-  const select = e.target as HTMLSelectElement;
-  if (select.name == "tag") selectedTag.value = select.value;
-  if (select.name == "folder") selectedFolder.value = select.value;
+function showNavigation(): void {
+  let menuModal = document.querySelector(".nav-modal");
+  let menuFilter = document.querySelector(".nav-filter");
+  menuModal?.classList.remove("nav-modal-hidden");
+  menuFilter?.classList.remove("nav-filter-hidden");
+}
+
+/**
+  * Set text value variables.
+  * @param event Event on select.
+  * @return void
+  */
+function setTextValue(event: Event|null): void {
+  const target = event?.target as HTMLInputElement|null;
+  search.value = target?.value ? target?.value : "";
   paginationParameters.page = 1;
-  ajaxGamesFiltered([selectedTag.value, selectedFolder.value]);
+  urlParams.delete("text");
+  (search.value.length) ? urlParams.set("text", search.value) : "";
+  ajaxGamesFiltered([selectedTag.value, selectedFolder.value], false, search.value);
+}
+
+/**
+  * Set selected folder/tag value variables.
+  * @param event Event on select.
+  * @return void
+  */
+function setSelectedValue(event: Event): void {
+  const select = event.target as HTMLSelectElement;
+  if (select.name == "folder") selectedFolder.value = select.value;
+  if (select.name == "tag") selectedTag.value = select.value;
+  paginationParameters.page = 1;
+  urlParams.delete(select.name);
+  (select.value.length) ? urlParams.set(select.name, select.value) : "";
+  ajaxGamesFiltered([selectedTag.value, selectedFolder.value], false, search.value);
 }
 
 /**
@@ -303,6 +352,7 @@ function setSelectedValue(e: Event): void {
   * @return void
   */
 function ajaxGamesFiltered(filters: string[] = [], pagination: boolean = false, search: string|null = null): void {
+  history.replaceState("Object", "", location.pathname + (urlParams.toString().length ? "?" + urlParams.toString() : ""));
   (pagination) ? paginationParameters.loading = true : loading.value = true;
   window.axios
     .post(getRouteGamesFiltered(), {

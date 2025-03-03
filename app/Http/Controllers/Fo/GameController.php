@@ -72,14 +72,16 @@ class GameController extends Controller
             ->when(
                 isset($searchSelects[1]) && !empty($searchSelects[1]),
                 function (Builder $query) use ($searchSelects) {
-                    $query->where('folder_id', $searchSelects[1]);
+                    $query->whereHas('folder', function (Builder $query) use ($searchSelects) {
+                        $query->where('slug', $searchSelects[1]);
+                    });
                 }
             )
             ->when(
                 isset($searchSelects[0]) && !empty($searchSelects[0]),
                 function (Builder $query) use ($searchSelects) {
                     $query->whereHas('tags', function (Builder $query) use ($searchSelects) {
-                        $query->where('id', $searchSelects[0]);
+                        $query->where('slug', $searchSelects[0]);
                     });
                 }
             )

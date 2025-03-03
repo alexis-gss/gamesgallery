@@ -21,17 +21,25 @@
                     </a>
                 </div>
                 <span class="mx-1">-</span>
-                <p class="rounded-2 text-white shadow m-0 px-2 py-0"
-                    style="background-color:{{ $gameModel->folder->color }}">
+                <button
+                    class="game-folder btn btn-primary text-decoration-none text-white border-0 rounded-2 px-2 py-0"
+                    style="background-color:{{ $gameModel->folder->color }}"
+                    name="folder"
+                    value="{{ $gameModel->folder->slug }}"
+                >
                     {{ $gameModel->folder->name }}
-                </p>
+                </button>
                 @if ($gameModel->tags->isNotEmpty() && $gameModel->tags->contains('published', true))
                     <span class="ms-1">-</span>
                     @foreach ($gameModel->tags->sortBy('name') as $tag)
                         @if ($tag->published)
-                            <p class="bg-secondary text-white rounded-2 shadow my-1 ms-1 px-2 py-0">
+                            <button
+                                class="game-tags btn btn-secondary text-decoration-none text-white border-0 rounded-2 px-2 py-0 ms-1"
+                                name="tag"
+                                value="{{ $tag->slug }}"
+                            >
                                 {{ $tag->name }}
-                            </p>
+                            </button>
                         @endif
                     @endforeach
                 @endif

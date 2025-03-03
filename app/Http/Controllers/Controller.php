@@ -51,9 +51,25 @@ class Controller extends BaseController
         bool $paginate = false,
         int $nbrItemsPerPage = 12,
     ): \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection {
+        $searchText   = request()->text;
+        $searchFolder = request()->folder;
+        $searchTag    = request()->tag;
         /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = Game::query()
             ->with('pictures')
+            ->when($searchText, function (Builder $query) use ($searchText) {
+                return $query->where('name', 'LIKE', '%' . $searchText . '%');
+            })
+            ->when($searchFolder, function (Builder $query) use ($searchFolder) {
+                return $query->whereHas('folder', function (Builder $query) use ($searchFolder) {
+                    $query->where('slug', $searchFolder);
+                });
+            })
+            ->when($searchTag, function (Builder $query) use ($searchTag) {
+                return $query->whereHas('tags', function (Builder $query) use ($searchTag) {
+                    $query->where('slug', $searchTag);
+                });
+            })
             ->where('published', true)
             ->orderBy('slug', 'ASC')
             ->whereHas('folder', function (Builder $query) {
