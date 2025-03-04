@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Games Gallery"
+<ruleset name="Memoria"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <description>Created with the PHP Coding Standard Generator. http://edorian.github.com/php-coding-standard-generator/</description>
     <arg name="colors" />

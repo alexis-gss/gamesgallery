@@ -1,16 +1,16 @@
 <div align="center">
 
-[![Banner of the github account](./resources/assets/images/github-visual.png)](https://games-gallery.alexis-gousseau.com/)
+[![Banner of the github account](./resources/assets/images/github-visual.png)](https://memoria.alexis-gousseau.com/)
 
-[![Website test](https://img.shields.io/website-up-down-green-red/https/games-gallery.alexis-gousseau.com?style=for-the-badge)](https://games-gallery.alexis-gousseau.com)
-[![GitHub latest commit](https://img.shields.io/github/last-commit/alexis-gss/games-gallery/develop?color=5A718A&style=for-the-badge)](https://github.com/alexis-gss/games-gallery/commit/master)
-[![GitHub tag](https://img.shields.io/github/tag/alexis-gss/games-gallery?style=for-the-badge&color=5A718A)](https://github.com/alexis-gss/games-gallery/tags)
-[![GitHub License](https://img.shields.io/github/license/alexis-gss/games-gallery?color=5A718A&style=for-the-badge)](https://github.com/alexis-gss/games-gallery/blob/master/LICENSE)
+[![Website test](https://img.shields.io/website-up-down-green-red/https/memoria.alexis-gousseau.com?style=for-the-badge)](https://memoria.alexis-gousseau.com)
+[![GitHub latest commit](https://img.shields.io/github/last-commit/alexis-gss/memoria/develop?color=5A718A&style=for-the-badge)](https://github.com/alexis-gss/memoria/commit/master)
+[![GitHub tag](https://img.shields.io/github/tag/alexis-gss/memoria?style=for-the-badge&color=5A718A)](https://github.com/alexis-gss/memoria/tags)
+[![GitHub License](https://img.shields.io/github/license/alexis-gss/memoria?color=5A718A&style=for-the-badge)](https://github.com/alexis-gss/memoria/blob/master/LICENSE)
 
 </div>
 
 # Introduction
-[Games Gallery](http://games-gallery.alexis-gousseau.com/) is, as its name suggests, a gallery of images from a multitude of video games I've played. Each game is listed and associated with a folder to sort them by license or universe.
+[Memoria](http://memoria.alexis-gousseau.com/) is, as its name suggests, a gallery of images from a multitude of video games I've played. Each game is listed and associated with a folder to sort them by license or universe.
 
 Each element (name, image, folder, color, etc.) can be managed in the back-office (/bo) and accessed via authentication.
 
@@ -38,13 +38,13 @@ Each element (name, image, folder, color, etc.) can be managed in the back-offic
 
 # Documentation
 
-You can find all the documentation of this project on this link : [Games Gallery documentation](https://docs-games-gallery.alexis-gousseau.com).
+You can find all the documentation of this project on this link : [Memoria documentation](https://docs-memoria.alexis-gousseau.com).
 
 # Contributing
 
 ### Create a task
 
-You can create a [new issue](https://github.com/alexis-gss/games-gallery/issues/new/choose) with a specific templates : bug or feature.
+You can create a [new issue](https://github.com/alexis-gss/memoria/issues/new/choose) with a specific templates : bug or feature.
 
 Once your code is working, please run the following commands `npm run stylelint`, `npm run eslint`, `./vendor/bin/phpstan`, `./vendor/bin/phpcs` and check tests `php artisan test` to verify that your code is following the same coding standards (in all cases, there is github actions that check this part).
 
@@ -64,6 +64,6 @@ See the [CHANGELOG.md](CHANGELOG.md) file for details.
 
 # Copyright and License
 
-[Games Gallery](http://games-gallery.alexis-gousseau.com/) was written by [Alexis Gousseau](https://github.com/alexis-gss).
+[Memoria](http://memoria.alexis-gousseau.com/) was written by [Alexis Gousseau](https://github.com/alexis-gss).
 
 Copyright (c) 2022 and beyond Alexis Gousseau.

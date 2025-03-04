@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `games-gallery` will be documented in this file.
+All notable changes to `memoria` will be documented in this file.
 
 - The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html),
@@ -38,7 +38,7 @@ All notable changes to `games-gallery` will be documented in this file.
 -   fix: 🐛 update user policies (all only show/update & conceptor on others)
 -   fix: 🐛 remove useless alt/title on user model
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v5.1.0...v5.2.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v5.1.0...v5.2.0
 
 ## **[v5.1.0] - 25.07.24**
 
@@ -55,7 +55,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v5.1.0...v5.
 -   fix: 💄 update maintenance page in front/back
 -   fix: 💄 fix the margin at the bottom of the front game page
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v5.0.0...v5.1.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v5.0.0...v5.1.0
 
 ## **[v5.0.0] - 26.06.24**
 
@@ -96,7 +96,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v5.0.0...v5.
 ### Removed
 -   chore: ➖ remove unused jscolor package
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.2.0...v5.0.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v4.2.0...v5.0.0
 
 ## **[v4.2.0] - 08.03.24**
 
@@ -116,7 +116,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.2.0...v5.
 -   Fix responsive front
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.1.1...v4.2.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v4.1.1...v4.2.0
 
 ## **[v4.1.1] - 15.02.24**
 
@@ -133,7 +133,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.1.1...v4.
 -   Fix sass component
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.1.0...v4.1.1
+Full changelog: https://github.com/alexis-gss/memoria/compare/v4.1.0...v4.1.1
 
 ## **[v4.1.0] - 12.02.24**
 
@@ -152,7 +152,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.1.0...v4.
 ### Fixed
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.0.0...v4.1.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v4.0.0...v4.1.0
 
 ## **[v4.0.0] - 18.01.24**
 
@@ -171,7 +171,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v4.0.0...v4.
 ### Fixed
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v3.0.0...v4.0.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v3.0.0...v4.0.0
 
 ## **[v3.0.0] - 12.10.23**
 
@@ -192,7 +192,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v3.0.0...v4.
 ### Fixed
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.5.0...v3.0.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.5.0...v3.0.0
 
 ## **[v2.5.0] - 17.08.23**
 
@@ -213,7 +213,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.5.0...v3.
 -   Fix user's picture when run the command user:create
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.4.0...v2.5.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.4.0...v2.5.0
 
 ## **[v2.4.0] - 22.05.23**
 
@@ -232,7 +232,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.4.0...v2.
 ### Fixed
 -   Minor fixes/bugs
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.3.0...v2.4.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.3.0...v2.4.0
 
 ## **[v2.3.0] - 04.04.23**
 
@@ -247,28 +247,28 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.3.0...v2.
 ### Fixed
 -   Minor fixes
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.2.1...v2.3.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.2.1...v2.3.0
 
 ## **[v2.2.1] - 24.01.23**
 
 ### Changed
 -   Update new method for saving images
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.2.0...v2.2.1
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.2.0...v2.2.1
 
 ## **[v2.2.0] - 11.09.22**
 
 ### Added
 -   Adding tags for games
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.1.0...v2.2.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.1.0...v2.2.0
 
 ## **[v2.1.0] - 10.10.22**
 
 ### Added
 -   Adding a users administration
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.0.0...v2.1.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v2.0.0...v2.1.0
 
 ## **[v2.0.0] - 12.08.22**
 
@@ -279,7 +279,7 @@ Full changelog: https://github.com/alexis-gss/games-gallery/compare/v2.0.0...v2.
 -   Total redesign of the project under Laravel
 -   Separation of the front/back office
 
-Full changelog: https://github.com/alexis-gss/games-gallery/compare/v1.0.0...v2.0.0
+Full changelog: https://github.com/alexis-gss/memoria/compare/v1.0.0...v2.0.0
 
 ## **[v1.0.0] - 17.02.22**
 

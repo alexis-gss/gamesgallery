@@ -104,14 +104,14 @@
                         </li>
                         <li class="list-group-item bg-transparent border-0 py-1">
                             <a class="link-light link-offset-2 link-opacity-75-hover"
-                                href="https://docs-games-gallery.alexis-gousseau.com" target="_blank"
+                                href="https://docs-memoria.alexis-gousseau.com" target="_blank"
                                 title="{{ __('bo_tooltip_home_documentation') }}" data-bs-tooltip="tooltip">
                                 {{ __('fo_footer_documentation_label') }}
                             </a>
                         </li>
                         <li class="list-group-item bg-transparent border-0 pt-1 pb-0">
                             <a class="link-light link-offset-2 link-opacity-75-hover"
-                                href="https://github.com/alexis-gss/games-gallery" target="_blank"
+                                href="https://github.com/alexis-gss/memoria" target="_blank"
                                 title="{{ __('bo_tooltip_home_github') }}" data-bs-tooltip="tooltip">
                                 {{ __('fo_footer_github_label') }}
                             </a>

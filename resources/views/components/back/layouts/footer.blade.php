@@ -6,7 +6,7 @@
         @endif
         @if (isset($globalName))
             <a class="text-reset text-decoration-none" data-bs-tooltip="tooltip" data-bs-placement="top"
-                href="https://github.com/alexis-gss/games-gallery" title="{{ __('global_acces_github') }}" target="_blank">
+                href="https://github.com/alexis-gss/memoria" title="{{ __('global_acces_github') }}" target="_blank">
                 {{ $globalName }}
             </a>
             <span>-</span>
