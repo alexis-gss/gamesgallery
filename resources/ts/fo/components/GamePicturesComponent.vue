@@ -246,7 +246,8 @@ function getGamePicturesRoute(): string {
   if (!gamePicturesRoute) {
     throw new Error("Undefined route " + routeName.value);
   }
-  return gamePicturesRoute;
+  let url = new URL(gamePicturesRoute);
+  return url.origin + url.pathname;
 }
 
 /**
